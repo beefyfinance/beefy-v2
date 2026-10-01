@@ -4,51 +4,68 @@ import { BoostAbi } from '../../../../../config/abi/BoostAbi.ts';
 import { bigNumberToBigInt } from '../../../../../helpers/big-number.ts';
 import type { BoostPromoEntity } from '../../../entities/promo.ts';
 import type { TokenErc20 } from '../../../entities/token.ts';
-import type { AnyStrategyId } from '../strategies/strategy-configs.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { getInsertIndex } from './zap.ts';
 import { selectErc20TokenByAddress } from '../../../selectors/tokens.ts';
-import type { ZapTransactHelpers } from '../strategies/IStrategy.ts';
+import {
+  type IStrategy,
+  isComposableStrategy,
+  type ZapTransactHelpers,
+} from '../strategies/IStrategy.ts';
 
 /** v1 boosts mint nothing, so only v2+ (BeefyRewardPool) has a receipt a zap can hand back */
 export const BOOST_ZAP_MIN_VERSION = 2;
 
-/**
- * Routes `maybeWrapBoost` decorates in place, and where the withdraw share override applies.
- * Excludes conic/yieldbasis/reward-pool-to-vault, which build their order inline in fetchDepositStep.
- */
-const boostDecoratableIds = [
-  'vault',
-  'single',
-  'uniswap-v2',
-  'solidly',
-  'curve',
-  'gamma',
-  'balancer',
-  'pendle-v2',
-  'vault-composer',
-] as const satisfies ReadonlyArray<AnyStrategyId>;
+/** Declared by the routes whose boost leg a handler applies, where support cannot be derived */
+export type BoostRouteSupport = {
+  stake: boolean;
+  unstake: boolean;
+};
 
-export const boostDecoratableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>(
-  boostDecoratableIds
-);
+function declaresBoostSupport(
+  strategy: IStrategy
+): strategy is IStrategy & { boostSupport: BoostRouteSupport } {
+  return 'boostSupport' in strategy;
+}
 
-/** Deposit: cross-chain and vault-to-vault are decorated inside `VaultDestHandler` instead. */
-export const boostStakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
-  ...boostDecoratableIds,
-  'cross-chain',
-  'vault-to-vault-single-token',
-]);
+const noBoostSupport: BoostRouteSupport = { stake: false, unstake: false };
+const fullBoostSupport: BoostRouteSupport = { stake: true, unstake: true };
 
 /**
- * Withdraw: cross-chain is decorated inside `VaultSourceHandler`. vault-to-vault is deliberately
- * absent — a position split between vault and boost has no agreed UX yet, so the checkbox is not
- * offered there even though the source leg would support it.
+ * What the boost decorator can wrap: the direct vault route (`BoostVaultStrategy`) and anything
+ * composable (`BoostZapStrategy` appends its step to the zap breakdown). A basic zap strategy builds
+ * its order inline in fetchDepositStep, so there is nothing to append to.
  */
-export const boostUnstakeableStrategyIds: ReadonlySet<AnyStrategyId> = new Set<AnyStrategyId>([
-  ...boostDecoratableIds,
-  'cross-chain',
-]);
+export function canDecorateForBoost(strategy: IStrategy): boolean {
+  return strategy.id === 'vault' || isComposableStrategy(strategy);
+}
+
+function boostSupportOf(strategy: IStrategy): BoostRouteSupport {
+  if (declaresBoostSupport(strategy)) {
+    return strategy.boostSupport;
+  }
+  return canDecorateForBoost(strategy) ? fullBoostSupport : noBoostSupport;
+}
+
+/**
+ * The checkbox selectors are synchronous and have no strategy instance, so the answer rides along on
+ * the options the strategy produced. Unstamped means no checkbox, so every producer must pass here.
+ */
+export function markOptionsBoostable<T extends { boostable?: boolean }>(
+  options: T[],
+  strategy: IStrategy,
+  side: 'stake' | 'unstake'
+): T[] {
+  const boostable = boostSupportOf(strategy)[side];
+  for (const option of options) {
+    option.boostable = boostable;
+  }
+  return options;
+}
+
+export function isOptionBoostable(option: { boostable?: boolean }): boolean {
+  return option.boostable === true;
+}
 
 /** `boostId` is what separates our steps from a gov/reward-pool strategy's own stake/unstake steps */
 function isBoostStep<T extends 'stake' | 'unstake'>(

@@ -29,6 +29,7 @@ import {
   type ComposableStrategyId,
   type ComposerStrategyId,
   isBasicZapStrategyStatic,
+  isComposableStrategyId,
   isComposableStrategyStatic,
   isComposerStrategyStatic,
   type StrategyIdToStatic,
@@ -46,7 +47,8 @@ import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/Vau
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
 import { BoostVaultStrategy, BoostZapStrategy } from './strategies/BoostStrategy.ts';
 import {
-  boostDecoratableStrategyIds,
+  canDecorateForBoost,
+  markOptionsBoostable,
   findBoostStakeStep,
   findBoostUnstakeStep,
 } from './helpers/boost.ts';
@@ -120,7 +122,7 @@ function maybeWrapBoost(
   helpers: TransactHelpers,
   quote?: TransactQuote
 ): IStrategy {
-  if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategy.id)) {
+  if (!isZapTransactHelpers(helpers) || !canDecorateForBoost(strategy)) {
     return strategy;
   }
 
@@ -246,7 +248,7 @@ export class TransactApi implements ITransactApi {
             if (zapStrategies[i].disableVaultDeposit) {
               vaultDepositOption = undefined;
             }
-            options.push(...result.value);
+            options.push(...markOptionsBoostable(result.value, zapStrategies[i], 'stake'));
           }
         }
       });
@@ -261,7 +263,7 @@ export class TransactApi implements ITransactApi {
         try {
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchDepositOptions();
-          options.push(...xChainOptions);
+          options.push(...markOptionsBoostable(xChainOptions, xChainStrategy, 'stake'));
         } catch (err) {
           console.warn('Failed to load cross-chain deposit options:', err);
         }
@@ -279,7 +281,9 @@ export class TransactApi implements ITransactApi {
             { strategyId: 'vault-to-vault-single-token' },
             helpers
           );
-          options.push(...(await v2vStrategy.fetchDepositOptions()));
+          options.push(
+            ...markOptionsBoostable(await v2vStrategy.fetchDepositOptions(), v2vStrategy, 'stake')
+          );
         } catch (err) {
           console.warn('Failed to load same-chain v2v deposit options:', err);
         }
@@ -297,6 +301,8 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
+      // BoostVaultStrategy always wraps this route; non-standard vaults are gated by the selectors
+      vaultDepositOption.boostable = true;
       const deduped = dropSingleIdentityOption(
         allowedOptions,
         vaultDepositOption.inputs[0].address
@@ -400,7 +406,7 @@ export class TransactApi implements ITransactApi {
             if (zapStrategies[i].disableVaultWithdraw) {
               vaultWithdrawOption = undefined;
             }
-            options.push(...result.value);
+            options.push(...markOptionsBoostable(result.value, zapStrategies[i], 'unstake'));
           }
         }
       });
@@ -415,7 +421,7 @@ export class TransactApi implements ITransactApi {
         try {
           const xChainStrategy = new CrossChainStrategy({ strategyId: 'cross-chain' }, helpers);
           const xChainOptions = await xChainStrategy.fetchWithdrawOptions();
-          options.push(...xChainOptions);
+          options.push(...markOptionsBoostable(xChainOptions, xChainStrategy, 'unstake'));
         } catch (err) {
           console.warn('Failed to load cross-chain withdraw options:', err);
         }
@@ -451,6 +457,7 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     if (vaultWithdrawOption) {
+      vaultWithdrawOption.boostable = true;
       const deduped = dropSingleIdentityOption(
         allowedOptions,
         vaultWithdrawOption.inputs[0].address
@@ -765,7 +772,7 @@ export class TransactApi implements ITransactApi {
     quote?: TransactQuote
   ): Promise<IStrategy> {
     const { vault } = helpers;
-    const routeHelpers = this.withBoostSourcedShares(helpers, strategyId, quote);
+    const routeHelpers = await this.withBoostSourcedShares(helpers, strategyId, quote);
     const { vaultType } = routeHelpers;
 
     if (strategyId === 'vault') {
@@ -801,12 +808,16 @@ export class TransactApi implements ITransactApi {
    * `helpersCache` shares one object per (state, vault) across every strategy and both directions,
    * so the swapped vault type has to go on a copy.
    */
-  private withBoostSourcedShares(
+  private async withBoostSourcedShares(
     helpers: TransactHelpers,
     strategyId: AnyStrategyId,
     quote: TransactQuote | undefined
-  ): TransactHelpers {
-    if (!isZapTransactHelpers(helpers) || !boostDecoratableStrategyIds.has(strategyId)) {
+  ): Promise<TransactHelpers> {
+    // id-only twin of canDecorateForBoost: this runs before any strategy is built
+    if (!isZapTransactHelpers(helpers)) {
+      return helpers;
+    }
+    if (strategyId !== 'vault' && !(await isComposableStrategyId(strategyId))) {
       return helpers;
     }
     try {

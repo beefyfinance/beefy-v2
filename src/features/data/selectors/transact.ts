@@ -21,8 +21,7 @@ import {
 import { computeOptionZapFee } from '../apis/transact/helpers/fee.ts';
 import {
   BOOST_ZAP_MIN_VERSION,
-  boostStakeableStrategyIds,
-  boostUnstakeableStrategyIds,
+  isOptionBoostable,
   findBoostStakeStep,
 } from '../apis/transact/helpers/boost.ts';
 import type { ChainEntity } from '../entities/chain.ts';
@@ -203,7 +202,7 @@ export const selectTransactUnstakeFromBoostSupported = (state: BeefyState): bool
   const selectionId = state.ui.transact.selectedSelectionId;
   const quote = selectTransactSelectedQuoteOrUndefined(state);
   if (quote && quote.option.selectionId === selectionId) {
-    return boostUnstakeableStrategyIds.has(quote.option.strategyId);
+    return isOptionBoostable(quote.option);
   }
 
   const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
@@ -213,7 +212,7 @@ export const selectTransactUnstakeFromBoostSupported = (state: BeefyState): bool
   // every, not some: a selection mixing supported and unsupported options cannot be honoured
   return optionIds.every(id => {
     const option = state.ui.transact.options.byOptionId[id];
-    return !!option && boostUnstakeableStrategyIds.has(option.strategyId);
+    return !!option && isOptionBoostable(option);
   });
 };
 
@@ -226,7 +225,7 @@ export const selectTransactStakeIntoBoostSupported = (state: BeefyState): boolea
   const quote = selectTransactSelectedQuoteOrUndefined(state);
   // a quote left over from the previous selection describes a route the user is no longer on
   if (quote && quote.option.selectionId === selectionId) {
-    return boostStakeableStrategyIds.has(quote.option.strategyId);
+    return isOptionBoostable(quote.option);
   }
 
   const optionIds = selectionId ? state.ui.transact.options.bySelectionId[selectionId] : undefined;
@@ -235,7 +234,7 @@ export const selectTransactStakeIntoBoostSupported = (state: BeefyState): boolea
   }
   return optionIds.some(id => {
     const option = state.ui.transact.options.byOptionId[id];
-    return !!option && boostStakeableStrategyIds.has(option.strategyId);
+    return !!option && isOptionBoostable(option);
   });
 };
 

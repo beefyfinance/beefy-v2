@@ -101,6 +101,8 @@ type BaseOption = {
   async?: boolean;
   feeable?: boolean;
   feeCampaign?: OptionFeeCampaign;
+  /** deposit: can stake into a boost; withdraw: can unstake from one. Stamped from the strategy. */
+  boostable?: boolean;
 };
 
 export type OptionFeeCampaign = {

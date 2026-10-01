@@ -9,7 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import { findBoostStakeStep } from '../../helpers/boost.ts';
+import { type BoostRouteSupport, findBoostStakeStep } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -95,6 +95,11 @@ type V2VQuoteBody = {
 class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
   public static readonly id = strategyId;
   public readonly id = strategyId;
+  /**
+   * Deposit is decorated inside `VaultDestHandler`. Unstake is deliberately off: a position split
+   * between vault and boost has no agreed UX yet.
+   */
+  public readonly boostSupport: BoostRouteSupport = { stake: true, unstake: false };
 
   constructor(
     protected options: VaultToVaultSingleTokenStrategyConfig,

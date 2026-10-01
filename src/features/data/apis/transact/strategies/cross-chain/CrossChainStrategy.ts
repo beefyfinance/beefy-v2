@@ -73,7 +73,11 @@ import {
 } from '../../../../actions/wallet/cross-chain.ts';
 import { enumerateDstVaultCandidates, enumerateSrcVaultCandidates } from './enumeration.ts';
 import { buildDustOutputs, mergeOutputs } from '../../handlers/dust.ts';
-import { findBoostStakeStep, findBoostUnstakeStep } from '../../helpers/boost.ts';
+import {
+  type BoostRouteSupport,
+  findBoostStakeStep,
+  findBoostUnstakeStep,
+} from '../../helpers/boost.ts';
 import { buildBalanceCheckZapStep, findBridgeTokenMin } from './handlers/utils.ts';
 import type { SwapOptions } from '../../swap/ISwapProvider.ts';
 import { PassthroughDestHandler } from './handlers/PassthroughDestHandler.ts';
@@ -117,6 +121,8 @@ type CrossChainQuoteBody = {
 class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
   public static readonly id = strategyId;
   public readonly id = strategyId;
+  /** Both legs are decorated inside the handlers, which `maybeWrapBoost` never sees */
+  public readonly boostSupport: BoostRouteSupport = { stake: true, unstake: true };
 
   private readonly allowedSourceChains: Set<ChainEntity['id']>;
   private readonly allowedDestChains: Set<ChainEntity['id']>;

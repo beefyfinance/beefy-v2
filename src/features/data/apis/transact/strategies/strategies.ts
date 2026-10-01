@@ -89,6 +89,16 @@ export function isComposerStrategyStatic(
   return 'composer' in strategy && strategy.composer;
 }
 
+/** Composable or composer — the shapes a decorator can extend — asked by id, before construction */
+export async function isComposableStrategyId(strategyId: ZapStrategyId): Promise<boolean> {
+  const loader = strategyLoadersById[strategyId];
+  if (!loader) {
+    return false;
+  }
+  const ctor = await loader();
+  return isComposableStrategyStatic(ctor) || isComposerStrategyStatic(ctor);
+}
+
 export function isBasicZapStrategyStatic(
   strategy: AnyZapStrategyStatic
 ): strategy is BasicZapStrategyStatic {

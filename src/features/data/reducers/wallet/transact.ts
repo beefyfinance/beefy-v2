@@ -461,6 +461,12 @@ function addQuotesToState(sliceState: Draft<TransactState>, quotes: TransactQuot
 
 function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOption[]) {
   for (const option of options) {
+    if (import.meta.env.DEV && option.boostable === undefined) {
+      // unstamped fails closed, so the boost checkbox would silently disappear on this route
+      console.warn(
+        `Option ${option.id} (${option.strategyId}) was not stamped with boostable; see markOptionsBoostable`
+      );
+    }
     if (option.id in sliceState.options.byOptionId) {
       console.warn(`Attempting to add duplicate option id ${option.id} to state`);
       continue;
