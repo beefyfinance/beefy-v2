@@ -2,7 +2,7 @@ import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
 import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
-import { orderBy } from 'lodash-es';
+import { countBy, orderBy } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
@@ -40,10 +40,13 @@ import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
 import { selectPlatformById } from './platforms.ts';
 import {
+  isTokenStock,
+  resolveStockCompanyName,
   selectHasBreakdownDataForVault,
   selectIsTokenStable,
   selectLpBreakdownForVault,
   selectTokenByAddress,
+  selectTokenByIdOrUndefined,
   selectTokenPriceByTokenOracleId,
   selectVaultTokenImageAssets,
   selectWrappedToNativeSymbolOrTokenSymbol,
@@ -327,6 +330,7 @@ type DashboardUserExposureSummarizer<
 
 type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
   assets: SingleAsset[];
+  company?: string;
 };
 
 type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
@@ -411,9 +415,19 @@ const top6ByPercentageSummarizer = <
 const top6ChainsByPercentageSummarizer = (
   entries: DashboardUserExposureEntry<DashboardUserChainExposureVaultEntry>[]
 ) => getTopNArray(entries, 'percentage', 6, CHAIN_EXPOSURE_OTHERS);
+const withCompanyOnSharedLabels = (
+  entries: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry>[]
+) => {
+  const labelCounts = countBy(entries, entry => entry.label);
+  return entries.map(entry =>
+    entry.company && labelCounts[entry.label] > 1 ?
+      { ...entry, label: `${entry.label} (${entry.company})` }
+    : entry
+  );
+};
 const top6TokensByPercentageSummarizer = (
   entries: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry>[]
-) => getTopNArray(entries, 'percentage', 6, TOKEN_EXPOSURE_OTHERS);
+) => getTopNArray(withCompanyOnSharedLabels(entries), 'percentage', 6, TOKEN_EXPOSURE_OTHERS);
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
 
@@ -497,16 +511,18 @@ export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletA
 
 const selectTokenExposureVaultEntry = (
   state: BeefyState,
-  token: SingleAsset,
+  asset: SingleAsset,
   value: BigNumber
 ): DashboardUserTokenExposureVaultEntry => {
-  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol);
-  const labelledAsNative = symbol !== token.symbol;
+  const token = asset.id ? selectTokenByIdOrUndefined(state, asset.chainId, asset.id) : undefined;
+  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
+  const labelledAsNative = symbol !== asset.symbol;
   return {
-    key: symbol,
+    key: token && isTokenStock(token) ? `stock:${symbol}` : symbol,
     label: symbol,
+    company: resolveStockCompanyName(token),
     value,
-    assets: [labelledAsNative ? { symbol, chainId: token.chainId } : token],
+    assets: [labelledAsNative ? { symbol, chainId: asset.chainId } : asset],
   };
 };
 
