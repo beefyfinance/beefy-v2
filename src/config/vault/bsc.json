@@ -1,5 +1,162 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-fxion-rp",
+    "name": "FXIon-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscUSDT-FXIon",
+    "tokenAddress": "0x3b90A0027393354D5b1Be71c5685Eb15dd25cF5b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x4f128C8247Efbf33fB969b020D2986602D3A5326",
+    "earnedToken": "rCowPancakeBscUSDT-FXIon",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-fxion",
+    "status": "active",
+    "createdAt": 1790830299,
+    "platformId": "pancakeswap",
+    "assets": ["FXIon", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-fxion",
+    "name": "USDT-FXIon",
+    "type": "cowcentrated",
+    "token": "USDT-FXIon pancakeswap",
+    "tokenAddress": "0x8768C8969e177575e37435B8295aFa2DFB231C86",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x9b8E987e6fEc8Cf1380C4dcA7071e2C7853AEEA1"
+    ],
+    "earnContractAddress": "0x3b90A0027393354D5b1Be71c5685Eb15dd25cF5b",
+    "earnedToken": "cowPancakeBscUSDT-FXIon",
+    "earnedTokenAddress": "0x3b90A0027393354D5b1Be71c5685Eb15dd25cF5b",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-fxion",
+    "status": "active",
+    "createdAt": 1790830299,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["USDT", "FXIon"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-nvdab-usdt-rp",
+    "name": "NVDAB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscNVDAB-USDT",
+    "tokenAddress": "0xB0ddc9924f778de638abf22F4f10F22889bAb8BB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xdc353c09A12dF6321eD93EdD952ddaAf4DC3f877",
+    "earnedToken": "rCowPancakeBscNVDAB-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-nvdab-usdt",
+    "status": "active",
+    "createdAt": 1790830293,
+    "platformId": "pancakeswap",
+    "assets": ["NVDAB", "USDT"],
+    "icons": ["NVDA", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-nvdab-usdt",
+    "name": "NVDAB-USDT",
+    "type": "cowcentrated",
+    "token": "NVDAB-USDT pancakeswap",
+    "tokenAddress": "0x8FB4243b553aC29BA088aCf00B9B7dA24bD6690C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x02Fca66C1D1aFB4E2A7884261eB00F63598a7436",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0xB0ddc9924f778de638abf22F4f10F22889bAb8BB",
+    "earnedToken": "cowPancakeBscNVDAB-USDT",
+    "earnedTokenAddress": "0xB0ddc9924f778de638abf22F4f10F22889bAb8BB",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-nvdab-usdt",
+    "status": "active",
+    "createdAt": 1790830293,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["NVDAB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-bncb-wbnb-rp",
     "name": "BNCB-WBNB Reward Pool",
     "type": "gov",
