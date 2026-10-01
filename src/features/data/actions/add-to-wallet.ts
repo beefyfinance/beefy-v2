@@ -15,16 +15,12 @@ export type AddTokenToWalletPayload = {
   iconUrl: string;
 };
 
-function getTokenIconUrl(
-  id: TokenEntity['id'],
-  chainId: TokenEntity['chainId'],
-  customUrl?: string
-): string {
+function getTokenIconUrl(token: TokenEntity, customUrl?: string): string {
   if (customUrl) {
     return customUrl;
   }
 
-  const assetSrc = getSingleAssetSrc({ symbol: id, chainId });
+  const assetSrc = getSingleAssetSrc(token);
   if (assetSrc) {
     return `${window.location.origin}${assetSrc}`;
   }
@@ -38,7 +34,7 @@ export const addTokenToWalletAction = createAppAsyncThunk<
 >('addToWallet/open', async ({ chainId, tokenAddress, customIconUrl }, { getState }) => {
   const state = getState();
   const token = selectTokenByAddress(state, chainId, tokenAddress);
-  const iconUrl = getTokenIconUrl(token.id, token.chainId, customIconUrl);
+  const iconUrl = getTokenIconUrl(token, customIconUrl);
 
   return {
     token,
