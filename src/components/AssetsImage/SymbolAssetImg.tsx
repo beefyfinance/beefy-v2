@@ -16,7 +16,7 @@ export const SymbolAssetImg = memo<SymbolAssetImgProps>(function SymbolAssetImg(
   className,
 }) {
   const src = useMemo(
-    () => getSingleAssetSrc(symbol, chainId) ?? missingAssetUrl,
+    () => getSingleAssetSrc({ symbol, chainId }) ?? missingAssetUrl,
     [symbol, chainId]
   );
 

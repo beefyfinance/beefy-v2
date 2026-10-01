@@ -96,7 +96,7 @@ const selectAssetsForToken = (
   }
 
   // image exists for symbol -> use single asset icon
-  if (singleAssetExists(token.symbol, token.chainId)) {
+  if (singleAssetExists({ symbol: token.symbol, chainId: token.chainId })) {
     return selectChainAssetsForSymbol(state, token.chainId, token.symbol);
   }
 

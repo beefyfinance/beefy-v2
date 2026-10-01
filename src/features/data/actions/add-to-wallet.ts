@@ -24,7 +24,7 @@ function getTokenIconUrl(
     return customUrl;
   }
 
-  const assetSrc = getSingleAssetSrc(id, chainId);
+  const assetSrc = getSingleAssetSrc({ symbol: id, chainId });
   if (assetSrc) {
     return `${window.location.origin}${assetSrc}`;
   }
