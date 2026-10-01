@@ -25,7 +25,7 @@ import { selectTokenPriceByAddress } from '../../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
 import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
-import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, clmSupportsActionableAt } from '../../../beefy/beefy-clm-pool.ts';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts.ts';
 import { Balances } from '../../helpers/Balances.ts';
 import {
@@ -66,7 +66,11 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error.ts';
+import {
+  assertCowcentratedActionable,
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotCalmError,
+} from '../error.ts';
 import type {
   IComposableStrategy,
   IComposableStrategyStatic,
@@ -170,7 +174,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.vaultType.depositTokens
+      this.vaultType.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
@@ -438,7 +443,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       this.vaultType.shareToken.address,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      this.vaultType.depositTokens
+      this.vaultType.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
@@ -573,7 +579,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       this.vault.contractAddress,
       strategy,
       chain,
-      this.vaultType.depositTokens
+      this.vaultType.depositTokens,
+      clmSupportsActionableAt(this.vault)
     );
 
     // We want to be able to convert to token1
@@ -649,16 +656,23 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       return { token: this.vaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
-    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
-      await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+    const {
+      isCalm,
+      liquidity,
+      used0,
+      used1,
+      unused0,
+      unused1,
+      position1,
+      position0,
+      actionableAt,
+    } = await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
 
     if (liquidity.lte(BIG_ZERO)) {
       throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
     }
 
-    if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError('deposit');
-    }
+    assertCowcentratedActionable('deposit', isCalm, actionableAt);
 
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],

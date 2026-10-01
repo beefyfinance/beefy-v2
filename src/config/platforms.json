@@ -1627,5 +1627,14 @@
     "documentation": "https://prismfi.cc/docs/",
     "description": "Prism is MegaETH's superdapp built for swapping, launching tokens and more.",
     "type": "amm"
+  },
+  {
+    "id": "alandale",
+    "name": "Alandale",
+    "website": "https://alandale.xyz/",
+    "twitter": "alandalexyz",
+    "documentation": "https://alandale.gitbook.io/alandale/",
+    "description": "Alandale is the outlaw liquidity market: a ve(3,3) MetaDEX for Robinhood chain; a singular venue where every trading fee, every emission, and every vote flows through the same flywheel.",
+    "type": "amm"
   }
 ]

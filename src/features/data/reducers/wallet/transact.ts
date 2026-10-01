@@ -101,6 +101,7 @@ const initialTransactState: TransactState = {
   swapSlippage: 0.01, // 1% default
   inputAmounts: [BIG_ZERO],
   inputMaxes: [false],
+  inputEnteredAmounts: [],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   depositSource: DepositSource.Wallet,
@@ -131,6 +132,7 @@ const transactSlice = createSlice({
         sliceState.step = TransactStep.Form;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
+        sliceState.inputEnteredAmounts = [];
         sliceState.depositSource = DepositSource.Wallet;
         sliceState.stakeIntoBoost = true;
         sliceState.unstakeFromBoost = undefined;
@@ -162,12 +164,20 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactSetInputAmount, (sliceState, action) => {
-        const { index, amount, max } = action.payload;
+        const { index, amount, max, enteredAmount } = action.payload;
         if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
           sliceState.inputAmounts[index] = amount;
         }
         if (!sliceState.inputMaxes[index] || sliceState.inputMaxes[index] !== max) {
           sliceState.inputMaxes[index] = max;
+        }
+        const currentEntered = sliceState.inputEnteredAmounts[index];
+        const enteredUnchanged =
+          currentEntered && enteredAmount ?
+            currentEntered.isEqualTo(enteredAmount)
+          : currentEntered === enteredAmount;
+        if (!enteredUnchanged) {
+          sliceState.inputEnteredAmounts[index] = enteredAmount;
         }
       })
       .addCase(transactClearInput, sliceState => {
@@ -369,8 +379,8 @@ const transactSlice = createSlice({
         const rq = sliceState.crossChain.recoveryQuote;
         if (rq.opId === action.meta.arg.opId) {
           rq.status = TransactStatus.Rejected;
-          rq.error = action.error;
-          console.error('crossChainFetchRecoveryQuote rejected', action.error);
+          rq.error = action.meta.rejectedWithValue ? action.payload : action.error;
+          console.error('crossChainFetchRecoveryQuote rejected', rq.error);
         }
       })
       .addCase(crossChainFetchRecoveryQuote.fulfilled, (sliceState, action) => {
@@ -402,6 +412,7 @@ function clearInputs(sliceState: Draft<TransactState>) {
     sliceState.inputAmounts = [BIG_ZERO];
     sliceState.inputMaxes = [false];
   }
+  sliceState.inputEnteredAmounts = [];
 }
 
 function resetForm(sliceState: Draft<TransactState>) {
@@ -409,6 +420,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedSelectionId = undefined;
   sliceState.inputAmounts = [BIG_ZERO];
   sliceState.inputMaxes = [false];
+  sliceState.inputEnteredAmounts = [];
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
   sliceState.depositSource = DepositSource.Wallet;

@@ -212,7 +212,7 @@ const Section = styled('div', {
     rowGap: '12px',
     paddingTop: '12px',
     marginBottom: '10px',
-    borderRadius: '16px',
+    borderRadius: '12px',
     overflow: 'hidden',
     background: 'background.content.dark',
   },

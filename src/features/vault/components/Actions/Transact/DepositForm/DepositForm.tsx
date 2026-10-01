@@ -8,9 +8,12 @@ import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
+import {
+  transactSetInputAmount,
+  transactSetTokenInputAmount,
+} from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { isVaultActive } from '../../../../../data/entities/vault.ts';
+import { isVaultActive, type VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectUserBalanceOfToken,
@@ -18,7 +21,7 @@ import {
   selectUserVaultBalanceInShareToken,
 } from '../../../../../data/selectors/balance.ts';
 import {
-  selectTransactDepositFromVaultId,
+  selectTransactDepositInputVaultId,
   selectTransactForceSelection,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -56,13 +59,7 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
   const handleMax = useCallback(() => {
     if (token && balance) {
-      dispatch(
-        transactSetInputAmount({
-          index,
-          amount: balance,
-          max: true,
-        })
-      );
+      dispatch(transactSetTokenInputAmount({ index, token, amount: balance, max: true }));
     }
   }, [balance, dispatch, token, index]);
 
@@ -75,33 +72,25 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
 type VaultBalanceProps = {
   index: number;
+  vaultId: VaultEntity['id'];
 };
-const VaultBalance = memo(function VaultBalance({ index }: VaultBalanceProps) {
+const VaultBalance = memo(function VaultBalance({ index, vaultId }: VaultBalanceProps) {
   const dispatch = useAppDispatch();
-  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
   const depositBalance = useAppSelector(state =>
-    fromVaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, fromVaultId) : undefined
+    selectUserVaultBalanceInDepositTokenWithToken(state, vaultId)
   );
-  const shareBalance = useAppSelector(state =>
-    fromVaultId ? selectUserVaultBalanceInShareToken(state, fromVaultId) : undefined
-  );
+  const shareBalance = useAppSelector(state => selectUserVaultBalanceInShareToken(state, vaultId));
 
   const handleMax = useCallback(() => {
-    if (shareBalance) {
-      // dispatch exact share-balance: store-of-record is share-math even though display is deposit-token
-      dispatch(
-        transactSetInputAmount({
-          index,
-          amount: shareBalance,
-          max: true,
-        })
-      );
-    }
+    // dispatch exact share-balance: store-of-record is share-math even though display is deposit-token
+    dispatch(
+      transactSetInputAmount({
+        index,
+        amount: shareBalance,
+        max: true,
+      })
+    );
   }, [shareBalance, dispatch, index]);
-
-  if (!depositBalance || !shareBalance) {
-    return null;
-  }
 
   return (
     <TokenAmountFromEntity
@@ -165,7 +154,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const multipleInputs = selection.tokens.length > 1;
   const forceSelection = useAppSelector(selectTransactForceSelection);
   const { ctaLabel: firstSelectLabel } = useTransactSelectFlowCta();
-  const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
+  const fromVaultId = useAppSelector(selectTransactDepositInputVaultId);
 
   if (forceSelection) {
     return (
@@ -180,7 +169,9 @@ const DepositFormInputs = memo(function DepositFormInputs() {
       token={token}
       selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
       tokenAvailable={
-        fromVaultId ? <VaultBalance index={0} /> : <TokenInWallet token={token} index={index} />
+        fromVaultId ?
+          <VaultBalance index={0} vaultId={fromVaultId} />
+        : <TokenInWallet token={token} index={index} />
       }
     />
   ));

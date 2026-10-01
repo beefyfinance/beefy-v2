@@ -22,7 +22,10 @@ import {
 } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
-import { selectChainById } from '../../../../selectors/chains.ts';
+import {
+  selectChainById,
+  selectIsChainNativeSharedWithWrapped,
+} from '../../../../selectors/chains.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -40,7 +43,7 @@ import {
   onlyOneToken,
 } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
-import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
+import { pickTokens } from '../../helpers/tokens.ts';
 import { getGovVaultWithdrawnFromState, getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import {
@@ -383,7 +386,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     ];
 
     // Step 2. Wrap native if needed
-    if (isTokenNative(withdrawnToken) && !nativeAndWrappedAreSame(withdrawnToken.chainId)) {
+    if (
+      isTokenNative(withdrawnToken) &&
+      !selectIsChainNativeSharedWithWrapped(state, withdrawnToken.chainId)
+    ) {
       const { swapAggregator, getState } = this.helpers;
       const state = getState();
       const wrapQuotes = await swapAggregator.fetchQuotes(

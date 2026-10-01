@@ -126,7 +126,7 @@ export interface PromoPartnerConfig {
 }
 
 export interface PromoCampaignConfig {
-  title: string;
+  title?: string;
   description: string;
   learn?: string;
   social: PromoSocials;

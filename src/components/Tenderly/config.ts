@@ -22,4 +22,5 @@ export const tenderlyChains = new Set<ChainId>([
   'plasma',
   'monad',
   'megaeth',
+  'arc',
 ]);

@@ -6,7 +6,6 @@ import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsI
 import { Button } from '../../../../../../../components/Button/Button.tsx';
 import { fromWei, toWei } from '../../../../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
@@ -40,10 +39,8 @@ import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
 import type { MinterCardParams } from '../../MinterCard.tsx';
 import { styles } from '../styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { css } from '@repo/styles/css';
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -149,7 +146,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
 
   return (
     <CardContent css={styles.cardContent}>
-      <div className={classes.content}>
+      <div className={css(styles.content)}>
         {t(
           [
             `Burn-${minter.canBurn}-${minter.id}-Content`,
@@ -163,24 +160,24 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         )}
       </div>
       {minter.canBurn === 'reserves' ?
-        <div className={classes.boxReserves}>
-          <div className={classes.reservesText}>
+        <div className={css(styles.boxReserves)}>
+          <div className={css(styles.reservesText)}>
             {t('reserves', { token: minter.depositToken.symbol })}
           </div>
           <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-          <div className={classes.amountReserves}>
+          <div className={css(styles.amountReserves)}>
             {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
           </div>
         </div>
       : null}
-      <div className={classes.inputContainer}>
-        <div className={classes.balances}>
-          <div className={classes.label}>
-            {t('from')} <span className={classes.value}>{mintedToken.symbol}</span>
+      <div className={css(styles.inputContainer)}>
+        <div className={css(styles.balances)}>
+          <div className={css(styles.label)}>
+            {t('from')} <span className={css(styles.value)}>{mintedToken.symbol}</span>
           </div>
-          <div className={classes.label}>
+          <div className={css(styles.label)}>
             {t('wallet')}{' '}
-            <span className={classes.value}>
+            <span className={css(styles.value)}>
               {formatTokenDisplayCondensed(mintedTokenBalance, mintedToken.decimals)}{' '}
               {mintedToken.symbol}
             </span>
@@ -200,19 +197,19 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           }
         />
       </div>
-      <div className={classes.customDivider}>
-        <div className={classes.line} />
+      <div className={css(styles.customDivider)}>
+        <div className={css(styles.line)} />
         <img alt="arrowDown" src={iconArrowDown} />
-        <div className={classes.line} />
+        <div className={css(styles.line)} />
       </div>
-      <div className={classes.inputContainer}>
-        <div className={classes.balances}>
-          <div className={classes.label}>
-            {t('to')} <span className={classes.value}>{depositToken.symbol}</span>
+      <div className={css(styles.inputContainer)}>
+        <div className={css(styles.balances)}>
+          <div className={css(styles.label)}>
+            {t('to')} <span className={css(styles.value)}>{depositToken.symbol}</span>
           </div>
-          <div className={classes.label}>
+          <div className={css(styles.label)}>
             {t('wallet')}
-            <span className={classes.value}>
+            <span className={css(styles.value)}>
               {formatTokenDisplayCondensed(depositedTokenBalance, depositToken.decimals)}{' '}
               {depositToken.symbol}
             </span>
@@ -231,7 +228,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       <>
         {isWalletConnected ?
           !isWalletOnVaultChain ?
-            <Button onClick={handleNetworkChange} className={classes.btn}>
+            <Button onClick={handleNetworkChange} borderless={true} css={styles.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
           : <Button
@@ -241,12 +238,13 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
                 isStepping
               }
               onClick={handleWithdraw}
-              className={classes.btn}
+              borderless={true}
+              css={styles.btn}
             >
               {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
             </Button>
 
-        : <Button onClick={handleConnectWallet} className={classes.btn}>
+        : <Button onClick={handleConnectWallet} borderless={true} css={styles.btn}>
             {t('Network-ConnectWallet')}
           </Button>
         }

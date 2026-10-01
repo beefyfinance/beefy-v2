@@ -10,8 +10,8 @@ import {
 } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { TokenEntity } from '../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import type { SharedBalanceWnative, TokenEntity } from '../entities/token.ts';
+import { isTokenErc20, isTokenNative, sharedPrecisionDecimals } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
@@ -21,7 +21,7 @@ import {
   valueOrThrow,
 } from '../utils/selector-utils.ts';
 import { toSearchWords } from '../utils/vault-search.ts';
-import { selectAllChainIds } from './chains.ts';
+import { selectAllChainIds, selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
@@ -177,6 +177,36 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
     );
   }
   return token;
+};
+
+/** wnative where native and wnative are one balance (arc, metis, celo), otherwise undefined */
+export const selectSharedBalanceWrappedToken = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+): SharedBalanceWnative | undefined =>
+  selectIsChainNativeSharedWithWrapped(state, chainId) ?
+    (selectChainWrappedNativeToken(state, chainId) as SharedBalanceWnative)
+  : undefined;
+
+/** as selectSharedBalanceWrappedToken, but the balance api runs before the addressbook loads */
+export const selectSharedBalanceWrappedTokenIfLoaded = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+): SharedBalanceWnative | undefined => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return undefined;
+  }
+  const chainTokens = state.entities.tokens.byChainId[chainId];
+  const address = chainTokens?.wnative ? chainTokens.byId[chainTokens.wnative] : undefined;
+  const token = address ? chainTokens?.byAddress[address] : undefined;
+  return token && isTokenErc20(token) ? (token as SharedBalanceWnative) : undefined;
+};
+
+/** arc's native USDC is spent through its 6 decimal erc20 view, so finer input is only dust */
+export const selectTokenInputDecimals = (state: BeefyState, token: TokenEntity): number => {
+  return isTokenNative(token) ?
+      sharedPrecisionDecimals(token, selectSharedBalanceWrappedToken(state, token.chainId))
+    : token.decimals;
 };
 
 export function isTokenStable(token: TokenEntity): boolean {

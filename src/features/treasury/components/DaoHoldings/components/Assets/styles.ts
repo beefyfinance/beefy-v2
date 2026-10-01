@@ -7,7 +7,7 @@ export const styles = {
     marginTop: '1px',
     rowGap: '1px',
     '& div:last-child': {
-      borderRadius: '0px 0px 8px 8px',
+      borderRadius: '0px 0px 12px 12px',
     },
   }),
   assetTypes: css.raw({

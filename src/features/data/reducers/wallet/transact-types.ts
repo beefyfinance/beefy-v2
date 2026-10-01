@@ -166,6 +166,7 @@ export type TransactState = {
   swapSlippage: number;
   inputAmounts: BigNumber[];
   inputMaxes: boolean[];
+  inputEnteredAmounts: (BigNumber | undefined)[];
   mode: TransactMode;
   step: TransactStep;
   depositSource: DepositSource;

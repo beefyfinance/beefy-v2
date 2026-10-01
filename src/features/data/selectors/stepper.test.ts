@@ -64,7 +64,7 @@ function makeReceipt(logs: Log[]): TransactionReceipt {
   return {
     from: USER,
     to: MINT_CONTRACT,
-    contractAddress: ZAP_CONTRACT,
+    contractAddress: null,
     status: 'success',
     logs,
   } as unknown as TransactionReceipt;
@@ -109,6 +109,7 @@ function makeState(walletActions: unknown): BeefyState {
           },
         },
       },
+      zaps: { zaps: { byChainId: { [CHAIN]: { chainId: CHAIN, router: ZAP_CONTRACT } } } },
       promos: {
         byId: {
           'test-boost': {
@@ -245,6 +246,12 @@ describe('stepper success selectors', () => {
       expect(returned).toHaveLength(1);
       expect(returned[0].token.symbol).toBe('DUST');
       expect(returned[0].amount.toString(10)).toBe('0.5');
+    });
+
+    it('ignores tokens returned by a contract other than the zap router', () => {
+      const logs = [...dustLogs(), tokenReturnedLog(BOOST_CONTRACT, REWARD_TOKEN, 10n ** 18n)];
+      const returned = selectZapReturned(zapState(logs));
+      expect(returned.map(amount => amount.token.symbol)).toEqual(['DUST']);
     });
 
     it('parses the logs once however many dispatches land while the modal is open', () => {

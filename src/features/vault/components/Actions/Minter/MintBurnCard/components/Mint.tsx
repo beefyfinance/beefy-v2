@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
@@ -35,11 +34,9 @@ import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
 import type { MinterCardParams } from '../../MinterCard.tsx';
 import { styles } from '../styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { css } from '@repo/styles/css';
 
 export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -134,28 +131,28 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   return (
     <CardContent css={styles.cardContent}>
-      <div className={classes.content}>
+      <div className={css(styles.content)}>
         {t(contentKey, {
           mintedToken: minter.mintedToken.symbol,
           depositToken: minter.depositToken.symbol,
         })}
       </div>
-      <div className={classes.boxReminder}>
-        <div className={classes.content}>
+      <div className={css(styles.boxReminder)}>
+        <div className={css(styles.content)}>
           {t(reminderKey, {
             mintedToken: minter.mintedToken.symbol,
             depositToken: minter.depositToken.symbol,
           })}
         </div>
       </div>
-      <div className={classes.inputContainer}>
-        <div className={classes.balances}>
-          <div className={classes.label}>
-            {t('from')} <span className={classes.value}>{depositToken.symbol}</span>
+      <div className={css(styles.inputContainer)}>
+        <div className={css(styles.balances)}>
+          <div className={css(styles.label)}>
+            {t('from')} <span className={css(styles.value)}>{depositToken.symbol}</span>
           </div>
-          <div className={classes.label}>
+          <div className={css(styles.label)}>
             {t('wallet')}{' '}
-            <span className={classes.value}>
+            <span className={css(styles.value)}>
               {formatTokenDisplayCondensed(depositTokenBalance, depositToken.decimals)}{' '}
               {depositToken.symbol}
             </span>
@@ -175,19 +172,19 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           }
         />
       </div>
-      <div className={classes.customDivider}>
-        <div className={classes.line} />
+      <div className={css(styles.customDivider)}>
+        <div className={css(styles.line)} />
         <img alt="arrowDown" src={iconArrowDown} />
-        <div className={classes.line} />
+        <div className={css(styles.line)} />
       </div>
-      <div className={classes.inputContainer}>
-        <div className={classes.balances}>
-          <div className={classes.label}>
-            {t('to')} <span className={classes.value}>{mintedToken.symbol}</span>
+      <div className={css(styles.inputContainer)}>
+        <div className={css(styles.balances)}>
+          <div className={css(styles.label)}>
+            {t('to')} <span className={css(styles.value)}>{mintedToken.symbol}</span>
           </div>
-          <div className={classes.label}>
+          <div className={css(styles.label)}>
             {t('wallet')}
-            <span className={classes.value}>
+            <span className={css(styles.value)}>
               {formatTokenDisplayCondensed(mintedTokenBalance, mintedToken.decimals)}{' '}
               {mintedToken.symbol}
             </span>
@@ -206,18 +203,19 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       <>
         {isWalletConnected ?
           !isWalletOnVaultChain ?
-            <Button onClick={handleNetworkChange} className={classes.btn}>
+            <Button onClick={handleNetworkChange} borderless={true} css={styles.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
           : <Button
               disabled={formData.amount.isLessThanOrEqualTo(0) || isStepping}
               onClick={handleDeposit}
-              className={classes.btn}
+              borderless={true}
+              css={styles.btn}
             >
               {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
             </Button>
 
-        : <Button onClick={handleConnectWallet} className={classes.btn}>
+        : <Button onClick={handleConnectWallet} borderless={true} css={styles.btn}>
             {t('Network-ConnectWallet')}
           </Button>
         }

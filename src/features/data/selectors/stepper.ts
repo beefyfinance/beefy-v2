@@ -36,6 +36,7 @@ import {
 import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
+import { selectZapByChainId } from './zap.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
@@ -320,7 +321,7 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
 
   const tokenReturnedEvents = parseTokenReturnedEvents(receipt.logs);
 
-  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.contractAddress) {
+  if (!vaultId || !receipt || !tokenReturnedEvents) {
     return NO_TOKEN_AMOUNTS;
   }
 
@@ -333,7 +334,11 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
   );
 
   const vault = selectVaultById(state, vaultId);
-  const zapAddress = receipt.contractAddress.toLowerCase();
+  const zap = selectZapByChainId(state, vault.chainId);
+  if (!zap) {
+    return NO_TOKEN_AMOUNTS;
+  }
+  const zapAddress = zap.router.toLowerCase();
   const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {

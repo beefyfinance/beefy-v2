@@ -5,7 +5,7 @@ export const styles = {
     width: '100%',
     padding: '16px 24px',
     backgroundColor: 'background.content',
-    borderRadius: '8px',
+    borderRadius: '12px',
     display: 'grid',
     rowGap: '16px',
     mdOnly: {
