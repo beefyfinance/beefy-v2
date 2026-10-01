@@ -1,5 +1,246 @@
 [
   {
+    "id": "alandale-cow-robinhood-weth-shop-vault",
+    "name": "SHOP-WETH",
+    "type": "standard",
+    "token": "SHOP-WETH",
+    "tokenAddress": "0x530fa5699EB20be4D18BED24e57A6D0DEFdE218C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "earnContractAddress": "0xEBe70034de92614ebe06Cde98C12257f9397dC0e",
+    "earnedToken": "mooCowAlandaleRobinhoodSHOP-WETH",
+    "earnedTokenAddress": "0xEBe70034de92614ebe06Cde98C12257f9397dC0e",
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-weth-shop",
+    "status": "active",
+    "createdAt": 1790759158,
+    "platformId": "alandale",
+    "assets": ["SHOPrh", "WETH"],
+    "icons": ["SHOP", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "alandale-cow-robinhood-weth-shop-rp",
+    "name": "SHOP-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAlandaleRobinhoodSHOP-WETH",
+    "tokenAddress": "0x530fa5699EB20be4D18BED24e57A6D0DEFdE218C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "earnContractAddress": "0xf4976dC296c76ea73a65bCEC91BF7113Bb7300d3",
+    "earnedToken": "rCowAlandaleRobinhoodSHOP-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-weth-shop",
+    "status": "active",
+    "createdAt": 1786635001,
+    "platformId": "alandale",
+    "assets": ["SHOPrh", "WETH"],
+    "icons": ["SHOP", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "alandale-cow-robinhood-weth-shop",
+    "name": "SHOP-WETH",
+    "type": "cowcentrated",
+    "token": "SHOP-WETH alandale",
+    "tokenAddress": "0x74d6E6a1221B2aE5BB4EDefD230b621bbb7B235a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0xF53F66751B1Eff985311b693531E3290F600c410"
+    ],
+    "earnContractAddress": "0x530fa5699EB20be4D18BED24e57A6D0DEFdE218C",
+    "earnedToken": "cowAlandaleRobinhoodSHOP-WETH",
+    "earnedTokenAddress": "0x530fa5699EB20be4D18BED24e57A6D0DEFdE218C",
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-weth-shop",
+    "status": "active",
+    "createdAt": 1786635001,
+    "platformId": "beefy",
+    "feeTier": "0.50",
+    "tickSpacing": 60,
+    "assets": ["SHOPrh", "WETH"],
+    "icons": ["SHOP", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "alandale-cow-robinhood-usdg-net-vault",
+    "name": "NET-USDG",
+    "type": "standard",
+    "token": "NET-USDG",
+    "tokenAddress": "0xBC712b9726e6346E9C700Df14B2a6a558Efd222A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "earnContractAddress": "0x857b3971E8038a8f8E2C0Da797145447eFbf6b86",
+    "earnedToken": "mooCowAlandaleRobinhoodNET-USDG",
+    "earnedTokenAddress": "0x857b3971E8038a8f8E2C0Da797145447eFbf6b86",
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-usdg-net",
+    "status": "active",
+    "createdAt": 1790759158,
+    "platformId": "alandale",
+    "assets": ["NET", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "alandale-cow-robinhood-usdg-net-rp",
+    "name": "NET-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAlandaleRobinhoodNET-USDG",
+    "tokenAddress": "0xBC712b9726e6346E9C700Df14B2a6a558Efd222A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "earnContractAddress": "0xa9d7DAd97AAbEE16252D71C699892BE8A9cb8853",
+    "earnedToken": "rCowAlandaleRobinhoodNET-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-usdg-net",
+    "status": "active",
+    "createdAt": 1786635001,
+    "platformId": "alandale",
+    "assets": ["NET", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "alandale-cow-robinhood-usdg-net",
+    "name": "NET-USDG",
+    "type": "cowcentrated",
+    "token": "NET-USDG alandale",
+    "tokenAddress": "0x146a67CAa3Ff12cB019B2E46d5fb8a1bedDC18D3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "alandale",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xCA9c78Dd337A67F6e0077F65F5E9218719d30eDf"
+    ],
+    "earnContractAddress": "0xBC712b9726e6346E9C700Df14B2a6a558Efd222A",
+    "earnedToken": "cowAlandaleRobinhoodNET-USDG",
+    "earnedTokenAddress": "0xBC712b9726e6346E9C700Df14B2a6a558Efd222A",
+    "oracle": "lps",
+    "oracleId": "alandale-cow-robinhood-usdg-net",
+    "status": "active",
+    "createdAt": 1786635001,
+    "platformId": "beefy",
+    "feeTier": "0.50",
+    "tickSpacing": 60,
+    "assets": ["NET", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-usdg-be-rp",
     "name": "BE-USDG Reward Pool",
     "type": "gov",
@@ -920,7 +1161,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-net",
     "status": "active",
-    "createdAt": 1786523797,
+    "createdAt": 1786635000,
     "platformId": "up",
     "assets": ["NET", "USDG"],
     "risks": {
@@ -962,7 +1203,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-net",
     "status": "active",
-    "createdAt": 1790058637,
+    "createdAt": 1786635000,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
@@ -1983,7 +2224,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-spy",
     "status": "active",
-    "createdAt": 1789555196,
+    "createdAt": 1786635001,
     "platformId": "alandale",
     "assets": ["SPYrh", "WETH"],
     "icons": ["SPY", "WETH"],
@@ -2026,7 +2267,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-spy",
     "status": "active",
-    "createdAt": 1789555196,
+    "createdAt": 1786635001,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -2104,7 +2345,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-lute",
     "status": "active",
-    "createdAt": 1789554996,
+    "createdAt": 1786635001,
     "platformId": "alandale",
     "assets": ["LUTE", "USDG"],
     "risks": {
@@ -2146,7 +2387,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-lute",
     "status": "active",
-    "createdAt": 1789554996,
+    "createdAt": 1786635001,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -2223,7 +2464,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-lute",
     "status": "active",
-    "createdAt": 1789554910,
+    "createdAt": 1786635001,
     "platformId": "alandale",
     "assets": ["LUTE", "WETH"],
     "risks": {
@@ -2265,7 +2506,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-lute",
     "status": "active",
-    "createdAt": 1789554910,
+    "createdAt": 1786635001,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -2342,7 +2583,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-usdg",
     "status": "active",
-    "createdAt": 1789554885,
+    "createdAt": 1786635001,
     "platformId": "alandale",
     "assets": ["WETH", "USDG"],
     "risks": {
@@ -2384,7 +2625,7 @@
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-usdg",
     "status": "active",
-    "createdAt": 1789554885,
+    "createdAt": 1786635001,
     "platformId": "beefy",
     "feeTier": "0.004",
     "tickSpacing": 10,
@@ -4732,7 +4973,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-intc",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "up",
     "assets": ["INTCrh", "USDG"],
     "icons": ["INTC", "USDG"],
@@ -4773,7 +5014,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-intc",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "up",
     "assets": ["INTCrh", "USDG"],
     "icons": ["INTC", "USDG"],
@@ -4816,7 +5057,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-intc",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -4854,7 +5095,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "up",
     "assets": ["NVDArh", "USDG"],
     "icons": ["NVDA", "USDG"],
@@ -4895,7 +5136,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "up",
     "assets": ["NVDArh", "USDG"],
     "icons": ["NVDA", "USDG"],
@@ -4938,7 +5179,7 @@
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
     "status": "active",
-    "createdAt": 1786635778,
+    "createdAt": 1786635000,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 60,
