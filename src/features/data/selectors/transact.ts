@@ -174,6 +174,9 @@ export const selectTransactInputMaxes = (state: BeefyState) => state.ui.transact
 export const selectTransactInputIndexAmount = (state: BeefyState, index: number) =>
   state.ui.transact.inputAmounts[index] || BIG_ZERO;
 
+export const selectTransactInputIndexEnteredAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.inputEnteredAmounts[index];
+
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
 export const selectTransactSelectedSelectionIdOrUndefined = (state: BeefyState) =>
