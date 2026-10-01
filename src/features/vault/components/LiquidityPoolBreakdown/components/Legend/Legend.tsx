@@ -6,6 +6,7 @@ import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { formatLargePercent } from '../../../../../../helpers/format.ts';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
+import { getTokenAssetId } from '../../../../../../helpers/singleAssetSrc.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -33,7 +34,7 @@ export const Legend = memo(function Legend({
           <AssetsImage
             size={24}
             chainId={chainId}
-            assetSymbols={[asset.symbol]}
+            assetSymbols={[getTokenAssetId(asset)]}
             css={styles.icon}
           />
           {formatLargePercent(asset[percentKey])}

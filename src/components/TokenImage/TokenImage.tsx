@@ -15,7 +15,7 @@ import {
   selectVaultById,
 } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
-import { singleAssetExists } from '../../helpers/singleAssetSrc.ts';
+import { getTokenAssetId, singleAssetExists } from '../../helpers/singleAssetSrc.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import type { AssetsImageProps } from '../AssetsImage/AssetsImage.tsx';
 import {
@@ -95,9 +95,10 @@ const selectAssetsForToken = (
     return selectAssetsForVault(state, { vault });
   }
 
-  // image exists for symbol -> use single asset icon
-  if (singleAssetExists(token.symbol, token.chainId)) {
-    return selectChainAssetsForSymbol(state, token.chainId, token.symbol);
+  // image exists for token id or symbol -> use single asset icon
+  const assetId = getTokenAssetId(token);
+  if (singleAssetExists(assetId, token.chainId)) {
+    return selectChainAssetsForSymbol(state, token.chainId, assetId);
   }
 
   // LP token for a vault -> use vault icon
@@ -127,7 +128,7 @@ const selectAssetsForTokens = (
 
   return {
     chainId: tokens[0].chainId,
-    assetSymbols: tokens.map(token => token.symbol),
+    assetSymbols: tokens.map(getTokenAssetId),
   };
 };
 
@@ -169,7 +170,7 @@ type CommonTokenImageProps = {
   css?: CssStyles;
 };
 
-type Token = Pick<TokenEntity, 'address' | 'symbol' | 'chainId'>;
+type Token = Pick<TokenEntity, 'address' | 'symbol' | 'chainId'> & Partial<Pick<TokenEntity, 'id'>>;
 
 export type TokenImageProps = AddressChainIdOptions & CommonTokenImageProps;
 export const TokenImage = memo(function TokenImage({
