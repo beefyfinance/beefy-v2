@@ -23,4 +23,5 @@ export const tenderlyChains = new Set<ChainId>([
   'monad',
   'megaeth',
   'arc',
+  'robinhood',
 ]);
