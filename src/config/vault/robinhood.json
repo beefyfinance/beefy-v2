@@ -18,7 +18,6 @@
     "createdAt": 1790780202,
     "platformId": "uniswap",
     "assets": ["NETrh", "USDG"],
-    "icons": ["NETrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -60,7 +59,6 @@
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["NETrh", "USDG"],
-    "icons": ["NETrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,

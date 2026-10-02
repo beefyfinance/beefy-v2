@@ -7,7 +7,6 @@ import type { BreakdownMode, CalculatedBreakdownData } from '../../types.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
-import { getTokenAssetId } from '../../../../../../helpers/singleAssetSrc.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -42,7 +41,7 @@ export const BreakdownTable = memo(function BreakdownTable({
               size={32}
               css={styles.icon}
               chainId={chainId}
-              assetSymbols={[getTokenAssetId(asset)]}
+              assetSymbols={[asset.symbol]}
             />{' '}
             {asset.symbol}
           </div>
@@ -62,7 +61,7 @@ export const BreakdownTable = memo(function BreakdownTable({
             size={32}
             css={styles.icon}
             chainId={chainId}
-            assetSymbols={assets.map(getTokenAssetId)}
+            assetSymbols={assets.map(asset => asset.symbol)}
           />{' '}
           LP
         </div>

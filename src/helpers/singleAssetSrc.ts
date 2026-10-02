@@ -22,10 +22,3 @@ export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEnti
 export function singleAssetExists(symbol: TokenEntity['id'], chainId?: ChainEntity['id']): boolean {
   return getSingleAssetSrc(symbol, chainId) !== undefined;
 }
-
-/** Prefer the unique token id so tokens sharing a ticker can have different images. */
-export function getTokenAssetId(
-  token: Pick<TokenEntity, 'symbol' | 'chainId'> & Partial<Pick<TokenEntity, 'id'>>
-): string {
-  return token.id && singleAssetExists(token.id, token.chainId) ? token.id : token.symbol;
-}

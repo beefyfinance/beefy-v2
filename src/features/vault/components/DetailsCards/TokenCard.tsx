@@ -5,7 +5,6 @@ import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx'
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
 import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange.tsx';
 import { explorerTokenUrl } from '../../../../helpers/url.ts';
-import { getTokenAssetId } from '../../../../helpers/singleAssetSrc.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import Code from '../../../../images/icons/mui/Code.svg?react';
 import Link from '../../../../images/icons/mui/Link.svg?react';
@@ -46,7 +45,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
     <Container>
       <TitleContainer>
         <AssetIconSymbol>
-          <AssetsImage assetSymbols={[getTokenAssetId(token)]} chainId={chain.id} size={24} />
+          <AssetsImage assetSymbols={[token.symbol]} chainId={chain.id} size={24} />
           <AssetSymbol>{token.symbol}</AssetSymbol>
         </AssetIconSymbol>
         <Links>
