@@ -111,12 +111,17 @@ const TotalApyTooltipContent = memo(function TotalApyTooltipContent({
             value: rates[key] ?? '?',
           }));
 
-    items.push({
+    // only the streams paying right now; a vault paying nothing keeps its template, or the tooltip
+    // would be a lone total repeating the stat above it
+    const paying = items.filter(item => item.value !== ZERO_RATE);
+    const shown = paying.length ? paying : items;
+
+    shown.push({
       label: labels[totalKey],
       value: isBoosted ? (rates[boostedTotalKey] ?? '?') : rates[totalKey],
     });
 
-    return items;
+    return shown;
   }, [vault, isBoosted, rates, type, rewards]);
 
   return (
