@@ -211,7 +211,7 @@ const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
 
   return (
     <div className={classes.breakLp}>
-      <AssetsImage assetSymbols={tokens.map(t => t.symbol)} chainId={tokens[0].chainId} size={16} />
+      <AssetsImage assets={tokens} size={16} />
     </div>
   );
 });

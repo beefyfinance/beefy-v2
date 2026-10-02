@@ -5,10 +5,10 @@ import {
   transactSetStakeIntoBoost,
   transactSwitchMode,
 } from '../../../../../data/actions/transact.ts';
-import type { PromoReward } from '../../../../../data/entities/promo.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectUserVaultBalanceInDepositToken } from '../../../../../data/selectors/balance.ts';
+import type { UnifiedRewardToken } from '../../../../../data/selectors/rewards.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import {
   selectTransactBoostForStaking,
@@ -20,7 +20,7 @@ import { DepositTokensNotice } from './DepositTokensNotice.tsx';
 
 export type BoostDepositNoticeProps = {
   vaultId: VaultEntity['id'];
-  rewardTokens: PromoReward[];
+  rewardTokens: UnifiedRewardToken[];
 };
 
 /**

@@ -1,4 +1,3 @@
-import type { ChainEntity } from '../../../data/entities/chain.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import type BigNumber from 'bignumber.js';
 import type { UserLpBreakdownBalanceAsset } from '../../../data/selectors/balance-types.ts';
@@ -12,7 +11,6 @@ export type CalculatedAsset = UserLpBreakdownBalanceAsset & {
 };
 
 export type CalculatedBreakdownData = {
-  chainId: ChainEntity['id'];
   token: TokenEntity;
   assets: CalculatedAsset[];
   totalAmount: BigNumber;

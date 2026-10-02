@@ -4,6 +4,7 @@ import { fromUnixTime, sub } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { areSameSingleAssets, type SingleAsset } from '../../../helpers/singleAssetSrc.ts';
 import {
   getDataApiBucket,
   getDataApiBucketsLongerThan,
@@ -540,19 +541,34 @@ export const selectVaultTokenNameWords = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultIcons = createCachedSelector(
+export const selectVaultTokenImageAssets = createCachedSelector(
   selectVaultById,
   (state: BeefyState) => state.entities.tokens.byChainId,
-  (vault, tokensByChainId) => {
-    if (vault.icons?.length) {
-      return vault.icons;
-    }
-
-    return vault.assetIds.map(assetId =>
-      resolveAssetSymbol(tokensByChainId, vault.chainId, assetId)
-    );
+  ({ chainId, assetIds }, tokensByChainId): SingleAsset[] =>
+    assetIds.map(assetId => {
+      const token = resolveAssetToken(tokensByChainId, chainId, assetId);
+      return token ?
+          { id: token.id, symbol: token.symbol, chainId }
+        : { id: assetId, symbol: assetId, chainId };
+    }),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: areSameSingleAssets,
+    },
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+const selectVaultIconImageAssets = createCachedSelector(
+  selectVaultById,
+  ({ chainId, icons }): SingleAsset[] | undefined =>
+    icons?.length ? icons.map(icon => ({ symbol: icon, chainId })) : undefined
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultImageAssets = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): SingleAsset[] =>
+  selectVaultIconImageAssets(state, vaultId) ?? selectVaultTokenImageAssets(state, vaultId);
 
 export const selectCurrentCowcentratedRangesByOracleId = (
   state: BeefyState,
