@@ -114,14 +114,3 @@ export function areArraysEqual<T>(
   }
   return true;
 }
-
-export function getMostCommon<T extends string>(arr: T[]): T {
-  if (!isNonEmptyArray(arr)) {
-    throw new Error('Array is empty');
-  }
-  const counts = arr.reduce(
-    (acc, val) => acc.set(val, (acc.get(val) || 0) + 1),
-    new Map<T, number>()
-  );
-  return [...counts.entries()].reduce((a, b) => (b[1] > a[1] ? b : a))[0];
-}

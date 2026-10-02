@@ -1,6 +1,6 @@
 {
-  "uniswap-cow-base-usdc-basecat-rp": true,
-  "uniswap-cow-robinhood-weth-moo-rp": true,
-  "pancake-cow-bsc-usdt-4stock-rp": true,
-  "aerodrome-cow-base-weth-drv-vault": true
+  "aerodrome-cow-base-usdc-cbzec-vault": true,
+  "aerodrome-cow-base-usdc-cbhype-vault": true,
+  "uniswap-cow-robinhood-weth-musebook-rp": true,
+  "uniswap-cow-robinhood-weth-ai-rp": true
 }

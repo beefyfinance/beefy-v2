@@ -336,7 +336,8 @@ const CardDivider = styled('hr', {
     height: '1px',
     background: 'background.border',
     border: 'none',
-    margin: '0',
+    // divider owns the spacing around it, so card content needs no vertical padding
+    margin: '4px 0',
   },
 });
 

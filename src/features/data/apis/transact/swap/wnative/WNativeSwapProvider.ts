@@ -4,14 +4,18 @@ import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { isTokenNative } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
-import { selectAllChainIds } from '../../../../selectors/chains.ts';
+import {
+  selectAllChainIds,
+  selectIsChainNativeSharedWithWrapped,
+} from '../../../../selectors/chains.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
+  selectSharedBalanceWrappedToken,
 } from '../../../../selectors/tokens.ts';
 import type { BeefyState } from '../../../../store/types.ts';
 import { ZERO_FEE } from '../../helpers/quotes.ts';
-import { nativeAndWrappedAreSame } from '../../helpers/tokens.ts';
+import { floorToSharedPrecision } from '../../helpers/tokens.ts';
 import { getInsertIndex } from '../../helpers/zap.ts';
 import type {
   ISwapProvider,
@@ -26,14 +30,19 @@ export class WNativeSwapProvider implements ISwapProvider {
     return 'wnative';
   }
 
-  async fetchQuote(request: QuoteRequest, _state: BeefyState): Promise<QuoteResponse> {
-    // 1:1
+  async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
+    const { fromToken, fromAmount } = request;
     return {
       providerId: this.getId(),
-      fromToken: request.fromToken,
-      fromAmount: request.fromAmount,
+      fromToken,
+      fromAmount,
       toToken: request.toToken,
-      toAmount: request.fromAmount,
+      // 1:1, but where native and wnative are one balance (arc) the wnative view holds fewer decimals
+      toAmount: floorToSharedPrecision(
+        fromAmount,
+        fromToken,
+        selectSharedBalanceWrappedToken(state, fromToken.chainId)
+      ),
       fee: ZERO_FEE,
     };
   }
@@ -41,6 +50,10 @@ export class WNativeSwapProvider implements ISwapProvider {
   async fetchSwap(request: SwapRequest, state: BeefyState): Promise<SwapResponse> {
     const { quote } = request;
     const chainId = quote.fromToken.chainId;
+    if (selectIsChainNativeSharedWithWrapped(state, chainId)) {
+      // fetchZapAggregatorSwap moves these call-less; the erc20 view has no deposit()/withdraw()
+      throw new Error(`No wrap/unwrap call on ${chainId}`);
+    }
     const wnative = selectChainWrappedNativeToken(state, chainId);
     const inputIsNative = isTokenNative(quote.fromToken);
     const fromAmountWei = toWeiString(quote.fromAmount, quote.fromToken.decimals);
@@ -68,10 +81,6 @@ export class WNativeSwapProvider implements ISwapProvider {
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {
-    if (nativeAndWrappedAreSame(chainId)) {
-      return [];
-    }
-
     const native = selectChainNativeToken(state, chainId);
     const wnative = selectChainWrappedNativeToken(state, chainId);
     return [native, wnative];

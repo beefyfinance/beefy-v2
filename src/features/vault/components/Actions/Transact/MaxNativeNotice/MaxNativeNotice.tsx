@@ -1,9 +1,9 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import type { TransactQuote } from '../../../../../data/apis/transact/transact-types.ts';
-import { isTokenNative } from '../../../../../data/entities/token.ts';
 import { type CssStyles } from '@repo/styles/css';
+import { useMaxGasTokenSymbol } from '../hooks/useActionGates.ts';
 
 export type MaxNativeProps = {
   quote: TransactQuote;
@@ -14,18 +14,15 @@ export const MaxNativeNotice = memo(function MaxNativeNotice({
   css: cssProp,
 }: MaxNativeProps) {
   const { t } = useTranslation();
-  const maxNativeInputs = useMemo(() => {
-    return quote.inputs.filter(tokenAmount => tokenAmount.max && isTokenNative(tokenAmount.token));
-  }, [quote]);
-  const isMaxNative = maxNativeInputs.length > 0;
+  const maxGasTokenSymbol = useMaxGasTokenSymbol(quote);
 
-  if (!isMaxNative) {
+  if (!maxGasTokenSymbol) {
     return null;
   }
 
   return (
     <AlertError css={cssProp}>
-      <p>{t('Transact-Notice-MaxNative', { token: maxNativeInputs[0].token.symbol })}</p>
+      <p>{t('Transact-Notice-MaxNative', { token: maxGasTokenSymbol })}</p>
     </AlertError>
   );
 });

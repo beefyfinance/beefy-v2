@@ -1,37 +1,20 @@
 import { type CssStyles } from '@repo/styles/css';
 import BigNumber from 'bignumber.js';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
-import {
-  isVaultWithPricePerFullShare,
-  type VaultEntity,
-} from '../../../../../data/entities/vault.ts';
-import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenWithToken,
-  selectUserVaultBalanceInShareToken,
-} from '../../../../../data/selectors/balance.ts';
-import {
-  selectTokenByAddress,
-  selectTokenPriceByTokenOracleId,
-} from '../../../../../data/selectors/tokens.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
-import {
-  selectVaultByIdWithReceipt,
-  selectVaultPricePerFullShare,
-} from '../../../../../data/selectors/vaults.ts';
-import {
-  mooAmountToOracleAmount,
-  oracleAmountToMooAmount,
-} from '../../../../../data/utils/ppfs.ts';
 import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../AmountInputWithSlider/AmountInputWithSlider.tsx';
 import { TokenSelectButton } from '../TokenSelectButton/TokenSelectButton.tsx';
+import { useVaultSharesAmountInput } from '../hooks/useVaultSharesAmountInput.ts';
 
 export type WithdrawTokenAmountInputProps = {
   css?: CssStyles;
@@ -96,55 +79,11 @@ const VaultSourceWithdrawTokenAmountInput = memo(function VaultSourceWithdrawTok
   vaultId,
   css: cssProp,
 }: VaultSourceProps) {
-  const dispatch = useAppDispatch();
-  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, vaultId));
-  const receiptToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
-  );
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
-  const ppfs = useAppSelector(state => selectVaultPricePerFullShare(state, vaultId));
-  const shareBalance = useAppSelector(state => selectUserVaultBalanceInShareToken(state, vaultId));
-  const depositBalance = useAppSelector(state =>
-    selectUserVaultBalanceInDepositToken(state, vaultId)
-  );
-  const storeAmount = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
-  const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
-  );
-
-  const value = useMemo(
-    () =>
-      isVaultWithPricePerFullShare(vault) ?
-        mooAmountToOracleAmount(receiptToken, depositToken, ppfs, storeAmount)
-      : storeAmount,
-    [vault, receiptToken, depositToken, ppfs, storeAmount]
-  );
-
-  const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
-    (typedValue, isMax) => {
-      let amount: BigNumber;
-      if (isMax) {
-        amount = shareBalance;
-      } else if (isVaultWithPricePerFullShare(vault)) {
-        amount = oracleAmountToMooAmount(receiptToken, depositToken, ppfs, typedValue);
-      } else {
-        amount = typedValue.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-      }
-      dispatch(transactSetInputAmount({ index: 0, amount, max: isMax }));
-    },
-    [dispatch, vault, receiptToken, depositToken, ppfs, shareBalance]
-  );
-
+  const inputProps = useVaultSharesAmountInput(0, vaultId);
   return (
     <AmountInputWithSlider
       css={cssProp}
-      maxValue={depositBalance}
-      onChange={handleChange}
-      value={value}
-      price={price}
-      tokenDecimals={depositToken.decimals}
+      {...inputProps}
       endAdornment={<TokenSelectButton index={0} />}
     />
   );

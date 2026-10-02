@@ -2,7 +2,9 @@ import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { slipBy } from '../helpers/amounts.ts';
+import { floorToSharedPrecision, isSameBalancePair } from '../helpers/tokens.ts';
 import { getTokenAddress } from '../helpers/zap.ts';
+import { selectSharedBalanceWrappedToken } from '../../../selectors/tokens.ts';
 import { QuoteChangedError } from '../strategies/error.ts';
 import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
@@ -25,7 +27,20 @@ export async function fetchZapAggregatorSwap(
     throw new Error(`Invalid swap request`);
   }
 
+  const input = first(inputs)!;
   const output = first(outputs)!; // we checked length above
+
+  const sharedWnative = selectSharedBalanceWrappedToken(state, quote.fromToken.chainId);
+  if (isSameBalancePair(quote.fromToken, quote.toToken, sharedWnative)) {
+    // one balance: nothing to call, the next step's balance read already sees it
+    const moved = [
+      {
+        token: quote.toToken,
+        amount: floorToSharedPrecision(input.amount, input.token, sharedWnative),
+      },
+    ];
+    return { inputs, outputs: moved, minOutputs: moved, returned: [], zaps: [] };
+  }
 
   const swap = await swapAggregator.fetchSwap(
     request.providerId,

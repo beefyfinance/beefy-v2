@@ -217,7 +217,8 @@ type ChainId =
   | 'plasma'
   | 'monad'
   | 'megaeth'
-  | 'robinhood';
+  | 'robinhood'
+  | 'arc';
 
 export type ChainConfig = {
   id: ChainId;
@@ -236,6 +237,7 @@ export type ChainConfig = {
     symbol: string;
     oracleId: string;
     decimals: number;
+    balanceSharedWithWrapped?: boolean;
   };
   gas: GasConfig;
   new?: boolean;

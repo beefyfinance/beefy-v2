@@ -15,6 +15,8 @@ import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import {
   type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
+  isZapQuoteStepSwap,
+  isZapQuoteStepSwapAggregator,
   type TokenAmount,
   type ZapQuote,
   type ZapQuoteStep,
@@ -39,7 +41,10 @@ import {
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
-import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import {
+  selectChainById,
+  selectChainIdsNativeSharedWithWrapped,
+} from '../../../../../data/selectors/chains.ts';
 import {
   selectCrossChainRecoveryQuote,
   selectCrossChainRecoveryQuoteOpId,
@@ -58,6 +63,19 @@ import CheckmarkIcon from '../../../../../../images/icons/checkmark.svg?react';
 import PlayIcon from '../../../../../../images/icons/play.svg?react';
 
 export type StepStatusState = 'list' | 'finished' | 'inProgress' | 'notStarted' | 'failed';
+
+function isDisplayedStep(step: ZapQuoteStep, sharedChainIds: Set<ChainEntity['id']>): boolean {
+  if (step.type === 'fee' || step.type === 'unused') {
+    return false;
+  }
+  // native <-> wnative where they are one balance (arc) is a call-less bookkeeping step
+  return !(
+    isZapQuoteStepSwap(step) &&
+    isZapQuoteStepSwapAggregator(step) &&
+    step.providerId === 'wnative' &&
+    sharedChainIds.has(step.fromToken.chainId)
+  );
+}
 
 function getStepChainId(step: ZapQuoteStep): ChainEntity['id'] | undefined {
   switch (step.type) {
@@ -623,18 +641,17 @@ export const ZapRoute = memo(function ZapRoute({
     stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
+  const sharedChainIds = useAppSelector(selectChainIdsNativeSharedWithWrapped);
 
   const { effectiveSteps, bridgeStepAbsoluteIndex } = useMemo(() => {
-    const displaySteps = quote.steps.filter(s => s.type !== 'fee' && s.type !== 'unused');
+    const displaySteps = quote.steps.filter(s => isDisplayedStep(s, sharedChainIds));
     const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
       pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
-      const recoverySteps = recoveryQuote.steps.filter(
-        s => s.type !== 'fee' && s.type !== 'unused'
-      );
+      const recoverySteps = recoveryQuote.steps.filter(s => isDisplayedStep(s, sharedChainIds));
       return {
         effectiveSteps: [...preBridgeSteps, ...recoverySteps],
         bridgeStepAbsoluteIndex: absoluteBridgeIdx,
@@ -642,7 +659,14 @@ export const ZapRoute = memo(function ZapRoute({
     }
 
     return { effectiveSteps: displaySteps, bridgeStepAbsoluteIndex: absoluteBridgeIdx };
-  }, [quote.steps, isRecovery, recoveryQuote, recoveryQuoteMatchesOp, pendingAllowances.length]);
+  }, [
+    quote.steps,
+    isRecovery,
+    recoveryQuote,
+    recoveryQuoteMatchesOp,
+    pendingAllowances.length,
+    sharedChainIds,
+  ]);
 
   const approvalCount = pendingAllowances.length;
   const totalSteps = approvalCount + effectiveSteps.length;

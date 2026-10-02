@@ -261,7 +261,7 @@ export const promosRecalculatePinned = createAppAsyncThunk<FulfilledVaultsPinned
         }
       }
 
-      const limited = limitIds(Array.from(matching), config.limit);
+      const limited = limitIds(Array.from(matching), config.limit, config.period);
       for (const id of limited) {
         byId[id] = true;
       }

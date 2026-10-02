@@ -1,3 +1,5 @@
+import { decodeFunctionData, type Hex } from 'viem';
+import { OneInchAggregationRouterV6Abi } from '../../../../../../config/abi/OneInchAggregationRouterV6Abi.ts';
 import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
@@ -70,13 +72,15 @@ export class OneInchSwapProvider implements ISwapProvider {
       throw new Error(`No one-inch aggregator config found for chain ${chain.id}`);
     }
 
+    // 1inch re-quotes on /swap, so ask for the min amount based on original quote rather than slippage%
+    const minReturn = slipBy(quote.toAmount, slippage, quote.toToken.decimals);
     const api = await getOneInchApi(chain);
     const swap = await api.getSwap({
       from: fromAddress,
       src: this.getTokenAddress(quote.fromToken),
       dst: this.getTokenAddress(quote.toToken),
       amount: toWeiString(quote.fromAmount, quote.fromToken.decimals),
-      slippage: request.slippage * 100, // convert to % (0.01 -> 1%)
+      minReturn: toWeiString(minReturn, quote.toToken.decimals),
       disableEstimate: true,
       origin: fromAddress,
       ...(config.excludedSources?.length ?
@@ -84,17 +88,24 @@ export class OneInchSwapProvider implements ISwapProvider {
       : {}),
     });
 
+    const { args } = decodeFunctionData({
+      abi: OneInchAggregationRouterV6Abi,
+      data: swap.tx.data as Hex,
+    });
+    const toAmountMin = fromWei(args[1].minReturnAmount, quote.toToken.decimals);
+    if (toAmountMin.lt(minReturn)) {
+      throw new Error(
+        `one-inch swap minimum ${toAmountMin.toString(10)} is below the requested ${minReturn.toString(10)}`
+      );
+    }
+
     return {
       providerId: this.getId(),
       fromToken: quote.fromToken,
       fromAmount: quote.fromAmount,
       toToken: quote.toToken,
       toAmount: fromWei(swap.dstAmount, quote.toToken.decimals),
-      toAmountMin: slipBy(
-        fromWei(swap.dstAmount, quote.toToken.decimals),
-        slippage,
-        quote.toToken.decimals
-      ),
+      toAmountMin,
       tx: {
         fromAddress: swap.tx.from,
         toAddress: swap.tx.to,

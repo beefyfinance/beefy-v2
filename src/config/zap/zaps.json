@@ -243,5 +243,12 @@
     "manager": "0x057dD7686F9EFD62b261655D178d088190cF08Ef",
     "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
     "feeBps": 5
+  },
+  {
+    "chainId": "arc",
+    "router": "0xaEFB7C930b9181A31a0CDF0409375b78C059395C",
+    "manager": "0xe63f735bE6296ff496B64A34E342A406C99AD122",
+    "feeRecipient": "0xA55e75C4815Ff39eFD76C257857441d9FD99b45b",
+    "feeBps": 5
   }
 ]

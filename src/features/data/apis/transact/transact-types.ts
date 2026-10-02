@@ -386,6 +386,7 @@ export type VaultComposerWithdrawOption = ZapBaseWithdrawOption & {
 
 export type RewardPoolToVaultDepositOption = ZapBaseDepositOption & {
   strategyId: 'reward-pool-to-vault';
+  srcVaultId: VaultEntity['id'];
 };
 
 export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {

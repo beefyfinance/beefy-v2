@@ -45,7 +45,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
     <Container>
       <TitleContainer>
         <AssetIconSymbol>
-          <AssetsImage assetSymbols={[token.symbol]} chainId={chain.id} size={24} />
+          <AssetsImage assets={[token]} size={24} />
           <AssetSymbol>{token.symbol}</AssetSymbol>
         </AssetIconSymbol>
         <Links>

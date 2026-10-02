@@ -21,12 +21,7 @@ export const ChartWithLegend = memo(function ChartWithLegend({
   return (
     <div className={classes.holder}>
       <Chart assets={breakdown.assets} isUnderlying={isUnderlying} />
-      <Legend
-        assets={breakdown.assets}
-        chainId={breakdown.chainId}
-        css={styles.legend}
-        isUnderlying={isUnderlying}
-      />
+      <Legend assets={breakdown.assets} css={styles.legend} isUnderlying={isUnderlying} />
     </div>
   );
 });

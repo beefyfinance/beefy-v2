@@ -1,7 +1,7 @@
 import type { Address } from 'viem';
 import type BigNumber from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
-import type { TokenEntity } from '../../entities/token.ts';
+import type { ContractRewardToken } from '../../entities/token.ts';
 import {
   type VaultCowcentrated,
   type VaultErc4626,
@@ -28,7 +28,7 @@ export interface GovVaultContractData {
 }
 
 export interface RewardContractData {
-  token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
+  token: ContractRewardToken;
   rewardRate: BigNumber;
   periodFinish: Date | undefined;
   index: number;

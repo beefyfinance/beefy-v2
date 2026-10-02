@@ -1,52 +1,139 @@
 import BigNumber from 'bignumber.js';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import type * as CCTPProvider from '../apis/transact/cctp/CCTPProvider.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { TransactMode } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
-import { selectClmBoostVaultId } from './transact.ts';
+import {
+  selectCrossChainSortedChains,
+  selectTransactDepositInputVaultId,
+  selectTransactDepositTokensForChainIdWithBalances,
+} from './transact.ts';
+import type * as WalletSelectors from './wallet.ts';
 
-const WALLET = '0x1234567890abcdef1234567890abcdef12345678';
-const ids = {
-  clm: 'clm',
-  pool: 'clm-rp',
-  vault: 'clm-vault',
-  pools: ['clm-rp'],
-  vaults: ['clm-vault'],
-};
+vi.mock('./wallet.ts', async importOriginal => ({
+  ...(await importOriginal<typeof WalletSelectors>()),
+  selectWalletAddress: () => USER,
+  selectWalletAddressIfKnown: () => USER,
+}));
+vi.mock('../apis/transact/cctp/CCTPProvider.ts', async importOriginal => ({
+  ...(await importOriginal<typeof CCTPProvider>()),
+  getSupportedChainIds: () => [],
+}));
 
-type Boosts = Record<string, Record<string, 'active' | 'prestake' | 'inactive'>>;
+const CHAIN = 'base';
+const USER = '0x1111111111111111111111111111111111111111';
+const CLM = '0x2222222222222222222222222222222222222222';
+const MOO_CLM = '0x3333333333333333333333333333333333333333';
+const RCLM = '0x4444444444444444444444444444444444444444';
 
-function makeState(boostsByVault: Boosts, stakedBoostIds: string[] = []): BeefyState {
-  const byVaultId: Record<string, unknown> = {};
-  const statusById: Record<string, string> = {};
-  for (const [vaultId, boosts] of Object.entries(boostsByVault)) {
-    byVaultId[vaultId] = { byType: { boost: { allIds: Object.keys(boosts) } } };
-    Object.assign(statusById, boosts);
-  }
+function erc20(address: string, symbol: string) {
+  return {
+    type: 'erc20',
+    id: symbol,
+    symbol,
+    oracleId: 'clm',
+    chainId: CHAIN,
+    address,
+    decimals: 18,
+  } as unknown as TokenEntity;
+}
+
+const mooClmToken = erc20(MOO_CLM, 'SOL-cbBTC mooCLM');
+const rclmToken = erc20(RCLM, 'SOL-cbBTC rCLM');
+
+function makeState(
+  pageVaultId: VaultEntity['id'],
+  input: TokenEntity,
+  srcVaultId: string,
+  mode: TransactMode = TransactMode.Deposit
+) {
+  const selectionId = `standard-${CHAIN}-${input.address}`;
   return {
     entities: {
+      chains: { byId: { [CHAIN]: { id: CHAIN, name: 'Base' } } },
+      tokens: {
+        byChainId: {
+          [CHAIN]: {
+            byAddress: {
+              [CLM]: erc20(CLM, 'SOL-cbBTC CLM'),
+              [MOO_CLM]: mooClmToken,
+              [RCLM]: rclmToken,
+            },
+          },
+        },
+        prices: { byOracleId: { clm: new BigNumber(2) } },
+      },
       vaults: {
         byId: {
-          clm: { id: 'clm', type: 'cowcentrated', cowcentratedIds: ids },
-          'clm-rp': { id: 'clm-rp', type: 'gov', subType: 'cowcentrated', cowcentratedIds: ids },
-          'clm-vault': {
-            id: 'clm-vault',
+          mooclm: {
+            id: 'mooclm',
             type: 'standard',
-            subType: 'cowcentrated',
-            cowcentratedIds: ids,
+            chainId: CHAIN,
+            contractAddress: MOO_CLM,
+            receiptTokenAddress: MOO_CLM,
+            depositTokenAddress: CLM,
           },
-          plain: { id: 'plain', type: 'standard' },
+          rclm: {
+            id: 'rclm',
+            type: 'gov',
+            contractType: 'multi',
+            chainId: CHAIN,
+            contractAddress: RCLM,
+            receiptTokenAddress: RCLM,
+            depositTokenAddress: CLM,
+          },
+        },
+        contractData: { byVaultId: { mooclm: { pricePerFullShare: new BigNumber(1.25) } } },
+        // the deposit-from-vault path resolves a selection's source vault by address
+        byChainId: {
+          [CHAIN]: {
+            byAddress: { [MOO_CLM.toLowerCase()]: 'mooclm', [RCLM.toLowerCase()]: 'rclm' },
+          },
         },
       },
-      promos: { byVaultId, statusById },
     },
     user: {
-      wallet: { address: WALLET },
       balance: {
         byAddress: {
-          [WALLET]: {
+          [USER]: {
             tokenAmount: {
-              byBoostId: Object.fromEntries(
-                stakedBoostIds.map(id => [id, { balance: new BigNumber(1), rewards: [] }])
-              ),
+              byChainId: {
+                [CHAIN]: {
+                  byTokenAddress: {
+                    [MOO_CLM]: { balance: new BigNumber(1_000) },
+                    [RCLM]: { balance: new BigNumber(400) },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    ui: {
+      transact: {
+        mode,
+        selectedSelectionId: selectionId,
+        selections: {
+          byChainId: { [CHAIN]: [selectionId] },
+          bySelectionId: {
+            [selectionId]: { id: selectionId, tokens: [input], order: 2, hideIfZeroBalance: true },
+          },
+        },
+        options: {
+          bySelectionId: { [selectionId]: ['move'] },
+          byOptionId: {
+            move: {
+              id: 'move',
+              strategyId: 'reward-pool-to-vault',
+              mode: TransactMode.Deposit,
+              vaultId: pageVaultId,
+              chainId: CHAIN,
+              selectionId,
+              inputs: [input],
+              srcVaultId,
             },
           },
         },
@@ -55,42 +142,39 @@ function makeState(boostsByVault: Boosts, stakedBoostIds: string[] = []): BeefyS
   } as unknown as BeefyState;
 }
 
-describe('selectClmBoostVaultId', () => {
-  // the connected-wallet lookup reads a view-as override from the URL
-  beforeAll(() => {
-    vi.stubGlobal('window', { location: { search: '', hostname: 'localhost' } });
+describe('transact selections holding a vault position', () => {
+  it('lists vault shares as the vault position in the deposit token', () => {
+    const state = makeState('rclm', mooClmToken, 'mooclm');
+    const [row] = selectTransactDepositTokensForChainIdWithBalances(state, CHAIN, 'rclm');
+
+    expect(row.balance?.toString(10)).toBe('1250');
+    expect(row.balanceValue.toString(10)).toBe('2500');
+    expect(row.decimals).toBe(18);
   });
 
-  it('finds the boosted side from the base CLM and from either wrapper', () => {
-    const state = makeState({ 'clm-vault': { b1: 'active' } });
-    expect(selectClmBoostVaultId(state, 'clm')).toBe('clm-vault');
-    expect(selectClmBoostVaultId(state, 'clm-rp')).toBe('clm-vault');
-    expect(selectClmBoostVaultId(state, 'clm-vault')).toBe('clm-vault');
+  it('lists reward pool shares as the reward pool position in the deposit token', () => {
+    const state = makeState('mooclm', rclmToken, 'rclm');
+    const [row] = selectTransactDepositTokensForChainIdWithBalances(state, CHAIN, 'mooclm');
+
+    expect(row.balance?.toString(10)).toBe('400');
+    expect(row.balanceValue.toString(10)).toBe('800');
   });
 
-  it('counts a prestake boost, and a pool-side boost', () => {
-    expect(selectClmBoostVaultId(makeState({ 'clm-rp': { b1: 'prestake' } }), 'clm')).toBe(
-      'clm-rp'
-    );
+  it('values the chain picker total and token by the vault position', () => {
+    const state = makeState('rclm', mooClmToken, 'mooclm');
+    const [chain] = selectCrossChainSortedChains(state, 'rclm');
+
+    expect(chain.balanceUsd.toString(10)).toBe('2500');
+    expect(chain.tokens.map(token => token.balanceUsd.toString(10))).toEqual(['2500']);
   });
 
-  it('keeps an ended boost only while the user is still staked in it', () => {
-    expect(selectClmBoostVaultId(makeState({ 'clm-vault': { b1: 'inactive' } }), 'clm')).toBe(
-      undefined
-    );
-    expect(
-      selectClmBoostVaultId(makeState({ 'clm-vault': { b1: 'inactive' } }, ['b1']), 'clm')
-    ).toBe('clm-vault');
+  it('reads the selected move input as a position in its source vault', () => {
+    const state = makeState('rclm', mooClmToken, 'mooclm');
+    expect(selectTransactDepositInputVaultId(state)).toBe('mooclm');
   });
 
-  it('prefers a live boost over an ended one still staked on the other side', () => {
-    const state = makeState({ 'clm-rp': { old: 'inactive' }, 'clm-vault': { live: 'active' } }, [
-      'old',
-    ]);
-    expect(selectClmBoostVaultId(state, 'clm')).toBe('clm-vault');
-  });
-
-  it('is undefined for a vault outside any CLM', () => {
-    expect(selectClmBoostVaultId(makeState({ plain: { b1: 'active' } }), 'plain')).toBe(undefined);
+  it('does not read a vault position while on the withdraw tab', () => {
+    const state = makeState('rclm', mooClmToken, 'mooclm', TransactMode.Withdraw);
+    expect(selectTransactDepositInputVaultId(state)).toBeUndefined();
   });
 });

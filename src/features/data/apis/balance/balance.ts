@@ -1,6 +1,6 @@
 import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
-import { chunk, partition, pick } from 'lodash-es';
+import { chunk, partition } from 'lodash-es';
 import { type PublicClient } from 'viem';
 import { readContract } from 'viem/actions';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
@@ -9,7 +9,13 @@ import { BIG_ZERO, fromWei, isFiniteBigNumber } from '../../../../helpers/big-nu
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  pickContractRewardToken,
+  sharedPrecisionDecimals,
+} from '../../entities/token.ts';
 import {
   isErc4626AsyncWithdrawVault,
   isGovVaultSingle,
@@ -23,7 +29,11 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance.ts';
-import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import {
+  selectChainNativeToken,
+  selectSharedBalanceWrappedTokenIfLoaded,
+  selectTokenByAddress,
+} from '../../selectors/tokens.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags.ts';
@@ -62,10 +72,16 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize(this.chain.id);
 
+    // arc: native and wnative are one balance, stored once under the erc20 view
+    const sameBalanceWNative = selectSharedBalanceWrappedTokenIfLoaded(state, this.chain.id);
+    let sameBalanceWanted = false;
+
     const nativeTokens: TokenNative[] = [];
     const erc20Tokens: TokenErc20[] = [];
     for (const token of tokens) {
-      if (isTokenErc20(token)) {
+      if (sameBalanceWNative && isTokenEqual(token, sameBalanceWNative)) {
+        sameBalanceWanted = true;
+      } else if (isTokenErc20(token)) {
         erc20Tokens.push(token);
       } else if (isTokenNative(token)) {
         nativeTokens.push(token);
@@ -178,7 +194,17 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       });
     });
 
-    if (nativeTokens.length > 0) {
+    if (sameBalanceWNative && (sameBalanceWanted || nativeTokens.length > 0)) {
+      const native = nativeTokens[0] || selectChainNativeToken(state, this.chain.id);
+      const { amount } = this.nativeTokenFormatter(nativeResults, native);
+      res.tokens.push({
+        tokenAddress: sameBalanceWNative.address,
+        amount: amount.decimalPlaces(
+          sharedPrecisionDecimals(native, sameBalanceWNative),
+          BigNumber.ROUND_FLOOR
+        ),
+      });
+    } else if (nativeTokens.length > 0) {
       res.tokens.push(this.nativeTokenFormatter(nativeResults, nativeTokens[0]));
     }
 
@@ -275,7 +301,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       balance: balance,
       rewards: [
         {
-          token: pick(rewardsToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardsToken),
           amount: rewards,
           index: 0,
         },
@@ -297,7 +323,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const earnedToken = selectTokenByAddress(state, firstReward.chainId, firstReward.address);
     const balance = fromWei(result.balance.toString(10), balanceToken.decimals);
     const reward = {
-      token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+      token: pickContractRewardToken(earnedToken),
       amount: fromWei(result.rewards.toString(10), earnedToken.decimals),
       index: 0,
     };
@@ -333,7 +359,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
-          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardToken),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -368,7 +394,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
-          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(rewardToken),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -384,7 +410,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       for (const reward of missing) {
         const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
         rewards.push({
-          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(earnedToken),
           amount: BIG_ZERO,
           index: -1,
         });

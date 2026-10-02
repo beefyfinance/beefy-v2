@@ -277,14 +277,6 @@
     "blockedVaults": []
   },
   {
-    "id": "one-inch-robinhood",
-    "type": "one-inch",
-    "chainId": "robinhood",
-    "priorityTokens": ["ETH", "WETH", "USDG"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "one-inch-monad",
     "type": "one-inch",
     "chainId": "monad",
@@ -297,6 +289,22 @@
     "type": "one-inch",
     "chainId": "hyperevm",
     "priorityTokens": ["WHYPE", "HYPE", "USDC", "USDT0", "UBTC", "kHYPE"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "kyber-arc",
+    "type": "kyber",
+    "chainId": "arc",
+    "priorityTokens": ["USDC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "one-inch-arc",
+    "type": "one-inch",
+    "chainId": "arc",
+    "priorityTokens": ["USDC"],
     "blockedTokens": [],
     "blockedVaults": []
   }

@@ -60,8 +60,7 @@ type BaseActiveData = {
 
 type TokenData = BaseActiveData & {
   type: TokenExposureTooltipProps['type'];
-  chainId: TokenExposurePayloadData['chainId'];
-  symbols: TokenExposurePayloadData['symbols'];
+  assets: TokenExposurePayloadData['assets'];
 };
 
 type ChainData = BaseActiveData & {
@@ -100,8 +99,7 @@ function extractProps(props: TooltipProps): InactiveData | ChainData | TokenData
     return {
       ...base,
       type: props.type,
-      chainId: props.payload[0].payload.chainId,
-      symbols: props.payload[0].payload.symbols,
+      assets: props.payload[0].payload.assets,
     };
   }
 
@@ -136,7 +134,7 @@ export const PieChartTooltip = memo(function PieChartTooltip(props: TooltipProps
                 <img className={classes.icon} src={getNetworkSrc(data.chainId)} alt={title} />
               : null}
               {data.type === 'token' ?
-                <AssetsImage size={24} chainId={data.chainId} assetSymbols={data.symbols} />
+                <AssetsImage size={24} assets={data.assets} />
               : null}
             </>
           : null}

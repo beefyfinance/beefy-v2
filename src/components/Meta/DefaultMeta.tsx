@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import ogImageUrl from '../../images/miniapp/hero.png';
+import ogImageUrl from '../../images/social-card.png';
 
 export const DefaultMeta = memo(function DefaultMeta() {
   const location = useLocation();

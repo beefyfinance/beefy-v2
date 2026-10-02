@@ -37,8 +37,6 @@ export const MessageContainer = styled('div', {
   base: {
     padding: '24px',
     background: 'background.content',
-    borderBottomLeftRadius: '8px',
-    borderBottomRightRadius: '8px',
   },
 });
 
