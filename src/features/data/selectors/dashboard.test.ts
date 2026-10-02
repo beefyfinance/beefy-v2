@@ -4,9 +4,12 @@ import {
   baseNative,
   baseUsdc,
   baseWeth,
+  chainTokens,
   erc20Token,
+  nativeToken,
 } from '../apis/transact/helpers/same-balance.test-helper.ts';
-import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity, TokenErc20, TokenLpBreakdown } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import type * as BalanceSelectors from './balance.ts';
@@ -29,22 +32,39 @@ vi.mock('./balance.ts', async importOriginal => ({
 
 const WALLET = '0x1111111111111111111111111111111111111111';
 const CHAIN = 'base' as const;
+const OTHER_CHAIN = 'robinhood' as const;
 
 const address = (n: number) => `0x${n.toString(16).padStart(40, '0')}`;
+const stock = (token: TokenErc20, name: string): TokenErc20 => ({
+  ...token,
+  name,
+  tags: ['STOCK'],
+});
 const net = erc20Token(CHAIN, 'NET', 'NET', address(1), 18);
-const netRh = erc20Token(CHAIN, 'NETrh', 'NET', address(2), 18);
+const netRh = stock(
+  erc20Token(CHAIN, 'NETrh', 'NET', address(2), 18),
+  'Cloudflare • Robinhood Token'
+);
 const wethNetLp = erc20Token(CHAIN, 'WETH-NET', 'WETH-NET LP', address(3), 18);
+const aaplC = stock(erc20Token(CHAIN, 'AAPLc', 'AAPL', address(4), 8), 'Apple Inc.');
 const memes = ['AERO', 'BRETT', 'DEGEN', 'TOSHI', 'VIRTUAL'].map((symbol, i) =>
   erc20Token(CHAIN, symbol, symbol, address(10 + i), 18)
 );
-const erc20s = [baseWeth, baseUsdc, net, netRh, wethNetLp, ...memes];
+const erc20s = [baseUsdc, net, netRh, wethNetLp, aaplC, ...memes];
+
+const otherNative = nativeToken(OTHER_CHAIN, 'ETH');
+const otherWeth = erc20Token(OTHER_CHAIN, 'WETH', 'WETH', address(20), 18);
+const aaplRh = stock(
+  erc20Token(OTHER_CHAIN, 'AAPLrh', 'AAPL', address(21), 18),
+  'Apple • Robinhood Token'
+);
 
 const FULFILLED = { lastFulfilled: { timestamp: 0, requestId: 'test' } };
 
-function vault(id: string, assetIds: string[]) {
+function vault(id: string, assetIds: string[], chainId: ChainEntity['id'] = CHAIN) {
   return {
     id,
-    chainId: CHAIN,
+    chainId,
     assetIds,
     breakdownId: id,
     depositTokenAddress: wethNetLp.address,
@@ -63,26 +83,18 @@ function breakdownOf(...tokens: TokenEntity[]): TokenLpBreakdown {
 function makeState(vaults: VaultEntity[], breakdowns: Record<string, TokenLpBreakdown> = {}) {
   return {
     entities: {
-      chains: { allIds: [CHAIN] },
+      chains: { allIds: [CHAIN, OTHER_CHAIN] },
       vaults: { byId: Object.fromEntries(vaults.map(v => [v.id, v])) },
       tokens: {
         byChainId: {
-          [CHAIN]: {
-            native: baseNative.id,
-            wnative: baseWeth.id,
-            byId: Object.fromEntries([
-              [baseNative.id, 'native'],
-              ...erc20s.map(token => [token.id, token.address.toLowerCase()]),
-            ]),
-            byAddress: Object.fromEntries([
-              ['native', baseNative],
-              ...erc20s.map(token => [token.address.toLowerCase(), token]),
-            ]),
-          },
+          [CHAIN]: chainTokens(baseNative, baseWeth, ...erc20s),
+          [OTHER_CHAIN]: chainTokens(otherNative, otherWeth, aaplRh),
         },
         breakdown: { byOracleId: breakdowns },
         prices: {
-          byOracleId: Object.fromEntries(erc20s.map(token => [token.oracleId, new BigNumber(1)])),
+          byOracleId: Object.fromEntries(
+            [baseWeth, ...erc20s].map(token => [token.oracleId, new BigNumber(1)])
+          ),
         },
       },
     },
@@ -102,12 +114,18 @@ function imagesByKey(entries: ReturnType<typeof selectDashboardUserExposureByTok
   );
 }
 
+function slicesByKey(entries: ReturnType<typeof selectDashboardUserExposureByToken>) {
+  return Object.fromEntries(
+    entries.map(({ key, label, percentage }) => [key, { label, percentage }])
+  );
+}
+
 describe('selectDashboardUserExposureByToken', () => {
   it('draws a single-asset vault with its token', () => {
     const state = makeState([vault('net', ['NETrh'])]);
 
     expect(imagesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
-      NET: [{ id: 'NETrh', symbol: 'NET', chainId: CHAIN }],
+      'stock:NET': [{ id: 'NETrh', symbol: 'NET', chainId: CHAIN }],
     });
   });
 
@@ -126,7 +144,7 @@ describe('selectDashboardUserExposureByToken', () => {
 
     expect(imagesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
       ETH: [{ symbol: 'ETH', chainId: CHAIN }],
-      NET: [{ id: 'NETrh', symbol: 'NET', chainId: CHAIN }],
+      'stock:NET': [{ id: 'NETrh', symbol: 'NET', chainId: CHAIN }],
     });
   });
 
@@ -149,6 +167,62 @@ describe('selectDashboardUserExposureByToken', () => {
     expect(entries).toHaveLength(6);
     expect(entries[5].key).toBe('others');
     expect(entries[5].assets).toEqual([]);
+  });
+
+  it('keeps a stock apart from a token sharing its ticker, naming the company', () => {
+    const state = makeState([vault('netnet', ['NET']), vault('cloudflare', ['NETrh'])]);
+
+    expect(slicesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
+      NET: { label: 'NET', percentage: 0.5 },
+      'stock:NET': { label: 'NET (Cloudflare)', percentage: 0.5 },
+    });
+  });
+
+  it('labels a stock by its ticker alone when no other slice shares it', () => {
+    const state = makeState([vault('cloudflare', ['NETrh'])]);
+
+    expect(slicesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
+      'stock:NET': { label: 'NET', percentage: 1 },
+    });
+  });
+
+  it('merges a token held on several chains, wrapped or native', () => {
+    const state = makeState([
+      vault('weth', ['WETH']),
+      vault('other-weth', ['WETH'], OTHER_CHAIN),
+      vault('other-eth', ['ETH'], OTHER_CHAIN),
+    ]);
+
+    expect(slicesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
+      ETH: { label: 'ETH', percentage: 1 },
+    });
+  });
+
+  it('merges a stock held on several chains under its ticker', () => {
+    const state = makeState([
+      vault('aapl', ['AAPLc']),
+      vault('other-aapl', ['AAPLrh'], OTHER_CHAIN),
+    ]);
+
+    expect(slicesByKey(selectDashboardUserExposureByToken(state, WALLET))).toEqual({
+      'stock:AAPL': { label: 'AAPL', percentage: 1 },
+    });
+  });
+
+  it('sums the slices beyond the top five into others', () => {
+    const tokens = [baseUsdc, net, ...memes];
+    const state = makeState(tokens.map(token => vault(token.id, [token.id])));
+    const entries = selectDashboardUserExposureByToken(state, WALLET);
+
+    expect(entries.map(entry => entry.label)).toEqual([
+      'USDC',
+      'NET',
+      'AERO',
+      'BRETT',
+      'DEGEN',
+      'Others',
+    ]);
+    expect(entries[5].percentage).toBeCloseTo(2 / 7);
   });
 });
 
