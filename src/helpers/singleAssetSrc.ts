@@ -1,6 +1,9 @@
 import type { TokenEntity } from '../features/data/entities/token.ts';
-import type { ChainEntity } from '../features/data/entities/chain.ts';
+import { areArraysEqual } from '../features/data/utils/array-utils.ts';
 import { createGlobLoader, removeExtension } from './globLoader.ts';
+
+export type SingleAsset = Pick<TokenEntity, 'symbol' | 'chainId'> &
+  Partial<Pick<TokenEntity, 'id'>>;
 
 const pathToUrl = import.meta.glob<string>('../images/single-assets/**/*.(svg|webp|png)', {
   query: '?url',
@@ -12,13 +15,30 @@ const keyToUrl = createGlobLoader(pathToUrl, path => {
   return removeExtension(path.replace('../images/single-assets/', ''));
 });
 
-export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
-  const parsedSymbol = symbol.replace('.', '');
-  const ids = chainId ? [`${chainId}/${parsedSymbol}`, parsedSymbol] : [parsedSymbol];
-
-  return keyToUrl(ids);
+export function singleAssetKeys({ id, symbol, chainId }: SingleAsset): string[] {
+  const symbolKey = symbol.replace('.', '');
+  const symbolKeys = [`${chainId}/${symbolKey}`, symbolKey];
+  return id ? [`${chainId}/by-id/${id}`, ...symbolKeys] : symbolKeys;
 }
 
-export function singleAssetExists(symbol: TokenEntity['id'], chainId?: ChainEntity['id']): boolean {
-  return getSingleAssetSrc(symbol, chainId) !== undefined;
+export function getSingleAssetSrc(asset: SingleAsset): string | undefined {
+  return keyToUrl(singleAssetKeys(asset));
+}
+
+export function singleAssetExists(asset: SingleAsset): boolean {
+  return getSingleAssetSrc(asset) !== undefined;
+}
+
+export function isSameSingleAsset(a: SingleAsset, b: SingleAsset): boolean {
+  return a.id === b.id && a.symbol === b.symbol && a.chainId === b.chainId;
+}
+
+export function areSameSingleAssets(
+  a: readonly SingleAsset[] | undefined,
+  b: readonly SingleAsset[] | undefined
+): boolean {
+  if (!a || !b) {
+    return a === b;
+  }
+  return areArraysEqual(a, b, isSameSingleAsset);
 }

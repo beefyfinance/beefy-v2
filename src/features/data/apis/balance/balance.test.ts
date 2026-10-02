@@ -12,6 +12,15 @@ import {
   bn,
   makeState,
 } from '../transact/helpers/same-balance.test-helper.ts';
+import {
+  boostV1,
+  boostV2,
+  govMulti,
+  govSingle,
+  makeRewardsState,
+  rewardBifi,
+  rewardUsdc,
+} from '../reward-tokens.test-helper.ts';
 import { BalanceAPI } from './balance.ts';
 
 const { NATIVE_WEI } = vi.hoisted(() => ({ NATIVE_WEI: 10_000000500000000000n })); // 10.0000005
@@ -21,15 +30,20 @@ vi.mock('../rpc-contract/rpc-manager.ts', () => ({
     getBatchClient: () => ({ getBalance: async () => NATIVE_WEI }),
   },
 }));
-vi.mock('../rpc-contract/viem-contract.ts', () => ({
-  fetchContract: () => ({
-    read: {
-      getTokenBalances: async ([addresses]: [string[]]) => addresses.map(() => 0n),
-      getBoostOrGovBalance: async () => [],
-      getGovVaultMultiBalance: async () => [],
-    },
-  }),
-}));
+vi.mock('../rpc-contract/viem-contract.ts', async () => {
+  const { rewardBifi } = await import('../reward-tokens.test-helper.ts');
+  return {
+    fetchContract: () => ({
+      read: {
+        getTokenBalances: async ([addresses]: [string[]]) => addresses.map(() => 0n),
+        getBoostOrGovBalance: async ([addresses]: [string[]]) =>
+          addresses.map(() => ({ balance: 0n, rewards: 1n })),
+        getGovVaultMultiBalance: async ([addresses]: [string[]]) =>
+          addresses.map(() => ({ balance: 0n, rewardTokens: [rewardBifi.address], rewards: [1n] })),
+      },
+    }),
+  };
+});
 vi.mock(import('../../utils/feature-flags.ts'), async importOriginal => ({
   ...(await importOriginal()),
   featureFlag_getBalanceApiChunkSize: () => 100,
@@ -98,6 +112,36 @@ describe('wallet balance where native and wnative are separate balances', () => 
     expect(result.tokens).toEqual([
       { tokenAddress: baseWeth.address, amount: bn('0') },
       { tokenAddress: 'native', amount: bn('10.0000005') },
+    ]);
+  });
+});
+
+describe('reward tokens', () => {
+  const rewardIds = (rewards: { token: { id: string } }[]) => rewards.map(r => r.token.id);
+
+  it('keep their id on gov vaults', async () => {
+    const result = await baseApi.fetchAllBalances(
+      makeRewardsState(),
+      { govVaults: [govSingle, govMulti] },
+      WALLET
+    );
+
+    expect(result.govVaults.map(vault => rewardIds(vault.rewards))).toEqual([
+      [rewardBifi.id],
+      [rewardBifi.id],
+    ]);
+  });
+
+  it('keep their id on boosts, including rewards only in the config', async () => {
+    const result = await baseApi.fetchAllBalances(
+      makeRewardsState(),
+      { boosts: [boostV1, boostV2] },
+      WALLET
+    );
+
+    expect(result.boosts.map(boost => rewardIds(boost.rewards))).toEqual([
+      [rewardBifi.id],
+      [rewardBifi.id, rewardUsdc.id],
     ]);
   });
 });

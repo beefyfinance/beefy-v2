@@ -563,11 +563,12 @@ const selectClmPnlInner = createCachedSelector(
       const claimedAmount = reward.accumulated.minus(reward.unclaimed);
       const rewardTokenEntity =
         tokensByChainId[reward.token.chainId]?.byAddress[reward.token.address.toLowerCase()];
+      const token = rewardTokenEntity ?? reward.token;
       const tokenPrice =
         (rewardTokenEntity && pricesByOracleId[rewardTokenEntity.oracleId]) || BIG_ZERO;
       if (claimedAmount.gt(BIG_ZERO)) {
         claimed.push({
-          token: reward.token,
+          token,
           amount: claimedAmount,
           usd: claimedAmount.times(tokenPrice),
           source: reward.source,
@@ -575,7 +576,7 @@ const selectClmPnlInner = createCachedSelector(
       }
       if (reward.unclaimed.gt(BIG_ZERO)) {
         pending.push({
-          token: reward.token,
+          token,
           amount: reward.unclaimed,
           usd: reward.unclaimed.times(tokenPrice),
           source: reward.source,

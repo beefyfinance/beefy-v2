@@ -14,9 +14,11 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectTransactDepositFromVaultId,
+  selectTransactDepositInputVaultId,
   selectTransactForceSelection,
   selectTransactIsDepositFromVault,
   selectTransactNumTokens,
@@ -53,6 +55,8 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   const { openSelectStep } = useTransactSelectFlowCta();
   const isFromVaultMode = useAppSelector(selectTransactIsDepositFromVault);
   const isDepositFromVault = isFromVaultMode && index === 0;
+  const inputVaultId = useAppSelector(selectTransactDepositInputVaultId);
+  const selectedVaultId = index === 0 ? inputVaultId : undefined;
 
   const tokenSymbol = useMemo(() => {
     return (
@@ -82,7 +86,8 @@ export const TokenSelectButton = memo(function TokenSelectButton({
         styles.button,
         cssProp,
         canSwitchToTokenSelect && styles.buttonMore,
-        forceSelection && styles.buttonForceSelection
+        forceSelection && styles.buttonForceSelection,
+        !!selectedVaultId && styles.vaultButton
       )}
     >
       {forceSelection && hasCrossChainZap ?
@@ -91,6 +96,8 @@ export const TokenSelectButton = memo(function TokenSelectButton({
         <div className={css(styles.select, styles.forceSelection)}>{t('Transact-SelectToken')}</div>
       : isBreakLp ?
         <BreakLp tokens={selection.tokens} />
+      : selectedVaultId ?
+        <SelectedVault vaultId={selectedVaultId} />
       : <div className={classes.select}>
           <TokensImageWithChain
             chainId={selection.tokens[index].chainId}
@@ -115,9 +122,6 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const fromVaultId = useAppSelector(selectTransactDepositFromVaultId);
-  const fromVault = useAppSelector(state =>
-    fromVaultId ? selectVaultById(state, fromVaultId) : undefined
-  );
 
   const handleClick = useCallback(() => {
     dispatch(transactSwitchStep(TransactStep.DepositFromVaultSelect));
@@ -132,25 +136,32 @@ const VaultSelectButton = memo(function VaultSelectButton({ cssProp }: VaultSele
         styles.vaultButton,
         cssProp,
         styles.buttonMore,
-        !fromVault && styles.buttonForceSelection
+        !fromVaultId && styles.buttonForceSelection
       )}
     >
-      {fromVault ?
-        <div className={css(styles.select, styles.vaultSelect)}>
-          <VaultIconWrapper>
-            <VaultIcon vaultId={fromVault.id} size={24} />
-            <VaultChainBadge>
-              <ChainIcon chainId={fromVault.chainId} size={10} />
-            </VaultChainBadge>
-          </VaultIconWrapper>
-          <VaultName>{fromVault.names.single}</VaultName>
-        </div>
+      {fromVaultId ?
+        <SelectedVault vaultId={fromVaultId} />
       : <div className={css(styles.select, styles.forceSelection)}>
           {t('Transact-DepositFromVault-Select')}
         </div>
       }
       <ExpandMore className={classes.iconMore} />
     </button>
+  );
+});
+
+const SelectedVault = memo(function SelectedVault({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  return (
+    <div className={css(styles.select, styles.vaultSelect)}>
+      <VaultIconWrapper>
+        <VaultIcon vaultId={vault.id} size={24} />
+        <VaultChainBadge>
+          <ChainIcon chainId={vault.chainId} size={10} />
+        </VaultChainBadge>
+      </VaultIconWrapper>
+      <VaultName>{vault.names.single}</VaultName>
+    </div>
   );
 });
 
@@ -200,7 +211,7 @@ const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
 
   return (
     <div className={classes.breakLp}>
-      <AssetsImage assetSymbols={tokens.map(t => t.symbol)} chainId={tokens[0].chainId} size={16} />
+      <AssetsImage assets={tokens} size={16} />
     </div>
   );
 });

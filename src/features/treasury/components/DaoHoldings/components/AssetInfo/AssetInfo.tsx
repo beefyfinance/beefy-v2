@@ -117,11 +117,14 @@ const LPidentity = memo(function LPidentity({ chainId, name, regexType }: LPiden
     }
   }, [regexType]);
 
-  const assets = name.replace(regex, '').split('-');
+  const assets = name
+    .replace(regex, '')
+    .split('-')
+    .map(symbol => ({ symbol, chainId }));
 
   return (
     <>
-      <AssetsImage size={24} chainId={chainId} assetSymbols={assets} />
+      <AssetsImage size={24} assets={assets} />
       <AssetName name={name} />
     </>
   );
