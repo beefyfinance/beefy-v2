@@ -45,7 +45,7 @@ import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
-import { BoostVaultStrategy, BoostZapStrategy } from './strategies/BoostStrategy.ts';
+import { BoostZapStrategy } from './strategies/BoostStrategy.ts';
 import {
   canDecorateForBoost,
   markOptionsBoostable,
@@ -134,11 +134,7 @@ function maybeWrapBoost(
       return strategy;
     }
 
-    if (strategy.id === 'vault') {
-      return new BoostVaultStrategy(strategy as IStrategy<'vault'>, helpers, boost);
-    }
-
-    if (isComposableStrategy(strategy)) {
+    if (canDecorateForBoost(strategy)) {
       return new BoostZapStrategy(strategy, helpers, boost);
     }
   } catch (err: unknown) {
@@ -301,7 +297,7 @@ export class TransactApi implements ITransactApi {
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
-      // BoostVaultStrategy always wraps this route; non-standard vaults are gated by the selectors
+      // the vault route always passes canDecorateForBoost; non-standard vaults are gated by the selectors
       vaultDepositOption.boostable = true;
       const deduped = dropSingleIdentityOption(
         allowedOptions,
@@ -776,7 +772,7 @@ export class TransactApi implements ITransactApi {
     const { vaultType } = routeHelpers;
 
     if (strategyId === 'vault') {
-      return maybeWrapBoost(new VaultStrategy(vaultType), routeHelpers, quote);
+      return maybeWrapBoost(new VaultStrategy(vaultType, routeHelpers), routeHelpers, quote);
     }
 
     if (!isZapTransactHelpers(routeHelpers)) {

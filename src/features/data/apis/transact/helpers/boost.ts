@@ -8,6 +8,7 @@ import type { ZapStep } from '../zap/types.ts';
 import { getInsertIndex } from './zap.ts';
 import { selectErc20TokenByAddress } from '../../../selectors/tokens.ts';
 import {
+  type ComposableSurface,
   type IStrategy,
   isComposableStrategy,
   type ZapTransactHelpers,
@@ -32,12 +33,14 @@ const noBoostSupport: BoostRouteSupport = { stake: false, unstake: false };
 const fullBoostSupport: BoostRouteSupport = { stake: true, unstake: true };
 
 /**
- * What the boost decorator can wrap: the direct vault route (`BoostVaultStrategy`) and anything
- * composable (`BoostZapStrategy` appends its step to the zap breakdown). A basic zap strategy builds
- * its order inline in fetchDepositStep, so there is nothing to append to.
+ * What the boost decorator can wrap: anything that can hand over a zap breakdown to append the stake
+ * to — every composable zap, plus the plain vault route. A basic zap strategy builds its order
+ * inline in fetchDepositStep, so there is nothing to append to.
  */
-export function canDecorateForBoost(strategy: IStrategy): boolean {
-  return strategy.id === 'vault' || isComposableStrategy(strategy);
+export function canDecorateForBoost(
+  strategy: IStrategy
+): strategy is IStrategy & ComposableSurface {
+  return isComposableStrategy(strategy);
 }
 
 function boostSupportOf(strategy: IStrategy): BoostRouteSupport {
@@ -49,7 +52,8 @@ function boostSupportOf(strategy: IStrategy): BoostRouteSupport {
 
 /**
  * The checkbox selectors are synchronous and have no strategy instance, so the answer rides along on
- * the options the strategy produced. Unstamped means no checkbox, so every producer must pass here.
+ * the options the strategy produced. Unstamped means no checkbox, so every option must be stamped
+ * before it reaches the store.
  */
 export function markOptionsBoostable<T extends { boostable?: boolean }>(
   options: T[],
