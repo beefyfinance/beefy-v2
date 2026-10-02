@@ -277,14 +277,6 @@
     "blockedVaults": []
   },
   {
-    "id": "one-inch-robinhood",
-    "type": "one-inch",
-    "chainId": "robinhood",
-    "priorityTokens": ["ETH", "WETH", "USDG"],
-    "blockedTokens": [],
-    "blockedVaults": []
-  },
-  {
     "id": "one-inch-monad",
     "type": "one-inch",
     "chainId": "monad",
