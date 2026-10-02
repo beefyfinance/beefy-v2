@@ -10,16 +10,19 @@ import {
   isDepositQuote,
   isWithdrawOption,
   isWithdrawQuote,
+  isZapQuote,
   type QuoteOutputTokenAmountChange,
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
+import { findBoostUnstakeStep } from '../../apis/transact/helpers/boost.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import { selectBoostUserRewardsInToken } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
-import type { BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
   transactConfirmPending,
@@ -28,6 +31,7 @@ import {
   transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
+import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
 import { stepperReset, stepperStartWithSteps } from './stepper.ts';
@@ -38,6 +42,35 @@ type PrefetchedRequote = {
 };
 
 const REQUOTE_MAX_AGE_MS = 30_000;
+
+/**
+ * The zap unstakes with `withdraw()`, which leaves rewards behind — `exit()` would send them to the
+ * router, which has no way to pass them on. Claiming in the same batch saves the user a second visit.
+ */
+function maybeBoostClaimStep(
+  quote: TransactQuote,
+  state: BeefyState,
+  t: TFunction<Namespace>
+): Step | undefined {
+  if (!isWithdrawQuote(quote) || !isZapQuote(quote)) {
+    return undefined;
+  }
+  const unstakeStep = findBoostUnstakeStep(quote.steps);
+  if (!unstakeStep) {
+    return undefined;
+  }
+  const rewards = selectBoostUserRewardsInToken(state, unstakeStep.boostId);
+  if (!rewards.some(reward => reward.amount.gt(BIG_ZERO))) {
+    return undefined;
+  }
+
+  return {
+    step: 'boost-claim',
+    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+    action: claimBoost(unstakeStep.boostId),
+    pending: false,
+  };
+}
 
 export async function getTransactSteps(
   quote: TransactQuote,
@@ -56,6 +89,12 @@ export async function getTransactSteps(
   if (isCrossChainOption(quote.option)) {
     const sourceChain = selectChainById(state, quote.option.sourceChainId);
     prefetchGasPrice(sourceChain);
+  }
+
+  // first, so the rewards the unstake would strand land in the wallet in the same batch
+  const claimStep = maybeBoostClaimStep(quote, state, t);
+  if (claimStep) {
+    steps.push(claimStep);
   }
 
   const api = await getTransactApi();

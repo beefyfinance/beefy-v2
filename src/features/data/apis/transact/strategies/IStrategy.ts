@@ -80,6 +80,18 @@ export type UserlessZapWithdrawBreakdown = {
   expectedTokens: TokenEntity[];
 };
 
+/**
+ * Handing over a zap breakdown, expressed against the wide quote types so the plain vault route can
+ * satisfy it too. Composable zaps narrow this via IComposableStrategy.
+ */
+export interface ComposableSurface {
+  getHelpers(): TransactHelpers;
+  fetchDepositUserlessZapBreakdown(quote: DepositQuote): Promise<UserlessZapDepositBreakdown>;
+  fetchWithdrawUserlessZapBreakdown(quote: WithdrawQuote): Promise<UserlessZapWithdrawBreakdown>;
+  canAcceptTokenAsDeposit(token: TokenEntity): Promise<boolean>;
+  canEmitTokenAsWithdraw(token: TokenEntity): Promise<boolean>;
+}
+
 export interface IComposableStrategy<
   TId extends ZapStrategyId = ZapStrategyId,
 > extends IZapStrategy<TId> {

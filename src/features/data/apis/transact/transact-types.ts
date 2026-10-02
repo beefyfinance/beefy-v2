@@ -101,6 +101,8 @@ type BaseOption = {
   async?: boolean;
   feeable?: boolean;
   feeCampaign?: OptionFeeCampaign;
+  /** deposit: can stake into a boost; withdraw: can unstake from one. Stamped from the strategy. */
+  boostable?: boolean;
 };
 
 export type OptionFeeCampaign = {
@@ -672,6 +674,9 @@ export type ZapQuoteStepBuild = {
 export type ZapQuoteStepWithdraw = {
   type: 'withdraw';
   outputs: TokenAmount[];
+  /** Set when the position is broken into its constituents; a plain share -> deposit token
+   * unwrap is priced by ppfs alone, so it is not presented as an estimate. */
+  estimated?: boolean;
 };
 
 export type ZapQuoteStepDeposit = {
@@ -694,11 +699,14 @@ export type ZapQuoteStepUnused = {
 export type ZapQuoteStepStake = {
   type: 'stake';
   inputs: TokenAmount[];
+  boostId?: string;
 };
 
 export type ZapQuoteStepUnstake = {
   type: 'unstake';
   outputs: TokenAmount[];
+  /** set when the step was prepended by the unstake-from-boost decorator */
+  boostId?: string;
 };
 
 export type ZapQuoteStepBridge = {
@@ -1287,6 +1295,10 @@ export function isVaultUnderlyingCowcentratedWithdrawQuote(
     (isCowcentratedZapWithdrawQuote(quote.underlyingQuote) ||
       isCowcentratedVaultWithdrawQuote(quote.underlyingQuote))
   );
+}
+
+export function isSingleWithdrawQuote(quote: TransactQuote): quote is SingleWithdrawQuote {
+  return isWithdrawQuote(quote) && quote.strategyId === 'single';
 }
 
 export function isGovComposerWithdrawQuote(

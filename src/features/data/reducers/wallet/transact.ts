@@ -21,6 +21,8 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSetStakeIntoBoost,
+  transactSetUnstakeFromBoost,
   transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
@@ -103,6 +105,8 @@ const initialTransactState: TransactState = {
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   depositSource: DepositSource.Wallet,
+  stakeIntoBoost: true,
+  unstakeFromBoost: undefined,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
@@ -130,6 +134,8 @@ const transactSlice = createSlice({
         sliceState.inputMaxes = [false];
         sliceState.inputEnteredAmounts = [];
         sliceState.depositSource = DepositSource.Wallet;
+        sliceState.stakeIntoBoost = true;
+        sliceState.unstakeFromBoost = undefined;
         resetQuotes(sliceState);
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
@@ -220,6 +226,19 @@ const transactSlice = createSlice({
       })
       .addCase(transactSetSlippage, (sliceState, action) => {
         sliceState.swapSlippage = action.payload.slippage;
+      })
+      .addCase(transactSetStakeIntoBoost, (sliceState, action) => {
+        sliceState.stakeIntoBoost = action.payload;
+      })
+      .addCase(transactSetUnstakeFromBoost, (sliceState, action) => {
+        sliceState.unstakeFromBoost = action.payload;
+        // available changes with it, so a sticky max would resolve to the wrong balance; the typed
+        // amount is kept so the re-quote can run on it. Only reassign when it actually changes —
+        // inputMaxes is a quote-effect dependency, and a fresh reference costs an extra fetch.
+        if (sliceState.inputMaxes.some(Boolean)) {
+          sliceState.inputMaxes = sliceState.inputMaxes.map(() => false);
+        }
+        resetQuotes(sliceState);
       })
       .addCase(transactSetExecuting, (sliceState, action) => {
         sliceState.executing = action.payload;
@@ -405,6 +424,8 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.forceSelection = false;
   sliceState.successClosed = false;
   sliceState.depositSource = DepositSource.Wallet;
+  sliceState.stakeIntoBoost = true;
+  sliceState.unstakeFromBoost = undefined;
 
   sliceState.options.status = TransactStatus.Idle;
   sliceState.options.error = undefined;
@@ -452,6 +473,12 @@ function addQuotesToState(sliceState: Draft<TransactState>, quotes: TransactQuot
 
 function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOption[]) {
   for (const option of options) {
+    if (import.meta.env.DEV && option.boostable === undefined) {
+      // unstamped fails closed, so the boost checkbox would silently disappear on this route
+      console.warn(
+        `Option ${option.id} (${option.strategyId}) was not stamped with boostable; see markOptionsBoostable`
+      );
+    }
     if (option.id in sliceState.options.byOptionId) {
       console.warn(`Attempting to add duplicate option id ${option.id} to state`);
       continue;

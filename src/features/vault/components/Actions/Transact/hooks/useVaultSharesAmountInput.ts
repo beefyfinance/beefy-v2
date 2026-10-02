@@ -45,7 +45,12 @@ export function vaultSharesInputValue(
   return mooAmountToOracleAmount(shareToken, depositToken, ppfs, storedShares);
 }
 
-export function useVaultSharesAmountInput(index: number, vaultId: VaultEntity['id']) {
+export function useVaultSharesAmountInput(
+  index: number,
+  vaultId: VaultEntity['id'],
+  /** what the route can actually spend, when that is not the wallet balance (e.g. staked in a boost) */
+  available?: { shareBalance: BigNumber; depositBalance: BigNumber }
+) {
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, vaultId));
   const receiptToken = useAppSelector(state =>
@@ -55,10 +60,14 @@ export function useVaultSharesAmountInput(index: number, vaultId: VaultEntity['i
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const ppfs = useAppSelector(state => selectVaultPricePerFullShare(state, vaultId));
-  const shareBalance = useAppSelector(state => selectUserVaultBalanceInShareToken(state, vaultId));
-  const depositBalance = useAppSelector(state =>
+  const walletShareBalance = useAppSelector(state =>
+    selectUserVaultBalanceInShareToken(state, vaultId)
+  );
+  const walletDepositBalance = useAppSelector(state =>
     selectUserVaultBalanceInDepositToken(state, vaultId)
   );
+  const shareBalance = available?.shareBalance ?? walletShareBalance;
+  const depositBalance = available?.depositBalance ?? walletDepositBalance;
   const storeAmount = useAppSelector(state => selectTransactInputIndexAmount(state, index));
   const enteredAmount = useAppSelector(state =>
     selectTransactInputIndexEnteredAmount(state, index)

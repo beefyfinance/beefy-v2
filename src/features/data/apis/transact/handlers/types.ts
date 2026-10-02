@@ -97,6 +97,10 @@ export type DestHandlerContext = {
   pageVaultId: VaultEntity['id'];
   /** Async resolver for vault-bound `ZapTransactHelpers`; called by `VaultDestHandler` with its own dst vault id. */
   resolveHelpersForVault: (vaultId: VaultEntity['id']) => Promise<ZapTransactHelpers>;
+  /** True on the dst-only recovery path, where the live transact form no longer describes this op. */
+  isRecovery?: boolean;
+  /** Boost to stake into, carried from the op being recovered instead of read from the live form. */
+  stakeIntoBoostId?: string;
 };
 
 export interface ISourceHandler<Q = unknown> {

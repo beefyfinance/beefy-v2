@@ -17,7 +17,10 @@ import {
   type UnifiedRewardToken,
 } from '../../../../../data/selectors/rewards.ts';
 import {
+  selectTransactBoostForStaking,
+  selectTransactBoostForUnstaking,
   selectTransactMode,
+  selectTransactUnstakeFromBoostSupported,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { bigNumberEqual } from '../../../../../data/utils/selector-equality.ts';
@@ -26,6 +29,7 @@ import type { BeefyState } from '../../../../../data/store/types.ts';
 const BoostDepositNotice = lazy(() => import('./DepositBoostNotice.tsx'));
 const DepositClaimNotice = lazy(() => import('./DepositClaimNotice.tsx'));
 const WithdrawBoostNotice = lazy(() => import('./WithdrawBoostNotice.tsx'));
+const UnstakeBoostNotice = lazy(() => import('./UnstakeBoostNotice.tsx'));
 
 type FooterNotice =
   | {
@@ -41,6 +45,11 @@ type FooterNotice =
       kind: 'withdraw-boost';
       vaultId: VaultEntity['id'];
       balance: BigNumber;
+    }
+  | {
+      kind: 'boost-unstake';
+      vaultId: VaultEntity['id'];
+      balance: BigNumber;
     };
 
 const vaultIdArgument = (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId;
@@ -51,9 +60,17 @@ const selectBoostDepositNotice = createSelector(
     selectVaultCurrentBoostRewardTokens,
     selectUserVaultBalanceInShareTokenIncludingDisplaced,
     selectUserVaultBalanceNotInActiveBoostInShareToken,
+    selectTransactBoostForStaking,
   ],
-  (vaultId, rewardTokens, inVaultAnywhere, notInActiveBoost): FooterNotice | undefined => {
-    if (!!rewardTokens && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
+  (
+    vaultId,
+    rewardTokens,
+    inVaultAnywhere,
+    notInActiveBoost,
+    stakeable
+  ): FooterNotice | undefined => {
+    // staking into the boost happens in the deposit itself, so the strip is shown as the opt-in
+    if (!!rewardTokens && (!!stakeable || inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
       return { kind: 'boost-deposit', vaultId, rewardTokens };
     }
 
@@ -73,6 +90,27 @@ const selectDepositClaimNotice = createSelector(
 );
 
 const selectWithdrawBoostNotice = createSelector(
+  [
+    vaultIdArgument,
+    selectUserVaultBalanceInDepositTokenInBoosts,
+    selectTransactBoostForUnstaking,
+    selectTransactUnstakeFromBoostSupported,
+  ],
+  (vaultId, balance, unstakeable, supported): FooterNotice | undefined => {
+    if (unstakeable && supported && balance) {
+      return { kind: 'boost-unstake', vaultId, balance };
+    }
+
+    if (balance && !balance.isZero()) {
+      return { kind: 'withdraw-boost', vaultId, balance };
+    }
+
+    return undefined;
+  }
+);
+
+/** Migrate has no zap withdraw form, so it keeps the link across to the boost tab */
+const selectMigrateBoostNotice = createSelector(
   [vaultIdArgument, selectUserVaultBalanceInDepositTokenInBoosts],
   (vaultId, balance): FooterNotice | undefined => {
     if (balance && !balance.isZero()) {
@@ -92,7 +130,7 @@ type ModeToFooters = {
 const modeToFooters: ModeToFooters = {
   [TransactMode.Deposit]: [selectBoostDepositNotice, selectDepositClaimNotice],
   [TransactMode.Withdraw]: [selectWithdrawBoostNotice],
-  [TransactMode.Migrate]: [selectWithdrawBoostNotice],
+  [TransactMode.Migrate]: [selectMigrateBoostNotice],
 };
 
 const selectFooter = (state: BeefyState): FooterNotice | undefined => {
@@ -133,6 +171,9 @@ function footerNoticeEqual(a: FooterNotice | undefined, b: FooterNotice | undefi
   if (a.kind === 'withdraw-boost' && b.kind === 'withdraw-boost') {
     return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
   }
+  if (a.kind === 'boost-unstake' && b.kind === 'boost-unstake') {
+    return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
+  }
   return false;
 }
 
@@ -150,5 +191,7 @@ export const FormStepFooter = memo(function FormStepFooter() {
       return <DepositClaimNotice rewardTokens={notice.rewardTokens} />;
     case 'withdraw-boost':
       return <WithdrawBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
+    case 'boost-unstake':
+      return <UnstakeBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
   }
 });

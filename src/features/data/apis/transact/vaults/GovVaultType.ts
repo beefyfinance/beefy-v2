@@ -1,18 +1,28 @@
 import BigNumber from 'bignumber.js';
 import { first } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import type { Address } from 'viem';
+import { BoostAbi } from '../../../../../config/abi/BoostAbi.ts';
+import { BIG_ZERO, fromWei, toWei } from '../../../../../helpers/big-number.ts';
 import { exitGovVault, stakeGovVault, unstakeGovVault } from '../../../actions/wallet/gov.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
-import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault.ts';
+import {
+  isGovVault,
+  isGovVaultCowcentrated,
+  isNonCowcentratedMultiGovVault,
+  type VaultGov,
+  type VaultGovMulti,
+} from '../../../entities/vault.ts';
 import type { Step } from '../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import { selectTokenByAddress } from '../../../selectors/tokens.ts';
-import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectWalletAddress, selectWalletAddressOrThrow } from '../../../selectors/wallet.ts';
 import type { BeefyState, BeefyStateFn } from '../../../store/types.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import { buildBoostStakeZapStep, buildBoostWithdrawZapStep } from '../helpers/boost.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -252,11 +262,64 @@ export class GovVaultType implements IGovVaultType {
     };
   }
 
-  async fetchZapDeposit(_request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    throw new Error('Gov vaults do not support zap.');
+  /** Only v2 pools (BeefyRewardPool) mint a receipt the zap router can hand back */
+  protected getZappableVault(): VaultGovMulti {
+    if (!isNonCowcentratedMultiGovVault(this.vault)) {
+      throw new Error('Gov vault does not support zap.');
+    }
+    return this.vault;
   }
 
-  async fetchZapWithdraw(_request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
-    throw new Error('Gov vaults do not support zap.');
+  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    const vault = this.getZappableVault();
+    const input = onlyOneInput(request.inputs);
+    if (!isTokenEqual(input.token, this.depositToken) || !isTokenErc20(input.token)) {
+      throw new Error('Input token is not the deposit token');
+    }
+
+    const state = this.getState();
+    const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const outputs = [
+      {
+        token: receiptToken,
+        amount: input.amount.minus(this.calculateDepositFee(input, state)),
+      },
+    ];
+
+    return {
+      inputs: request.inputs,
+      outputs,
+      minOutputs: outputs,
+      zap: buildBoostStakeZapStep(vault, input.token, toWei(input.amount, input.token.decimals)),
+    };
+  }
+
+  async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
+    const vault = this.getZappableVault();
+    const input = onlyOneInput(request.inputs);
+    if (!isTokenEqual(input.token, this.depositToken)) {
+      throw new Error('Input token is not the deposit token');
+    }
+
+    const state = this.getState();
+    const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const address = selectWalletAddressOrThrow(state);
+    const pool = fetchContract(vault.contractAddress, BoostAbi, vault.chainId);
+    // the order pulls these receipts from the wallet, so a stale state balance must not overshoot
+    const balanceWei = new BigNumber(
+      (await pool.read.balanceOf([address as Address])).toString(10)
+    );
+    const requestedWei = toWei(input.amount, receiptToken.decimals);
+    const sharesWei = input.max || requestedWei.gt(balanceWei) ? balanceWei : requestedWei;
+    const shares = fromWei(sharesWei, receiptToken.decimals);
+    const fee = this.calculateWithdrawFee({ token: this.depositToken, amount: shares }, state);
+    const outputs = [{ token: this.depositToken, amount: shares.minus(fee) }];
+
+    return {
+      inputs: [{ token: receiptToken, amount: shares, max: input.max }],
+      outputs,
+      minOutputs: outputs,
+      zap: buildBoostWithdrawZapStep(vault, sharesWei),
+    };
   }
 }
