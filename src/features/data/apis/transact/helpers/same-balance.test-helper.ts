@@ -85,7 +85,7 @@ export const metisWmetis = erc20Token(
   18
 );
 
-function chainTokens(native: TokenNative, wnative: TokenErc20, ...others: TokenErc20[]) {
+export function chainTokens(native: TokenNative, wnative: TokenErc20, ...others: TokenErc20[]) {
   const erc20s = [wnative, ...others];
   return {
     native: native.id,

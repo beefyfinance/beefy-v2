@@ -5,10 +5,6 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { getUnixNow } from '../../../helpers/date.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
-import {
-  isVaultDestWithdrawOption,
-  isVaultSourceDepositOption,
-} from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
@@ -983,35 +979,3 @@ export const selectBalanceKeyForToken = (
   chainId: ChainEntity['id'],
   address: string
 ): string => `${chainId}:${selectBalanceStorageAddress(state, chainId, address)}`;
-
-export const selectDepositOptionTokensBalanceByChainId = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  walletAddress: string
-): BigNumber => {
-  const selectionIds = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionIds) return BIG_ZERO;
-
-  const counted = new Set<string>();
-  return selectionIds.reduce((acc, selectionId) => {
-    const selection = state.ui.transact.selections.bySelectionId[selectionId];
-    if (!selection) return acc;
-    if (isVaultSourceSelection(state, selectionId)) return acc;
-    return selection.tokens.reduce((sum, token) => {
-      const key = selectBalanceKeyForToken(state, token.chainId, token.address);
-      if (counted.has(key)) return sum;
-      counted.add(key);
-      const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
-      const price = selectTokenPriceByAddress(state, token.chainId, token.address);
-      return sum.plus(balance.multipliedBy(price));
-    }, acc);
-  }, BIG_ZERO);
-};
-
-function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean {
-  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
-  if (!optionIds?.length) return false;
-  const option = state.ui.transact.options.byOptionId[optionIds[0]];
-  if (!option) return false;
-  return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
-}

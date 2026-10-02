@@ -71,6 +71,8 @@ export const transactSetInputAmount = createAction<{
   index: number;
   amount: BigNumber;
   max: boolean;
+  /** what the user entered, when the input shows it in a different unit than `amount` */
+  enteredAmount?: BigNumber;
 }>('transact/setInputAmount');
 
 /** sets a deposit amount at the precision the token can carry (arc native: its 6 decimal erc20 view) */
