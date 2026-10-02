@@ -167,9 +167,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
               {t('Transact-Max')}
             </Button>
           }
-          startAdornment={
-            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-          }
+          startAdornment={<AssetsImage assets={[depositToken]} size={24} />}
         />
       </div>
       <div className={css(styles.customDivider)}>
@@ -195,9 +193,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           maxValue={depositTokenBalance}
           onChange={handleChange}
           disabled={true}
-          startAdornment={
-            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={24} chainId={chain.id} />
-          }
+          startAdornment={<AssetsImage assets={[mintedToken]} size={24} />}
         />
       </div>
       <>

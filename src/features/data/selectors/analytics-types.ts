@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../entities/token.ts';
+import type { UnifiedRewardToken } from './rewards.ts';
 
 export type UserStandardPnl = {
   type: 'standard';
@@ -63,7 +64,7 @@ export type UsdChange = {
 };
 
 export type PnlYieldSource = {
-  token: Pick<TokenEntity, 'decimals' | 'symbol' | 'address' | 'chainId'>;
+  token: UnifiedRewardToken;
   amount: BigNumber;
   usd: BigNumber;
   source: 'vault' | 'clm' | 'pool' | 'merkl' | 'stellaswap';
@@ -73,7 +74,7 @@ export type PnlYieldTotal = {
   usd: BigNumber;
   tokens: {
     [address: string]: {
-      token: Pick<TokenEntity, 'decimals' | 'symbol' | 'address' | 'chainId'>;
+      token: UnifiedRewardToken;
       amount: BigNumber;
       usd: BigNumber;
     };

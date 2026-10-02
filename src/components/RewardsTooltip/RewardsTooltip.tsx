@@ -1,4 +1,4 @@
-import { uniq } from 'lodash-es';
+import { uniqWith } from 'lodash-es';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
@@ -9,10 +9,11 @@ import {
   type UserRewardSource,
   type UserRewardStatus,
 } from '../../features/data/selectors/dashboard.ts';
-import { getMostCommon, isDefined } from '../../features/data/utils/array-utils.ts';
+import { isDefined } from '../../features/data/utils/array-utils.ts';
 import { groupByMap } from '../../helpers/collection.ts';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { isSameSingleAsset } from '../../helpers/singleAssetSrc.ts';
 import { ucFirstLetter } from '../../helpers/string.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { AssetsImage } from '../AssetsImage/AssetsImage.tsx';
@@ -58,23 +59,21 @@ export const PendingRewardsIconWithTooltip = memo(function PendingRewardsIconWit
   const { pending } = rewards;
   const tokens = useMemo(
     () =>
-      pending.has ?
-        {
-          chainId: getMostCommon(pending.rewards.map(r => r.token.chainId)),
-          symbols: uniq(pending.rewards.map(r => r.token.symbol)),
-        }
-      : undefined,
+      uniqWith(
+        pending.rewards.map(r => r.token),
+        isSameSingleAsset
+      ),
     [pending]
   );
 
-  if (!tokens) {
+  if (!pending.has) {
     return null;
   }
 
   return (
     <AsTooltip content={<StatusRewards status={'pending'} rewards={pending.rewards} />}>
       <div className={classes.container}>
-        <AssetsImage chainId={tokens.chainId} size={size || 20} assetSymbols={tokens.symbols} />
+        <AssetsImage size={size || 20} assets={tokens} />
       </div>
     </AsTooltip>
   );

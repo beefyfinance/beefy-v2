@@ -3,10 +3,11 @@ import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import missingAssetUrl from '../../images/single-assets/missing-asset.svg';
 import { AssetArrangement } from './AssetArrangement.tsx';
 import { AssetImg } from './AssetImg.tsx';
-import { SymbolAssetImg } from './SymbolAssetImg.tsx';
+import { SingleAssetImg } from './SingleAssetImg.tsx';
 import { defaultSize, maxSupportedAssets } from './config.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { ChainIcon } from '../ChainIcon/ChainIcon.tsx';
+import { areSameSingleAssets, type SingleAsset } from '../../helpers/singleAssetSrc.ts';
 
 const chainBadgeSize = 0.5;
 
@@ -16,34 +17,28 @@ type CommonProps = {
 };
 
 export type AssetsImageProps = {
-  chainId?: ChainEntity['id'] | undefined;
-  assetSymbols: string[];
+  assets: SingleAsset[];
 } & CommonProps;
 
 export const AssetsImage = memo<AssetsImageProps>(
-  function AssetsImage({ chainId, assetSymbols, css, size = defaultSize }) {
-    if (!assetSymbols || assetSymbols.length === 0) {
+  function AssetsImage({ assets, css, size = defaultSize }) {
+    if (assets.length === 0) {
       return <MissingAssetsImage size={size} css={css} />;
     }
 
     return (
-      <AssetArrangement
-        count={Math.min(assetSymbols.length, maxSupportedAssets)}
-        size={size}
-        css={css}
-      >
-        {assetSymbols.slice(0, maxSupportedAssets).map(symbol => (
-          <SymbolAssetImg key={`${symbol}.${chainId}`} symbol={symbol} chainId={chainId} />
+      <AssetArrangement count={Math.min(assets.length, maxSupportedAssets)} size={size} css={css}>
+        {assets.slice(0, maxSupportedAssets).map((asset, index) => (
+          <SingleAssetImg key={index} asset={asset} />
         ))}
       </AssetArrangement>
     );
   },
   (prevProps, nextProps) => {
     return (
-      prevProps.chainId === nextProps.chainId &&
       prevProps.size === nextProps.size &&
       prevProps.css === nextProps.css &&
-      prevProps.assetSymbols?.join() === nextProps.assetSymbols?.join()
+      areSameSingleAssets(prevProps.assets, nextProps.assets)
     );
   }
 );
@@ -63,12 +58,12 @@ export const MissingAssetsImage = memo<MissingAssetsImageProps>(function Missing
 
 export type AssetsImageWithChainProps = {
   chainId?: ChainEntity['id'];
-  assetSymbols: string[];
+  assets: SingleAsset[];
 } & CommonProps;
 
 export const AssetsImageWithChain = memo<AssetsImageWithChainProps>(function AssetsImageWithChain({
   chainId,
-  assetSymbols,
+  assets,
   css: cssProp,
   size = defaultSize,
 }) {
@@ -76,7 +71,7 @@ export const AssetsImageWithChain = memo<AssetsImageWithChainProps>(function Ass
 
   return (
     <div className={css(wrapperStyle, cssProp)} style={{ width: size, height: size }}>
-      <AssetsImage chainId={chainId} assetSymbols={assetSymbols} size={size} />
+      <AssetsImage assets={assets} size={size} />
       {chainId && <ChainIcon chainId={chainId} size={badgeSize} css={chainBadgeStyle} />}
     </div>
   );

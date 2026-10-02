@@ -9,10 +9,8 @@ import { formatLargePercent, formatUsd } from '../../../../../../helpers/format.
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { selectChainById } from '../../../../../data/selectors/chains.ts';
-
-type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
+import type { UnifiedRewardToken } from '../../../../../data/selectors/rewards.ts';
 
 export type RewardItemProps = {
   chainId: ChainEntity['id'];
@@ -20,7 +18,7 @@ export type RewardItemProps = {
   reward: {
     active: boolean;
     amount: BigNumber;
-    token: Token;
+    token: UnifiedRewardToken;
     price: BigNumber | undefined;
     apr: number | undefined;
   };

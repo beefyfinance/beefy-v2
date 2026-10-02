@@ -1,13 +1,13 @@
 import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
+import type { SingleAsset } from '../../helpers/singleAssetSrc.ts';
 
 export type TokenExposurePayloadData = {
   key: string;
   label: string;
   value: BigNumber;
   percentage: number;
-  chainId: ChainEntity['id'];
-  symbols: string[];
+  assets: SingleAsset[];
 };
 
 export type ChainExposurePayloadData = {
