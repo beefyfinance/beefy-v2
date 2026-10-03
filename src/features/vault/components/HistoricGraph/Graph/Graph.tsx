@@ -2,6 +2,7 @@ import { token } from '@repo/styles/tokens';
 import { fromUnixTime } from 'date-fns';
 import { max as lodashMax } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Area,
   Bar,
@@ -22,9 +23,9 @@ import {
   formatUsd,
 } from '../../../../../helpers/format.ts';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph.ts';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
 import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
+import { getBucketParams } from '../../../../data/apis/beefy/beefy-data-api-helpers.ts';
 import type { TokenEntity } from '../../../../data/entities/token.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
@@ -32,10 +33,8 @@ import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
 import type { BaseTooltipProps } from '../TooltipContent/TooltipContent.tsx';
 import { TooltipContent } from '../TooltipContent/TooltipContent.tsx';
 import type { ChartStat } from '../types.ts';
-import { styles } from './styles.ts';
+import { ChartBox } from './styles.ts';
 import { useChartData } from './useChartData.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type ChartProp<TStat extends ChartStat> = {
   vaultId: VaultEntity['id'];
@@ -54,7 +53,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
   toggles,
   inverted,
 }: ChartProp<TStat>) {
-  const classes = useStyles();
+  const { t } = useTranslation();
   const isMobile = useBreakpoint({ to: 'xs' });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultType = vault.type;
@@ -105,31 +104,30 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
 
   const isClm = stat === 'clm';
 
+  const tooltipLabel = t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`]);
+  const maLabel = useMemo(() => {
+    const { maPeriods, maUnit } = getBucketParams(bucket);
+    return `${maPeriods} ${t(maUnit)}`;
+  }, [bucket, t]);
+
   const tooltipContentCreator = useCallback(
     (props: BaseTooltipProps<TStat>) => (
       <TooltipContent<TStat>
         {...props}
-        stat={stat}
-        bucket={bucket}
+        label={tooltipLabel}
+        maLabel={maLabel}
         toggles={isClm ? { movingAverage: false, average: false } : toggles}
         valueFormatter={yTickFormatter}
         avg={avg}
-        vaultType={vaultType}
       />
     ),
-    [stat, bucket, isClm, toggles, yTickFormatter, avg, vaultType]
+    [tooltipLabel, maLabel, isClm, toggles, yTickFormatter, avg]
   );
 
   return (
-    <div className={classes.chartContainer}>
+    <ChartBox>
       <ResponsiveContainer height={250}>
-        <ComposedChart
-          data={data}
-          className={classes.graph}
-          height={200}
-          margin={chartMargin}
-          barCategoryGap={'30%'}
-        >
+        <ComposedChart data={data} height={200} margin={chartMargin} barCategoryGap={'30%'}>
           <CartesianGrid
             strokeDasharray="2 2"
             vertical={!isClm}
@@ -184,7 +182,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
           />
         </ComposedChart>
       </ResponsiveContainer>
-    </div>
+    </ChartBox>
   );
 });
 
