@@ -184,6 +184,47 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
   });
 });
 
+describe('UniswapLikeStrategy pool deposit quote returned', () => {
+  it('reports the part of the swapped leg the pool could not pair as returned, not lost', async () => {
+    const { strategy, option } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    // 10 USDC in: 5 swapped for 0.002 WETH, 5 kept as the USDC leg
+    pool.swap.mockReturnValue({ amountOut: bn('2000000000000000') });
+    // the WETH leg overshoots the post-swap pool ratio by 0.0001 WETH
+    pool.addLiquidity.mockReturnValue({
+      liquidity: bn('1000000000000000000'),
+      returnedA: bn('100000000000000'),
+      returnedB: bn('0'),
+    });
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      option
+    );
+
+    // USDC is swapped in but WETH is token0, so the swapped-out WETH leg is amountA
+    expect(pool.addLiquidity).toHaveBeenCalledWith(
+      bn('2000000000000000'),
+      baseWeth.address,
+      bn('5000000')
+    );
+    expect(quote.returned).toEqual([{ token: baseWeth, amount: bn('0.0001') }]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit', 'unused']);
+    expect(quote.steps[3]).toEqual({ type: 'unused', outputs: quote.returned });
+  });
+
+  it('adds no returned or unused step when both legs pair exactly', async () => {
+    const { strategy, option } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      option
+    );
+
+    expect(quote.returned).toEqual([]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit']);
+  });
+});
+
 describe('UniswapLikeStrategy aggregator deposit quote', () => {
   it('reports the leg the pool could not pair as returned, not lost', async () => {
     const { strategy, option, fetchQuotes } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
