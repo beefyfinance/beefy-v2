@@ -29,6 +29,7 @@ const swapAggregator = new SwapAggregator([new WNativeSwapProvider()]);
 const { pool } = vi.hoisted(() => ({
   pool: {
     getOptimalSwapAmount: vi.fn(),
+    getAddLiquidityRatio: vi.fn(),
     swap: vi.fn(),
     addLiquidity: vi.fn(),
   },
@@ -107,7 +108,11 @@ beforeEach(() => {
   pool.swap
     .mockReset()
     .mockImplementation((amountIn: BigNumber) => ({ amountOut: amountIn.idiv(2) }));
-  pool.addLiquidity.mockReset().mockReturnValue({ liquidity: bn('1000000000000000000') });
+  pool.addLiquidity.mockReset().mockReturnValue({
+    liquidity: bn('1000000000000000000'),
+    returnedA: bn('0'),
+    returnedB: bn('0'),
+  });
 });
 
 describe('UniswapLikeStrategy pool deposit quote', () => {
@@ -176,6 +181,139 @@ describe('UniswapLikeStrategy pool deposit quote', () => {
     expect(fetchQuotes).toHaveBeenCalledTimes(1);
     expect(quote.steps.map(step => step.type)).toEqual(['swap', 'swap', 'build', 'deposit']);
     expect(quote.steps[0]).toMatchObject({ via: 'aggregator', providerId: 'wnative' });
+  });
+});
+
+describe('UniswapLikeStrategy pool deposit quote returned', () => {
+  it('reports the part of the swapped leg the pool could not pair as returned, not lost', async () => {
+    const { strategy, option } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    // 10 USDC in: 5 swapped for 0.002 WETH, 5 kept as the USDC leg
+    pool.swap.mockReturnValue({ amountOut: bn('2000000000000000') });
+    // the WETH leg overshoots the post-swap pool ratio by 0.0001 WETH
+    pool.addLiquidity.mockReturnValue({
+      liquidity: bn('1000000000000000000'),
+      returnedA: bn('100000000000000'),
+      returnedB: bn('0'),
+    });
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      option
+    );
+
+    // USDC is swapped in but WETH is token0, so the swapped-out WETH leg is amountA
+    expect(pool.addLiquidity).toHaveBeenCalledWith(
+      bn('2000000000000000'),
+      baseWeth.address,
+      bn('5000000')
+    );
+    expect(quote.returned).toEqual([{ token: baseWeth, amount: bn('0.0001') }]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit', 'unused']);
+    expect(quote.steps[3]).toEqual({ type: 'unused', outputs: quote.returned });
+  });
+
+  it('adds no returned or unused step when both legs pair exactly', async () => {
+    const { strategy, option } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      option
+    );
+
+    expect(quote.returned).toEqual([]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit']);
+  });
+});
+
+describe('UniswapLikeStrategy aggregator deposit quote', () => {
+  it('reports the leg the pool could not pair as returned, not lost', async () => {
+    const { strategy, option, fetchQuotes } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    const aggOption = { ...option, swapVia: 'aggregator', lpTokens: [baseWeth, baseUsdc] };
+    // 10 USDC in: 5 swapped to WETH, 5 kept as the USDC leg
+    pool.getAddLiquidityRatio.mockReturnValue({ a: bn('5000000'), b: bn('5000000') });
+    fetchQuotes.mockResolvedValue([
+      {
+        providerId: 'kyber',
+        fromToken: baseUsdc,
+        fromAmount: bn('5'),
+        toToken: baseWeth,
+        toAmount: bn('0.002'),
+        fee: { value: 0 },
+      },
+    ]);
+    // the WETH leg overshoots the pool ratio by 0.0001 WETH
+    pool.addLiquidity.mockReturnValue({
+      liquidity: bn('1000000000000000000'),
+      returnedA: bn('100000000000000'),
+      returnedB: bn('0'),
+    });
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      aggOption as never
+    );
+
+    expect(pool.addLiquidity).toHaveBeenCalledWith(
+      bn('2000000000000000'),
+      baseWeth.address,
+      bn('5000000')
+    );
+    expect(quote.returned).toEqual([{ token: baseWeth, amount: bn('0.0001') }]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit', 'unused']);
+    expect(quote.steps[3]).toEqual({ type: 'unused', outputs: quote.returned });
+  });
+
+  it('maps returnedB to the second leg at its own decimals', async () => {
+    const { strategy, option, fetchQuotes } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    const aggOption = { ...option, swapVia: 'aggregator', lpTokens: [baseWeth, baseUsdc] };
+    pool.getAddLiquidityRatio.mockReturnValue({ a: bn('5000000'), b: bn('5000000') });
+    fetchQuotes.mockResolvedValue([
+      {
+        providerId: 'kyber',
+        fromToken: baseUsdc,
+        fromAmount: bn('5'),
+        toToken: baseWeth,
+        toAmount: bn('0.002'),
+        fee: { value: 0 },
+      },
+    ]);
+    // the USDC leg (6 decimals) is the one left over: 0.25 USDC
+    pool.addLiquidity.mockReturnValue({
+      liquidity: bn('1000000000000000000'),
+      returnedA: bn('0'),
+      returnedB: bn('250000'),
+    });
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      aggOption as never
+    );
+
+    expect(quote.returned).toEqual([{ token: baseUsdc, amount: bn('0.25') }]);
+  });
+
+  it('adds no returned or unused step when both legs pair exactly', async () => {
+    const { strategy, option, fetchQuotes } = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    const aggOption = { ...option, swapVia: 'aggregator', lpTokens: [baseWeth, baseUsdc] };
+    pool.getAddLiquidityRatio.mockReturnValue({ a: bn('5000000'), b: bn('5000000') });
+    fetchQuotes.mockResolvedValue([
+      {
+        providerId: 'kyber',
+        fromToken: baseUsdc,
+        fromAmount: bn('5'),
+        toToken: baseWeth,
+        toAmount: bn('0.002'),
+        fee: { value: 0 },
+      },
+    ]);
+
+    const quote = await strategy.fetchDepositQuote(
+      [{ token: baseUsdc, amount: bn('10'), max: false }],
+      aggOption as never
+    );
+
+    expect(quote.returned).toEqual([]);
+    expect(quote.steps.map(step => step.type)).toEqual(['swap', 'build', 'deposit']);
   });
 });
 

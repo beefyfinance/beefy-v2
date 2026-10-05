@@ -320,21 +320,20 @@ export abstract class UniswapLikeStrategy<
       lpTokenAmounts.reverse(); // in-place
     }
 
-    const { liquidity } = pool.addLiquidity(
+    const { liquidity, returnedA, returnedB } = pool.addLiquidity(
       toWei(lpTokenAmounts[0].amount, lpTokenAmounts[0].token.decimals),
       lpTokenAmounts[0].token.address,
       toWei(lpTokenAmounts[1].amount, lpTokenAmounts[1].token.decimals)
     );
 
     const liquidityAmount = fromWei(liquidity, depositToken.decimals);
-    // const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
-    //   token: lpTokens[i],
-    //   amount: fromWei(amount, lpTokens[i].decimals),
-    // }));
-    // const returnedTokenAmounts = [returnedA, returnedB].map((amount, i) => ({
-    //   token: lpTokens[i],
-    //   amount: fromWei(amount, lpTokens[i].decimals),
-    // }));
+    // the optimal swap amount is an estimate (loosest on stable pools); the router sends the unmatched part back as dust
+    const returned = [returnedA, returnedB]
+      .map((amount, i) => ({
+        token: lpTokenAmounts[i].token,
+        amount: fromWei(amount, lpTokenAmounts[i].token.decimals),
+      }))
+      .filter(({ amount }) => amount.gt(BIG_ZERO));
 
     // Build quote inputs
     const inputs = [input];
@@ -394,6 +393,10 @@ export abstract class UniswapLikeStrategy<
       inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
+    if (returned.length > 0) {
+      steps.push({ type: 'unused', outputs: returned });
+    }
+
     // Build quote outputs
     const outputs: TokenAmount[] = [
       {
@@ -401,9 +404,6 @@ export abstract class UniswapLikeStrategy<
         amount: liquidityAmount,
       },
     ];
-
-    // Build dust outputs
-    const returned: TokenAmount[] = [];
 
     // Build quote
     return {
@@ -505,21 +505,20 @@ export abstract class UniswapLikeStrategy<
       bigNumberToStringDeep(lpTokenAmounts)
     );
 
-    const { liquidity } = pool.addLiquidity(
+    const { liquidity, returnedA, returnedB } = pool.addLiquidity(
       toWei(lpTokenAmounts[0].amount, lpTokenAmounts[0].token.decimals),
       lpTokenAmounts[0].token.address,
       toWei(lpTokenAmounts[1].amount, lpTokenAmounts[1].token.decimals)
     );
 
     const liquidityAmount = fromWei(liquidity, depositToken.decimals);
-    // const usedTokenAmounts = [addAmountA, addAmountB].map((amount, i) => ({
-    //   token: lpTokens[i],
-    //   amount: fromWei(amount, lpTokens[i].decimals),
-    // }));
-    // const returnedTokenAmounts = [returnedA, returnedB].map((amount, i) => ({
-    //   token: lpTokens[i],
-    //   amount: fromWei(amount, lpTokens[i].decimals),
-    // }));
+    // aggregator legs rarely land on the pool ratio; the router sends the unmatched part back as dust
+    const returned = [returnedA, returnedB]
+      .map((amount, i) => ({
+        token: lpTokenAmounts[i].token,
+        amount: fromWei(amount, lpTokenAmounts[i].token.decimals),
+      }))
+      .filter(({ amount }) => amount.gt(BIG_ZERO));
 
     // Build quote inputs
     const inputs = [input];
@@ -555,6 +554,10 @@ export abstract class UniswapLikeStrategy<
       inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
+    if (returned.length > 0) {
+      steps.push({ type: 'unused', outputs: returned });
+    }
+
     // Build quote outputs
     const outputs: TokenAmount[] = [
       {
@@ -562,9 +565,6 @@ export abstract class UniswapLikeStrategy<
         amount: liquidityAmount,
       },
     ];
-
-    // Build dust outputs
-    const returned: TokenAmount[] = [];
 
     // Build quote
     return {
