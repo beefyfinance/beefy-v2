@@ -122,30 +122,22 @@ export type AxelarGasToken =
 export type GetFeesRequest = {
   destinationChain: AxelarChain;
   destinationContractAddress: string;
-  method: 'getFees';
   sourceChain: AxelarChain;
-  sourceContractAddress: string;
   sourceTokenSymbol: string;
 };
 
-type AxelarResponse<
-  TRequest extends {
-    method: string;
-  },
-  TResult,
-> = {
-  method: TRequest['method'];
+type AxelarResponse<TMethod extends string, TRequest, TResult> = {
+  method: TMethod;
   params: TRequest;
   result: TResult;
 };
 
-export type GetFeesResponse = AxelarResponse<GetFeesRequest, GetFeesResult>;
+export type GetFeesResponse = AxelarResponse<'getFees', GetFeesRequest, GetFeesResult>;
 
 export interface IAxelarSDK {
   /** @returns fee in wei of the source chain's native token */
   estimateGasFee(
     sourceChainId: AxelarChain,
-    sourceContractAddress: string,
     sourceChainTokenSymbol: AxelarGasToken,
     destinationChainId: AxelarChain,
     destinationContractAddress: string,

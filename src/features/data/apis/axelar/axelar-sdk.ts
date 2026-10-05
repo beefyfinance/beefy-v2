@@ -26,7 +26,6 @@ export class AxelarSDK implements IAxelarSDK {
 
   async estimateGasFee(
     sourceChainId: AxelarChain,
-    sourceContractAddress: string,
     sourceChainTokenSymbol: AxelarGasToken,
     destinationChainId: AxelarChain,
     destinationContractAddress: string,
@@ -49,10 +48,9 @@ export class AxelarSDK implements IAxelarSDK {
       // expressSupported,
     } = await this.getFees({
       sourceChain: sourceChainId,
-      sourceContractAddress: destinationContractAddress,
       sourceTokenSymbol: sourceChainTokenSymbol,
       destinationChain: destinationChainId,
-      destinationContractAddress: sourceContractAddress,
+      destinationContractAddress: destinationContractAddress,
     });
 
     const destGasPriceWei = toWeiFromString(destToken.gas_price, destToken.decimals);
@@ -130,21 +128,13 @@ export class AxelarSDK implements IAxelarSDK {
     return [l1ExecutionFee, l1ExecutionFeeWithMultiplier];
   }
 
-  protected async getFees(request: Omit<GetFeesRequest, 'method'>) {
-    const url = `https://api.gmp.axelarscan.io/`;
-    const body: GetFeesRequest = {
-      method: 'getFees',
-      ...request,
-    };
-
+  protected async getFees(request: GetFeesRequest) {
     const response = await postJson<GetFeesResponse>({
-      url,
-
+      url: 'https://api.axelarscan.io/gmp/getFees',
       headers: {
         'Content-Type': 'application/json',
       },
-      init: { mode: 'cors' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(request),
     });
 
     const {
