@@ -330,6 +330,7 @@ export const config = {
     },
   },
   sonic: {
+    eol: 1790951681,
     name: 'Sonic',
     chainId: 146,
     rpc: [
