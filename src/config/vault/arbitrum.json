@@ -15863,6 +15863,7 @@
     "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["rETH", "WETH"],
+    "replacementVaultId": "uniswap-cow-arb-wsteth-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
