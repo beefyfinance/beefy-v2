@@ -250,7 +250,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       ...(fee?.step ? [fee.step] : []),
     ];
     const destSteps = destHandlerQuote.destSteps.filter(s => s.type !== 'unused');
-    const returned = mergeTokenAmounts(srcHandlerQuote.returned, destHandlerQuote.returned);
+    // the dest is quoted on the slippage floor; the held-back routing token is the user's, not a loss
+    const returned = mergeTokenAmounts(
+      srcHandlerQuote.returned,
+      [{ token: routingToken, amount: netRoutingAmount.minus(inputAmount) }],
+      destHandlerQuote.returned
+    );
     const trailingSteps: ZapQuoteStep[] =
       returned.length > 0 ? [{ type: 'unused', outputs: returned }] : [];
 
