@@ -1939,6 +1939,7 @@
     "platformId": "curvance",
     "assets": ["AUSD"],
     "migrationIds": [],
+    "replacementVaultId": "aavev3-monad-ausd",
     "risks": {
       "updatedAt": 1765800810,
       "complex": false,

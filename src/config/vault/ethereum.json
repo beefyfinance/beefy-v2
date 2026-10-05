@@ -6036,6 +6036,7 @@
     "curatorId": "steakhouse",
     "assets": ["wstETH"],
     "migrationIds": ["morpho"],
+    "replacementVaultId": "curve-eth+-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -7478,8 +7479,8 @@
     "retiredAt": 1790969311,
     "platformId": "convex",
     "assets": ["eUSD", "USDC"],
-    "replacementVaultId": "morpho-smokehouse-usdc",
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "replacementVaultId": "morpho-steakhouse-usdc",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
