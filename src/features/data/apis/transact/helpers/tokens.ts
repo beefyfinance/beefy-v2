@@ -1,7 +1,18 @@
-import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { isTokenEqual, isTokenNative, tokenEqualityKey } from '../../../entities/token.ts';
+import BigNumber from 'bignumber.js';
+import type {
+  SharedBalanceWnative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../../../entities/token.ts';
+import {
+  isSharedBalanceToken,
+  isTokenEqual,
+  isTokenNative,
+  sharedPrecisionDecimals,
+  tokenEqualityKey,
+} from '../../../entities/token.ts';
 import { sortBy } from 'lodash-es';
-import type { ChainEntity } from '../../../entities/chain.ts';
 import type { TokenAmount } from '../transact-types.ts';
 
 /**
@@ -128,6 +139,14 @@ export function tokensReachableFromAll(
   });
 }
 
+/** the token whose balance is spent: either side of a shared pair is its erc20 view */
+function toBalanceToken(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): TokenEntity {
+  return isSharedBalanceToken(token, sharedWnative) ? sharedWnative : token;
+}
+
 /**
  * Returns true if all tokens are different from each other
  */
@@ -136,11 +155,64 @@ export function allTokensAreDistinct(inputs: TokenEntity[]): boolean {
 }
 
 /**
- * Returns true for chains where native and wnative balances are treated as one
- * (Chains where there is no need to wrap or unwrap)
+ * Native <-> wnative on a chain where both are one balance, so moving between them needs no call
  */
-export function nativeAndWrappedAreSame(chainId: ChainEntity['id']) {
-  return ['metis', 'celo'].includes(chainId);
+export function isSameBalancePair(
+  a: TokenEntity,
+  b: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
+  return (
+    !isTokenEqual(a, b) &&
+    isSharedBalanceToken(a, sharedWnative) &&
+    isSharedBalanceToken(b, sharedWnative)
+  );
+}
+
+/** same token, or the other view of the same balance: either way no swap is needed */
+export function isSameOrSharedBalance(
+  a: TokenEntity,
+  b: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
+  return isTokenEqual(toBalanceToken(a, sharedWnative), toBalanceToken(b, sharedWnative));
+}
+
+/** the native view of a shared balance: the erc20 view is how the app holds and spends it */
+function isSharedNativeView(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): boolean {
+  return isTokenNative(token) && isSharedBalanceToken(token, sharedWnative);
+}
+
+/** lists a shared balance once, as the erc20 view, so it is never offered on neither view */
+export function withoutSharedNativeView(
+  tokens: TokenEntity[],
+  sharedWnative: SharedBalanceWnative | undefined
+): TokenEntity[] {
+  if (!sharedWnative || !tokens.some(token => isSharedNativeView(token, sharedWnative))) {
+    return tokens;
+  }
+  return uniqueTokens(
+    tokens.map(token => (isSharedNativeView(token, sharedWnative) ? sharedWnative : token))
+  );
+}
+
+/**
+ * Amounts are in whole tokens, so native and wnative need no conversion factor, but the wnative
+ * view can hold fewer decimals (arc: 6 vs 18, balanceOf truncates the rest).
+ * No-op unless token is native/wnative and sharedWnative is set.
+ */
+export function floorToSharedPrecision(
+  amount: BigNumber,
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): BigNumber {
+  if (!isSharedBalanceToken(token, sharedWnative)) {
+    return amount;
+  }
+  return amount.decimalPlaces(sharedPrecisionDecimals(token, sharedWnative), BigNumber.ROUND_FLOOR);
 }
 
 export function pickTokens(...inputs: TokenAmount[][]): TokenEntity[] {

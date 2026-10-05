@@ -143,6 +143,10 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
     count: 30,
     hash: '0a78e409fd4ed8ed0d1741878cfb566a2ce63add64a786af782e5fe746971ead',
   },
+  sonic: {
+    count: 114,
+    hash: '3c7fac77f022b741affec06043fb612098e9a722fbc67721a31f69c3cd1b7625',
+  },
 };
 
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];

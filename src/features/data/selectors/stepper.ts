@@ -36,6 +36,7 @@ import {
   selectVaultByIdOrUndefined,
   selectVaultPricePerFullShare,
 } from './vaults.ts';
+import { selectZapByChainId } from './zap.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
@@ -321,7 +322,7 @@ function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmou
 
   const tokenReturnedEvents = parseTokenReturnedEvents(receipt.logs);
 
-  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.to) {
+  if (!vaultId || !receipt || !tokenReturnedEvents) {
     return NO_TOKEN_AMOUNTS;
   }
 
@@ -334,8 +335,13 @@ function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmou
   );
 
   const vault = selectVaultById(state, vaultId);
-  // the router emits TokenReturned for every order output, and the user calls the router directly
-  const zapAddress = receipt.to.toLowerCase();
+  // the router emits TokenReturned for every order output; the config knows it, and receipt.to
+  // would be the wallet's own contract for a Safe or smart account
+  const zap = selectZapByChainId(state, vault.chainId);
+  if (!zap) {
+    return NO_TOKEN_AMOUNTS;
+  }
+  const zapAddress = zap.router.toLowerCase();
   const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {

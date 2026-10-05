@@ -6,11 +6,7 @@
     "bps": 0,
     "output": {
       "vault": {
-        "ids": [
-          "pancakeswap-cow-base-sol-usdc-vault",
-          "pancakeswap-cow-base-sol-cbbtc-vault",
-          "pancakeswap-cow-base-sol-jitosol-vault"
-        ]
+        "ids": ["pancakeswap-cow-base-sol-cbbtc-vault", "pancakeswap-cow-base-sol-jitosol-vault"]
       }
     }
   }

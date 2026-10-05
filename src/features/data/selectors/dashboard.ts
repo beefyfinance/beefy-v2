@@ -2,11 +2,10 @@ import { EMPTY_ARRAY } from '../utils/selector-utils.ts';
 import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
-import { orderBy } from 'lodash-es';
+import { countBy, orderBy } from 'lodash-es';
 import type BigNumber from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
   isErc4626Vault,
@@ -18,6 +17,7 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { getTopNArray } from '../utils/array-utils.ts';
 import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types.ts';
+import type { UnifiedRewardToken } from './rewards.ts';
 import {
   selectClmPnl,
   selectStandardGovPnl,
@@ -40,13 +40,15 @@ import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { selectIsVaultStable } from './filtered-vaults.ts';
 import { selectPlatformById } from './platforms.ts';
 import {
+  isTokenStock,
+  resolveStockCompanyName,
   selectHasBreakdownDataForVault,
   selectIsTokenStable,
   selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
   selectTokenPriceByTokenOracleId,
-  selectVaultTokenSymbols,
+  selectVaultTokenImageAssets,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
@@ -55,6 +57,7 @@ import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
 import { selectShouldInitDashboardForUserImpl } from './data-loader/dashboard.ts';
 import { recordEqualBy } from '../../../helpers/object.ts';
+import { areSameSingleAssets, type SingleAsset } from '../../../helpers/singleAssetSrc.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -81,7 +84,7 @@ export type UserRewardStatus = 'compounded' | 'pending' | 'claimed';
 export type UserRewardSource = PnlYieldSource['source'] | 'gov' | 'boost';
 
 export type UserReward = {
-  token: Pick<TokenEntity, 'symbol' | 'decimals' | 'address' | 'chainId'>;
+  token: UnifiedRewardToken;
   amount: BigNumber;
   usd: BigNumber;
   status: UserRewardStatus;
@@ -326,8 +329,8 @@ type DashboardUserExposureSummarizer<
 > = (entries: DashboardUserExposureEntry<T>[]) => DashboardUserExposureEntry<T>[];
 
 type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
-  symbols: string[];
-  chainId: ChainEntity['id'];
+  assets: SingleAsset[];
+  company?: string;
 };
 
 type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
@@ -335,17 +338,7 @@ type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
 };
 type DashboardUserAnyExposureEntry = DashboardUserExposureEntry & {
   chainId?: ChainEntity['id'] | 'others';
-  symbols?: string[];
-};
-
-const exposureSymbolsEqual = (a: string[] | undefined, b: string[] | undefined): boolean => {
-  if (a === b) {
-    return true;
-  }
-  if (!a || !b || a.length !== b.length) {
-    return false;
-  }
-  return a.every((symbol, i) => symbol === b[i]);
+  assets?: SingleAsset[];
 };
 
 export const exposureEntriesEqual = (
@@ -369,7 +362,7 @@ export const exposureEntriesEqual = (
       numberEqual(entry.percentage, other.percentage) &&
       entry.chainId === other.chainId &&
       bigNumberEqual(entry.value, other.value) &&
-      exposureSymbolsEqual(entry.symbols, other.symbols)
+      areSameSingleAssets(entry.assets, other.assets)
     );
   });
 };
@@ -412,8 +405,7 @@ const CHAIN_EXPOSURE_OTHERS: DashboardUserExposureEntry<DashboardUserChainExposu
 const TOKEN_EXPOSURE_OTHERS: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry> =
   Object.freeze({
     ...EXPOSURE_OTHERS,
-    symbols: EMPTY_ARRAY,
-    chainId: 'ethereum' as const,
+    assets: EMPTY_ARRAY,
   });
 const top6ByPercentageSummarizer = <
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
@@ -423,9 +415,19 @@ const top6ByPercentageSummarizer = <
 const top6ChainsByPercentageSummarizer = (
   entries: DashboardUserExposureEntry<DashboardUserChainExposureVaultEntry>[]
 ) => getTopNArray(entries, 'percentage', 6, CHAIN_EXPOSURE_OTHERS);
+const withCompanyOnSharedLabels = (
+  entries: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry>[]
+) => {
+  const labelCounts = countBy(entries, entry => entry.label);
+  return entries.map(entry =>
+    entry.company && labelCounts[entry.label] > 1 ?
+      { ...entry, label: `${entry.label} (${entry.company})` }
+    : entry
+  );
+};
 const top6TokensByPercentageSummarizer = (
   entries: DashboardUserExposureEntry<DashboardUserTokenExposureVaultEntry>[]
-) => getTopNArray(entries, 'percentage', 6, TOKEN_EXPOSURE_OTHERS);
+) => getTopNArray(withCompanyOnSharedLabels(entries), 'percentage', 6, TOKEN_EXPOSURE_OTHERS);
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
 
@@ -506,20 +508,32 @@ export const selectDashboardUserExposureByPlatform = (state: BeefyState, walletA
     top6ByPercentageSummarizer,
     walletAddress
   );
+
+const selectTokenExposureVaultEntry = (
+  state: BeefyState,
+  asset: SingleAsset,
+  value: BigNumber
+): DashboardUserTokenExposureVaultEntry => {
+  const token = asset.id ? selectTokenByIdOrUndefined(state, asset.chainId, asset.id) : undefined;
+  const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
+  const labelledAsNative = symbol !== asset.symbol;
+  return {
+    key: token && isTokenStock(token) ? `stock:${symbol}` : symbol,
+    label: symbol,
+    company: resolveStockCompanyName(token),
+    value,
+    assets: [labelledAsNative ? { symbol, chainId: asset.chainId } : asset],
+  };
+};
+
 const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
   DashboardUserTokenExposureVaultEntry
 > = (state, vaultId, vaultTvl, walletAddress): DashboardUserTokenExposureVaultEntry[] => {
   const vault = selectVaultById(state, vaultId);
+  const vaultAssets = selectVaultTokenImageAssets(state, vaultId);
 
-  if (vault.assetIds.length === 1) {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, vault.assetIds[0]);
-    const symbol = selectWrappedToNativeSymbolOrTokenSymbol(
-      state,
-      token ? token.symbol : vault.assetIds[0]
-    );
-    return [
-      { key: symbol, label: symbol, value: vaultTvl, symbols: [symbol], chainId: vault.chainId },
-    ];
+  if (vaultAssets.length === 1) {
+    return [selectTokenExposureVaultEntry(state, vaultAssets[0], vaultTvl)];
   }
 
   const haveBreakdownData = selectHasBreakdownDataForVault(state, vault);
@@ -528,27 +542,18 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
     const scaleFactor = getDashboardLpBreakdownScalingFactor(vaultId, vaultTvl, assets);
 
-    return assets.map(asset => {
-      const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
-      return {
-        key: symbol,
-        label: symbol,
-        value: asset.userValue.multipliedBy(scaleFactor),
-        symbols: [symbol],
-        chainId: vault.chainId,
-      };
-    });
+    return assets.map(asset =>
+      selectTokenExposureVaultEntry(state, asset, asset.userValue.multipliedBy(scaleFactor))
+    );
   }
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const symbols = selectVaultTokenSymbols(state, vaultId);
   return [
     {
       key: depositToken.symbol,
       label: depositToken.symbol,
       value: vaultTvl,
-      symbols,
-      chainId: vault.chainId,
+      assets: vaultAssets,
     },
   ];
 };

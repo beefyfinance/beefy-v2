@@ -7,7 +7,6 @@ export interface IAxelarApi {
     sourceChain: ChainEntity,
     destinationChain: ChainEntity,
     gasLimit: BigNumber,
-    sourceAddress: string,
     destinationAddress: string
   ): Promise<BigNumber>;
 }

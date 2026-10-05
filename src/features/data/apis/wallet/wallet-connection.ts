@@ -36,14 +36,11 @@ const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
 };
 
-const eip6963WalletPriority = ['xyz.farcaster.', 'com.coinbase.'];
-
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected hasConnectedWallet = false;
   protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
-  protected tryToAutoConnectToEip6963: boolean = false;
   protected eip6963Wallets = new Map<string, string>();
 
   constructor(protected options: WalletConnectionOptions) {
@@ -264,11 +261,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  /** set whether next tryToAutoConnect will try to automatically connect to EIP6963 wallet */
-  public setAutoConnectToEip6963(value: boolean = true) {
-    this.tryToAutoConnectToEip6963 = value;
-  }
-
   /**
    * Attempt to reconnect to cached provider
    */
@@ -435,9 +427,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Clear wallet connect storage or else it will try to reconnect to same session
     WalletConnectionApi.clearWalletConnectStorage();
 
-    // Don't try to auto connect next time
-    this.tryToAutoConnectToEip6963 = false;
-
     // Raise events
     this.options.onWalletDisconnected();
   }
@@ -460,21 +449,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     this.eip6963Wallets.set(e.detail.info.rdns, e.detail.info.name);
   }
 
-  protected getEip6963Wallet() {
-    if (this.eip6963Wallets.size === 0) {
-      return undefined;
-    }
-
-    for (const rdns of eip6963WalletPriority) {
-      const wallet = this.eip6963Wallets.get(rdns);
-      if (wallet) {
-        return wallet;
-      }
-    }
-
-    return sample(Array.from(this.eip6963Wallets.values()));
-  }
-
   protected async getWalletForAutoConnect() {
     // Use last connected wallet if set
     const lastConnectedWallet = WalletConnectionApi.getLastConnectedWallet();
@@ -482,12 +456,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       // wait for injected wallet to be available in case last connected was an injected wallet
       await this.waitForInjectedWallet();
       return lastConnectedWallet;
-    }
-
-    // Try to auto connect if wallet announced via EIP-6963
-    if (this.tryToAutoConnectToEip6963 && this.eip6963Wallets.size > 0) {
-      this.tryToAutoConnectToEip6963 = false;
-      return this.getEip6963Wallet();
     }
 
     return undefined;

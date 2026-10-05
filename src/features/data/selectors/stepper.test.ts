@@ -67,11 +67,10 @@ function tokenReturnedLog(emitter: string, token: string, amount: bigint): Log {
   );
 }
 
-function makeReceipt(logs: Log[], to: string = MINT_CONTRACT): TransactionReceipt {
+function makeReceipt(logs: Log[]): TransactionReceipt {
   return {
     from: USER,
-    to,
-    // only set when a transaction deploys a contract
+    to: MINT_CONTRACT,
     contractAddress: null,
     status: 'success',
     logs,
@@ -124,6 +123,7 @@ function makeState(walletActions: unknown): BeefyState {
           byVaultId: { 'test-vault': { pricePerFullShare: new BigNumber(1.5) } },
         },
       },
+      zaps: { zaps: { byChainId: { [CHAIN]: { chainId: CHAIN, router: ZAP_CONTRACT } } } },
       promos: {
         byId: {
           'test-boost': {
@@ -168,7 +168,7 @@ function boostState(logs: Log[]) {
 function zapState(logs: Log[], expectedTokens: unknown[] = [SHARE]) {
   return makeState({
     result: 'success',
-    data: { hash: '0xabc', receipt: makeReceipt(logs, ZAP_CONTRACT) },
+    data: { hash: '0xabc', receipt: makeReceipt(logs) },
     additional: {
       type: 'zap',
       amount: new BigNumber(1),
@@ -266,6 +266,12 @@ describe('stepper success selectors', () => {
       expect(returned[0].amount.toString(10)).toBe('0.5');
     });
 
+    it('ignores tokens returned by a contract other than the zap router', () => {
+      const logs = [...dustLogs(), tokenReturnedLog(BOOST_CONTRACT, REWARD_TOKEN, 10n ** 18n)];
+      const returned = selectZapReturned(zapState(logs));
+      expect(returned.map(amount => amount.token.symbol)).toEqual(['DUST']);
+    });
+
     it('parses the logs once however many dispatches land while the modal is open', () => {
       let state = zapState(dustLogs());
       const first = selectZapReturned(state);
@@ -287,7 +293,7 @@ describe('stepper success selectors', () => {
       expect(returned.map(r => r.token.symbol)).toEqual(['DUST']);
     });
 
-    it('only reads events from the router the user called', () => {
+    it('only reads events from the configured zap router', () => {
       const logs = [tokenReturnedLog(OTHER_CONTRACT, DUST_TOKEN, 5n * 10n ** 17n)];
       expect(selectZapReturned(zapState(logs))).toHaveLength(0);
     });

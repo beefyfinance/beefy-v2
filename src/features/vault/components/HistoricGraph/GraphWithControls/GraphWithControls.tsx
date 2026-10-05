@@ -61,7 +61,7 @@ export const GraphWithControls = memo(function GraphWithControls({
             />
           </ErrorBoundary>
         : loading ?
-          <GraphLoader imgHeight={220} />
+          <GraphLoader imgHeight={250} />
         : <GraphNoData reason={willRetry ? 'error-retry' : 'wait-collect'} />}
       </div>
       <div className={classes.footer}>

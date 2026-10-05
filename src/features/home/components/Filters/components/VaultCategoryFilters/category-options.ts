@@ -9,7 +9,7 @@ type VaultCategoryWithoutAll = Exclude<VaultCategoryType, 'all'>;
 
 export const CATEGORY_OPTIONS = {
   stable: { i18nKey: 'Filter-CategoryStable' },
-  stock: { i18nKey: 'Filter-CategoryStock', highlight: 'new' },
+  stock: { i18nKey: 'Filter-CategoryStock' },
   bluechip: { i18nKey: 'Filter-CategoryBlue' },
   meme: { i18nKey: 'Filter-CategoryMeme' },
   correlated: { i18nKey: 'Filter-CategoryCorrelated' },

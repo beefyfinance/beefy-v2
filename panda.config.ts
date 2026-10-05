@@ -1149,6 +1149,7 @@ const config = buildConfig(
     },
     networks: {
       arbitrum: { primary: '#2d374b', header: '#289fef33' },
+      arc: { primary: '#1B3158', header: 0.2 },
       aurora: { primary: '#70d44b', header: 0.2 },
       avax: { primary: '#e74142', header: 0.2 },
       base: { primary: '#ffffff', header: '#0000ff5e' },

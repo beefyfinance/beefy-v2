@@ -1,3 +1,4 @@
+import { pick } from 'lodash-es';
 import type { ChainEntity } from './chain.ts';
 import type { PlatformEntity } from './platform.ts';
 import type BigNumber from 'bignumber.js';
@@ -10,6 +11,11 @@ import type { LpData } from '../apis/beefy/beefy-api-types.ts';
  *  - A fake "unique token identifier" for boosts virtual earned token
  */
 export type TokenEntity = TokenErc20 | TokenNative;
+
+/**
+ * Token id of the native token on chains where wnative holds the native symbol as its id
+ */
+export const NATIVE_TOKEN_ID = 'NATIVE';
 
 /**
  * This represents a token implementation in a specific chain
@@ -82,6 +88,41 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
  */
 export function tokenEqualityKey(token: TokenEntity): string {
   return `${token.type}|${token.chainId}|${token.address}`;
+}
+
+const rewardTokenKeys = ['id', 'address', 'symbol', 'decimals', 'oracleId', 'chainId'] as const;
+
+export type ContractRewardToken = Pick<TokenEntity, (typeof rewardTokenKeys)[number]>;
+
+export function pickContractRewardToken(token: TokenEntity): ContractRewardToken {
+  return pick(token, rewardTokenKeys);
+}
+
+/**
+ * wnative of a chain whose native and wnative are one balance
+ * Only selectSharedBalanceWrappedToken makes one, so a plain wnative can't be passed by mistake
+ */
+export type SharedBalanceWnative = TokenErc20 & { readonly __sharedBalance: true };
+
+export function isSharedBalanceToken(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): sharedWnative is SharedBalanceWnative {
+  return (
+    !!sharedWnative &&
+    token.chainId === sharedWnative.chainId &&
+    (isTokenNative(token) || isTokenEqual(token, sharedWnative))
+  );
+}
+
+/** decimals both views of a shared balance can hold (arc: 6); otherwise the token's own */
+export function sharedPrecisionDecimals(
+  token: TokenEntity,
+  sharedWnative: SharedBalanceWnative | undefined
+): number {
+  return isSharedBalanceToken(token, sharedWnative) ?
+      Math.min(token.decimals, sharedWnative.decimals)
+    : token.decimals;
 }
 
 export type TokenLpBreakdown = LpData;

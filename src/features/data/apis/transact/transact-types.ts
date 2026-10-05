@@ -386,6 +386,7 @@ export type VaultComposerWithdrawOption = ZapBaseWithdrawOption & {
 
 export type RewardPoolToVaultDepositOption = ZapBaseDepositOption & {
   strategyId: 'reward-pool-to-vault';
+  srcVaultId: VaultEntity['id'];
 };
 
 export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {
@@ -566,6 +567,12 @@ export function isCrossChainVaultDstWithdrawOption(
   option: TransactOption
 ): option is CrossChainVaultDstWithdrawOption {
   return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
+}
+
+export function isRewardPoolToVaultDepositOption(
+  option: TransactOption
+): option is RewardPoolToVaultDepositOption {
+  return option.strategyId === 'reward-pool-to-vault' && option.mode === TransactMode.Deposit;
 }
 
 export function isVaultToVaultSingleTokenDepositOption(

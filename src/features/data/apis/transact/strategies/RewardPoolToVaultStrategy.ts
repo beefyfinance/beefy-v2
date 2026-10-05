@@ -42,7 +42,7 @@ import {
   createSelectionId,
   onlyOneInput,
 } from '../helpers/options.ts';
-import { ZERO_FEE } from '../helpers/quotes.ts';
+import { convertVaultShareToDepositTokenAmount, ZERO_FEE } from '../helpers/quotes.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import {
   type InputTokenAmount,
@@ -220,6 +220,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           inputs,
           wantedOutputs: [this.rewardPoolType!.depositToken], // assuming connectSecondVaultEntity was called
           mode: TransactMode.Deposit,
+          srcVaultId: this.vault.id,
         },
       ] as const satisfies RewardPoolToVaultDepositOption[];
     } else {
@@ -241,6 +242,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           inputs,
           wantedOutputs: [this.vaultType!.depositToken], // assuming connectSecondVaultEntity was called
           mode: TransactMode.Deposit,
+          srcVaultId: this.rewardPool.id,
         },
       ] as const satisfies RewardPoolToVaultDepositOption[];
     }
@@ -320,6 +322,15 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     };
   }
 
+  protected vaultSharesAsDepositTokenInput(input: InputTokenAmount): InputTokenAmount {
+    const { amount } = convertVaultShareToDepositTokenAmount(
+      this.helpers.getState(),
+      this.vault.id,
+      input.amount
+    );
+    return { token: this.depositToken, amount, max: input.max };
+  }
+
   protected async fetchVaultToRewardPoolDepositQuote(
     inputs: InputTokenAmount[],
     option: RewardPoolToVaultDepositOption
@@ -331,13 +342,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     const { zap } = this.helpers;
 
     const vaultWithdrawQuote = await this.vaultType!.fetchWithdrawQuote(
-      [
-        {
-          token: this.depositToken,
-          amount: input.amount,
-          max: input.max,
-        },
-      ],
+      [this.vaultSharesAsDepositTokenInput(input)],
       {
         ...option,
         mode: TransactMode.Withdraw,
@@ -371,7 +376,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       inputs,
       outputs: [
         {
-          token: this.rewardPoolShareToken,
+          token: this.depositToken,
           amount: vaultWithdrawQuote.outputs[0].amount,
         },
       ],
@@ -452,7 +457,6 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         steps: [...unstakeZap.zaps, depositZap.zap],
       };
 
-      // quote.outputs is the vault's deposit token, but the router returns its shares
       const expectedTokens = depositZap.outputs.map(output => output.token);
 
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
@@ -489,7 +493,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       }
 
       const withdrawZap = await this.vaultType!.fetchZapWithdraw({
-        inputs: quote.inputs.map(i => ({ ...i, token: this.depositToken })),
+        inputs: quote.inputs.map(i => this.vaultSharesAsDepositTokenInput(i)),
         from: this.helpers.zap.router,
       }); // assuming connectSecondVaultEntity was called
       const stakeZap = await this.fetchZapStakeStep(withdrawZap.outputs, zapHelpers);
@@ -521,7 +525,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         steps: [withdrawZap.zap, ...stakeZap.zaps],
       };
 
-      const expectedTokens = quote.outputs.map(output => output.token);
+      const expectedTokens = stakeZap.outputs.map(output => output.token);
 
       const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
