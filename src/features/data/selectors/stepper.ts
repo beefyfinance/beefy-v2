@@ -348,7 +348,9 @@ function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmou
     return NO_TOKEN_AMOUNTS;
   }
 
-  const minAmount = new BigNumber('0.00000001');
+  // dust below this is noise; expected outputs are never too small to report, and CLM shares are
+  // tiny enough to fall under it (0.002 ETH into a CLM vault mints ~4e-12 shares)
+  const minDustAmount = new BigNumber('0.00000001');
   const native = selectChainNativeToken(state, vault.chainId);
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
@@ -364,7 +366,7 @@ function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmou
     })
     .filter((t): t is TokenAmount => !!t.token)
     .filter(t => expectedTokensAddresses.has(t.token.address.toLowerCase()) === expected)
-    .filter(t => t.amount.gte(minAmount));
+    .filter(t => (expected ? t.amount.gt(BIG_ZERO) : t.amount.gte(minDustAmount)));
 
   return arrayOrStaticEmpty(tokenAmounts);
 }

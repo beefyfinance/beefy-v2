@@ -9,17 +9,21 @@ import {
   isCrossChainOption,
   isDepositOption,
   isDepositQuote,
+  isRewardPoolToVaultDepositOption,
   isVaultToVaultSingleTokenOption,
   isWithdrawOption,
   isWithdrawQuote,
   type QuoteOutputTokenAmountChange,
+  type TokenAmount,
+  type TransactOption,
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
-import type { VaultGov } from '../../entities/vault.ts';
+import type { VaultEntity, VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectChainById } from '../../selectors/chains.ts';
+import { selectVaultByIdOrUndefined } from '../../selectors/vaults.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
@@ -121,6 +125,32 @@ export async function getTransactSteps(
   return steps;
 }
 
+/** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
+function vaultToVaultOf(option: TransactOption) {
+  if (isVaultToVaultSingleTokenOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.destVaultId };
+  }
+  if (isRewardPoolToVaultDepositOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.vaultId };
+  }
+  return undefined;
+}
+
+/** These routes are quoted in the source vault's shares, which is not what the user typed */
+function sourceVaultInput(
+  state: BeefyState,
+  srcVaultId: VaultEntity['id'],
+  input: TokenAmount
+): TokenAmount {
+  const srcVault = selectVaultByIdOrUndefined(state, srcVaultId);
+  const isShares =
+    !!srcVault && input.token.address.toLowerCase() === srcVault.contractAddress.toLowerCase();
+  if (!isShares) {
+    return input;
+  }
+  return convertVaultShareToDepositTokenAmount(state, srcVaultId, input.amount);
+}
+
 /** Cross-chain zaps describe themselves via their pending op instead */
 function withZapDetails(step: Step, quote: TransactQuote, state: BeefyState): Step {
   if ((step.step !== 'zap-in' && step.step !== 'zap-out') || isCrossChainOption(quote.option)) {
@@ -133,15 +163,13 @@ function withZapDetails(step: Step, quote: TransactQuote, state: BeefyState): St
     .filter(output => output.amount.gt(BIG_ZERO))
     .map(output => output.token);
 
+  const vaultToVault = vaultToVaultOf(option);
   const zapDetails: ZapStepDetails =
-    isVaultToVaultSingleTokenOption(option) ?
+    vaultToVault ?
       {
-        // v2v inputs are source vault shares
-        inputs: inputs.map(input =>
-          convertVaultShareToDepositTokenAmount(state, option.srcVaultId, input.amount)
-        ),
+        inputs: inputs.map(input => sourceVaultInput(state, vaultToVault.srcVaultId, input)),
         outputTokens,
-        vaultToVault: { srcVaultId: option.srcVaultId, destVaultId: option.destVaultId },
+        vaultToVault,
       }
     : { inputs, outputTokens };
 
