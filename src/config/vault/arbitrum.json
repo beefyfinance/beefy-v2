@@ -9855,6 +9855,7 @@
     "feeTier": "Dynamic",
     "tickSpacing": 10,
     "assets": ["WETH", "USDC"],
+    "replacementVaultId": "pancake-cow-arb-weth-usdc-500",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -15863,6 +15864,7 @@
     "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["rETH", "WETH"],
+    "replacementVaultId": "uniswap-cow-arb-wsteth-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
