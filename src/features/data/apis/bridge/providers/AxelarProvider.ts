@@ -29,13 +29,7 @@ export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig
     const native = selectChainNativeToken(state, from.id);
     const incomingGasLimit = await this.fetchIncomingGasLimit(config, from, to);
 
-    const feeEstimate = await api.estimateGasFee(
-      from,
-      to,
-      incomingGasLimit,
-      fromChain.bridge,
-      toChain.bridge
-    );
+    const feeEstimate = await api.estimateGasFee(from, to, incomingGasLimit, toChain.bridge);
 
     return {
       token: native,

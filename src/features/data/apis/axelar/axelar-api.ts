@@ -52,7 +52,6 @@ export class AxelarApi implements IAxelarApi {
     sourceChain: ChainEntity,
     destinationChain: ChainEntity,
     gasLimit: BigNumber,
-    sourceAddress: string,
     destinationAddress: string
   ): Promise<BigNumber> {
     const sdk = await getAxelarSdk(destinationChain);
@@ -61,7 +60,6 @@ export class AxelarApi implements IAxelarApi {
     const sourceGasToken = this.chainEntityToGasToken(source);
     return sdk.estimateGasFee(
       source,
-      sourceAddress,
       sourceGasToken,
       destination,
       destinationAddress,
