@@ -7478,6 +7478,7 @@
     "retiredAt": 1790969311,
     "platformId": "convex",
     "assets": ["eUSD", "USDC"],
+    "replacementVaultId": "morpho-smokehouse-usdc",
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
     "risks": {
       "updatedAt": 1765557014,
