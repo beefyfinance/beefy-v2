@@ -61,7 +61,7 @@ export const config = {
       'https://43114.rpc.thirdweb.com',
       'https://spectrum-01.simplystaking.xyz/avalanche-mn-rpc/ext/bc/C/rpc',
     ],
-    explorerUrl: 'https://cchain.explorer.avax.network',
+    explorerUrl: 'https://snowscan.xyz',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe60D2cf5140b7D7703D26aD5f581F865a7b51BeF',
     native: { symbol: 'AVAX', oracleId: 'WAVAX', decimals: 18 },
@@ -174,7 +174,7 @@ export const config = {
       'https://252.rpc.thirdweb.com',
     ],
     explorerUrl: 'https://fraxscan.com',
-    multicall3Address: '0x0955479C61B37074d689319fCaA84ffE1E9e8CF5',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79',
     native: { symbol: 'FRAX', oracleId: 'WFXS', decimals: 18 },
     gas: {
@@ -273,7 +273,7 @@ export const config = {
       'https://rpc.swiftnodes.io/rpc/plasma',
       'https://9745.rpc.thirdweb.com',
     ],
-    explorerUrl: 'https://plasmascan.to/',
+    explorerUrl: 'https://plasmascan.to',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x25B6B1a6e7948a983f8e0999FFB4E68Bc7385520',
     native: { symbol: 'XPL', oracleId: 'WXPL', decimals: 18 },
@@ -359,6 +359,7 @@ export const config = {
   },
   rootstock: {
     eol: 1789666812,
+    disabled: true,
     name: 'Rootstock',
     chainId: 30,
     rpc: [
@@ -472,7 +473,7 @@ export const config = {
       'https://sei-evm-rpc.stakeme.pro',
       'https://1329.rpc.thirdweb.com',
     ],
-    explorerUrl: 'https://seitrace.com',
+    explorerUrl: 'https://seiscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
     native: { symbol: 'SEI', oracleId: 'WSEI', decimals: 18 },
@@ -545,6 +546,7 @@ export const config = {
     name: 'Cronos',
     chainId: 25,
     eol: 1764838421,
+    disabled: true,
     rpc: [
       'https://evm.cronos.org',
       'https://rpc.vvs.finance',
@@ -568,6 +570,7 @@ export const config = {
     name: 'Saga',
     chainId: 5464,
     eol: 1764838421,
+    disabled: true,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io', 'https://5464.rpc.thirdweb.com'],
     explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io',
     multicall3Address: '0x864DDc9B50B9A0dF676d826c9B9EDe9F8913a160', // TODO ?
@@ -581,6 +584,7 @@ export const config = {
     name: 'Moonbeam',
     chainId: 1284,
     eol: 1756396225,
+    disabled: true,
     rpc: ['https://moonbeam.api.onfinality.io/public', 'https://moonbeam.api.pocket.network'],
     explorerUrl: 'https://moonscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -597,6 +601,7 @@ export const config = {
     name: 'Mode',
     chainId: 34443,
     eol: 1754382440,
+    disabled: true,
     rpc: [
       'https://mainnet.mode.network',
       'https://mode-mainnet.rpc.sentio.xyz',
@@ -619,6 +624,7 @@ export const config = {
     name: 'Scroll',
     chainId: 534352,
     eol: 1753131600,
+    disabled: true,
     rpc: [
       'https://rpc.scroll.io',
       'https://scroll-rpc.publicnode.com',
@@ -643,6 +649,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     eol: 1736182577,
+    disabled: true,
     chainId: 250,
     rpc: [
       'https://rpcapi.fantom.network',
@@ -681,6 +688,7 @@ export const config = {
     name: 'Kava',
     chainId: 2222,
     eol: 1734101117,
+    disabled: true,
     rpc: [
       'https://kava-evm-rpc.publicnode.com',
       'https://evm.kava-rpc.com',
@@ -701,6 +709,7 @@ export const config = {
     name: 'Manta',
     chainId: 169,
     eol: 1734101117,
+    disabled: true,
     rpc: [
       'https://manta-pacific-mainnet.rpc.sentio.xyz',
       'https://manta-pacific-gascap.calderachain.xyz/http',
@@ -742,6 +751,7 @@ export const config = {
   zkevm: {
     name: 'Polygon zkEVM',
     eol: 1729771090,
+    disabled: true,
     chainId: 1101,
     rpc: [
       'https://zkevm-rpc.com',
@@ -760,6 +770,7 @@ export const config = {
   fuse: {
     name: 'Fuse',
     eol: 1722901359,
+    disabled: true,
     chainId: 122,
     rpc: [
       'https://fuse.liquify.com',
@@ -779,6 +790,7 @@ export const config = {
     name: 'Moonriver',
     chainId: 1285,
     eol: 1715594061,
+    disabled: true,
     rpc: [
       'https://moonriver.api.onfinality.io/public',
       'https://moonriver.drpc.org',
@@ -799,6 +811,7 @@ export const config = {
     name: 'Aurora',
     chainId: 1313161554,
     eol: 1691085875,
+    disabled: true,
     rpc: ['https://mainnet.aurora.dev', 'https://aurora.drpc.org'],
     explorerUrl: 'https://aurorascan.dev',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -812,6 +825,7 @@ export const config = {
     name: 'Emerald',
     chainId: 42262,
     eol: 1691085875,
+    disabled: true,
     rpc: [
       'https://emerald.oasis.io',
       'https://emerald.oasis.dev',
@@ -829,6 +843,7 @@ export const config = {
     name: 'Celo',
     chainId: 42220,
     eol: 1691085875,
+    disabled: true,
     rpc: [
       'https://forno.celo.org',
       'https://rpc.ankr.com/celo',
