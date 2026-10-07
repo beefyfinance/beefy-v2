@@ -392,7 +392,11 @@ export function getCowcentratedVault(vault: VaultCowcentratedLike): string | und
   return undefined;
 }
 
-export function shouldVaultShowInterest(vault: VaultEntity) {
+export function shouldVaultShowInterest(vault: VaultEntity, chain: Pick<ChainEntity, 'features'>) {
+  if (!chain.features.apy) {
+    return false;
+  }
+
   if (isVaultRetired(vault)) {
     return false;
   }

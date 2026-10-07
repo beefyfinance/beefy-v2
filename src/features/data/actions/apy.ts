@@ -15,6 +15,7 @@ import {
 import type { AvgApy, AvgApyPeriod, RawAvgApy, TotalApy } from '../reducers/apy-types.ts';
 import { selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectActiveVaultBoostIds } from '../selectors/boosts.ts';
+import { selectChainHasFeature } from '../selectors/chains.ts';
 import {
   isMerklBoostCampaign,
   type MerklRewardsCampaignWithApr,
@@ -75,10 +76,14 @@ export const recalculateAvgApyAction = createAppAsyncThunk<FetchAvgApyFulfilledP
   async (_, { getState }) => {
     const state = getState();
     const rawAverages = state.biz.apy.rawAvgApy.byVaultId;
-    const unprocessedVaultIds = new Set(selectAllVisibleVaultIds(state));
+    const unprocessedVaultIds = new Set(
+      selectAllVisibleVaultIds(state).filter(vaultId =>
+        selectChainHasFeature(state, selectVaultById(state, vaultId).chainId, 'apy')
+      )
+    );
 
     const data = mapValues(rawAverages, (rawAverage, vaultId) => {
-      // don't try to process apy for vaults no longer in app
+      // don't try to process apy for vaults no longer in app, or on chains with apy disabled
       if (!unprocessedVaultIds.has(vaultId)) {
         return EMPTY_AVG_APY;
       }
@@ -163,6 +168,10 @@ export const recalculateTotalApyAction = createAppAsyncThunk<RecalculateTotalApy
       }
 
       const vault = selectVaultById(state, vaultId);
+      if (!selectChainHasFeature(state, vault.chainId, 'apy')) {
+        continue;
+      }
+
       const total: TotalApy = {
         totalApy: 'totalApy' in apy ? apy.totalApy : 0,
         totalMonthly: 0,

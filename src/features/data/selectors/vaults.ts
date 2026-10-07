@@ -28,6 +28,7 @@ import {
 import type { BeefyState } from '../store/types.ts';
 import { featureFlag_disableRedirect } from '../utils/feature-flags.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import { selectChainById } from './chains.ts';
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 
 export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
@@ -411,6 +412,8 @@ export const selectVaultIdForVaultPage = createSelector(
     return vault.id;
   }
 );
-/** Returns false if vault is retired or paused and not earning */
-export const selectVaultShouldShowInterest = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  shouldVaultShowInterest(selectVaultById(state, vaultId));
+/** Returns false if chain has apy disabled, or vault is retired or paused and not earning */
+export const selectVaultShouldShowInterest = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return shouldVaultShowInterest(vault, selectChainById(state, vault.chainId));
+};
