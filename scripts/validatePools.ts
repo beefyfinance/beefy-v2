@@ -228,7 +228,7 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
-  if (getChain(chainId).eol || 0 > 0) {
+  if (getChain(chainId).status === 'eol') {
     console.log(`${chainId} is EOL, consider exclude`);
   }
   const vaultsAndPromos = await Promise.all([

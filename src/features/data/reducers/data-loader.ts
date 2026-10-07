@@ -238,7 +238,7 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
   builder.addCase(action.fulfilled, (sliceState, action) => {
     if (fetchChainConfigs.fulfilled.match(action)) {
       sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
-        .filter(c => c.eol)
+        .filter(c => c.status !== 'active')
         .map(c => c.id);
     }
     setGlobalFulfilled(sliceState, stateKey, action.meta.requestId);

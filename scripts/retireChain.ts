@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import * as prettier from 'prettier';
 import { type ArgumentConfig, parse } from 'ts-command-line-args';
 import { config } from '../src/config/config.ts';
-import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
+import type { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types.ts';
 import { loadJson, saveJson } from './common/files.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
 
@@ -41,7 +41,7 @@ function getRunArgs() {
       {
         header: 'npm run retireChain',
         content:
-          'Retire a chain: EOLs all active vaults via setVaultStatus and adds eol timestamp to config.ts, re-sorting chains (active A-Z first, then EOL by timestamp).',
+          'Retire a chain: EOLs all active vaults via setVaultStatus and sets status eol + retiredAt in config.ts, re-sorting chains (active A-Z first, then retired by timestamp).',
       },
     ],
   });
@@ -49,8 +49,19 @@ function getRunArgs() {
 
 type ConfigEntry = {
   key: string;
-  eol?: number;
+  status: ChainConfig['status'];
+  retiredAt: number | undefined;
 };
+
+function splitConfigSource(source: string) {
+  const bodyStart = source.indexOf('\n', source.indexOf('const chainConfigInputs = {')) + 1;
+  const bodyEnd = source.indexOf('\n} satisfies ', bodyStart) + 1;
+  return {
+    header: source.slice(0, bodyStart),
+    body: source.slice(bodyStart, bodyEnd),
+    footer: source.slice(bodyEnd),
+  };
+}
 
 function parseConfigEntries(source: string): ConfigEntry[] {
   const entries: ConfigEntry[] = [];
@@ -59,8 +70,8 @@ function parseConfigEntries(source: string): ConfigEntry[] {
   let match;
   while ((match = keyRegex.exec(source)) !== null) {
     const key = match[1];
-    const chainConfig = (config as Record<string, { eol?: number }>)[key];
-    entries.push({ key, eol: chainConfig?.eol });
+    const chainConfig = config[key as keyof typeof config];
+    entries.push({ key, status: chainConfig.status, retiredAt: chainConfig.retiredAt });
   }
   return entries;
 }
@@ -100,24 +111,26 @@ function buildSortedConfig(
 
     let block = source.slice(blockStart, blockEnd);
 
-    // If this is the chain being retired, inject eol timestamp after the opening brace
     if (entry.key === chainToRetire) {
-      entry.eol = timestamp;
-      // Add eol after "chainKey: {" line, before the name line
-      block = block.replace(/^(\s{2}\w+:\s*\{)\n(\s{4}name:)/m, `$1\n    eol: ${timestamp},\n$2`);
+      entry.status = 'eol';
+      entry.retiredAt = timestamp;
+      block = block.replace(
+        /^(\s{4})status: 'active',$/m,
+        `$1status: 'eol',\n$1retiredAt: ${timestamp},`
+      );
     }
 
     blocks[entry.key] = block;
   }
 
-  // Sort: active chains (no eol) alphabetically, then eol chains by timestamp ascending
-  const active = entries.filter(e => !e.eol).sort((a, b) => a.key.localeCompare(b.key));
-  const eol = entries.filter(e => !!e.eol).sort((a, b) => (b.eol ?? 0) - (a.eol ?? 0));
-  const sorted = [...active, ...eol];
-
-  // Rebuild config source
-  const header = source.slice(0, source.indexOf('\n', source.indexOf('export const config')) + 1);
-  const footer = `} satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;\n`;
+  // Sort: active chains alphabetically, then retired chains by retiredAt descending
+  const active = entries
+    .filter(e => e.status === 'active')
+    .sort((a, b) => a.key.localeCompare(b.key));
+  const retired = entries
+    .filter(e => e.status !== 'active')
+    .sort((a, b) => (b.retiredAt ?? 0) - (a.retiredAt ?? 0));
+  const sorted = [...active, ...retired];
 
   const body = sorted.map((entry, i) => {
     const block = blocks[entry.key];
@@ -125,7 +138,7 @@ function buildSortedConfig(
     return block + (isLast ? '' : ',');
   });
 
-  return header + body.join('\n') + '\n' + footer;
+  return body.join('\n') + '\n';
 }
 
 async function main() {
@@ -138,9 +151,11 @@ async function main() {
     process.exit(1);
   }
 
-  const chainConfig = (config as Record<string, { eol?: number }>)[chainId];
-  if (chainConfig.eol) {
-    console.error(`[ERROR] Chain "${chainId}" is already EOL (eol: ${chainConfig.eol})`);
+  const chainConfig = config[chainId as keyof typeof config];
+  if (chainConfig.status !== 'active') {
+    console.error(
+      `[ERROR] Chain "${chainId}" is already ${chainConfig.status} (retiredAt: ${chainConfig.retiredAt})`
+    );
     process.exit(1);
   }
 
@@ -176,19 +191,22 @@ async function main() {
     console.log(`[INFO] No active/paused vaults on ${chainId}`);
   }
 
-  // 2. Update config.ts: add eol timestamp and re-sort chains
+  // 2. Update config.ts: set status eol + retiredAt and re-sort chains
   const configPath = './src/config/config.ts';
   const source = await readFile(configPath, 'utf-8');
-  const entries = parseConfigEntries(source);
+  const { header, body, footer } = splitConfigSource(source);
+  const entries = parseConfigEntries(body);
 
-  const newSource = buildSortedConfig(source, entries, chainId, timestamp);
+  const newSource = header + buildSortedConfig(body, entries, chainId, timestamp) + footer;
 
   // Format with prettier
   const prettierConfig = await prettier.resolveConfig(configPath);
   const formatted = await prettier.format(newSource, { ...prettierConfig, filepath: configPath });
   await writeFile(configPath, formatted, 'utf-8');
 
-  console.log(`[INFO] Added eol: ${timestamp} to ${chainId} in config.ts and re-sorted chains`);
+  console.log(
+    `[INFO] Set status eol, retiredAt: ${timestamp} on ${chainId} in config.ts and re-sorted chains`
+  );
   console.log(`[DONE] Chain "${chainId}" retired successfully`);
 }
 
