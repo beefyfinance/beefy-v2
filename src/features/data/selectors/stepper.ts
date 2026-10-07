@@ -23,6 +23,7 @@ import {
 } from '../reducers/wallet/wallet-action-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
+import { selectSharesAsDepositTokenAmount } from './balance.ts';
 import { selectBoostById } from './boosts.ts';
 import {
   selectChainNativeToken,
@@ -31,11 +32,7 @@ import {
 } from './tokens.ts';
 import { isStandardVault, isErc4626Vault, type VaultEntity } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
-import {
-  selectVaultById,
-  selectVaultByIdOrUndefined,
-  selectVaultPricePerFullShare,
-} from './vaults.ts';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
 import { selectZapByChainId } from './zap.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
@@ -385,29 +382,7 @@ export function selectZapReceived(
     return received;
   }
 
-  const vault = selectVaultByIdOrUndefined(state, sharesVaultId);
-  if (!vault || !(isStandardVault(vault) || isErc4626Vault(vault))) {
-    return received;
-  }
-  const depositToken = selectTokenByAddressOrUndefined(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
-  if (!depositToken) {
-    return received;
-  }
-
-  const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  const shareAddress = vault.contractAddress.toLowerCase();
-  return received.map(item =>
-    item.token.address.toLowerCase() === shareAddress ?
-      {
-        amount: mooAmountToOracleAmount(item.token, depositToken, ppfs, item.amount),
-        token: depositToken,
-      }
-    : item
-  );
+  return received.map(item => selectSharesAsDepositTokenAmount(state, sharesVaultId, item));
 }
 
 function selectDstTokensReturned(
