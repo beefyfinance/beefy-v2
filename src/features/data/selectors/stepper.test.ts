@@ -30,6 +30,8 @@ const ZAP_CONTRACT = '0x666666666666666666666666666666666666000D';
 const DUST_TOKEN = '0x777777777777777777777777777777777777000A';
 const NATIVE_ADDRESS = '0x888888888888888888888888888888888888000A';
 const OTHER_CONTRACT = '0x999999999999999999999999999999999999000B';
+const POOL_CONTRACT = '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa000C';
+const CLM_TOKEN = '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb000E';
 
 const TRANSFER_TOPIC = toEventSelector('Transfer(address,address,uint256)');
 const TOKEN_RETURNED_TOPIC = toEventSelector('TokenReturned(address,uint256)');
@@ -90,6 +92,8 @@ const NATIVE = {
   decimals: 18,
 };
 const SHARE = erc20(MINT_CONTRACT, 'mooMOO');
+const RCLM = erc20(POOL_CONTRACT, 'CLM rCLM');
+const CLM = erc20(CLM_TOKEN, 'CLM');
 
 function makeState(walletActions: unknown): BeefyState {
   return {
@@ -105,6 +109,8 @@ function makeState(walletActions: unknown): BeefyState {
               [REWARD_TOKEN.toLowerCase()]: erc20(REWARD_TOKEN, 'RWD'),
               [MINT_TOKEN.toLowerCase()]: erc20(MINT_TOKEN, 'MOO'),
               [DUST_TOKEN.toLowerCase()]: erc20(DUST_TOKEN, 'DUST'),
+              [POOL_CONTRACT.toLowerCase()]: RCLM,
+              [CLM_TOKEN.toLowerCase()]: CLM,
             },
           },
         },
@@ -118,9 +124,23 @@ function makeState(walletActions: unknown): BeefyState {
             contractAddress: MINT_CONTRACT,
             depositTokenAddress: MINT_TOKEN,
           },
+          'test-pool': {
+            id: 'test-pool',
+            chainId: CHAIN,
+            type: 'gov',
+            contractType: 'multi',
+            assetType: 'clm',
+            contractAddress: POOL_CONTRACT,
+            receiptTokenAddress: POOL_CONTRACT,
+            depositTokenAddress: CLM_TOKEN,
+          },
         },
         contractData: {
-          byVaultId: { 'test-vault': { pricePerFullShare: new BigNumber(1.5) } },
+          byVaultId: {
+            'test-vault': { pricePerFullShare: new BigNumber(1.5) },
+            // a gov pool has no ppfs of its own; this one is here to prove the 1:1 path ignores it
+            'test-pool': { pricePerFullShare: new BigNumber(3) },
+          },
         },
       },
       zaps: { zaps: { byChainId: { [CHAIN]: { chainId: CHAIN, router: ZAP_CONTRACT } } } },
@@ -306,6 +326,26 @@ describe('stepper success selectors', () => {
       expect(received[0].token.symbol).toBe('MOO');
       // 2 shares at a ppfs of 1.5
       expect(received[0].amount.toString(10)).toBe('3');
+    });
+
+    it('shows a CLM pool receipt as the CLM it is worth, like the vault screens do', () => {
+      const logs = [tokenReturnedLog(ZAP_CONTRACT, POOL_CONTRACT, 2n * 10n ** 18n)];
+      const received = selectZapReceived(zapState(logs, [RCLM]), 'test-pool');
+      expect(received).toHaveLength(1);
+      // rCLM is 1:1 with CLM, so only the token it is reported as changes
+      expect(received[0].token.symbol).toBe('CLM');
+      expect(received[0].amount.toString(10)).toBe('2');
+    });
+
+    it('keeps an expected output below the dust threshold', () => {
+      // a small CLM deposit mints share amounts far under 1e-8, and they are still the position
+      const shares = 4060n; // 4.06e-15 at 18dp
+      const state = zapState(depositLogs(shares));
+      expect(selectZapReceived(state, 'test-vault')).toHaveLength(1);
+      // the same amount as dust is still noise
+      expect(
+        selectZapReturned(zapState([tokenReturnedLog(ZAP_CONTRACT, DUST_TOKEN, shares)]))
+      ).toHaveLength(0);
     });
 
     it('shows withdrawn tokens as they are', () => {

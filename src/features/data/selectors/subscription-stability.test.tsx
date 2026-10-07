@@ -448,7 +448,10 @@ describe('no subscription in a high-fanout tree is unstable', () => {
     );
     const depositText = deposit.html.replaceAll('<!-- -->', '');
     expect(depositText).toContain(`You deposited 5 ${fixture.rewardToken.symbol} into`);
-    expect(depositText).toContain('was added to your position');
+    // the router returned 2 shares, which the screen reports as the position they are worth
+    const depositToken = chainTokens.byAddress[vault.depositTokenAddress.toLowerCase()];
+    const position = vault.assetType === 'single' ? depositToken.symbol : 'LP';
+    expect(depositText).toContain(`2 ${position} was added to your position`);
     expect(describeUnstable(deposit)).toEqual([]);
 
     // break-LP style withdraw: two tokens come back
@@ -469,6 +472,36 @@ describe('no subscription in a high-fanout tree is unstable', () => {
       `2 ${fixture.rewardToken.symbol} and 2 ${otherToken.symbol} were sent to your wallet.`
     );
     expect(describeUnstable(withdraw)).toEqual([]);
+
+    // a vault -> CLM pool conversion names both sides, and the pool's rCLM reads as the position
+    const poolVaultId = fixture.vaultIds.find(
+      id => fixture.state.entities.vaults.byId[id]?.type === 'gov'
+    )!;
+    const poolVault = fixture.state.entities.vaults.byId[poolVaultId]!;
+    const poolShareToken = chainTokens.byAddress[poolVault.contractAddress.toLowerCase()];
+    const conversion = renderTree(
+      <ZapSuccessContent
+        step={{
+          ...FIXTURE_STEP,
+          extraInfo: {
+            vaultId,
+            zapDetails: {
+              inputs,
+              outputTokens: [],
+              vaultToVault: { srcVaultId: vaultId, destVaultId: poolVaultId },
+            },
+          },
+        }}
+      />,
+      withZapRouterSuccess(fixture.state, poolVaultId, [poolShareToken])
+    );
+    const conversionText = conversion.html.replaceAll('<!-- -->', '');
+    expect(conversionText).toContain(
+      `from ${vault.names.singleMeta} into ${poolVault.names.singleMeta}`
+    );
+    // the pool returned 2 rCLM, which reads as the CLM position it is worth
+    expect(conversionText).toContain('2 LP was added to your position');
+    expect(describeUnstable(conversion)).toEqual([]);
 
     const boost = renderTree(
       <BoostUnstakeSuccessContent step={FIXTURE_STEP} />,
