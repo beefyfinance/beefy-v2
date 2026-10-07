@@ -24559,7 +24559,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "single",
-    "buyTokenUrl": "https://exchange.yieldbay.finance/#/swap?outputCurrency=0x9768e5b2d8e761905bc81dfc554f9437a46cdcc6",
     "network": "bsc"
   },
   {
@@ -25232,9 +25231,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://exchange.yieldbay.finance/#/swap?outputCurrency=0x9768e5b2d8e761905bc81dfc554f9437a46cdcc6",
-    "addLiquidityUrl": "https://exchange.yieldbay.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6",
-    "removeLiquidityUrl": "https://exchange.yieldbay.finance/#/remove/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6",
     "network": "bsc"
   },
   {
@@ -25267,9 +25263,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "buyTokenUrl": "https://exchange.yieldbay.finance/#/swap?outputCurrency=0x9768e5b2d8e761905bc81dfc554f9437a46cdcc6",
-    "addLiquidityUrl": "https://exchange.yieldbay.finance/#/add/ETH/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6",
-    "removeLiquidityUrl": "https://exchange.yieldbay.finance/#/remove/ETH/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6",
     "network": "bsc"
   },
   {
