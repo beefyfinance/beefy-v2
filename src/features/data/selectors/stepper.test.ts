@@ -3,8 +3,14 @@ import { pad, parseEventLogs, toEventSelector, toHex } from 'viem';
 import type * as Viem from 'viem';
 import type { Hex, Log, TransactionReceipt } from 'viem';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import type { BeefyState } from '../store/types.ts';
-import { selectBoostClaimed, selectMintResult, selectZapReturned } from './stepper.ts';
+import {
+  selectBoostClaimed,
+  selectMintResult,
+  selectZapReceived,
+  selectZapReturned,
+} from './stepper.ts';
 
 vi.mock('viem', async importOriginal => {
   const actual = await importOriginal<typeof Viem>();
@@ -23,6 +29,9 @@ const MINT_TOKEN = '0x555555555555555555555555555555555555000A';
 const ZAP_CONTRACT = '0x666666666666666666666666666666666666000D';
 const DUST_TOKEN = '0x777777777777777777777777777777777777000A';
 const NATIVE_ADDRESS = '0x888888888888888888888888888888888888000A';
+const OTHER_CONTRACT = '0x999999999999999999999999999999999999000B';
+const POOL_CONTRACT = '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa000C';
+const CLM_TOKEN = '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb000E';
 
 const TRANSFER_TOPIC = toEventSelector('Transfer(address,address,uint256)');
 const TOKEN_RETURNED_TOPIC = toEventSelector('TokenReturned(address,uint256)');
@@ -74,6 +83,18 @@ function erc20(address: string, symbol: string) {
   return { type: 'erc20', id: symbol, symbol, chainId: CHAIN, address, decimals: 18 };
 }
 
+const NATIVE = {
+  type: 'native',
+  id: 'ETH',
+  symbol: 'ETH',
+  chainId: CHAIN,
+  address: NATIVE_ADDRESS,
+  decimals: 18,
+};
+const SHARE = erc20(MINT_CONTRACT, 'mooMOO');
+const RCLM = erc20(POOL_CONTRACT, 'CLM rCLM');
+const CLM = erc20(CLM_TOKEN, 'CLM');
+
 function makeState(walletActions: unknown): BeefyState {
   return {
     entities: {
@@ -83,17 +104,13 @@ function makeState(walletActions: unknown): BeefyState {
             native: 'ETH',
             byId: { ETH: NATIVE_ADDRESS.toLowerCase() },
             byAddress: {
-              [NATIVE_ADDRESS.toLowerCase()]: {
-                type: 'native',
-                id: 'ETH',
-                symbol: 'ETH',
-                chainId: CHAIN,
-                address: NATIVE_ADDRESS,
-                decimals: 18,
-              },
+              [NATIVE_ADDRESS.toLowerCase()]: NATIVE,
+              [MINT_CONTRACT.toLowerCase()]: SHARE,
               [REWARD_TOKEN.toLowerCase()]: erc20(REWARD_TOKEN, 'RWD'),
               [MINT_TOKEN.toLowerCase()]: erc20(MINT_TOKEN, 'MOO'),
               [DUST_TOKEN.toLowerCase()]: erc20(DUST_TOKEN, 'DUST'),
+              [POOL_CONTRACT.toLowerCase()]: RCLM,
+              [CLM_TOKEN.toLowerCase()]: CLM,
             },
           },
         },
@@ -105,7 +122,25 @@ function makeState(walletActions: unknown): BeefyState {
             chainId: CHAIN,
             type: 'standard',
             contractAddress: MINT_CONTRACT,
+            receiptTokenAddress: MINT_CONTRACT,
             depositTokenAddress: MINT_TOKEN,
+          },
+          'test-pool': {
+            id: 'test-pool',
+            chainId: CHAIN,
+            type: 'gov',
+            contractType: 'multi',
+            assetType: 'clm',
+            contractAddress: POOL_CONTRACT,
+            receiptTokenAddress: POOL_CONTRACT,
+            depositTokenAddress: CLM_TOKEN,
+          },
+        },
+        contractData: {
+          byVaultId: {
+            'test-vault': { pricePerFullShare: new BigNumber(1.5) },
+            // a gov pool has no ppfs of its own; this one is here to prove the 1:1 path ignores it
+            'test-pool': { pricePerFullShare: new BigNumber(3) },
           },
         },
       },
@@ -151,7 +186,7 @@ function boostState(logs: Log[]) {
   });
 }
 
-function zapState(logs: Log[]) {
+function zapState(logs: Log[], expectedTokens: unknown[] = [SHARE]) {
   return makeState({
     result: 'success',
     data: { hash: '0xabc', receipt: makeReceipt(logs) },
@@ -160,7 +195,7 @@ function zapState(logs: Log[]) {
       amount: new BigNumber(1),
       token: erc20(MINT_TOKEN, 'MOO'),
       vaultId: 'test-vault',
-      expectedTokens: [erc20(MINT_TOKEN, 'MOO')],
+      expectedTokens,
     },
   });
 }
@@ -169,6 +204,10 @@ function zapState(logs: Log[]) {
 const buyLogs = () => [transferLog(MINT_TOKEN, MINT_CONTRACT, USER, 7n * 10n ** 18n)];
 const claimLogs = () => [transferLog(REWARD_TOKEN, BOOST_CONTRACT, USER, 2n * 10n ** 18n)];
 const dustLogs = () => [tokenReturnedLog(ZAP_CONTRACT, DUST_TOKEN, 5n * 10n ** 17n)];
+const depositLogs = (shares: bigint) => [
+  tokenReturnedLog(ZAP_CONTRACT, MINT_CONTRACT, shares),
+  ...dustLogs(),
+];
 
 beforeEach(() => {
   parseEventLogsMock.mockClear();
@@ -268,6 +307,70 @@ describe('stepper success selectors', () => {
       selectZapReturned(zapState(dustLogs()));
       expect(selectZapReturned(zapState([]))).toHaveLength(0);
       expect(parseEventLogsMock).toHaveBeenCalledTimes(2);
+    });
+
+    it('leaves out the tokens the zap was expected to return', () => {
+      const returned = selectZapReturned(zapState(depositLogs(2n * 10n ** 18n)));
+      expect(returned.map(r => r.token.symbol)).toEqual(['DUST']);
+    });
+
+    it('only reads events from the configured zap router', () => {
+      const logs = [tokenReturnedLog(OTHER_CONTRACT, DUST_TOKEN, 5n * 10n ** 17n)];
+      expect(selectZapReturned(zapState(logs))).toHaveLength(0);
+    });
+  });
+
+  describe('selectZapReceived', () => {
+    it('shows the vault shares a deposit received in the deposit token', () => {
+      const received = selectZapReceived(zapState(depositLogs(2n * 10n ** 18n)), 'test-vault');
+      expect(received).toHaveLength(1);
+      expect(received[0].token.symbol).toBe('MOO');
+      // 2 shares at a ppfs of 1.5
+      expect(received[0].amount.toString(10)).toBe('3');
+    });
+
+    it('shows a CLM pool receipt as the CLM it is worth, like the vault screens do', () => {
+      const logs = [tokenReturnedLog(ZAP_CONTRACT, POOL_CONTRACT, 2n * 10n ** 18n)];
+      const received = selectZapReceived(zapState(logs, [RCLM]), 'test-pool');
+      expect(received).toHaveLength(1);
+      // rCLM is 1:1 with CLM, so only the token it is reported as changes
+      expect(received[0].token.symbol).toBe('CLM');
+      expect(received[0].amount.toString(10)).toBe('2');
+    });
+
+    it('keeps an expected output below the dust threshold', () => {
+      // a small CLM deposit mints share amounts far under 1e-8, and they are still the position
+      const shares = 4060n; // 4.06e-15 at 18dp
+      const state = zapState(depositLogs(shares));
+      expect(selectZapReceived(state, 'test-vault')).toHaveLength(1);
+      // the same amount as dust is still noise
+      expect(
+        selectZapReturned(zapState([tokenReturnedLog(ZAP_CONTRACT, DUST_TOKEN, shares)]))
+      ).toHaveLength(0);
+    });
+
+    it('shows withdrawn tokens as they are', () => {
+      const logs = [tokenReturnedLog(ZAP_CONTRACT, ZERO_ADDRESS, 4n * 10n ** 17n)];
+      const received = selectZapReceived(zapState(logs, [NATIVE]), undefined);
+      expect(received).toHaveLength(1);
+      expect(received[0].token.symbol).toBe('ETH');
+      expect(received[0].amount.toString(10)).toBe('0.4');
+    });
+
+    it('skips an expected output the router returned nothing of', () => {
+      const state = zapState(depositLogs(0n));
+      expect(selectZapReceived(state, 'test-vault')).toHaveLength(0);
+      expect(selectZapReturned(state)).toHaveLength(1);
+    });
+
+    it('returns an equal result across dispatches without re-parsing', () => {
+      let state = zapState(depositLogs(2n * 10n ** 18n));
+      const first = selectZapReceived(state, 'test-vault');
+      for (let i = 0; i < 5; i++) {
+        state = dispatch(state);
+        expect(selectZapReceived(state, 'test-vault')).toEqual(first);
+      }
+      expect(parseEventLogsMock).toHaveBeenCalledTimes(1);
     });
   });
 

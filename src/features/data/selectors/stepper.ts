@@ -9,6 +9,7 @@ import {
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
 } from '../actions/wallet/wallet-action.ts';
+import { toDepositTokenIfVaultShare } from '../apis/transact/helpers/quotes.ts';
 import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
@@ -29,7 +30,7 @@ import {
   selectChainWrappedNativeToken,
   selectTokenByAddressOrUndefined,
 } from './tokens.ts';
-import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
+import { isStandardVault, isErc4626Vault, type VaultEntity } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
 import { selectZapByChainId } from './zap.ts';
@@ -304,7 +305,8 @@ const parseTokenReturnedEvents = weakMapMemoize((logs: ReceiptLogs) =>
   parseEventLogs({ abi: tokenReturnedAbi, logs, eventName: 'TokenReturned' })
 );
 
-export function selectZapReturned(state: BeefyState): TokenAmount[] {
+/** Router outputs with a non-trivial amount, either the zap's expected tokens or the rest (dust) */
+function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmount[] {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return NO_TOKEN_AMOUNTS;
   }
@@ -330,6 +332,8 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
   );
 
   const vault = selectVaultById(state, vaultId);
+  // the router emits TokenReturned for every order output; the config knows it, and receipt.to
+  // would be the wallet's own contract for a Safe or smart account
   const zap = selectZapByChainId(state, vault.chainId);
   if (!zap) {
     return NO_TOKEN_AMOUNTS;
@@ -341,7 +345,9 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
     return NO_TOKEN_AMOUNTS;
   }
 
-  const minAmount = new BigNumber('0.00000001');
+  // dust below this is noise; expected outputs are never too small to report, and CLM shares are
+  // tiny enough to fall under it (0.002 ETH into a CLM vault mints ~4e-12 shares)
+  const minDustAmount = new BigNumber('0.00000001');
   const native = selectChainNativeToken(state, vault.chainId);
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
@@ -356,10 +362,27 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
       };
     })
     .filter((t): t is TokenAmount => !!t.token)
-    .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
-    .filter(t => t.amount.gte(minAmount));
+    .filter(t => expectedTokensAddresses.has(t.token.address.toLowerCase()) === expected)
+    .filter(t => (expected ? t.amount.gt(BIG_ZERO) : t.amount.gte(minDustAmount)));
 
   return arrayOrStaticEmpty(tokenAmounts);
+}
+
+export function selectZapReturned(state: BeefyState): TokenAmount[] {
+  return selectZapRouterOutputs(state, false);
+}
+
+/** What a same-chain zap sent to the user; shares of `sharesVaultId` are shown as its deposit token */
+export function selectZapReceived(
+  state: BeefyState,
+  sharesVaultId: VaultEntity['id'] | undefined
+): TokenAmount[] {
+  const received = selectZapRouterOutputs(state, true);
+  if (!sharesVaultId || !received.length) {
+    return received;
+  }
+
+  return received.map(item => toDepositTokenIfVaultShare(state, sharesVaultId, item));
 }
 
 function selectDstTokensReturned(

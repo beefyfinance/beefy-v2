@@ -3,6 +3,7 @@ import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import { selectVaultByIdOrUndefined } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
@@ -53,7 +54,7 @@ export function quoteHasTransformation(quote: TransactQuote): boolean {
   );
 }
 
-/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+/** Converts a vault share amount to the deposit token, via ppfs where the vault has one, otherwise 1:1. */
 export function convertVaultShareToDepositTokenAmount(
   state: BeefyState,
   srcVaultId: VaultEntity['id'],
@@ -66,6 +67,18 @@ export function convertVaultShareToDepositTokenAmount(
     token: depositToken,
     amount: mooAmountToOracleAmount(shareToken, depositToken, ppfs, shareAmount),
   };
+}
+
+export function toDepositTokenIfVaultShare(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  tokenAmount: TokenAmount
+): TokenAmount {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || tokenAmount.token.address.toLowerCase() !== vault.contractAddress.toLowerCase()) {
+    return tokenAmount;
+  }
+  return convertVaultShareToDepositTokenAmount(state, vaultId, tokenAmount.amount);
 }
 
 /**
