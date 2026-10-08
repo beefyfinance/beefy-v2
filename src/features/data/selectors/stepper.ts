@@ -9,6 +9,7 @@ import {
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
 } from '../actions/wallet/wallet-action.ts';
+import { toDepositTokenIfVaultShare } from '../apis/transact/helpers/quotes.ts';
 import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
@@ -23,7 +24,6 @@ import {
 } from '../reducers/wallet/wallet-action-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
-import { selectSharesAsDepositTokenAmount } from './balance.ts';
 import { selectBoostById } from './boosts.ts';
 import {
   selectChainNativeToken,
@@ -382,7 +382,7 @@ export function selectZapReceived(
     return received;
   }
 
-  return received.map(item => selectSharesAsDepositTokenAmount(state, sharesVaultId, item));
+  return received.map(item => toDepositTokenIfVaultShare(state, sharesVaultId, item));
 }
 
 function selectDstTokensReturned(

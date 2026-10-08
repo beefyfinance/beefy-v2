@@ -122,6 +122,7 @@ function makeState(walletActions: unknown): BeefyState {
             chainId: CHAIN,
             type: 'standard',
             contractAddress: MINT_CONTRACT,
+            receiptTokenAddress: MINT_CONTRACT,
             depositTokenAddress: MINT_TOKEN,
           },
           'test-pool': {

@@ -21,7 +21,6 @@ import {
 } from '../entities/vault.ts';
 import { deepEqualBigNumberAware } from '../utils/selector-equality.ts';
 import type { BeefyState } from '../store/types.ts';
-import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   arrayOrStaticEmpty,
@@ -44,7 +43,6 @@ import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import { selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import {
   selectTokenByAddress,
-  selectTokenByAddressOrUndefined,
   selectTokenPriceByAddress,
   selectTokensByChainId,
 } from './tokens.ts';
@@ -52,8 +50,6 @@ import {
   selectAllCowcentratedVaults,
   selectGovVaultById,
   selectVaultById,
-  selectVaultByIdOrUndefined,
-  selectVaultPricePerFullShare,
   selectVaultReplacementMigration,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
@@ -301,38 +297,6 @@ export const selectUserVaultBalanceInShareTokenPendingWithdrawal = createSelecto
     selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, maybeWalletAddress)?.shares,
   shares => bigNumberOrStaticZero(shares)
 );
-
-/**
- * A vault's own shares shown as its deposit token: ppfs for standard and erc4626, 1:1 for the gov
- * receipts that are minted against it (a CLM pool's rCLM is one CLM). Anything else is left alone,
- * as are vaults whose deposit token is not in the store.
- */
-export function selectSharesAsDepositTokenAmount(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  item: TokenAmount
-): TokenAmount {
-  const vault = selectVaultByIdOrUndefined(state, vaultId);
-  if (!vault || item.token.address.toLowerCase() !== vault.contractAddress.toLowerCase()) {
-    return item;
-  }
-  const depositToken = selectTokenByAddressOrUndefined(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
-  if (!depositToken) {
-    return item;
-  }
-  if (!isStandardVault(vault) && !isErc4626Vault(vault)) {
-    return { token: depositToken, amount: item.amount };
-  }
-  const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  return {
-    token: depositToken,
-    amount: mooAmountToOracleAmount(item.token, depositToken, ppfs, item.amount),
-  };
-}
 
 export const selectVaultSharesToDepositTokenData = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>

@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi } from '../../apis/instances.ts';
+import { toDepositTokenIfVaultShare } from '../../apis/transact/helpers/quotes.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
   isCrossChainOption,
@@ -20,7 +21,6 @@ import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import { selectSharesAsDepositTokenAmount } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
@@ -150,7 +150,7 @@ export function withZapDetails(step: Step, quote: TransactQuote, state: BeefySta
   // some routes quote the source vault's shares (v2v, and the gov composer's rCLM), which is
   // neither what the user typed nor what the rest of the app calls that position
   const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
-  const sent = inputs.map(input => selectSharesAsDepositTokenAmount(state, sourceVaultId, input));
+  const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
   const zapDetails: ZapStepDetails =
     vaultToVault ? { inputs: sent, outputTokens, vaultToVault } : { inputs: sent, outputTokens };
 

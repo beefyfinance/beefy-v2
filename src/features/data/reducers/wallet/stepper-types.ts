@@ -60,7 +60,7 @@ export type Step = {
 
 /** What a same-chain zap was built from, for the success screen */
 export type ZapStepDetails = {
-  /** Sent by the user; vault-to-vault shares are already converted to deposit token */
+  /** Sent by the user, with the source vault's shares shown as its deposit token */
   inputs: TokenAmount[];
   /** Tokens the zap was quoted to deliver */
   outputTokens: TokenEntity[];
