@@ -10466,48 +10466,6 @@
     ]
   },
   {
-    "id": "thena-matic-busd",
-    "name": "MATIC-BUSD vLP",
-    "type": "standard",
-    "token": "MATIC-BUSD vLP",
-    "tokenAddress": "0xEB58A4D07990fF50b9F8289701cBdDf9052570B5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnContractAddress": "0x13939652caF011CCa8228293Dc901E4CB2c47BA3",
-    "earnedToken": "mooThenaMATIC-BUSD",
-    "earnedTokenAddress": "0x13939652caF011CCa8228293Dc901E4CB2c47BA3",
-    "oracle": "lps",
-    "oracleId": "thena-matic-busd",
-    "status": "eol",
-    "createdAt": 1683224586,
-    "retireReason": "tvl",
-    "retiredAt": 1691431139,
-    "platformId": "thena",
-    "assets": ["MATIC", "BUSD"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-usdt-usdc",
     "name": "USDT-USDC sLP",
     "type": "standard",
