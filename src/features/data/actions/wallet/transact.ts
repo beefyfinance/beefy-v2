@@ -46,11 +46,6 @@ export async function getTransactSteps(
 ): Promise<Step[]> {
   const steps: Step[] = [];
   const state = getState();
-  const isCrossChain = isCrossChainOption(quote.option);
-  console.log('[transact] getTransactSteps: start', {
-    strategyId: quote.option.strategyId,
-    isCrossChain,
-  });
 
   // Prefetch gas price for cross-chain options (runs in background, consumed by crossChainZapExecuteOrder)
   if (isCrossChainOption(quote.option)) {
@@ -103,16 +98,9 @@ export async function getTransactSteps(
   requotePromise.catch(() => {});
 
   // Build the step (~5-8s, re-quote runs in parallel)
-  let originalStep: Step;
-  if (isDepositQuote(quote)) {
-    originalStep = await api.fetchDepositStep(quote, getState, t);
-  } else if (isWithdrawQuote(quote)) {
-    originalStep = await api.fetchWithdrawStep(quote, getState, t);
-  } else {
-    throw new Error(`Invalid quote`);
-  }
+  const originalStep = await fetchStepForQuote(quote, getState, t);
 
-  steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
+  steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote, t));
 
   return steps;
 }
@@ -169,7 +157,8 @@ export function transactStepsClaimGov(vault: VaultGov, t: TFunction<Namespace>):
 function wrapStepConfirmQuote(
   originalStep: Step,
   originalQuote: TransactQuote,
-  prefetchedRequote: PrefetchedRequote
+  prefetchedRequote: PrefetchedRequote,
+  t: TFunction<Namespace>
 ): Step {
   const action: BeefyThunk = async function (dispatch, getState) {
     const requestId = nanoid();
@@ -196,7 +185,6 @@ function wrapStepConfirmQuote(
       const maxSlippage = selectTransactSlippage(state);
       const newQuote = quotes.find(quote => quote.option.id === originalQuote.option.id);
       const minAllowedRatio = new BigNumber(1 - maxSlippage * 0.1); // max 10% of slippage lower
-      console.log('minAllowedRatio', minAllowedRatio.toString(10));
 
       if (!newQuote) {
         throw new Error(`Failed to get new quote.`);
@@ -221,8 +209,9 @@ function wrapStepConfirmQuote(
         }
       }
 
-      // Perform original action if no changes
+      // No significant changes: rebuild the step from the new quote so execution matches what is displayed
       if (significantChanges.length === 0) {
+        const newStep = await fetchStepForQuote(newQuote, getState, t);
         dispatch(
           transactConfirmUnneeded({
             requestId,
@@ -230,8 +219,7 @@ function wrapStepConfirmQuote(
             originalQuoteId: originalQuote.id,
           })
         );
-        const result = await originalStep.action(dispatch, getState, undefined);
-        return result;
+        return await newStep.action(dispatch, getState, undefined);
       }
 
       console.debug('original', originalQuote);
@@ -265,6 +253,21 @@ function wrapStepConfirmQuote(
     ...originalStep,
     action,
   };
+}
+
+async function fetchStepForQuote(
+  quote: TransactQuote,
+  getState: BeefyStateFn,
+  t: TFunction<Namespace>
+): Promise<Step> {
+  const api = await getTransactApi();
+  if (isDepositQuote(quote)) {
+    return api.fetchDepositStep(quote, getState, t);
+  } else if (isWithdrawQuote(quote)) {
+    return api.fetchWithdrawStep(quote, getState, t);
+  } else {
+    throw new Error(`Invalid quote`);
+  }
 }
 
 async function fetchFreshRequote(
