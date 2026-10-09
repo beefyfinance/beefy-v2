@@ -148,7 +148,12 @@ export class BoostStrategy implements IComposableStrategy {
   async fetchDepositStep(quote: DepositQuote, t: TFunction<Namespace>): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
-      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
+      const walletAction = zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens,
+        this.boost.id
+      );
       return walletAction(dispatch, getState, extraArgument);
     };
 

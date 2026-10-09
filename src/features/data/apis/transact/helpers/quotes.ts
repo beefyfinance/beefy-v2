@@ -3,6 +3,7 @@ import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import { selectBoostByContractAddressOrUndefined } from '../../../selectors/boosts.ts';
 import { selectVaultByIdOrUndefined } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
@@ -75,7 +76,15 @@ export function toDepositTokenIfVaultShare(
   tokenAmount: TokenAmount
 ): TokenAmount {
   const vault = selectVaultByIdOrUndefined(state, vaultId);
-  if (!vault || tokenAmount.token.address.toLowerCase() !== vault.contractAddress.toLowerCase()) {
+  if (!vault) {
+    return tokenAmount;
+  }
+  const address = tokenAmount.token.address;
+  // a v2 boost receipt is 1:1 with the vault's shares
+  const isShare =
+    address.toLowerCase() === vault.contractAddress.toLowerCase() ||
+    selectBoostByContractAddressOrUndefined(state, vault.chainId, address)?.vaultId === vaultId;
+  if (!isShare) {
     return tokenAmount;
   }
   return convertVaultShareToDepositTokenAmount(state, vaultId, tokenAmount.amount);
