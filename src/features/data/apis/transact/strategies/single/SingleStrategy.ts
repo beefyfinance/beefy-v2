@@ -360,7 +360,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // Token Allowances
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      getVaultWithdrawnFromState(input, this.vaultType, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const allowances = [
       {

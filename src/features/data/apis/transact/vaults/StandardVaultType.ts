@@ -40,6 +40,7 @@ import {
 } from '../helpers/options.ts';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
+import { type ShareSource, WalletShareSource } from './ShareSource.ts';
 import {
   type AllowanceTokenAmount,
   type InputTokenAmount,
@@ -65,9 +66,10 @@ export class StandardVaultType implements IStandardVaultType {
   public readonly vault: VaultStandard;
   public readonly depositToken: TokenEntity;
   public readonly shareToken: TokenErc20;
+  public readonly shareSource: ShareSource;
   protected readonly getState: BeefyStateFn;
 
-  constructor(vault: VaultStandard, getState: BeefyStateFn) {
+  constructor(vault: VaultStandard, getState: BeefyStateFn, shareSource?: ShareSource) {
     if (!isStandardVault(vault)) {
       throw new Error('Vault is not a standard vault');
     }
@@ -82,6 +84,11 @@ export class StandardVaultType implements IStandardVaultType {
       throw new Error('Share token is not an ERC20 token');
     }
     this.shareToken = shareToken;
+    this.shareSource = shareSource ?? new WalletShareSource(shareToken);
+  }
+
+  withShareSource(shareSource: ShareSource): StandardVaultType {
+    return new StandardVaultType(this.vault, this.getState, shareSource);
   }
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
@@ -342,7 +349,7 @@ export class StandardVaultType implements IStandardVaultType {
     }
 
     const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this.vault, state);
+    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this, state);
     const outputs = [
       {
         token: input.token,
@@ -388,7 +395,7 @@ export class StandardVaultType implements IStandardVaultType {
     const address = selectWalletAddressOrThrow(state);
     const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } = await getVaultWithdrawnFromContract(
       input,
-      this.vault,
+      this,
       state,
       address
     );
