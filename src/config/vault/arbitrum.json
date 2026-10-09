@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-v2-arbitrum-gauntlet-premium-usdg",
+    "name": "USDG (Gauntlet, Premium V2)",
+    "type": "standard",
+    "token": "USDG",
+    "tokenAddress": "0x004B506865409877C9fA29bfb1ebA929984B9bbC",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xed30A3B3E9183166e8D53CeF0Ab81DFbC184C679",
+    "earnedToken": "mooMorphoV2ArbitrumGauntletPremiumUSDG",
+    "earnedTokenAddress": "0xed30A3B3E9183166e8D53CeF0Ab81DFbC184C679",
+    "oracle": "tokens",
+    "oracleId": "arbUSDG",
+    "status": "active",
+    "createdAt": 1791361497,
+    "platformId": "morpho",
+    "curatorId": "gauntlet",
+    "assets": ["arbUSDG"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/arbitrum/vault/0x390c1bb01F3F627144a40617e287d4cE3D5aBCfa/gauntlet-premium-usdg",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arbitrum-mor-weth-rp",
     "name": "MOR-WETH Reward Pool",
     "type": "gov",
