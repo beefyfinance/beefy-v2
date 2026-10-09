@@ -21,6 +21,7 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSetWithBoost,
   transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
@@ -105,6 +106,7 @@ const initialTransactState: TransactState = {
   depositSource: DepositSource.Wallet,
   selections: initialTransactTokens,
   forceSelection: false,
+  withBoost: undefined,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
@@ -126,6 +128,7 @@ const transactSlice = createSlice({
       .addCase(transactSwitchMode, (sliceState, action) => {
         sliceState.mode = action.payload;
         sliceState.step = TransactStep.Form;
+        sliceState.withBoost = undefined;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
         sliceState.inputEnteredAmounts = [];
@@ -134,6 +137,12 @@ const transactSlice = createSlice({
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSetWithBoost, (sliceState, action) => {
+        if (sliceState.withBoost !== action.payload) {
+          sliceState.withBoost = action.payload;
+          resetQuotes(sliceState);
+        }
       })
       .addCase(transactSwitchDepositSource, (sliceState, action) => {
         sliceState.depositSource = action.payload;
@@ -403,6 +412,7 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.inputMaxes = [false];
   sliceState.inputEnteredAmounts = [];
   sliceState.forceSelection = false;
+  sliceState.withBoost = undefined;
   sliceState.successClosed = false;
   sliceState.depositSource = DepositSource.Wallet;
 

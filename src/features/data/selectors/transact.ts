@@ -46,7 +46,11 @@ import {
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
-import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import {
+  selectAllVaultBoostIds,
+  selectPreStakeOrActiveBoostIds,
+  selectZapStakeableBoostOrUndefined,
+} from './boosts.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
@@ -572,11 +576,35 @@ export const selectTransactOptionIdsForSelectionId = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId]
 );
 
+// deposit defaults to boosting; the withdraw default will depend on where the user's shares are
+export const selectTransactWithBoost = (state: BeefyState) => state.ui.transact.withBoost ?? true;
+
+// a counterpart is only offered while its boost is still the vault's one stakeable boost
+const selectTransactLiveBoostId = (state: BeefyState) => {
+  const vaultId = selectTransactVaultIdOrUndefined(state);
+  return vaultId ? selectZapStakeableBoostOrUndefined(state, vaultId)?.id : undefined;
+};
+
+export const selectTransactBoostAvailableForSelectionId = createSelector(
+  (state: BeefyState, selectionId: string) =>
+    selectTransactOptionIdsForSelectionId(state, selectionId),
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  selectTransactLiveBoostId,
+  (optionIds, byOptionId, liveBoostId) =>
+    !!liveBoostId && (optionIds ?? []).some(id => byOptionId[id]?.boostId === liveBoostId)
+);
+
+export const selectTransactWithBoostForSelectionId = (state: BeefyState, selectionId: string) =>
+  selectTransactWithBoost(state) && selectTransactBoostAvailableForSelectionId(state, selectionId);
+
+/** the selection's options for the current checkbox state: the boosted counterparts, or the plain ones */
 export const selectTransactOptionsForSelectionId = createSelector(
   (state: BeefyState, selectionId: string) =>
     selectTransactOptionIdsForSelectionId(state, selectionId),
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
+  selectTransactWithBoostForSelectionId,
+  (optionIds, byOptionId, withBoost) =>
+    optionIds.map(id => byOptionId[id]).filter(option => !!option.boostId === withBoost)
 );
 
 export type SelectedZapFee = {

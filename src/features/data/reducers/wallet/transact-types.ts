@@ -170,6 +170,8 @@ export type TransactState = {
   step: TransactStep;
   depositSource: DepositSource;
   forceSelection: boolean;
+  /** the user's explicit boost checkbox choice; undefined until touched (the default is resolved in selectors) */
+  withBoost: boolean | undefined;
   selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;
