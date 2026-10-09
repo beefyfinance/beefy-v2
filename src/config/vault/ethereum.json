@@ -9631,7 +9631,12 @@
     },
     "strategyTypeId": "bifi-pool",
     "excluded": "bifi-vault",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "convex-tricrypto-llama",

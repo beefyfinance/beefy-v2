@@ -12,6 +12,7 @@ import type {
   CrossChainWithdrawQuote,
   GovComposerZapWithdrawQuote,
   GovVaultWithdrawQuote,
+  SingleWithdrawQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
@@ -19,6 +20,7 @@ import {
   isCrossChainWithdrawQuote,
   isGovComposerWithdrawQuote,
   isGovVaultWithdrawQuote,
+  isSingleWithdrawQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import {
   isCowcentratedLikeVault,
@@ -114,6 +116,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
     quote &&
     (isGovVaultWithdrawQuote(quote) ||
       isGovComposerWithdrawQuote(quote) ||
+      isSingleWithdrawQuote(quote) ||
       isCrossChainWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
 
@@ -321,7 +324,11 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 });
 
 type ActionClaimWithdrawProps = {
-  quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote | CrossChainWithdrawQuote;
+  quote:
+    | GovVaultWithdrawQuote
+    | GovComposerZapWithdrawQuote
+    | SingleWithdrawQuote
+    | CrossChainWithdrawQuote;
   vault: VaultGov;
 };
 const ActionClaimWithdraw = memo(function ActionClaimWithdraw({

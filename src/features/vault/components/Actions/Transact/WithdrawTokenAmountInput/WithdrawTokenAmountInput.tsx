@@ -4,12 +4,13 @@ import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
   selectTransactVaultId,
+  selectTransactWithdrawAvailableInShareToken,
+  selectTransactWithdrawAvailableWithToken,
 } from '../../../../../data/selectors/transact.ts';
 import type { AmountInputProps } from '../AmountInput/AmountInput.tsx';
 import { AmountInputWithSlider } from '../AmountInputWithSlider/AmountInputWithSlider.tsx';
@@ -35,9 +36,8 @@ const StandardWithdrawTokenAmountInput = memo(function StandardWithdrawTokenAmou
   css: cssProp,
 }: WithdrawTokenAmountInputProps) {
   const dispatch = useAppDispatch();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const { token: depositToken, amount: userBalance } = useAppSelector(state =>
-    selectUserVaultBalanceInDepositTokenWithToken(state, vaultId)
+  const { token: depositToken, amount: userBalance } = useAppSelector(
+    selectTransactWithdrawAvailableWithToken
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
   const price = useAppSelector(state =>
@@ -79,7 +79,10 @@ const VaultSourceWithdrawTokenAmountInput = memo(function VaultSourceWithdrawTok
   vaultId,
   css: cssProp,
 }: VaultSourceProps) {
-  const inputProps = useVaultSharesAmountInput(0, vaultId);
+  // the wallet share balance the hook defaults to reads 0 while the position sits in a boost
+  const shareBalance = useAppSelector(selectTransactWithdrawAvailableInShareToken);
+  const depositBalance = useAppSelector(selectTransactWithdrawAvailableWithToken).amount;
+  const inputProps = useVaultSharesAmountInput(0, vaultId, { shareBalance, depositBalance });
   return (
     <AmountInputWithSlider
       css={cssProp}

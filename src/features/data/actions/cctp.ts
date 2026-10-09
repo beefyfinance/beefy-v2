@@ -16,6 +16,7 @@ import { selectWalletAddress } from '../selectors/wallet.ts';
 import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchBalanceAction } from './balance.ts';
+import { selectAllVaultBoostIds, selectBoostById } from '../selectors/boosts.ts';
 import { crossChainFetchRecoveryQuote, crossChainOpStatusUpdate } from './wallet/cross-chain.ts';
 import { stepperSetBridgeStatus, stepperSetStepContent } from './wallet/stepper.ts';
 import { createWalletActionErrorAction } from './wallet/wallet-action.ts';
@@ -323,8 +324,17 @@ function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
     if (vaultChainCctp) {
       vaultChainTokens.push(selectTokenByAddress(state, vault.chainId, vaultChainCctp.usdcAddress));
     }
+    // the dst route may have staked the shares into a boost, whose balance lives outside `vaults`
+    const vaultBoosts = selectAllVaultBoostIds(state, vault.id).map(boostId =>
+      selectBoostById(state, boostId)
+    );
     dispatch(
-      fetchBalanceAction({ chainId: vault.chainId, tokens: vaultChainTokens, vaults: [vault] })
+      fetchBalanceAction({
+        chainId: vault.chainId,
+        tokens: vaultChainTokens,
+        vaults: [vault],
+        boosts: vaultBoosts,
+      })
     );
 
     if (destChainId !== vault.chainId) {
