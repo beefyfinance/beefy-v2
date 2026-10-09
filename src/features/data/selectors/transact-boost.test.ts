@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { BeefyState } from '../store/types.ts';
 import {
-  selectTransactBoostAvailableForSelectionId,
+  selectTransactBoostAvailable,
   selectTransactOptionsForSelectionId,
+  selectTransactVisibleSelectionIds,
 } from './transact.ts';
 
 type Opt = { id: string; selectionId: string; boostId?: string };
@@ -22,6 +23,7 @@ function makeState(withBoost: boolean | undefined, liveBoostIds: string[] = ['li
           byOptionId: Object.fromEntries(options.map(o => [o.id, o])),
           bySelectionId: { usdc: [plain.id, boosted.id], eth: [conic.id] },
         },
+        selections: { allSelectionIds: ['usdc', 'eth'] },
       },
     },
     entities: {
@@ -46,19 +48,21 @@ describe('selectTransactOptionsForSelectionId', () => {
     expect(selectTransactOptionsForSelectionId(makeState(undefined), 'usdc')).toEqual([boosted]);
   });
 
-  it('shows the plain options for a selection without counterparts regardless of the checkbox', () => {
-    expect(selectTransactOptionsForSelectionId(makeState(true), 'eth')).toEqual([conic]);
+  it('hides a selection without counterparts while the checkbox is on', () => {
+    expect(selectTransactOptionsForSelectionId(makeState(true), 'eth')).toEqual([]);
+    expect(selectTransactVisibleSelectionIds(makeState(true))).toEqual(['usdc']);
+    expect(selectTransactVisibleSelectionIds(makeState(false))).toEqual(['usdc', 'eth']);
   });
 
   it('falls back to the plain options once the boost is no longer stakeable', () => {
     expect(selectTransactOptionsForSelectionId(makeState(true, []), 'usdc')).toEqual([plain]);
-    expect(selectTransactBoostAvailableForSelectionId(makeState(true, []), 'usdc')).toBe(false);
+    expect(selectTransactBoostAvailable(makeState(true, []))).toBe(false);
   });
 });
 
-describe('selectTransactBoostAvailableForSelectionId', () => {
-  it('is true only for selections with a counterpart of the live boost', () => {
-    expect(selectTransactBoostAvailableForSelectionId(makeState(false), 'usdc')).toBe(true);
-    expect(selectTransactBoostAvailableForSelectionId(makeState(false), 'eth')).toBe(false);
+describe('selectTransactBoostAvailable', () => {
+  it('is true when any fetched option can stake into the live boost', () => {
+    expect(selectTransactBoostAvailable(makeState(false))).toBe(true);
+    expect(selectTransactBoostAvailable(makeState(false, ['other']))).toBe(false);
   });
 });

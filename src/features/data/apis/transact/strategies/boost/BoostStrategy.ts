@@ -103,6 +103,7 @@ export class BoostStrategy implements IComposableStrategy {
     const quote = await this.inner.fetchDepositQuote(inputs, option);
     const stake: ZapQuoteStepStake = {
       type: 'stake',
+      boostId: this.boost.id,
       inputs: [{ token: this.shareToken, amount: this.estimateShares(quote) }],
     };
     return { ...quote, steps: [...quote.steps, stake] } as DepositQuote;

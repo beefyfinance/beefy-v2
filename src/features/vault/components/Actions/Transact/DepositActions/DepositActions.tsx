@@ -39,6 +39,7 @@ import {
   selectTransactSuccessClosed,
   selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
+  selectTransactWillStakeIntoBoost,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
@@ -177,6 +178,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const isDisabledByMaxNative = useIsMaxGasTokenQuote(quote);
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
+  const willStakeIntoBoost = useAppSelector(selectTransactWillStakeIntoBoost);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
@@ -216,6 +218,8 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
     (isTxInProgress &&
       (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
   const isLoading = isExecuting || isTxInProgress;
+  // the CTA keeps showing a blocking state and only morphs once the deposit is fireable
+  const boostCta = willStakeIntoBoost && !isDisabled && !isComplete && !confirmNeededWithChanges;
 
   return (
     <>
@@ -229,7 +233,7 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={executionChainId}>
           <AnimatedButton
-            variant="cta"
+            variant={boostCta ? 'boost' : 'cta'}
             loading={isComplete ? false : isLoading}
             isCreating={isComplete ? false : isCreating}
             isConfirmed={isComplete}
@@ -250,6 +254,8 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
                   'Transact-ConfirmDepositAll'
                 : 'Transact-ConfirmDeposit'
               )
+            : boostCta ?
+              t('Transact-DepositAndBoost')
             : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </AnimatedButton>
         </ActionConnectSwitch>

@@ -102,6 +102,7 @@ describe('BoostStrategy deposit', () => {
     expect(quote.steps.map(step => step.type)).toEqual(['deposit', 'stake']);
     expect(quote.steps[1]).toEqual({
       type: 'stake',
+      boostId: boost.id,
       inputs: [{ token: mooWeth, amount: bn('5') }],
     });
     expect(quote.allowances.map(allowance => allowance.spenderAddress)).toEqual([MANAGER]);

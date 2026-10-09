@@ -275,14 +275,14 @@ export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyStat
 };
 
 export const selectTransactNumTokens = (state: BeefyState) =>
-  state.ui.transact.selections.allSelectionIds.length;
+  selectTransactVisibleSelectionIds(state).length;
 
 const selectTransactWithdrawSelectionsForChain = (
   state: BeefyState,
   chainId: ChainEntity['id']
 ) => {
-  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionsForChain) {
+  const selectionsForChain = selectTransactVisibleSelectionIdsForChain(state, chainId);
+  if (!selectionsForChain.length) {
     return EMPTY_ARRAY;
   }
 
@@ -402,8 +402,8 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   vaultId: VaultEntity['id']
 ) => {
   const walletAddress = selectWalletAddressIfKnown(state);
-  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionsForChain) {
+  const selectionsForChain = selectTransactVisibleSelectionIdsForChain(state, chainId);
+  if (!selectionsForChain.length) {
     return EMPTY_ARRAY;
   }
   const vault = selectVaultById(state, vaultId);
@@ -511,7 +511,8 @@ export const selectTransactDepositFromVaultEntries = (
   const bySelectionId = state.ui.transact.selections.bySelectionId;
   const entries: DepositFromVaultEntry[] = [];
 
-  for (const selection of Object.values(bySelectionId)) {
+  for (const selectionId of selectTransactVisibleSelectionIds(state)) {
+    const selection = bySelectionId[selectionId];
     const vaultId = selectVaultRefIdForSelection(state, selection.id);
     if (!vaultId) continue;
     const balanceUsd =
@@ -538,7 +539,8 @@ const hasDepositFromVaultEntry = (state: BeefyState): boolean => {
   const walletAddress = selectWalletAddressIfKnown(state);
   if (!walletAddress) return false;
 
-  for (const selection of Object.values(state.ui.transact.selections.bySelectionId)) {
+  for (const selectionId of selectTransactVisibleSelectionIds(state)) {
+    const selection = state.ui.transact.selections.bySelectionId[selectionId];
     const vaultId = selectVaultRefIdForSelection(state, selection.id);
     if (!vaultId) continue;
     const balanceUsd =
@@ -576,35 +578,71 @@ export const selectTransactOptionIdsForSelectionId = createSelector(
   (selectionId, bySelectionId) => bySelectionId[selectionId]
 );
 
+// ---------------------------------------------------------------------------
+// Boost selectors
+// ---------------------------------------------------------------------------
+
 // deposit defaults to boosting; the withdraw default will depend on where the user's shares are
 export const selectTransactWithBoost = (state: BeefyState) => state.ui.transact.withBoost ?? true;
 
-// a counterpart is only offered while its boost is still the vault's one stakeable boost
-const selectTransactLiveBoostId = (state: BeefyState) => {
-  const vaultId = selectTransactVaultIdOrUndefined(state);
-  return vaultId ? selectZapStakeableBoostOrUndefined(state, vaultId)?.id : undefined;
-};
-
-export const selectTransactBoostAvailableForSelectionId = createSelector(
-  (state: BeefyState, selectionId: string) =>
-    selectTransactOptionIdsForSelectionId(state, selectionId),
+// the vault's one stakeable boost, if any of the fetched options can stake into it
+const selectTransactLiveBoostId = createSelector(
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  selectTransactLiveBoostId,
-  (optionIds, byOptionId, liveBoostId) =>
-    !!liveBoostId && (optionIds ?? []).some(id => byOptionId[id]?.boostId === liveBoostId)
+  (state: BeefyState) => {
+    const vaultId = selectTransactVaultIdOrUndefined(state);
+    return vaultId ? selectZapStakeableBoostOrUndefined(state, vaultId)?.id : undefined;
+  },
+  (byOptionId, liveBoostId) =>
+    liveBoostId && Object.values(byOptionId).some(option => option.boostId === liveBoostId) ?
+      liveBoostId
+    : undefined
 );
 
-export const selectTransactWithBoostForSelectionId = (state: BeefyState, selectionId: string) =>
-  selectTransactWithBoost(state) && selectTransactBoostAvailableForSelectionId(state, selectionId);
+export const selectTransactBoostAvailable = (state: BeefyState) =>
+  selectTransactLiveBoostId(state) !== undefined;
+
+export const selectTransactWillStakeIntoBoost = (state: BeefyState) =>
+  selectTransactWithBoost(state) && selectTransactBoostAvailable(state);
 
 /** the selection's options for the current checkbox state: the boosted counterparts, or the plain ones */
 export const selectTransactOptionsForSelectionId = createSelector(
   (state: BeefyState, selectionId: string) =>
     selectTransactOptionIdsForSelectionId(state, selectionId),
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  selectTransactWithBoostForSelectionId,
+  selectTransactWillStakeIntoBoost,
   (optionIds, byOptionId, withBoost) =>
     optionIds.map(id => byOptionId[id]).filter(option => !!option.boostId === withBoost)
+);
+
+// selections with no route for the current boost choice are hidden from the picker
+const hasRouteForChoice =
+  (
+    optionIdsBySelectionId: Record<string, string[]>,
+    byOptionId: Record<string, TransactOption>,
+    withBoost: boolean
+  ) =>
+  (selectionId: string) =>
+    (optionIdsBySelectionId[selectionId] ?? []).some(id => !!byOptionId[id]?.boostId === withBoost);
+
+export const selectTransactVisibleSelectionIds = createSelector(
+  (state: BeefyState) => state.ui.transact.selections.allSelectionIds,
+  (state: BeefyState) => state.ui.transact.options.bySelectionId,
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  selectTransactWillStakeIntoBoost,
+  (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
+    selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))
+);
+
+export const selectTransactVisibleSelectionIdsForChain = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.ui.transact.selections.byChainId[chainId],
+  (state: BeefyState) => state.ui.transact.options.bySelectionId,
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  selectTransactWillStakeIntoBoost,
+  (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
+    selectionIds ?
+      selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))
+    : EMPTY_ARRAY
 );
 
 export type SelectedZapFee = {
@@ -768,8 +806,7 @@ const selectDepositOptionTokensBalanceByChainId = (
   chainId: ChainEntity['id'],
   walletAddress: string
 ): BigNumber => {
-  const selectionIds = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionIds) return BIG_ZERO;
+  const selectionIds = selectTransactVisibleSelectionIdsForChain(state, chainId);
 
   const counted = new Set<string>();
   return selectionIds.reduce((acc, selectionId) => {
@@ -809,10 +846,10 @@ export const selectCrossChainSortedChains = (
         selectDepositOptionTokensBalanceByChainId(state, chainId, walletAddress)
       : BIG_ZERO;
 
-    const selectionIds = state.ui.transact.selections.byChainId[chainId];
+    const selectionIds = selectTransactVisibleSelectionIdsForChain(state, chainId);
     const seenAddresses = new Set<string>();
     const tokenOptions: CrossChainTokenOption[] = [];
-    if (selectionIds) {
+    if (selectionIds.length) {
       for (const selectionId of selectionIds) {
         const selection = state.ui.transact.selections.bySelectionId[selectionId];
         if (!selection) continue;

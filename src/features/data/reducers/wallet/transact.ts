@@ -139,9 +139,25 @@ const transactSlice = createSlice({
         sliceState.step = action.payload;
       })
       .addCase(transactSetWithBoost, (sliceState, action) => {
-        if (sliceState.withBoost !== action.payload) {
-          sliceState.withBoost = action.payload;
-          resetQuotes(sliceState);
+        if (sliceState.withBoost === action.payload) {
+          return;
+        }
+        sliceState.withBoost = action.payload;
+        resetQuotes(sliceState);
+        // keep the token if it has a route for the new choice, else jump to the first that does
+        const hasRoute = (selectionId: string | undefined) =>
+          !!selectionId &&
+          (sliceState.options.bySelectionId[selectionId] ?? []).some(
+            id => !!sliceState.options.byOptionId[id]?.boostId === action.payload
+          );
+        if (!hasRoute(sliceState.selectedSelectionId)) {
+          const selectionId = sliceState.selections.allSelectionIds.find(hasRoute);
+          if (selectionId) {
+            sliceState.selectedSelectionId = selectionId;
+            sliceState.selectedChainId =
+              sliceState.selections.bySelectionId[selectionId]?.tokens[0]?.chainId;
+            clearInputs(sliceState);
+          }
         }
       })
       .addCase(transactSwitchDepositSource, (sliceState, action) => {

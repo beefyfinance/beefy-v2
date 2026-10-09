@@ -17,6 +17,7 @@ import {
   type UnifiedRewardToken,
 } from '../../../../../data/selectors/rewards.ts';
 import {
+  selectTransactBoostAvailable,
   selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -51,9 +52,16 @@ const selectBoostDepositNotice = createSelector(
     selectVaultCurrentBoostRewardTokens,
     selectUserVaultBalanceInShareTokenIncludingDisplaced,
     selectUserVaultBalanceNotInActiveBoostInShareToken,
+    selectTransactBoostAvailable,
   ],
-  (vaultId, rewardTokens, inVaultAnywhere, notInActiveBoost): FooterNotice | undefined => {
-    if (!!rewardTokens && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
+  (
+    vaultId,
+    rewardTokens,
+    inVaultAnywhere,
+    notInActiveBoost,
+    available
+  ): FooterNotice | undefined => {
+    if (!!rewardTokens && (available || inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
       return { kind: 'boost-deposit', vaultId, rewardTokens };
     }
 
