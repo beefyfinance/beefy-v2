@@ -1,22 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchWeeklyRevenueStats } from '../actions/revenue.ts';
+import type { RevenueWeek } from '../utils/platform-stats.ts';
 
 export type RevenueState = {
-  previousWeek: {
-    yieldUsd: BigNumber | null;
-    revenueUsd: BigNumber | null;
-    buybackUsd: BigNumber | null;
-    buybackAmount: BigNumber | null;
-  };
+  /** closed weeks, oldest first */
+  weeks: RevenueWeek[];
 };
 
 export const initialRevenueState: RevenueState = {
-  previousWeek: {
-    yieldUsd: null,
-    revenueUsd: null,
-    buybackUsd: null,
-    buybackAmount: null,
-  },
+  weeks: [],
 };
 
 export const revenueSlice = createSlice({
@@ -25,7 +17,7 @@ export const revenueSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWeeklyRevenueStats.fulfilled, (state, action) => {
-      state.previousWeek = action.payload.data;
+      state.weeks = action.payload.weeks;
     });
   },
 });

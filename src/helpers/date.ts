@@ -257,6 +257,20 @@ const chartDateFormatter = new Intl.DateTimeFormat(resolvedLocale, {
   day: 'numeric',
 });
 
+// UTC for weekly buckets, which start Monday 00:00 UTC
+const utcDateFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+const utcChartDateFormatter = new Intl.DateTimeFormat(resolvedLocale, {
+  month: 'numeric',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
 export function formatDateTime(date: Date | number): string {
   return dateTimeFormatter.format(date);
 }
@@ -279,4 +293,12 @@ export function formatTimeWithSeconds(date: Date | number): string {
 
 export function formatChartDate(date: Date | number): string {
   return chartDateFormatter.format(date);
+}
+
+export function formatUtcDate(date: Date | number): string {
+  return utcDateFormatter.format(date);
+}
+
+export function formatUtcChartDate(date: Date | number): string {
+  return utcChartDateFormatter.format(date);
 }

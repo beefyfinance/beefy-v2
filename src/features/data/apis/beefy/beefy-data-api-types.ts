@@ -68,6 +68,12 @@ export type ApiRevenuePeriodStat = {
 
 export type ApiRevenueStats = ApiRevenuePeriodStat[];
 
+/** per chain: [t, total, vault, gov, clm] */
+export type ApiTvlByChains = {
+  fields: string[];
+  data: Record<string, Array<[number, number, number, number, number]>>;
+};
+
 export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
@@ -94,4 +100,6 @@ export interface IBeefyDataApi {
   getAvgApys(): Promise<ApiAvgApys>;
 
   getRevenueStatsByPeriod(revenueStatType: ApiRevenueStatType): Promise<ApiRevenueStats>;
+
+  getTvlByChains(bucket: ApiTimeBucket): Promise<ApiTvlByChains>;
 }
