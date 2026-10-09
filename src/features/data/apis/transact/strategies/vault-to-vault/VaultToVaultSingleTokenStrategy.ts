@@ -87,7 +87,10 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
   // --- CONTEXT FACTORIES ---
 
-  private makeSourceContext(routingToken: TokenEntity): SourceHandlerContext {
+  private makeSourceContext(
+    routingToken: TokenEntity,
+    boostId?: BoostPromoEntity['id']
+  ): SourceHandlerContext {
     return {
       helpers: this.helpers,
       sourceChainId: this.helpers.vault.chainId,
@@ -95,6 +98,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
+      boostId,
     };
   }
 
@@ -228,7 +232,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const { routingToken } = option;
 
-    const srcCtx = this.makeSourceContext(routingToken);
+    const srcCtx = this.makeSourceContext(routingToken, option.boostId);
     const destCtx = this.makeDestContext(routingToken, option.boostId);
 
     const srcHandler = new VaultSourceHandler(option.srcVaultId);
@@ -295,7 +299,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<Step> {
     const { routingToken } = quote.option;
 
-    const srcCtx = this.makeSourceContext(routingToken);
+    const srcCtx = this.makeSourceContext(routingToken, quote.option.boostId);
     const destCtx = this.makeDestContext(routingToken, quote.option.boostId);
 
     const srcHandler: ISourceHandler = new VaultSourceHandler(quote.option.srcVaultId);
@@ -337,7 +341,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       message: t('Vault-TxnConfirm', {
         type: t(isDeposit ? 'Deposit-noun' : 'Withdraw-noun'),
       }),
-      action: zapExecuteOrder(this.helpers.vault.id, zapRequest, destSteps.expectedTokens),
+      action: zapExecuteOrder(
+        this.helpers.vault.id,
+        zapRequest,
+        destSteps.expectedTokens,
+        quote.option.boostId
+      ),
       pending: false,
       extraInfo: { zap: true, vaultId: this.helpers.vault.id },
     };

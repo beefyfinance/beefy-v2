@@ -13,6 +13,7 @@ import { isSerializableError } from '../../apis/transact/strategies/error.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { isTokenErc20, type TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
@@ -117,7 +118,8 @@ export const crossChainZapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
   expectedTokens: TokenEntity[],
-  metadata: CrossChainExecuteMetadata
+  metadata: CrossChainExecuteMetadata,
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -247,6 +249,7 @@ export const crossChainZapExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
         clearInput: false,
+        boostId,
       }
     );
 

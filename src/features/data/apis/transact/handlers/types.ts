@@ -81,6 +81,8 @@ export type SourceHandlerContext = {
   pageVaultId: VaultEntity['id'];
   /** Async resolver for vault-bound `ZapTransactHelpers`; called by `VaultSourceHandler` with its own src vault id. */
   resolveHelpersForVault: (vaultId: VaultEntity['id']) => Promise<ZapTransactHelpers>;
+  /** unstake the source vault's shares from this boost (from the option's `boostId`) */
+  boostId?: BoostPromoEntity['id'];
 };
 
 /**

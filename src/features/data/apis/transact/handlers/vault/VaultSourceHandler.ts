@@ -14,7 +14,12 @@ import {
   type WithdrawOption,
   type ZapWithdrawQuote,
 } from '../../transact-types.ts';
-import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
+import { withBoost, withBoostShares } from '../../strategies/boost/BoostStrategy.ts';
+import {
+  type IComposableStrategy,
+  isComposableStrategy,
+  type IStrategy,
+} from '../../strategies/IStrategy.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
   ISourceHandler,
@@ -23,7 +28,7 @@ import type {
   SourceHandlerSteps,
 } from '../types.ts';
 
-type StrategyMatch = { strategy: IStrategy; option: WithdrawOption };
+type StrategyMatch = { strategy: IComposableStrategy; option: WithdrawOption };
 
 /** Strategy is re-resolved at step time (via underlyingQuote.strategyId) to avoid stale state across RPC calls. */
 type VaultSourceState = {
@@ -43,7 +48,10 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     input: InputTokenAmount,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerQuote<VaultSourceState>> {
-    const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const srcHelpers = withBoostShares(
+      await ctx.resolveHelpersForVault(this.srcVaultId),
+      ctx.boostId
+    );
     const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
     const match = await VaultSourceHandler.findStrategyForOutputWithdraw(
@@ -56,10 +64,11 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       );
     }
 
-    await match.strategy.beforeQuote?.();
+    const strategy: IStrategy = withBoost(match.strategy, srcHelpers, ctx.boostId);
+    await strategy.beforeQuote?.();
 
     const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
-    const underlyingQuote = await match.strategy.fetchWithdrawQuote([adaptedInput], match.option);
+    const underlyingQuote = await strategy.fetchWithdrawQuote([adaptedInput], match.option);
     if (!isZapQuote(underlyingQuote)) {
       throw new Error(
         `[vault-source] Composable strategy '${match.strategy.id}' returned a non-zap withdraw quote`
@@ -99,16 +108,20 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     quote: SourceHandlerQuote<VaultSourceState>,
     ctx: SourceHandlerContext
   ): Promise<SourceHandlerSteps> {
-    const srcHelpers = await ctx.resolveHelpersForVault(this.srcVaultId);
+    const srcHelpers = withBoostShares(
+      await ctx.resolveHelpersForVault(this.srcVaultId),
+      ctx.boostId
+    );
     const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
     const { underlyingQuote } = quote.state;
-    const strategy = strategies.find(s => s.id === underlyingQuote.strategyId);
-    if (!strategy || !isComposableStrategy(strategy)) {
+    const found = strategies.find(s => s.id === underlyingQuote.strategyId);
+    if (!found || !isComposableStrategy(found)) {
       throw new Error(
         `[vault-source] Source withdraw strategy '${underlyingQuote.strategyId}' on chain ${ctx.sourceChainId} is not composable`
       );
     }
+    const strategy = withBoost(found, srcHelpers, ctx.boostId);
 
     await strategy.beforeStep?.();
     const breakdown = await strategy.fetchWithdrawUserlessZapBreakdown(underlyingQuote);

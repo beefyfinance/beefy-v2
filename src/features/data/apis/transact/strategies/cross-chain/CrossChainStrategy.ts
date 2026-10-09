@@ -149,6 +149,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
+      boostId: option.boostId,
     };
   }
 
@@ -652,7 +653,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         quote.option.vaultId,
         zapRequest,
         expectedTokens,
-        metadata
+        metadata,
+        // a withdraw unstakes on the source chain; a deposit's boost refreshes when the bridge lands
+        isDeposit ? undefined : quote.option.boostId
       ),
       pending: false,
       extraInfo: {
