@@ -1904,6 +1904,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -1946,6 +1949,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -1988,6 +1994,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2030,6 +2039,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2070,6 +2082,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2110,6 +2125,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2151,6 +2169,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2279,6 +2300,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2403,6 +2427,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -2527,6 +2554,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3067,6 +3097,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3192,6 +3225,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3313,6 +3349,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3355,6 +3394,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3435,6 +3477,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3474,6 +3519,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3515,6 +3563,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3556,6 +3607,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3595,6 +3649,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3636,6 +3693,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3675,6 +3735,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3714,6 +3777,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3755,6 +3821,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3929,6 +3998,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -3968,6 +4040,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -6638,6 +6713,9 @@
             ]
           }
         ]
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -6948,6 +7026,9 @@
         ],
         "bptIndex": 1,
         "hasNestedPool": false
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -7149,6 +7230,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -7191,6 +7275,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -7285,6 +7372,9 @@
             ]
           }
         ]
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -7339,6 +7429,9 @@
             ]
           }
         ]
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -7842,6 +7935,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -8001,6 +8097,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -8041,6 +8140,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -8081,6 +8183,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -8163,6 +8268,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -8243,6 +8351,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ],
     "poolTogether": "https://app.cabana.fi/vault/10/0x626f8282f712732be0c12d4a89a86be6e9ce8ac8?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
@@ -9410,6 +9521,9 @@
             ]
           }
         ]
+      },
+      {
+        "strategyId": "single"
       }
     ],
     "poolTogether": "https://app.cabana.fi/vault/10/0xb4911efd3d53352f658536afd37e7897cb7dd7f6?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
@@ -9501,6 +9615,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ],
     "poolTogether": "https://app.cabana.fi/vault/10/0x5eb32e6dEc24d58C14D21fd1b329d9f65DE58364?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
@@ -9721,6 +9838,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -10092,6 +10212,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -10379,6 +10502,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -10461,6 +10587,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -11292,6 +11421,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -11621,6 +11753,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -11703,6 +11838,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -11787,6 +11925,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -12241,6 +12382,9 @@
       {
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },

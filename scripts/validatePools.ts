@@ -237,7 +237,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     getPromosForChain(chainId),
   ]);
   const allVaults = vaultsAndPromos[0];
-  const poolIds = new Set(allVaults.map(pool => pool.id));
+  const vaultsById = new Map(allVaults.map(pool => [pool.id, pool]));
   const promos = vaultsAndPromos[1];
 
   // console.log(`Validating ${allVaults.length} vaults in ${chainId}...`);
@@ -494,10 +494,26 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       return;
     }
 
-    if (!poolIds.has(promo.vaultId)) {
+    const promoVault = vaultsById.get(promo.vaultId);
+    if (!promoVault) {
       console.error(`Error: Promo ${promo.id}: Promo has non-existent vault id ${promo.vaultId}.`);
       exitCode = 1;
       return;
+    }
+
+    // boost zaps stake via the zap router, so the plain deposit/withdraw route must exist as a `single` zap
+    if (promo.type === 'boost' && (promo.version ?? 1) >= 2) {
+      const vaultType = promoVault.type ?? 'standard';
+      if (
+        (vaultType === 'standard' || vaultType === 'erc4626') &&
+        !promoVault.zaps?.some(zap => zap.strategyId === 'single')
+      ) {
+        console.error(
+          `Error: Promo ${promo.id}: Vault ${promo.vaultId} has a v2 boost but no "single" zap.`
+        );
+        exitCode = 1;
+        return;
+      }
     }
 
     if ((promo.partners || []).length === 0 && !promo.campaign) {

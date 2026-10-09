@@ -1019,6 +1019,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -1152,6 +1155,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -1285,6 +1291,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
@@ -1414,6 +1423,9 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
+      },
+      {
+        "strategyId": "single"
       }
     ]
   },
