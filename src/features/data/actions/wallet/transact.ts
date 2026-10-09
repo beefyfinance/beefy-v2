@@ -3,23 +3,27 @@ import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi } from '../../apis/instances.ts';
+import { toDepositTokenIfVaultShare } from '../../apis/transact/helpers/quotes.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
   isCrossChainOption,
   isDepositOption,
   isDepositQuote,
+  isRewardPoolToVaultDepositOption,
+  isVaultToVaultSingleTokenOption,
   isWithdrawOption,
   isWithdrawQuote,
   type QuoteOutputTokenAmountChange,
+  type TransactOption,
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
-import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
-import type { BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
   transactConfirmPending,
@@ -112,9 +116,45 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
+  steps.push(
+    wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
+  );
 
   return steps;
+}
+
+/** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
+function vaultToVaultOf(option: TransactOption) {
+  if (isVaultToVaultSingleTokenOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.destVaultId };
+  }
+  if (isRewardPoolToVaultDepositOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.vaultId };
+  }
+  return undefined;
+}
+
+/** Cross-chain zaps describe themselves via their pending op instead. Exported for tests. */
+export function withZapDetails(step: Step, quote: TransactQuote, state: BeefyState): Step {
+  if ((step.step !== 'zap-in' && step.step !== 'zap-out') || isCrossChainOption(quote.option)) {
+    return step;
+  }
+
+  const { option } = quote;
+  const inputs = quote.inputs.filter(input => input.amount.gt(BIG_ZERO));
+  const outputTokens = quote.outputs
+    .filter(output => output.amount.gt(BIG_ZERO))
+    .map(output => output.token);
+
+  const vaultToVault = vaultToVaultOf(option);
+  // some routes quote the source vault's shares (v2v, and the gov composer's rCLM), which is
+  // neither what the user typed nor what the rest of the app calls that position
+  const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
+  const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
+  const zapDetails: ZapStepDetails =
+    vaultToVault ? { inputs: sent, outputTokens, vaultToVault } : { inputs: sent, outputTokens };
+
+  return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }
 
 /**
