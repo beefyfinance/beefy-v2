@@ -151,14 +151,24 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     return tokenSupport.any;
   }
 
+  // the deposit token is always offered (identity route, used by composable consumers); deduped in transact.ts
+  private async identityAndAggregatorTokens(): Promise<TokenEntity[]> {
+    const { depositToken } = this.vaultType;
+    const tokens = await this.aggregatorTokenSupport();
+    if (tokens.some(token => isTokenEqual(token, depositToken))) {
+      return tokens;
+    }
+    return [depositToken, ...tokens];
+  }
+
   async fetchDepositOptions(): Promise<SingleDepositOption[]> {
     if (this.isDepositDisabled()) {
       return [];
     }
 
-    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
-    const tokens = await this.aggregatorTokenSupport();
-    const outputs = [this.vaultType.depositToken];
+    const { depositToken } = this.vaultType;
+    const tokens = await this.identityAndAggregatorTokens();
+    const outputs = [depositToken];
 
     return tokens.map(token => {
       const inputs = [token];
@@ -174,6 +184,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         wantedOutputs: outputs,
         strategyId: 'single',
         mode: TransactMode.Deposit,
+        feeable: !isTokenEqual(token, depositToken),
       };
     });
   }
@@ -303,9 +314,9 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       return [];
     }
 
-    // depositToken included so composable consumers find the identity option; deduped in transact.ts.
-    const tokens = await this.aggregatorTokenSupport();
-    const inputs = [this.vaultType.depositToken];
+    const { depositToken } = this.vaultType;
+    const tokens = await this.identityAndAggregatorTokens();
+    const inputs = [depositToken];
 
     return tokens.map(token => {
       const outputs = [token];
@@ -321,6 +332,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         wantedOutputs: outputs,
         strategyId: 'single',
         mode: TransactMode.Withdraw,
+        feeable: !isTokenEqual(token, depositToken),
       };
     });
   }
