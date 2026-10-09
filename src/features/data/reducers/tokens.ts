@@ -7,7 +7,7 @@ import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllMinters } from '../actions/minters.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
-import { initPromos } from '../actions/promos.ts';
+import { initBoostReceiptTokens, initPromos } from '../actions/promos.ts';
 import type { FetchAddressBookPayload } from '../actions/tokens.ts';
 import {
   fetchAddressBookAction,
@@ -99,6 +99,12 @@ export const tokensSlice = createSlice({
             addPromoRewardTokenToState(sliceState, promo.chainId, reward);
           }
         }
+      }
+    });
+
+    builder.addCase(initBoostReceiptTokens.fulfilled, (sliceState, action) => {
+      for (const token of action.payload.tokens) {
+        addTokenToStateIfNotExists(sliceState, token);
       }
     });
 
