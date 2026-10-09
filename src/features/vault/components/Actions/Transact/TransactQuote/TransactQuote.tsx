@@ -60,7 +60,7 @@ import {
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
   selectTransactVaultId,
-  selectTransactWithBoost,
+  selectTransactWithBoostChoice,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -92,7 +92,7 @@ export const TransactQuote = memo(function TransactQuote({
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
-  const withBoost = useAppSelector(selectTransactWithBoost);
+  const withBoost = useAppSelector(selectTransactWithBoostChoice);
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));

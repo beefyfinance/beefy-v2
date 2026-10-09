@@ -45,11 +45,14 @@ import {
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
+  selectBoostUserBalanceInToken,
+  selectVaultSharesToDepositTokenData,
 } from './balance.ts';
 import {
   selectAllVaultBoostIds,
   selectPreStakeOrActiveBoostIds,
   selectZapStakeableBoostOrUndefined,
+  selectZapUnstakeableBoostOrUndefined,
 } from './boosts.ts';
 import {
   selectVaultHasActiveGovRewards,
@@ -57,6 +60,9 @@ import {
   selectVaultHasActiveStellaSwapCampaigns,
 } from './rewards.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectIsStepperStepping, selectStepperStepContent } from './stepper.ts';
+import { StepContent } from '../reducers/wallet/stepper-types.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
@@ -582,15 +588,33 @@ export const selectTransactOptionIdsForSelectionId = createSelector(
 // Boost selectors
 // ---------------------------------------------------------------------------
 
-// deposit defaults to boosting; the withdraw default will depend on where the user's shares are
-export const selectTransactWithBoost = (state: BeefyState) => state.ui.transact.withBoost ?? true;
+export const selectTransactWithBoostChoice = (state: BeefyState) => state.ui.transact.withBoost;
 
-// the vault's one stakeable boost, if any of the fetched options can stake into it
+// deposit: boost by default; withdraw: unstake by default only when the wallet holds no shares
+const selectTransactWithBoostDefault = (state: BeefyState) => {
+  if (state.ui.transact.mode !== TransactMode.Withdraw) {
+    return true;
+  }
+  const vaultId = selectTransactVaultIdOrUndefined(state);
+  return !!vaultId && selectUserVaultBalanceInShareToken(state, vaultId).isZero();
+};
+
+export const selectTransactWithBoost = (state: BeefyState) =>
+  selectTransactWithBoostChoice(state) ?? selectTransactWithBoostDefault(state);
+
+// the vault's one boost a route can stake into (deposit) or unstake from (withdraw), if any fetched option does
 const selectTransactLiveBoostId = createSelector(
   (state: BeefyState) => state.ui.transact.options.byOptionId,
   (state: BeefyState) => {
     const vaultId = selectTransactVaultIdOrUndefined(state);
-    return vaultId ? selectZapStakeableBoostOrUndefined(state, vaultId)?.id : undefined;
+    if (!vaultId) {
+      return undefined;
+    }
+    const boost =
+      state.ui.transact.mode === TransactMode.Withdraw ?
+        selectZapUnstakeableBoostOrUndefined(state, vaultId)
+      : selectZapStakeableBoostOrUndefined(state, vaultId);
+    return boost?.id;
   },
   (byOptionId, liveBoostId) =>
     liveBoostId && Object.values(byOptionId).some(option => option.boostId === liveBoostId) ?
@@ -601,15 +625,40 @@ const selectTransactLiveBoostId = createSelector(
 export const selectTransactBoostAvailable = (state: BeefyState) =>
   selectTransactLiveBoostId(state) !== undefined;
 
-export const selectTransactWillStakeIntoBoost = (state: BeefyState) =>
+export const selectTransactBoostInEffect = (state: BeefyState) =>
   selectTransactWithBoost(state) && selectTransactBoostAvailable(state);
+
+// a toggle re-quotes, which would race a running tx or wipe the completed route still shown after success
+export const selectTransactIsLocked = (state: BeefyState) =>
+  selectTransactExecuting(state) ||
+  selectIsStepperStepping(state) ||
+  selectStepperStepContent(state) === StepContent.SuccessTx ||
+  selectTransactSuccessClosed(state);
+
+// what a withdraw can spend: the boost's staked shares when unstaking, else the wallet's
+export const selectTransactWithdrawAvailableInShareToken = (state: BeefyState): BigNumber => {
+  const vaultId = selectTransactVaultId(state);
+  const boostId = selectTransactBoostInEffect(state) ? selectTransactLiveBoostId(state) : undefined;
+  return boostId ?
+      selectBoostUserBalanceInToken(state, boostId)
+    : selectUserVaultBalanceInShareToken(state, vaultId);
+};
+
+export const selectTransactWithdrawAvailableWithToken = createSelector(
+  selectTransactWithdrawAvailableInShareToken,
+  (state: BeefyState) => selectVaultSharesToDepositTokenData(state, selectTransactVaultId(state)),
+  (shares, { shareToken, depositToken, ppfs }): TokenAmount => ({
+    token: depositToken,
+    amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
+  })
+);
 
 /** the selection's options for the current checkbox state: the boosted counterparts, or the plain ones */
 export const selectTransactOptionsForSelectionId = createSelector(
   (state: BeefyState, selectionId: string) =>
     selectTransactOptionIdsForSelectionId(state, selectionId),
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  selectTransactWillStakeIntoBoost,
+  selectTransactBoostInEffect,
   (optionIds, byOptionId, withBoost) =>
     optionIds.map(id => byOptionId[id]).filter(option => !!option.boostId === withBoost)
 );
@@ -628,7 +677,7 @@ export const selectTransactVisibleSelectionIds = createSelector(
   (state: BeefyState) => state.ui.transact.selections.allSelectionIds,
   (state: BeefyState) => state.ui.transact.options.bySelectionId,
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  selectTransactWillStakeIntoBoost,
+  selectTransactBoostInEffect,
   (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
     selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))
 );
@@ -638,7 +687,7 @@ export const selectTransactVisibleSelectionIdsForChain = createSelector(
     state.ui.transact.selections.byChainId[chainId],
   (state: BeefyState) => state.ui.transact.options.bySelectionId,
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  selectTransactWillStakeIntoBoost,
+  selectTransactBoostInEffect,
   (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
     selectionIds ?
       selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))

@@ -40,7 +40,7 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
-  selectTransactWillStakeIntoBoost,
+  selectTransactBoostInEffect,
   selectTransactSelectionById,
   selectTransactVaultId,
 } from '../selectors/transact.ts';
@@ -389,7 +389,7 @@ export const transactFetchQuotesIfNeeded = createAppAsyncThunk(
         // vaultId never matches selectionId/inputs already capture any real change
         (!isVaultSourceDepositOption(option) && option.vaultId !== vaultId) ||
         option.selectionId !== selectionId ||
-        !!option.boostId !== selectTransactWillStakeIntoBoost(state) ||
+        !!option.boostId !== selectTransactBoostInEffect(state) ||
         !matchingInputs;
     }
 
