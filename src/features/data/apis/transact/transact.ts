@@ -3,8 +3,13 @@ import { partition, uniq } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
+import {
+  isCowcentratedLikeVault,
+  isStandardVault,
+  type VaultEntity,
+} from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import { selectZapStakeableBoostOrUndefined } from '../../selectors/boosts.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
@@ -51,7 +56,8 @@ import {
 import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blacklist.ts';
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
 import { filterGeoBlockedOptions } from './helpers/geo.ts';
-import { isOptionFeeable } from './helpers/options.ts';
+import { withBoostedCounterparts } from './helpers/boost.ts';
+import { dropSingleIdentityOption, isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
   type DepositQuote,
@@ -222,7 +228,12 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
+    const allowedOptions = this.withBoostedDepositCounterparts(
+      state,
+      helpers.vault,
+      zapStrategies,
+      filterGeoBlockedOptions(state, helpers.vault, options)
+    );
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     if (vaultDepositOption) {
@@ -234,6 +245,28 @@ export class TransactApi implements ITransactApi {
     }
 
     return allowedOptions;
+  }
+
+  // the boost decorator wraps composable breakdowns: same-chain composable zaps, and cross-chain / v2v routes into this vault
+  private withBoostedDepositCounterparts(
+    state: BeefyState,
+    vault: VaultEntity,
+    zapStrategies: IStrategy[],
+    options: DepositOption[]
+  ): DepositOption[] {
+    const boost =
+      isStandardVault(vault) ? selectZapStakeableBoostOrUndefined(state, vault.id) : undefined;
+    if (!boost) {
+      return options;
+    }
+    const composableStrategyIds = new Set<string>(
+      zapStrategies.filter(isComposableStrategy).map(strategy => strategy.id)
+    );
+    return withBoostedCounterparts(options, boost.id, option =>
+      option.strategyId === 'cross-chain' || option.strategyId === 'vault-to-vault-single-token' ?
+        option.destVaultId === vault.id
+      : composableStrategyIds.has(option.strategyId)
+    );
   }
 
   async fetchDepositQuotesFor(
@@ -892,28 +925,4 @@ export class TransactApi implements ITransactApi {
   //
   //   return false;
   // }
-}
-
-/**
- * Drop SingleStrategy's identity (depositToken→depositToken) option — emitted so
- *  cross-chain can find the vault via fetchOptions; the picker uses the vault-type path instead.
- */
-function dropSingleIdentityOption<
-  T extends {
-    strategyId: string;
-    inputs: { address: string }[];
-    wantedOutputs: { address: string }[];
-  },
->(options: T[], tokenAddress: string): T[] {
-  const lower = tokenAddress.toLowerCase();
-  return options.filter(
-    o =>
-      !(
-        o.strategyId === 'single' &&
-        o.inputs.length === 1 &&
-        o.wantedOutputs.length === 1 &&
-        o.inputs[0].address.toLowerCase() === lower &&
-        o.wantedOutputs[0].address.toLowerCase() === lower
-      )
-  );
 }

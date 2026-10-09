@@ -3,6 +3,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { PlatformEntity } from '../../entities/platform.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type {
   AmmEntitySolidly,
@@ -101,6 +102,8 @@ type BaseOption = {
   async?: boolean;
   feeable?: boolean;
   feeCampaign?: OptionFeeCampaign;
+  /** set on the boosted counterpart of an option: the route also stakes into this boost */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type OptionFeeCampaign = {
