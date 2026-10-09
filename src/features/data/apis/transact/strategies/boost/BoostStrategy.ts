@@ -18,6 +18,7 @@ import type {
   InputTokenAmount,
   ZapDepositQuote,
   ZapQuoteStepStake,
+  ZapQuoteStepUnstake,
   ZapStrategyIdToDepositOption,
   ZapStrategyIdToDepositQuote,
   ZapStrategyIdToWithdrawOption,
@@ -32,6 +33,8 @@ import type {
   ZapTransactHelpers,
 } from '../IStrategy.ts';
 import type { ZapStrategyId } from '../strategy-configs.ts';
+import { isStandardVaultType } from '../../vaults/IVaultType.ts';
+import { BoostShareSource } from '../../vaults/ShareSource.ts';
 
 type DepositOption = ZapStrategyIdToDepositOption<ZapStrategyId>;
 type DepositQuote = ZapStrategyIdToDepositQuote<ZapStrategyId>;
@@ -168,16 +171,94 @@ export class BoostStrategy implements IComposableStrategy {
     };
   }
 
-  fetchWithdrawQuote(inputs: InputTokenAmount[], option: WithdrawOption): Promise<WithdrawQuote> {
-    return this.inner.fetchWithdrawQuote(inputs, option);
+  async fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: WithdrawOption
+  ): Promise<WithdrawQuote> {
+    const quote = await this.inner.fetchWithdrawQuote(inputs, option);
+    const shareAllowance = quote.allowances.find(allowance =>
+      isTokenEqual(allowance.token, this.shareToken)
+    );
+    if (!shareAllowance) {
+      throw new Error('Boost: inner route does not pull the share token');
+    }
+    const unstake: ZapQuoteStepUnstake = {
+      type: 'unstake',
+      boostId: this.boost.id,
+      outputs: [{ token: this.shareToken, amount: shareAllowance.amount }],
+    };
+    return {
+      ...quote,
+      steps: [unstake, ...quote.steps],
+      // the router pulls the receipt, not the shares
+      allowances: quote.allowances.map(allowance =>
+        allowance === shareAllowance ? { ...allowance, token: this.receiptToken } : allowance
+      ),
+    } as WithdrawQuote;
   }
 
-  fetchWithdrawUserlessZapBreakdown(quote: WithdrawQuote): Promise<UserlessZapWithdrawBreakdown> {
-    return this.inner.fetchWithdrawUserlessZapBreakdown(quote);
+  async fetchWithdrawUserlessZapBreakdown(
+    quote: WithdrawQuote
+  ): Promise<UserlessZapWithdrawBreakdown> {
+    const breakdown = await this.inner.fetchWithdrawUserlessZapBreakdown({
+      ...quote,
+      steps: quote.steps.filter(step => step.type !== 'unstake'),
+    } as WithdrawQuote);
+    const { order, steps } = breakdown.zapRequest;
+
+    const shareInput = order.inputs.find(input =>
+      isSameAddress(input.token, this.shareToken.address)
+    );
+    if (!shareInput) {
+      throw new Error('Boost: inner route has no share token input to unstake');
+    }
+
+    // the receipt is 1:1 with shares: pull it instead, unstake it into shares, return any leftover
+    order.inputs = order.inputs.map(input =>
+      input === shareInput ? { ...input, token: this.receiptToken.address } : input
+    );
+    steps.unshift(this.buildUnstakeZapStep(new BigNumber(shareInput.amount)));
+    order.outputs = uniqBy(
+      [...order.outputs, { token: this.receiptToken.address, minOutputAmount: '0' }],
+      output => output.token.toLowerCase()
+    );
+
+    return breakdown;
   }
 
-  fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    return this.inner.fetchWithdrawStep(quote, t);
+  async fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
+      const walletAction = zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens,
+        this.boost.id
+      );
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
+  }
+
+  // `withdraw` burns the receipt the router holds; not `exit`, which would also send the rewards to the router
+  private buildUnstakeZapStep(amountWei: BigNumber): ZapStep {
+    return {
+      target: this.boost.contractAddress,
+      value: '0',
+      data: encodeFunctionData({
+        abi: BoostAbi,
+        functionName: 'withdraw',
+        args: [bigNumberToBigInt(amountWei)],
+      }),
+      tokens: [{ token: this.receiptToken.address, index: getInsertIndex(0) }],
+    };
   }
 
   // listing the share token in `tokens` approves the boost to pull it and rewrites the amount to the router's balance
@@ -224,4 +305,23 @@ export function withBoost(
   return boostId ?
       new BoostStrategy(strategy, helpers, selectBoostById(helpers.getState(), boostId))
     : strategy;
+}
+
+/** helpers for building a route that stakes into / unstakes from `boostId`: its shares are in the boost */
+export function withBoostShares(
+  helpers: ZapTransactHelpers,
+  boostId: BoostPromoEntity['id'] | undefined
+): ZapTransactHelpers {
+  if (!boostId) {
+    return helpers;
+  }
+  const { vaultType } = helpers;
+  if (!isStandardVaultType(vaultType)) {
+    throw new Error(`Boost ${boostId}: only standard vault shares can be staked`);
+  }
+  const boost = selectBoostById(helpers.getState(), boostId);
+  return {
+    ...helpers,
+    vaultType: vaultType.withShareSource(new BoostShareSource(boost, vaultType.shareToken)),
+  };
 }

@@ -703,6 +703,7 @@ export type ZapQuoteStepStake = {
 export type ZapQuoteStepUnstake = {
   type: 'unstake';
   outputs: TokenAmount[];
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type ZapQuoteStepBridge = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { withBoostedCounterparts } from './boost.ts';
+import { insertBoostedCounterparts } from './boost.ts';
 
 type Opt = { id: string; strategyId: string; boostId?: string };
 
@@ -9,9 +9,13 @@ const options: Opt[] = [
   { id: 'conic-v1-usdc', strategyId: 'conic' },
 ];
 
-describe('withBoostedCounterparts', () => {
+describe('insertBoostedCounterparts', () => {
   it('adds a boosted copy right after each boostable option only', () => {
-    const result = withBoostedCounterparts(options, 'moo_v1-boost', o => o.strategyId === 'single');
+    const result = insertBoostedCounterparts(
+      options,
+      'moo_v1-boost',
+      o => o.strategyId === 'single'
+    );
 
     expect(result.map(o => o.id)).toEqual([
       'vault-v1-usdc',

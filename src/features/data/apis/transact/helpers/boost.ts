@@ -5,8 +5,8 @@ export const BOOST_ZAP_MIN_VERSION = 2;
 
 type BoostableOption = { id: string; boostId?: BoostPromoEntity['id'] };
 
-/** adds, after each option `canBoost` accepts, a copy of it that also stakes into `boostId` */
-export function withBoostedCounterparts<T extends BoostableOption>(
+/** inserts, after each option `canBoost` accepts, a copy of it that also stakes into `boostId` */
+export function insertBoostedCounterparts<T extends BoostableOption>(
   options: T[],
   boostId: BoostPromoEntity['id'],
   canBoost: (option: T) => boolean
