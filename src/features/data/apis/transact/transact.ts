@@ -1,5 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import { partition, uniq } from 'lodash-es';
+import { partition, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
@@ -9,7 +9,7 @@ import {
   type VaultEntity,
 } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
-import { selectZapStakeableBoostOrUndefined } from '../../selectors/boosts.ts';
+import { selectBoostById, selectZapStakeableBoostOrUndefined } from '../../selectors/boosts.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
@@ -49,6 +49,7 @@ import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
+import { BoostStrategy } from './strategies/boost/BoostStrategy.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -64,6 +65,7 @@ import {
   type InputTokenAmount,
   type ITransactApi,
   type RecoveryQuote,
+  type TransactOption,
   type TransactQuote,
   type WithdrawOption,
   type WithdrawQuote,
@@ -81,6 +83,9 @@ function maybeWrapFee(
   }
   return strategy;
 }
+
+const optionStrategyKey = (option: TransactOption) =>
+  option.boostId ? `${option.strategyId}:${option.boostId}` : option.strategyId;
 
 type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
   [K in TId]: {
@@ -275,13 +280,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn
   ): Promise<DepositQuote[]> {
     const vaultId = options[0].vaultId;
-    const strategyIds = uniq(options.map(option => option.strategyId));
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
-    // Init each strategy at most once
-    const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
+    // Init each strategy (plain or boosted) at most once
+    const keyedOptions = uniqBy(options, optionStrategyKey);
+    const strategies = await Promise.all(
+      keyedOptions.map(option => this.getStrategyForOption(option, helpers))
+    );
     const strategiesById = Object.fromEntries(
-      strategies.map((strategy, i) => [strategyIds[i], strategy])
+      strategies.map((strategy, i) => [optionStrategyKey(keyedOptions[i]), strategy])
     );
 
     await Promise.allSettled(
@@ -294,7 +301,7 @@ export class TransactApi implements ITransactApi {
 
     const quotes = await Promise.allSettled(
       options.map(async option => {
-        const strategy = strategiesById[option.strategyId];
+        const strategy = strategiesById[optionStrategyKey(option)];
         const quote = await strategy.fetchDepositQuote(amounts, option);
         if (!quote) {
           throw new Error(`Strategy ${option.strategyId} failed to return quote`);
@@ -330,7 +337,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyForOption(quote.option, helpers);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -429,13 +436,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn
   ): Promise<WithdrawQuote[]> {
     const vaultId = options[0].vaultId;
-    const strategyIds = uniq(options.map(option => option.strategyId));
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
-    // Init each strategy at most once
-    const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
+    // Init each strategy (plain or boosted) at most once
+    const keyedOptions = uniqBy(options, optionStrategyKey);
+    const strategies = await Promise.all(
+      keyedOptions.map(option => this.getStrategyForOption(option, helpers))
+    );
     const strategiesById = Object.fromEntries(
-      strategies.map((strategy, i) => [strategyIds[i], strategy])
+      strategies.map((strategy, i) => [optionStrategyKey(keyedOptions[i]), strategy])
     );
 
     await Promise.allSettled(
@@ -448,7 +457,7 @@ export class TransactApi implements ITransactApi {
 
     const quotes = await Promise.allSettled(
       options.map(option => {
-        const strategy = strategiesById[option.strategyId];
+        const strategy = strategiesById[optionStrategyKey(option)];
         return strategy.fetchWithdrawQuote(amounts, option);
       })
     );
@@ -499,7 +508,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyForOption(quote.option, helpers);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -718,6 +727,26 @@ export class TransactApi implements ITransactApi {
       ) => AnyComposableStrategy;
       return new ctor(s.options, underlyingHelpers);
     });
+  }
+
+  /** the strategy for an option; a boosted option's route is wrapped to also stake into the boost */
+  private async getStrategyForOption(
+    option: TransactOption,
+    helpers: TransactHelpers
+  ): Promise<IStrategy> {
+    const strategy = await this.getStrategyById(option.strategyId, helpers);
+    // cross-chain / v2v orchestrator are not composable; their destination handler wraps instead
+    if (!option.boostId || !isComposableStrategy(strategy)) {
+      return strategy;
+    }
+    if (!isZapTransactHelpers(helpers)) {
+      throw new Error(`Boost ${option.boostId} requires zap contract`);
+    }
+    return new BoostStrategy(
+      strategy,
+      helpers,
+      selectBoostById(helpers.getState(), option.boostId)
+    );
   }
 
   private async getStrategyById(
