@@ -10,6 +10,7 @@ import type {
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type BigNumber from 'bignumber.js';
 import type { SerializedError } from '../../apis/transact/strategies/error-types.ts';
 
@@ -115,6 +116,8 @@ export type CrossChainRecoveryVault = {
   destVaultId: VaultEntity['id'];
   bridgeTokenAddress: string;
   bridgedAmount: string;
+  /** the destination route also stakes into this boost; recovery re-executes it as is */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type CrossChainRecoveryParams =

@@ -4,6 +4,7 @@ import type { Address } from 'viem';
 import { toWeiBigInt, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../../../entities/promo.ts';
 import { isVaultWithReceipt, type VaultEntity } from '../../../../entities/vault.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
@@ -161,8 +162,9 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     destChainId: ChainEntity['id'];
     inputToken: TokenEntity;
     swapOptions: SwapOptions;
+    boostId?: BoostPromoEntity['id'];
   }): DestHandlerContext {
-    const { helpers, destChainId, inputToken, swapOptions } = args;
+    const { helpers, destChainId, inputToken, swapOptions, boostId } = args;
     const swapAggregator = helpers.swapAggregator.withOptions(swapOptions);
     return {
       helpers: { ...helpers, swapAggregator },
@@ -174,6 +176,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         ...(await this.resolveHelpersForVault(id)),
         swapAggregator,
       }),
+      boostId,
     };
   }
 
@@ -430,6 +433,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: option.destChainId,
       inputToken: option.destBridgeToken,
       swapOptions: DEST_HOOK_SWAP_OPTIONS,
+      boostId: option.boostId,
     });
     const srcHandler = this.makeSourceHandler(option);
     const destHandler = this.makeDestHandler(option);
@@ -569,6 +573,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: quote.option.destChainId,
       inputToken: quote.option.destBridgeToken,
       swapOptions: DEST_HOOK_SWAP_OPTIONS,
+      boostId: quote.option.boostId,
     });
     const srcHandler = this.makeSourceHandler(quote.option);
     const destHandler = this.makeDestHandler(quote.option);
@@ -860,6 +865,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           ...base,
           destHandlerKind: 'vault',
           destVaultId: quote.option.destVaultId,
+          boostId: quote.option.boostId,
         };
         break;
       default:
@@ -924,6 +930,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
       swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
+      boostId: recovery.destHandlerKind === 'vault' ? recovery.boostId : undefined,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const quoteVaultId =
@@ -968,6 +975,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: recovery.destChainId,
       inputToken: destBridgeToken,
       swapOptions: DEST_RECOVERY_SWAP_OPTIONS,
+      boostId: recovery.destHandlerKind === 'vault' ? recovery.boostId : undefined,
     });
     const handler = this.makeRecoveryHandler(recovery, destChainHelpers);
     const attributedVaultId =

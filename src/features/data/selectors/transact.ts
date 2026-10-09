@@ -1010,6 +1010,9 @@ export const selectTransactShouldShowWithdrawNotification = (
 // Cross-chain operation selectors
 // ---------------------------------------------------------------------------
 
+export const selectCrossChainOpById = (state: BeefyState, opId: string) =>
+  state.ui.transact.crossChain.pendingOps[opId];
+
 export const selectCrossChainPendingOps = createSelector(
   (state: BeefyState) => state.ui.transact.crossChain,
   (crossChain): PendingCrossChainOp[] =>

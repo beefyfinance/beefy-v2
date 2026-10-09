@@ -56,6 +56,7 @@ import {
 } from '../IStrategy.ts';
 import type { VaultToVaultSingleTokenStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../instances.ts';
+import type { BoostPromoEntity } from '../../../../entities/promo.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { enumerateSameChainDstCandidates, enumerateSameChainSrcCandidates } from './enumeration.ts';
 
@@ -97,7 +98,10 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
-  private makeDestContext(routingToken: TokenEntity): DestHandlerContext {
+  private makeDestContext(
+    routingToken: TokenEntity,
+    boostId?: BoostPromoEntity['id']
+  ): DestHandlerContext {
     return {
       helpers: this.helpers,
       destChainId: this.helpers.vault.chainId,
@@ -105,6 +109,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
+      boostId,
     };
   }
 
@@ -224,7 +229,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const { routingToken } = option;
 
     const srcCtx = this.makeSourceContext(routingToken);
-    const destCtx = this.makeDestContext(routingToken);
+    const destCtx = this.makeDestContext(routingToken, option.boostId);
 
     const srcHandler = new VaultSourceHandler(option.srcVaultId);
     const destHandler = new VaultDestHandler(option.destVaultId);
@@ -291,7 +296,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const { routingToken } = quote.option;
 
     const srcCtx = this.makeSourceContext(routingToken);
-    const destCtx = this.makeDestContext(routingToken);
+    const destCtx = this.makeDestContext(routingToken, quote.option.boostId);
 
     const srcHandler: ISourceHandler = new VaultSourceHandler(quote.option.srcVaultId);
     const destHandler: IDestHandler = new VaultDestHandler(quote.option.destVaultId);

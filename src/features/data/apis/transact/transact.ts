@@ -9,7 +9,7 @@ import {
   type VaultEntity,
 } from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
-import { selectBoostById, selectZapStakeableBoostOrUndefined } from '../../selectors/boosts.ts';
+import { selectZapStakeableBoostOrUndefined } from '../../selectors/boosts.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
@@ -49,7 +49,7 @@ import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
-import { BoostStrategy } from './strategies/boost/BoostStrategy.ts';
+import { withBoost } from './strategies/boost/BoostStrategy.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -742,11 +742,7 @@ export class TransactApi implements ITransactApi {
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`Boost ${option.boostId} requires zap contract`);
     }
-    return new BoostStrategy(
-      strategy,
-      helpers,
-      selectBoostById(helpers.getState(), option.boostId)
-    );
+    return withBoost(strategy, helpers, option.boostId);
   }
 
   private async getStrategyById(

@@ -8,6 +8,7 @@ import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { BoostPromoEntity } from '../../../../entities/promo.ts';
 import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
 import type { Step } from '../../../../reducers/wallet/stepper-types.ts';
+import { selectBoostById } from '../../../../selectors/boosts.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../../selectors/vaults.ts';
 import type { BeefyThunk } from '../../../../store/types.ts';
@@ -212,4 +213,15 @@ export class BoostStrategy implements IComposableStrategy {
       output.amount
     );
   }
+}
+
+/** the route as is, or decorated to also stake into `boostId` */
+export function withBoost(
+  strategy: IComposableStrategy,
+  helpers: ZapTransactHelpers,
+  boostId: BoostPromoEntity['id'] | undefined
+): IComposableStrategy {
+  return boostId ?
+      new BoostStrategy(strategy, helpers, selectBoostById(helpers.getState(), boostId))
+    : strategy;
 }
