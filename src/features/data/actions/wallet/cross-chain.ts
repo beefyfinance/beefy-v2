@@ -267,7 +267,8 @@ export const crossChainRecoveryExecuteOrder = (
   destChainId: ChainEntity['id'],
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -380,6 +381,7 @@ export const crossChainRecoveryExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: refreshTokens,
         clearInput: false,
+        boostId,
       }
     );
 

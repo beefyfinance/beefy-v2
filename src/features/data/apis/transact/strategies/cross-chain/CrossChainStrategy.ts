@@ -1017,7 +1017,8 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
         destCtx.destChainId,
         attributedVaultId,
         zapRequest,
-        steps.expectedTokens
+        steps.expectedTokens,
+        destCtx.boostId
       ),
       pending: false,
       extraInfo: { zap: true, vaultId: attributedVaultId },
