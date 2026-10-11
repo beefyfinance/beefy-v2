@@ -150,14 +150,18 @@ const transactSlice = createSlice({
           (sliceState.options.bySelectionId[selectionId] ?? []).some(
             id => !!sliceState.options.byOptionId[id]?.boostId === action.payload
           );
-        if (!hasRoute(sliceState.selectedSelectionId)) {
+        const keepsToken = hasRoute(sliceState.selectedSelectionId);
+        if (!keepsToken) {
           const selectionId = sliceState.selections.allSelectionIds.find(hasRoute);
           if (selectionId) {
             sliceState.selectedSelectionId = selectionId;
             sliceState.selectedChainId =
               sliceState.selections.bySelectionId[selectionId]?.tokens[0]?.chainId;
-            clearInputs(sliceState);
           }
+        }
+        // a withdraw's available balance comes from the other share source now: a kept MAX would withdraw all of it
+        if (!keepsToken || sliceState.mode === TransactMode.Withdraw) {
+          clearInputs(sliceState);
         }
       })
       .addCase(transactSwitchDepositSource, (sliceState, action) => {
