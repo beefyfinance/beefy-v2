@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { insertBoostedCounterparts } from './boost.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { boostIdForLeg, insertBoostedCounterparts } from './boost.ts';
 
 type Opt = { id: string; strategyId: string; boostId?: string };
 
@@ -25,5 +26,17 @@ describe('insertBoostedCounterparts', () => {
     ]);
     expect(result[2]).toEqual({ ...options[1], id: result[2].id, boostId: 'moo_v1-boost' });
     expect(result[1].boostId).toBeUndefined();
+  });
+});
+
+describe('boostIdForLeg', () => {
+  it('stakes on the destination leg of a deposit and unstakes on the source leg of a withdraw', () => {
+    const deposit = { mode: TransactMode.Deposit, boostId: 'moo_v1-boost' };
+    const withdraw = { mode: TransactMode.Withdraw, boostId: 'moo_v1-boost' };
+
+    expect(boostIdForLeg(deposit, 'dest')).toBe('moo_v1-boost');
+    expect(boostIdForLeg(deposit, 'source')).toBeUndefined();
+    expect(boostIdForLeg(withdraw, 'source')).toBe('moo_v1-boost');
+    expect(boostIdForLeg(withdraw, 'dest')).toBeUndefined();
   });
 });

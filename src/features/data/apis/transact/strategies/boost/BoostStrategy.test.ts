@@ -10,7 +10,7 @@ import { BoostShareSource } from '../../vaults/ShareSource.ts';
 import { StandardVaultType } from '../../vaults/StandardVaultType.ts';
 import type { ZapTransactHelpers } from '../IStrategy.ts';
 import { SingleStrategy } from '../single/SingleStrategy.ts';
-import { BoostStrategy } from './BoostStrategy.ts';
+import { BoostStrategy, withBoost, withBoostShares } from './BoostStrategy.ts';
 
 // the withdraw order is built for a connected user
 vi.mock('../../../../selectors/wallet.ts', async importOriginal => ({
@@ -199,5 +199,23 @@ describe('BoostStrategy withdraw', () => {
     });
     expect(zapRequest.order.outputs).toContainEqual({ token: BOOST, minOutputAmount: '0' });
     expect(expectedTokens.map(token => token.address)).toEqual([baseWeth.address]);
+  });
+});
+
+describe('withBoost / withBoostShares', () => {
+  it('refuse a boost of another vault', () => {
+    const state = makeBaseState();
+    Object.assign(state.entities, { promos: { byId: { [boost.id]: boost } } });
+    const getState = () => state;
+    const other = { ...vault, id: 'base-other' } as VaultStandard;
+    const helpers = {
+      vault: other,
+      vaultType: new StandardVaultType(other, getState),
+      getState,
+    } as unknown as ZapTransactHelpers;
+    const single = new SingleStrategy({ strategyId: 'single' }, helpers);
+
+    expect(() => withBoost(single, helpers, boost.id)).toThrow(/is for vault base-weth/);
+    expect(() => withBoostShares(helpers, boost.id)).toThrow(/is for vault base-weth/);
   });
 });

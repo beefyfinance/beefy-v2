@@ -9,6 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { boostIdForLeg } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -232,8 +233,8 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const { routingToken } = option;
 
-    const srcCtx = this.makeSourceContext(routingToken, option.boostId);
-    const destCtx = this.makeDestContext(routingToken, option.boostId);
+    const srcCtx = this.makeSourceContext(routingToken, boostIdForLeg(option, 'source'));
+    const destCtx = this.makeDestContext(routingToken, boostIdForLeg(option, 'dest'));
 
     const srcHandler = new VaultSourceHandler(option.srcVaultId);
     const destHandler = new VaultDestHandler(option.destVaultId);
@@ -299,8 +300,8 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<Step> {
     const { routingToken } = quote.option;
 
-    const srcCtx = this.makeSourceContext(routingToken, quote.option.boostId);
-    const destCtx = this.makeDestContext(routingToken, quote.option.boostId);
+    const srcCtx = this.makeSourceContext(routingToken, boostIdForLeg(quote.option, 'source'));
+    const destCtx = this.makeDestContext(routingToken, boostIdForLeg(quote.option, 'dest'));
 
     const srcHandler: ISourceHandler = new VaultSourceHandler(quote.option.srcVaultId);
     const destHandler: IDestHandler = new VaultDestHandler(quote.option.destVaultId);

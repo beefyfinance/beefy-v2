@@ -30,6 +30,7 @@ import {
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { boostIdForLeg } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -149,7 +150,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
-      boostId: option.boostId,
+      boostId: boostIdForLeg(option, 'source'),
     };
   }
 
@@ -434,7 +435,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: option.destChainId,
       inputToken: option.destBridgeToken,
       swapOptions: DEST_HOOK_SWAP_OPTIONS,
-      boostId: option.boostId,
+      boostId: boostIdForLeg(option, 'dest'),
     });
     const srcHandler = this.makeSourceHandler(option);
     const destHandler = this.makeDestHandler(option);
@@ -574,7 +575,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
       destChainId: quote.option.destChainId,
       inputToken: quote.option.destBridgeToken,
       swapOptions: DEST_HOOK_SWAP_OPTIONS,
-      boostId: quote.option.boostId,
+      boostId: boostIdForLeg(quote.option, 'dest'),
     });
     const srcHandler = this.makeSourceHandler(quote.option);
     const destHandler = this.makeDestHandler(quote.option);
@@ -868,7 +869,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
           ...base,
           destHandlerKind: 'vault',
           destVaultId: quote.option.destVaultId,
-          boostId: quote.option.boostId,
+          boostId: boostIdForLeg(quote.option, 'dest'),
         };
         break;
       default:

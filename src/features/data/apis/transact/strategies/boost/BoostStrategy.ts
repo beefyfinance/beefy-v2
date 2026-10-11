@@ -296,6 +296,14 @@ export class BoostStrategy implements IComposableStrategy {
   }
 }
 
+function selectBoostOfVault(helpers: ZapTransactHelpers, boostId: BoostPromoEntity['id']) {
+  const boost = selectBoostById(helpers.getState(), boostId);
+  if (boost.vaultId !== helpers.vault.id) {
+    throw new Error(`Boost ${boostId} is for vault ${boost.vaultId}, not ${helpers.vault.id}`);
+  }
+  return boost;
+}
+
 /** the route as is, or decorated to also stake into `boostId` */
 export function withBoost(
   strategy: IComposableStrategy,
@@ -303,7 +311,7 @@ export function withBoost(
   boostId: BoostPromoEntity['id'] | undefined
 ): IComposableStrategy {
   return boostId ?
-      new BoostStrategy(strategy, helpers, selectBoostById(helpers.getState(), boostId))
+      new BoostStrategy(strategy, helpers, selectBoostOfVault(helpers, boostId))
     : strategy;
 }
 
@@ -319,7 +327,7 @@ export function withBoostShares(
   if (!isStandardVaultType(vaultType)) {
     throw new Error(`Boost ${boostId}: only standard vault shares can be staked`);
   }
-  const boost = selectBoostById(helpers.getState(), boostId);
+  const boost = selectBoostOfVault(helpers, boostId);
   return {
     ...helpers,
     vaultType: vaultType.withShareSource(new BoostShareSource(boost, vaultType.shareToken)),
