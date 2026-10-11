@@ -39,7 +39,6 @@ import {
   selectTransactSuccessClosed,
   selectTransactVaultHasCrossChainZap,
   selectTransactVaultId,
-  selectTransactBoostInEffect,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
@@ -178,7 +177,6 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const isDisabledByMaxNative = useIsMaxGasTokenQuote(quote);
   const isDisabledByConfirm = useConfirmDisabled();
   const isDisabledByNotEnoughInput = useNotEnoughDisabled('deposit');
-  const boostInEffect = useAppSelector(selectTransactBoostInEffect);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
@@ -219,7 +217,8 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
       (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
   const isLoading = isExecuting || isTxInProgress;
   // the CTA keeps showing a blocking state and only morphs once the deposit is fireable
-  const boostCta = boostInEffect && !isDisabled && !isComplete && !confirmNeededWithChanges;
+  const boostCta =
+    !!quote.option.boostId && !isDisabled && !isComplete && !confirmNeededWithChanges;
 
   return (
     <>
