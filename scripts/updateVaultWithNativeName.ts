@@ -10,7 +10,7 @@ async function start() {
     string,
     ChainConfig,
   ][]) {
-    if (chainInfo.eol) {
+    if (chainInfo.status !== 'active') {
       continue;
     }
 

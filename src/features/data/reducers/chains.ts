@@ -26,7 +26,6 @@ export const chainsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchChainConfigs.fulfilled, (sliceState: Draft<ChainsState>, action) => {
-      const timestampNow = Date.now() / 1000;
       const { chainConfigs, localRpcs } = action.payload;
       for (const chainConfig of chainConfigs) {
         // we already know this chain
@@ -55,7 +54,7 @@ export const chainsSlice = createSlice({
         sliceState.byId[chain.id] = chain;
         sliceState.chainIdByNetworkChainId[chain.networkChainId] = chain.id;
         sliceState.allIds.push(chain.id);
-        sliceState[chain.eol && timestampNow > chain.eol ? 'eolIds' : 'activeIds'].push(chain.id);
+        sliceState[chain.status === 'eol' ? 'eolIds' : 'activeIds'].push(chain.id);
 
         // If a custom RPC was set in local storage, use that instead of the default
         const rpcs = localRpcs[chain.id] || chain.rpc;

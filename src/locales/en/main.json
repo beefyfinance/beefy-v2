@@ -942,6 +942,7 @@
   "Dashboard-VaultData": "Vault Data",
   "Dashboard-TransactionHistory": "Transaction History",
   "Dashboard-Transactions-PastNote": "Only transactions for your current deposit are included in the PNL analytics for this position",
+  "Dashboard-Transactions-Empty": "No transactions found",
   "Dashboard-Chart": "Chart",
   "Dashboard-PositionChart": "Position Chart",
   "Dashboard-CompoundsChart": "Compounds Chart",

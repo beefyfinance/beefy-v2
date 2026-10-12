@@ -9,7 +9,10 @@ import {
 } from '../../features/data/selectors/balance.ts';
 
 import { selectIsPricesAvailable } from '../../features/data/selectors/data-loader/prices.ts';
-import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import {
+  selectVaultById,
+  selectVaultShouldShowPrice,
+} from '../../features/data/selectors/vaults.ts';
 import {
   selectIsBalanceHidden,
   selectWalletAddress,
@@ -49,6 +52,7 @@ const selectVaultDepositedStat = createSelector(
     selectUserVaultBalanceInDepositToken(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultShouldShowPrice(state, vaultId),
   (state: BeefyState) => selectIsBalanceHidden(state),
   (state: BeefyState) => selectWalletAddress(state),
   (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -66,6 +70,7 @@ const selectVaultDepositedStat = createSelector(
     { amount: deposit, token: depositToken },
     baseDeposit,
     depositUsdAmount,
+    showPrice,
     blurred,
     walletAddress,
     isLoaded
@@ -76,7 +81,7 @@ const selectVaultDepositedStat = createSelector(
       hasDeposit,
       hasDisplacedDeposit: hasDeposit && deposit.gt(baseDeposit),
       deposit,
-      depositUsd: formatLargeUsd(depositUsdAmount),
+      depositUsd: showPrice ? formatLargeUsd(depositUsdAmount) : null,
       depositToken,
       blurred,
       loading: !!walletAddress && !isLoaded,

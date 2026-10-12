@@ -3,6 +3,7 @@ import { memo, type ReactNode } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import { selectUserDepositedTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
+import { selectVaultShouldShowPrice } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import {
   formatLargeUsd,
@@ -56,7 +57,9 @@ const selectVaultDepositNowStat = createSelector(
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
   (state: BeefyState, _v: VaultEntity['id'], _p: UserVaultPnl, walletAddress: string) =>
     selectIsAnalyticsLoadedByAddress(state, walletAddress),
-  (pnlData, vaultTimeline, isLoaded) => {
+  (state: BeefyState, vaultId: VaultEntity['id'], _p: UserVaultPnl, _w: string) =>
+    selectVaultShouldShowPrice(state, vaultId),
+  (pnlData, vaultTimeline, isLoaded, showPrice) => {
     const label = 'VaultStat-Now';
 
     if (!vaultTimeline || !vaultTimeline.current.length) {
@@ -81,7 +84,7 @@ const selectVaultDepositNowStat = createSelector(
     }
 
     let value: string,
-      subValue: string,
+      subValue: string | null,
       tooltip:
         | undefined
         | { type: 'amount'; balance: string }
@@ -98,7 +101,7 @@ const selectVaultDepositNowStat = createSelector(
         pnlData.underlying.token.decimals,
         6
       );
-      subValue = formatLargeUsd(pnlData.underlying.now.usd);
+      subValue = showPrice ? formatLargeUsd(pnlData.underlying.now.usd) : null;
       tooltip = {
         type: 'amount',
         balance: formatTokenDisplay(
@@ -123,7 +126,7 @@ const selectVaultDepositNowStat = createSelector(
       const { deposit, depositUsd, depositLive, tokenDecimals } = pnlData;
       pendingIndex = pnlData.pendingIndex;
       value = formatTokenDisplayCondensed(deposit, tokenDecimals, 6);
-      subValue = formatLargeUsd(depositUsd);
+      subValue = showPrice ? formatLargeUsd(depositUsd) : null;
       tooltip = { type: 'amount', balance: formatTokenDisplay(deposit, tokenDecimals) };
       if (pendingIndex) {
         tooltip = {

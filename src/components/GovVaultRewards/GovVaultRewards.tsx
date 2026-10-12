@@ -33,7 +33,7 @@ type GovVaultRewardsData =
       blurred: boolean;
       earnedToken: TokenEntity;
       rewardsEarnedToken: string;
-      rewardsEarnedUsd: string;
+      rewardsEarnedUsd: string | undefined;
     };
 
 const selectGovVaultRewardsData = (
@@ -79,7 +79,8 @@ const selectGovVaultRewardsData = (
           earnedToken.decimals,
           4
         ),
-        rewardsEarnedUsd: formatLargeUsd(rewardsEarnedUsd),
+        rewardsEarnedUsd:
+          rewardsEarnedPrice.isZero() ? undefined : formatLargeUsd(rewardsEarnedUsd),
       };
     }
   }

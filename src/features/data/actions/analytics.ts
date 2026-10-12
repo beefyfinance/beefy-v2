@@ -72,6 +72,7 @@ import {
   selectStandardCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
   selectVaultById,
+  selectVaultByIdOrUndefined,
   selectVaultStrategyAddress,
 } from '../selectors/vaults.ts';
 import type { BeefyMetaThunkConfig, BeefyState } from '../store/types.ts';
@@ -788,7 +789,10 @@ export const fetchWalletTimeline = createAppAsyncThunk<
 
     return {
       timelines: mergeAndPartitionTimelines(
-        databarnTimelineProcessed,
+        omitBy(databarnTimelineProcessed, (_, vaultId) => {
+          const vault = selectVaultByIdOrUndefined(state, vaultId);
+          return !!vault && isCowcentratedLikeVault(vault);
+        }),
         clmTimelineProcessed,
         classicVaultTimelineProcessed
       ),

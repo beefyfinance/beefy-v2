@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import { transactSetInputAmount } from '../../../../../data/actions/transact.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
   selectTransactIsActiveSelectionVaultSourceWithdraw,
@@ -41,7 +41,7 @@ const StandardWithdrawTokenAmountInput = memo(function StandardWithdrawTokenAmou
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
   const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    selectTokenPriceByAddress(state, depositToken.chainId, depositToken.address)
   );
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(

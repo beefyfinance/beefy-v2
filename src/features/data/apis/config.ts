@@ -24,9 +24,7 @@ const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/z
   import: 'default',
 });
 
-const enabledChains = entries(chainConfigs).filter(
-  ([, chain]) => !('disabled' in chain && chain.disabled)
-);
+const enabledChains = entries(chainConfigs).filter(([, chain]) => chain.status !== 'disabled');
 const enabledChainIds = enabledChains.map(([id]) => id);
 
 /**
