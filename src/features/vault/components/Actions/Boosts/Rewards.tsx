@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { TokenAmount } from '../../../../../components/TokenAmount/TokenAmount.tsx';
 import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format.ts';
+import { formatLargePercent, formatLargeUsdAtPrice } from '../../../../../helpers/format.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
 import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
 import { selectTokenPriceByAddress } from '../../../../data/selectors/tokens.ts';
@@ -49,7 +49,7 @@ const Reward = memo(function Reward({ reward, apr }: { reward: Reward; apr: numb
     selectTokenPriceByAddress(state, token.chainId, token.address)
   );
 
-  const pendingUsd = useMemo(() => formatLargeUsd(pending.multipliedBy(price)), [pending, price]);
+  const pendingUsd = useMemo(() => formatLargeUsdAtPrice(pending, price), [pending, price]);
 
   return (
     <RewardOrApy>

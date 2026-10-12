@@ -220,11 +220,17 @@ type ChainId =
   | 'robinhood'
   | 'arc';
 
+export type ChainStatus = 'active' | 'eol' | 'disabled';
+
+export type ChainFeature = 'price' | 'apy';
+
 export type ChainConfig = {
   id: ChainId;
   name: string;
-  eol?: number;
-  disabled?: boolean;
+  status: ChainStatus;
+  /** unix timestamp, set when status is not active */
+  retiredAt: number | undefined;
+  features: Record<ChainFeature, boolean>;
   chainId: number;
   rpc: string[];
   explorerUrl: string;

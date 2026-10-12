@@ -2,6 +2,7 @@ import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
+import { selectChainHasFeature } from '../../../selectors/chains.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultByIdOrUndefined } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
@@ -109,6 +110,14 @@ export function calculatePriceImpact(
   state: BeefyState,
   knownFeesUsd: BigNumber = BIG_ZERO // bridge fees that don't reflect price movement due to poor swapping/routing
 ): number {
+  if (
+    [...inputs, ...outputs, ...returned].some(
+      ({ token }) => !selectChainHasFeature(state, token.chainId, 'price')
+    )
+  ) {
+    return 0;
+  }
+
   const inputAmount = inputs.length > 0 ? totalValueOfTokenAmounts(inputs, state) : BIG_ZERO;
   const outputAmount = outputs.length > 0 ? totalValueOfTokenAmounts(outputs, state) : BIG_ZERO;
   const returnedAmount = returned.length > 0 ? totalValueOfTokenAmounts(returned, state) : BIG_ZERO;

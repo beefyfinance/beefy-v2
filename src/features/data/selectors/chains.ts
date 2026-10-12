@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
+import type { ChainFeature } from '../apis/config-types.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
-import { isChainNativeSharedWithWrapped } from '../entities/chain.ts';
+import { chainHasFeature, isChainNativeSharedWithWrapped } from '../entities/chain.ts';
 import type { BeefyState } from '../store/types.ts';
 
 function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id'][]) {
@@ -21,6 +22,12 @@ export const selectChainById = (state: BeefyState, chainId: ChainEntity['id']): 
 
 export const selectChainByIdOrUndefined = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.chains.byId[chainId] || undefined;
+
+export const selectChainHasFeature = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  feature: ChainFeature
+): boolean => chainHasFeature(selectChainByIdOrUndefined(state, chainId), feature);
 
 export const selectIsChainNativeSharedWithWrapped = (
   state: BeefyState,

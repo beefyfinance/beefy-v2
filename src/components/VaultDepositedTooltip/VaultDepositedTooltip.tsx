@@ -14,9 +14,9 @@ import {
 } from '../../features/data/selectors/balance.ts';
 import { selectBoostById } from '../../features/data/selectors/boosts.ts';
 import { selectChainById } from '../../features/data/selectors/chains.ts';
-import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens.ts';
+import { selectTokenPriceByAddress } from '../../features/data/selectors/tokens.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
-import { formatLargeUsd } from '../../helpers/format.ts';
+import { formatLargeUsdAtPrice } from '../../helpers/format.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { TokenAmount } from '../TokenAmount/TokenAmount.tsx';
@@ -38,7 +38,6 @@ const EntryDisplay = memo(function VaultEntry({
   label,
 }: EntryDisplayProps) {
   const classes = useStyles();
-  const value = entry.amount.multipliedBy(price);
   return (
     <>
       <div className={classes.label}>{label}</div>
@@ -46,7 +45,7 @@ const EntryDisplay = memo(function VaultEntry({
         <div>
           <TokenAmount amount={entry.amount} decimals={depositToken.decimals} />
         </div>
-        <div className={classes.value}>{formatLargeUsd(value)}</div>
+        <div className={classes.value}>{formatLargeUsdAtPrice(entry.amount, price)}</div>
       </div>
     </>
   );
@@ -162,7 +161,7 @@ export const VaultDepositedTooltip = memo(function VaultDepositedTooltip({
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId, walletAddress)
   );
   const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    selectTokenPriceByAddress(state, depositToken.chainId, depositToken.address)
   );
   const notEarning = useAppSelector(state =>
     selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, walletAddress)
