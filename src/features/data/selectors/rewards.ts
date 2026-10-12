@@ -10,6 +10,7 @@ import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducer
 import type { BeefyState } from '../store/types.ts';
 import { isNonEmptyArray } from '../utils/array-utils.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from './boosts.ts';
+import { selectTokenPriceLookup } from './tokens.ts';
 import { selectVaultRawTvl } from './tvl.ts';
 
 export type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'> &
@@ -112,9 +113,9 @@ export const selectVaultHasActiveOffchainCampaigns = createCachedSelector(
 export const selectVaultActiveGovRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
   selectVaultRawTvl,
-  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
+  (state: BeefyState) => selectTokenPriceLookup(state),
   () => Math.trunc(Date.now() / 600000), // re-evaluate reward periods on a 10-min bucket
-  (rewards, tvl, priceByOracleId, _bucket) => {
+  (rewards, tvl, priceLookup, _bucket) => {
     if (!rewards || rewards.length === 0 || !tvl || tvl.isZero()) {
       return undefined;
     }
@@ -123,7 +124,7 @@ export const selectVaultActiveGovRewards = createCachedSelector(
     return rewards
       .filter(r => r.periodFinish && isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
       .map(r => {
-        const price = priceByOracleId[r.token.oracleId] || BIG_ZERO;
+        const price = priceLookup(r.token.chainId, r.token.oracleId);
         const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);
 
         return {

@@ -9,6 +9,7 @@ import {
   selectTvlBreakdownByVaultId,
   tvlBreakdownEqual,
 } from '../../features/data/selectors/tvl.ts';
+import { selectChainHasFeature } from '../../features/data/selectors/chains.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import { bigNumberEqual } from '../../features/data/utils/selector-equality.ts';
@@ -23,7 +24,7 @@ type VaultTvlProps = {
 };
 
 type VaultTvlData = {
-  vaultTvl: BigNumber;
+  vaultTvl: BigNumber | null;
   underlyingTvl: BigNumber | null;
   loading: boolean;
   breakdown: TvlBreakdownUnderlying | null;
@@ -36,6 +37,13 @@ const LOADING_TVL_DATA: VaultTvlData = {
   breakdown: null,
 };
 
+const NO_PRICE_TVL_DATA: VaultTvlData = {
+  vaultTvl: null,
+  underlyingTvl: null,
+  loading: false,
+  breakdown: null,
+};
+
 const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
@@ -43,6 +51,10 @@ const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): Vaul
 
   if (!isLoaded) {
     return LOADING_TVL_DATA;
+  }
+
+  if (!selectChainHasFeature(state, vault.chainId, 'price')) {
+    return NO_PRICE_TVL_DATA;
   }
 
   const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
@@ -71,7 +83,7 @@ function vaultTvlDataEqual(a: VaultTvlData, b: VaultTvlData): boolean {
   return (
     a === b ||
     (a.loading === b.loading &&
-      bigNumberEqual(a.vaultTvl, b.vaultTvl) &&
+      optionalBigNumberEqual(a.vaultTvl, b.vaultTvl) &&
       optionalBigNumberEqual(a.underlyingTvl, b.underlyingTvl) &&
       tvlBreakdownEqual(a.breakdown, b.breakdown))
   );
@@ -85,7 +97,7 @@ export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
   );
 
   const value = useMemo(() => {
-    return formatLargeUsd(vaultTvl);
+    return vaultTvl ? formatLargeUsd(vaultTvl) : '-';
   }, [vaultTvl]);
 
   const subValue = useMemo(() => {

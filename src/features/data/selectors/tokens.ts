@@ -13,6 +13,7 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { SharedBalanceWnative, TokenEntity } from '../entities/token.ts';
 import { isTokenErc20, isTokenNative, sharedPrecisionDecimals } from '../entities/token.ts';
+import { chainHasFeature } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
@@ -244,14 +245,30 @@ export const selectIsTokenStableByAddress = (
   return !!token && isTokenStable(token);
 };
 
-export const selectTokenPriceByAddress = createSelector(
-  selectTokenByAddressOrUndefined,
+export type TokenPriceLookup = (
+  chainId: ChainEntity['id'],
+  oracleId: TokenEntity['oracleId']
+) => BigNumber;
+
+/** price is 0 when unknown, or the chain has the price feature disabled */
+export const selectTokenPriceLookup = createSelector(
+  (state: BeefyState) => state.entities.chains.byId,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
-  (token, pricesByOracleId) => {
-    return (token && pricesByOracleId[token.oracleId]) || BIG_ZERO;
-  }
+  (chainsById, pricesByOracleId): TokenPriceLookup =>
+    (chainId, oracleId) =>
+      (chainHasFeature(chainsById[chainId], 'price') && pricesByOracleId[oracleId]) || BIG_ZERO
 );
 
+export const selectTokenPriceByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+): BigNumber => {
+  const token = selectTokenByAddressOrUndefined(state, chainId, address);
+  return token ? selectTokenPriceLookup(state)(chainId, token.oracleId) : BIG_ZERO;
+};
+
+/** @dev ignores the chain price feature, prefer selectTokenPriceByAddress */
 export const selectTokenPriceByTokenOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId']
@@ -316,9 +333,8 @@ export const selectHasBreakdownDataByOracleId = (
   }
 
   // Must have prices of tokens in state
-  return (
-    tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token!.oracleId]) === -1
-  );
+  const priceLookup = selectTokenPriceLookup(state);
+  return tokens.every(token => !priceLookup(token!.chainId, token!.oracleId).isZero());
 };
 
 export const selectHasBreakdownDataForVault = (state: BeefyState, vault: VaultEntity) => {
@@ -604,7 +620,7 @@ const selectCowcentratedLikeVaultDepositTokenPrice = (
   index: 0 | 1
 ) => {
   const token = selectCowcentratedLikeVaultDepositTokens(state, vaultId)[index];
-  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ZERO;
+  return selectTokenPriceByAddress(state, token.chainId, token.address);
 };
 
 export const selectCowcentratedLikeVaultDepositTokensWithPrices = createSelector(

@@ -9,7 +9,7 @@ import { selectUserVaultPendingWithdrawal } from '../../../../../data/selectors/
 import { selectTransactExecuting } from '../../../../../data/selectors/transact.ts';
 import {
   selectErc20TokenByAddress,
-  selectTokenPriceByTokenOracleId,
+  selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { PendingRequest } from './PendingRequest.tsx';
@@ -28,7 +28,7 @@ export const PendingWithdrawRequests = memo(function PendingWithdrawRequests({
     selectErc20TokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const depositTokenPrice = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    selectTokenPriceByAddress(state, depositToken.chainId, depositToken.address)
   );
   const pending = useAppSelector(state => selectUserVaultPendingWithdrawal(state, vaultId));
   const isExecuting = useAppSelector(selectTransactExecuting);

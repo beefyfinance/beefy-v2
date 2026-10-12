@@ -14,7 +14,7 @@ import {
   selectTransactConfirmStatus,
 } from '../../../../../data/selectors/transact.ts';
 import type { QuoteOutputTokenAmountChange } from '../../../../../data/apis/transact/transact-types.ts';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import { QuoteRetryAlert } from '../QuoteErrorAlert/QuoteErrorAlert.tsx';
 import { quoteRetryOf } from '../hooks/useQuoteAutoRefresh.ts';
 import { styles } from './styles.ts';
@@ -72,9 +72,10 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, change.token.oracleId)
+    selectTokenPriceByAddress(state, change.token.chainId, change.token.address)
   );
 
+  const hasPrice = !price.isZero();
   const amountUsd = useMemo(() => change.amount.multipliedBy(price), [change.amount, price]);
   const newAmountUsd = useMemo(
     () => change.newAmount.multipliedBy(price),
@@ -94,7 +95,7 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
           amount: <TokenAmountFromEntity amount={change.amount} token={change.token} />,
         }}
       />{' '}
-      <span className={classes.usdValue}>{formatLargeUsd(amountUsd)}</span>
+      {hasPrice && <span className={classes.usdValue}>{formatLargeUsd(amountUsd)}</span>}
       <br />
       <Trans
         t={t}
@@ -103,7 +104,7 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
           amount: <TokenAmountFromEntity amount={change.newAmount} token={change.token} />,
         }}
       />{' '}
-      <span className={classes.usdValue}>{`${formatLargeUsd(newAmountUsd)}`}</span>
+      {hasPrice && <span className={classes.usdValue}>{`${formatLargeUsd(newAmountUsd)}`}</span>}
       <br />
       <Trans
         t={t}
@@ -121,9 +122,11 @@ const ChangeRow = memo(function ChangeRow({ change }: ChangeRowProps) {
           ),
         }}
       />{' '}
-      <span className={classes.usdValue}>
-        {differenceUsd.abs().lt(0.01) ? '<$0.01' : formatLargeUsd(differenceUsd)}
-      </span>
+      {hasPrice && (
+        <span className={classes.usdValue}>
+          {differenceUsd.abs().lt(0.01) ? '<$0.01' : formatLargeUsd(differenceUsd)}
+        </span>
+      )}
     </div>
   );
 });

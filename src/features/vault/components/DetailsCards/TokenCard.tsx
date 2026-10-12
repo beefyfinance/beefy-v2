@@ -80,7 +80,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           : bridge ?
             <BridgeTag bridge={bridge} chain={chain} />
           : null}
-          <PriceWithChange oracleId={token.oracleId} />
+          {chain.features.price && <PriceWithChange oracleId={token.oracleId} />}
         </AssetsBridgePrice>
       </TitleContainer>
       <Description className={css(!token.description && styles.descriptionPending)}>
