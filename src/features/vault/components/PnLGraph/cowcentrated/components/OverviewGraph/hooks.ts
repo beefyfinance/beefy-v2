@@ -1,10 +1,11 @@
 import type BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { BIG_ONE } from '../../../../../../../helpers/big-number.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import { maxOf, minOf } from '../../../../../../../helpers/collection.ts';
 import {
   type ClmInvestorOverviewTimeSeriesPoint,
   getClmInvestorTimeSeries,
+  getClmSideRewards,
   mergeClmOverviewTimeSeries,
 } from '../../../../../../../helpers/graph/timeseries.ts';
 import type { ApiChartData } from '../../../../../../data/apis/beefy/beefy-data-api-types.ts';
@@ -14,6 +15,7 @@ import { isTimelineEntityCowcentrated } from '../../../../../../data/entities/an
 import {
   getCowcentratedWrapperIds,
   isCowcentratedStandardVault,
+  isVaultRetired,
   type VaultEntity,
 } from '../../../../../../data/entities/vault.ts';
 import {
@@ -44,14 +46,18 @@ import { usePeriodsSince } from '../../../standard/hooks.ts';
 // Same object reference so a side with no data does not re-render its consumers
 const NO_POINTS: ClmInvestorOverviewTimeSeriesPoint[] = [];
 
+export type ClmOverviewChartPoint = ClmInvestorOverviewTimeSeriesPoint & {
+  /** position value plus the rewards that left it */
+  withRewardsUsd: number;
+};
+
 // Same object reference for empty chart data
 const NO_CHART_DATA = {
-  data: [],
+  data: [] as ClmOverviewChartPoint[],
   minUsd: 0,
   maxUsd: 0,
   minUnderlying: 0,
   maxUnderlying: 0,
-  type: 'pool',
 };
 
 /** one side's series, or an empty one when that side is absent or unheld */
@@ -131,9 +137,24 @@ function useSideSeries(
       shared.nowPriceToken0,
       shared.nowPriceToken1,
       clmHistory,
-      isVaultSide ? vaultHistory : undefined
+      isVaultSide ? vaultHistory : undefined,
+      {
+        ...getClmSideRewards(pnl.yields),
+        ...(vault && isVaultRetired(vault) ? { retiredAt: vault.retiredAt } : {}),
+      }
     );
-  }, [isLoading, pnl, timeline, shared, timeBucket, ppfs, clmHistory, vaultHistory, isVaultSide]);
+  }, [
+    isLoading,
+    pnl,
+    timeline,
+    shared,
+    timeBucket,
+    ppfs,
+    clmHistory,
+    vaultHistory,
+    isVaultSide,
+    vault,
+  ]);
 
   return { points, isLoading, willRetry, isVaultSide };
 }
@@ -153,7 +174,7 @@ export function useClmChartSides(vaultId: VaultEntity['id'], walletAddress: stri
     wholeGroup && walletAddress ? selectHeldClmSideIds(state, vaultId, walletAddress) : NO_SIDE_IDS
   );
 
-  return useMemo(() => {
+  const sides = useMemo(() => {
     const { cowcentratedIds: ids } = vault;
     if (!wholeGroup) {
       const isVaultSide = isCowcentratedStandardVault(vault);
@@ -172,6 +193,25 @@ export function useClmChartSides(vaultId: VaultEntity['id'], walletAddress: stri
       type: vaultSideId && !poolSideId ? ('vault' as const) : ('pool' as const),
     };
   }, [vault, wholeGroup, held]);
+  // the rewards line ends on claimed + pending, so it has something to add exactly when that does
+  const hasRewards = useAppSelector(
+    state =>
+      !!walletAddress &&
+      [sides.vaultSideId, sides.poolSideId].some(id => {
+        if (!id) {
+          return false;
+        }
+        // a side with no history draws no series, so it has no line to raise
+        const timeline = selectUserDepositedTimelineByVaultId(state, id, walletAddress);
+        if (!isTimelineEntityCowcentrated(timeline) || !timeline.current.length) {
+          return false;
+        }
+        const { claimed, pending } = selectClmPnl(state, id, walletAddress).yields;
+        return claimed.usd.plus(pending.usd).gt(BIG_ZERO);
+      })
+  );
+
+  return useMemo(() => ({ ...sides, hasRewards }), [sides, hasRewards]);
 }
 
 export const usePnLChartData = (
@@ -228,7 +268,7 @@ export const usePnLChartData = (
     ]
   );
 
-  const { vaultSideId, poolSideId, type } = useClmChartSides(vaultId, walletAddress);
+  const { vaultSideId, poolSideId, type, hasRewards } = useClmChartSides(vaultId, walletAddress);
   const vaultSide = useSideSeries(vaultSideId, walletAddress, timeBucket, shared);
   const poolSide = useSideSeries(poolSideId, walletAddress, timeBucket, shared);
 
@@ -241,21 +281,26 @@ export const usePnLChartData = (
     poolSide.willRetry;
 
   const chartData = useMemo(() => {
-    const data = mergeClmOverviewTimeSeries([vaultSide.points, poolSide.points]);
-    if (!data.length) {
+    const merged = mergeClmOverviewTimeSeries([vaultSide.points, poolSide.points]);
+    if (!merged.length) {
       return NO_CHART_DATA;
     }
+    const data: ClmOverviewChartPoint[] = merged.map(point => ({
+      ...point,
+      withRewardsUsd: point.underlyingUsd + point.rewardsUsd,
+    }));
 
     return {
       data,
       minUsd: minOf(data, 'underlyingUsd', 'heldUsd'),
-      maxUsd: maxOf(data, 'underlyingUsd', 'heldUsd'),
+      // rewards are never negative, so the line only ever raises the top of the axis
+      maxUsd: maxOf(data, 'underlyingUsd', 'heldUsd', 'withRewardsUsd'),
       minUnderlying: minOf(data, 'underlying'),
       maxUnderlying: maxOf(data, 'underlying'),
     };
   }, [vaultSide.points, poolSide.points]);
 
-  return { chartData, isLoading, willRetry, type };
+  return { chartData, isLoading, willRetry, type, hasRewards };
 };
 
 /**

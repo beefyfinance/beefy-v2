@@ -16,6 +16,7 @@ import type {
 } from '../../features/data/actions/analytics.ts';
 import type { ApiPoint } from '../../features/data/apis/beefy/beefy-data-api-types.ts';
 import { ClmPnl } from '../pnl.ts';
+import type { PnlYields, PnlYieldSource } from '../../features/data/selectors/analytics-types.ts';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import { getBigNumberInterpolator, type Interpolator } from '../math.ts';
 import type { GraphBucket } from './types.ts';
@@ -181,6 +182,8 @@ export type ClmInvestorOverviewTimeSeriesPoint = {
   underlying: number;
   underlyingUsd: number;
   heldUsd: number;
+  /** USD of rewards that left the position (claimed or claimable), earned since the first point */
+  rewardsUsd: number;
   debug: {
     sharesToUnderlying: BigNumber;
     underlyingToToken0: BigNumber;
@@ -321,6 +324,104 @@ class TimeBigNumberInterpolator extends TimeValueInterpolator<BigNumber> {
   }
 }
 
+/** a side's rewards that leave the position, as its PnL values them now */
+export type ClmSideRewards = {
+  /** claimable on chain now, live price */
+  pendingUsd: BigNumber;
+  /** with no claim history to place them by (Merkl, StellaSwap): claimed plus unclaimed, live price */
+  untimedUsd: BigNumber;
+  /** a retired side stopped earning here (unix seconds) */
+  retiredAt?: number;
+};
+
+/** splits a side's PnL rewards by whether the timeline can place them; claims it places itself */
+export function getClmSideRewards(yields: Pick<PnlYields, 'claimed' | 'pending'>): ClmSideRewards {
+  const sum = (sources: PnlYieldSource[]) =>
+    sources.reduce((total, source) => total.plus(source.usd), BIG_ZERO);
+  const isUntimed = (source: PnlYieldSource) =>
+    source.source === 'merkl' || source.source === 'stellaswap';
+  return {
+    pendingUsd: sum(yields.pending.sources.filter(source => source.source === 'pool')),
+    untimedUsd: sum([...yields.claimed.sources, ...yields.pending.sources].filter(isUntimed)),
+  };
+}
+
+export type ClmRewardsAccrualEntry = {
+  /** unix seconds */
+  t: number;
+  /** balance earning rewards after this entry */
+  balance: BigNumber;
+  /** USD claimed in this entry, valued at the claim */
+  claimedUsd: BigNumber;
+};
+
+/**
+ * Cumulative USD of rewards a CLM side has earned by time t, for rewards that leave the position
+ * (claimable pool rewards, Merkl, StellaSwap) and so never show in its value. At `nowUnix` it is
+ * exactly claimed plus pending — the PnL's own figures — and each claim is fully in by its own
+ * time. Between those anchors each amount is spread over the time it could have been earned in, in
+ * proportion to balance × time, i.e. a constant rate per staked unit, as a reward pool pays.
+ *
+ * - each claim accrues since the previous claim (or the first entry)
+ * - `pendingUsd` (claimable now, on chain) accrues since the last claim
+ * - `untimedUsd` (rewards with no claim history) accrues since the first entry
+ *
+ * Nothing accrues after `endUnix` (a retired side), and an interval with no weight in it, such as
+ * a claim in the first entry, places its amount as a step at the interval's end.
+ */
+export function makeClmRewardsAccrual(
+  entries: ClmRewardsAccrualEntry[],
+  pendingUsd: BigNumber,
+  untimedUsd: BigNumber,
+  nowUnix: number,
+  endUnix: number = nowUnix
+): (t: number) => BigNumber {
+  // ∫ balance dt from the first entry to each entry; balance is constant between entries
+  const times = entries.map(e => e.t);
+  const weightAt: BigNumber[] = [BIG_ZERO];
+  for (let i = 1; i < entries.length; i++) {
+    const earning = Math.max(0, Math.min(entries[i].t, endUnix) - entries[i - 1].t);
+    weightAt.push(weightAt[i - 1].plus(entries[i - 1].balance.times(earning)));
+  }
+  const weight = (t: number): BigNumber => {
+    if (t <= times[0]) {
+      return BIG_ZERO;
+    }
+    let i = 0;
+    while (i + 1 < entries.length && times[i + 1] <= t) {
+      i++;
+    }
+    return weightAt[i].plus(entries[i].balance.times(Math.max(0, Math.min(t, endUnix) - times[i])));
+  };
+
+  type Interval = { from: number; to: number; usd: BigNumber };
+  const intervals: Interval[] = [];
+  let from = times[0];
+  for (const entry of entries) {
+    if (entry.claimedUsd.gt(BIG_ZERO)) {
+      intervals.push({ from, to: entry.t, usd: entry.claimedUsd });
+      from = entry.t;
+    }
+  }
+  intervals.push({ from, to: nowUnix, usd: pendingUsd });
+  intervals.push({ from: times[0], to: nowUnix, usd: untimedUsd });
+
+  const shaped = intervals
+    .filter(i => i.usd.gt(BIG_ZERO))
+    .map(i => ({ ...i, start: weight(i.from), span: weight(i.to).minus(weight(i.from)) }));
+
+  return t =>
+    shaped.reduce((sum, i) => {
+      if (t >= i.to) {
+        return sum.plus(i.usd);
+      }
+      if (t <= i.from || i.span.lte(BIG_ZERO)) {
+        return sum;
+      }
+      return sum.plus(i.usd.times(weight(t).minus(i.start)).dividedBy(i.span));
+    }, BIG_ZERO);
+}
+
 class ClmInvestorOverviewTimeSeriesGenerator {
   protected readonly nowUnix: number;
   protected readonly firstUnix: number;
@@ -343,6 +444,7 @@ class ClmInvestorOverviewTimeSeriesGenerator {
     protected liveUnderlying0Balance: BigNumber,
     protected liveUnderlying1ToUsd: BigNumber,
     protected liveUnderlying1Balance: BigNumber,
+    protected rewards: ClmSideRewards,
     firstDate: Date,
     lastDate: Date,
     bucketSizeMs: number
@@ -567,6 +669,25 @@ class ClmInvestorOverviewTimeSeriesGenerator {
       balanceTimestamps,
     } = this.getBalances();
     const timestamps = this.getTimestamps(balanceTimestamps, sharesAtDepositBalances.timestamps[0]);
+    const rewardsAt = makeClmRewardsAccrual(
+      this.timeline.map(tx => ({
+        t: getUnixTime(tx.datetime),
+        // shares are what earn, and unlike underlying they hold still between transactions
+        balance: tx.shareBalance,
+        // as the PnL counts claims, so the line ends where the header does
+        claimedUsd: tx.rewardPoolClaimedDetails
+          .filter(claim => claim.claimedAmount.gt(BIG_ZERO))
+          .reduce((sum, claim) => sum.plus(claim.claimedAmount.times(claim.rewardToUsd)), BIG_ZERO),
+      })),
+      this.rewards.pendingUsd,
+      this.rewards.untimedUsd,
+      this.nowUnix,
+      Math.min(this.nowUnix, this.rewards.retiredAt ?? this.nowUnix)
+    );
+    // counted from the chart's first point: the longest range starts at the first deposit, so it
+    // still ends on the header's claimed + pending, and a short range shows what that period earned
+    // instead of a lifetime total that would flatten its axis
+    const rewardsBefore = rewardsAt(timestamps[0]);
 
     return timestamps.map(t => {
       const sharesAtDeposit = sharesAtDepositBalances.getValueAfter(t);
@@ -597,6 +718,7 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         underlying: underlying.toNumber(),
         underlyingUsd: underlyingUsd.toNumber(),
         heldUsd: heldUsd.toNumber(),
+        rewardsUsd: rewardsAt(t).minus(rewardsBefore).toNumber(),
         debug: {
           sharesToUnderlying,
           underlyingToToken0,
@@ -705,7 +827,8 @@ export function getClmInvestorTimeSeries(
   nowPriceToken0: BigNumber,
   nowPriceToken1: BigNumber,
   clmHistory: ClmPriceHistoryEntryClm[],
-  vaultHistory: ClmPriceHistoryEntryClassic[] | undefined
+  vaultHistory: ClmPriceHistoryEntryClassic[] | undefined,
+  rewards: ClmSideRewards
 ): ClmInvestorOverviewTimeSeriesPoint[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
@@ -731,6 +854,7 @@ export function getClmInvestorTimeSeries(
     nowBalanceToken0,
     nowPriceToken1,
     nowBalanceToken1,
+    rewards,
     firstDate,
     lastDate,
     bucketSize
@@ -773,7 +897,7 @@ export function getClmInvestorFeesTimeSeries(
 /**
  * Combine one CLM group member's overview series per side into a single series.
  *
- * Every plotted field is denominated in the base CLM's underlying or in USD, so all three sum
+ * Every plotted field is denominated in the base CLM's underlying or in USD, so they all sum
  * across sides. Sides share a bucket grid (same bucket size, floored start) but not a start date,
  * so a side contributes zero before its own first point and its last known value afterwards.
  *
@@ -800,6 +924,7 @@ export function mergeClmOverviewTimeSeries(
     let underlying = 0;
     let underlyingUsd = 0;
     let heldUsd = 0;
+    let rewardsUsd = 0;
 
     present.forEach((points, i) => {
       while (cursors[i] + 1 < points.length && points[cursors[i] + 1].timestamp <= timestamp) {
@@ -813,6 +938,7 @@ export function mergeClmOverviewTimeSeries(
       underlying += point.underlying;
       underlyingUsd += point.underlyingUsd;
       heldUsd += point.heldUsd;
+      rewardsUsd += point.rewardsUsd;
     });
 
     return {
@@ -821,6 +947,7 @@ export function mergeClmOverviewTimeSeries(
       underlying,
       underlyingUsd,
       heldUsd,
+      rewardsUsd,
       debug: {},
     } as ClmInvestorOverviewTimeSeriesPoint;
   });

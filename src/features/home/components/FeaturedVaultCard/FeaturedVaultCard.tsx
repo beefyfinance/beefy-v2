@@ -9,7 +9,7 @@ import { VaultTags } from '../../../../components/VaultIdentity/components/Vault
 import { VaultApyStat } from '../../../../components/VaultStats/VaultApyStat.tsx';
 import { VaultTvlStat } from '../../../../components/VaultStats/VaultTvlStat.tsx';
 import { punctuationWrap } from '../../../../helpers/string.ts';
-import { FeaturedVaultApyLabel } from './FeaturedVaultApyLabel.tsx';
+import { ApyPeriodLabel } from '../../../../components/ApyPeriodLabel/ApyPeriodLabel.tsx';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
@@ -58,7 +58,7 @@ export const FeaturedVaultCard = memo(function FeaturedVaultCard({
       </Identity>
       <Stats>
         <StatColumn>
-          <FeaturedVaultApyLabel />
+          <ApyPeriodLabel />
           <VaultApyStat vaultId={vaultId} type="yearly" showLabel={false} align="left" />
         </StatColumn>
         <VaultTvlStat vaultId={vaultId} showLabel align="left" hideSubValue />

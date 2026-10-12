@@ -1,9 +1,13 @@
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSubSort } from '../../../../hooks/useSubSort.ts';
+import { useSubSort } from '../../hooks/useSubSort.ts';
 
-export const FeaturedVaultApyLabel = memo(function FeaturedVaultApyLabel() {
+type ApyPeriodLabelProps = {
+  type?: 'apy' | 'apr';
+};
+
+export const ApyPeriodLabel = memo(function ApyPeriodLabel({ type = 'apy' }: ApyPeriodLabelProps) {
   const { t } = useTranslation();
   const { next, label } = useSubSort('apy');
 
@@ -21,7 +25,7 @@ export const FeaturedVaultApyLabel = memo(function FeaturedVaultApyLabel() {
       <Prefix type="button" onClick={handleClick}>
         {label}
       </Prefix>
-      <span>{t('VaultStat-APY')}</span>
+      <span>{t(type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY')}</span>
     </Label>
   );
 });
@@ -33,6 +37,7 @@ const Label = styled('div', {
     display: 'inline-flex',
     alignItems: 'baseline',
     columnGap: '4px',
+    flexWrap: 'wrap',
   },
 });
 

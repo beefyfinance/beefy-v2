@@ -135,6 +135,25 @@ export const selectZapCampaignForVaultGroup = (
   return undefined;
 };
 
+/** the one yield mode a CLM's free-zap campaign covers; undefined when it covers neither or both */
+export const selectClmFreeZapSide = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): 'vault' | 'pool' | undefined => {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault || !isCowcentratedLikeVault(vault)) {
+    return undefined;
+  }
+  const covers = (ids: string[]) => ids.some(id => !!selectZapCampaignByVaultId(state, id));
+  const vaultSide = covers(vault.cowcentratedIds.vaults);
+  const poolSide = covers(vault.cowcentratedIds.pools);
+  return (
+    vaultSide === poolSide ? undefined
+    : vaultSide ? 'vault'
+    : 'pool'
+  );
+};
+
 export const selectSwapAggregatorsExistForChain = (state: BeefyState, chainId: ChainEntity['id']) =>
   (state.entities.zaps.aggregators.byChainId[chainId]?.allIds.length || 0) > 0;
 

@@ -95,11 +95,15 @@ export const VaultPlatformTag = memo(function VaultPlatformTag({
   );
 });
 
-const VaultFreeZapTag = memo(function VaultFreeZapTag() {
+export const VaultFreeZapTag = memo(function VaultFreeZapTag({
+  css: cssProp,
+}: {
+  css?: CssStyles;
+}) {
   const { t } = useTranslation();
   return (
     <VaultTag
-      css={styles.vaultTagFreeZap}
+      css={css.raw(styles.vaultTagFreeZap, cssProp)}
       order="text-icon"
       text={t('VaultTag-FreeZap')}
       icon={<FreeZapIcon className={css(styles.vaultTagIconImage)} />}

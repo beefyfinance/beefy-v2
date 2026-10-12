@@ -2,8 +2,10 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
-import { formatTotalApy } from '../../helpers/format.ts';
+import { selectFilterAvgApySort } from '../../features/data/selectors/filtered-vaults.ts';
+import { formatAvgApy, formatTotalApy } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
+import { ApyPeriodLabel } from '../ApyPeriodLabel/ApyPeriodLabel.tsx';
 import { LabeledStat } from '../LabeledStat/LabeledStat.tsx';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import { ApyTooltipContent } from '../VaultStats/ApyTooltipContent.tsx';
@@ -16,15 +18,11 @@ type ApyStatsProps = {
 export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const label = useMemo(
-    () =>
-      t(
-        type === 'daily' ? 'VaultStat-DAILY'
-        : data.type === 'apr' ? 'VaultStat-APR'
-        : 'VaultStat-APY'
-      ),
-    [t, type, data.type]
-  );
+  const subSortApy = useAppSelector(selectFilterAvgApySort);
+  const label =
+    type === 'daily' ? t('VaultStat-DAILY')
+    : data.status === 'hidden' ? t(data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY')
+    : <ApyPeriodLabel type={data.type} />;
   const formatted = useMemo(
     () => (data.status === 'available' ? formatTotalApy(data.values, '???') : undefined),
     [data]
@@ -43,6 +41,12 @@ export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps)
   }
 
   const isBoosted = !!data.boosted;
+  const averages = data.averages ? formatAvgApy(data.averages) : undefined;
+  // falls back to current while a period has no data yet, same as the vault list
+  const averagePercent =
+    type === 'yearly' && subSortApy !== 'default' ?
+      averages?.periods[subSortApy]?.formatted
+    : undefined;
 
   return (
     <ValueBlock
@@ -56,11 +60,17 @@ export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps)
               formatted[boostedTotalKey]
             : undefined
           }
-          value={formatted[totalKey]}
+          value={averagePercent ?? formatted[totalKey]}
         />
       }
       tooltip={
-        <ApyTooltipContent vaultId={vaultId} type={type} isBoosted={isBoosted} rates={formatted} />
+        <ApyTooltipContent
+          vaultId={vaultId}
+          type={type}
+          isBoosted={isBoosted}
+          rates={formatted}
+          averages={averages}
+        />
       }
       loading={false}
     />

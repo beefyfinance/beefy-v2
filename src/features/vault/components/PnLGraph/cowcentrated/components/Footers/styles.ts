@@ -45,6 +45,11 @@ export const styles = {
     backgroundColor: 'graph.line.usd',
     borderRadius: '4px',
   }),
+  // dashed like its line: the position value line, plus the rewards that left the position
+  rewardsReferenceLine: css.raw({
+    width: '12px',
+    borderTop: '2px dashed {colors.graph.line.usd}',
+  }),
   holdReferenceLine: css.raw({
     height: '2px',
     width: '12px',

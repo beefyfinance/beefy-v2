@@ -13,7 +13,7 @@ export const styles = {
   }),
   buttons: css.raw({
     display: 'flex',
-    padding: '0 8px',
+    padding: '0 4px',
     background: 'purpleDarkest',
     borderRadius: '8px',
   }),

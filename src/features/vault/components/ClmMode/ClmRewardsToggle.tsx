@@ -2,6 +2,7 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { VaultFreeZapTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
 import { formatTokenList } from '../../../../helpers/format.ts';
 import { useLocalStorageBoolean } from '../../../../helpers/useLocalStorageBoolean.ts';
 import CheckBoxIcon from '../../../../images/icons/CheckBox.svg?react';
@@ -14,6 +15,7 @@ import {
 } from '../../../data/selectors/apy.ts';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
+import { selectClmFreeZapSide } from '../../../data/selectors/zap.ts';
 import { useAppSelector } from '../../../data/store/hooks.ts';
 import { type ClmModeContextValue, useClmMode } from './ClmModeContext.tsx';
 import { ModeIcon } from './ClmModeSelector.tsx';
@@ -55,6 +57,9 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
     clmMode ? selectClmPayoutTokens(state, clmMode.clmId) : undefined
   );
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const freeZapSide = useAppSelector(state =>
+    clmMode ? selectClmFreeZapSide(state, clmMode.clmId) : undefined
+  );
 
   useEffect(() => {
     if (!seen) {
@@ -131,6 +136,10 @@ export const ClmRewardsToggle = memo(function ClmRewardsToggle({
           <ExpandMoreIcon />
         </Chevron>
       </OptionTitleRow>
+      {/* on the option either way: unticked, it shows what ticking unlocks */}
+      {variant === 'toggle' && freeZapSide === 'vault' ?
+        <VaultFreeZapTag css={freeZapTagCss} />
+      : null}
       {expanded ?
         <Expansion>{explainer}</Expansion>
       : <OptionNote>{t(subLine, tokens)}</OptionNote>}
@@ -238,6 +247,9 @@ const Rate = styled('span', {
 const RateKind = styled('span', {
   base: { textStyle: 'body.medium', color: 'text.dark' },
 });
+
+/** a flex column would stretch the tag across the card */
+const freeZapTagCss = css.raw({ alignSelf: 'flex-start' });
 
 const Row = styled('div', {
   base: {

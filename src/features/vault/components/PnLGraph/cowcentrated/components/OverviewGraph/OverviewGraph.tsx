@@ -43,7 +43,7 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
     const xMargin = xsDown ? 16 : 24;
     return { top: 14, right: xMargin, bottom: 0, left: xMargin };
   }, [xsDown]);
-  const { chartData, isLoading, willRetry, type } = usePnLChartData(
+  const { chartData, isLoading, willRetry, type, hasRewards } = usePnLChartData(
     GRAPH_TIME_BUCKETS[period],
     vaultId,
     address
@@ -55,8 +55,8 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
   const dateAxis = useXAxis(GRAPH_TIME_BUCKETS[period], data.length, xsDown);
 
   const tooltipContentCreator = useCallback(
-    (props: OverviewTooltipProps): ReactNode => <OverviewTooltip {...props} />,
-    []
+    (props: OverviewTooltipProps): ReactNode => <OverviewTooltip {...props} rewards={hasRewards} />,
+    [hasRewards]
   );
 
   if (isLoading) {
@@ -113,6 +113,17 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
             dot={false}
             type="linear"
           />
+          {hasRewards && (
+            <Line
+              yAxisId="usd"
+              strokeWidth={1.5}
+              strokeDasharray="4 3"
+              dataKey="withRewardsUsd"
+              stroke={token('colors.graph.line.usd')}
+              dot={false}
+              type="linear"
+            />
+          )}
           {type === 'vault' && (
             <YAxis
               stroke={token('colors.graph.line.underlying')}

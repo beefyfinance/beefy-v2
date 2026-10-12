@@ -20,6 +20,7 @@ interface CommonFooterProps {
 
 interface OverviewFooterProps extends CommonFooterProps {
   position: boolean;
+  rewards: boolean;
 }
 
 export const OverviewFooter = memo(function OverviewFooter({
@@ -28,6 +29,7 @@ export const OverviewFooter = memo(function OverviewFooter({
   labels,
   css: cssProp,
   position,
+  rewards,
 }: OverviewFooterProps) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -55,6 +57,12 @@ export const OverviewFooter = memo(function OverviewFooter({
           <div className={classes.usdReferenceLine} />
           {t('Position Value')}
         </div>
+        {rewards ?
+          <div className={classes.legendItem}>
+            <div className={classes.rewardsReferenceLine} />
+            {t('Graph-cowcentrated-overview-tooltip-with-rewards')}
+          </div>
+        : null}
         <div className={classes.legendItem}>
           <div className={classes.holdReferenceLine} />
           {t('HOLD Value')}

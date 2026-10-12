@@ -4,14 +4,13 @@ import { Item, type ItemInnerProps } from './Item.tsx';
 import { useTranslation } from 'react-i18next';
 import { Scrollable } from '../Scrollable/Scrollable.tsx';
 import { SearchInput } from '../Form/Input/SearchInput.tsx';
-import { css, cx } from '@repo/styles/css';
+import { css } from '@repo/styles/css';
 
 export type SearchableListProps<TValue extends string = string> = {
   options: TValue[];
   onSelect: (value: TValue) => void;
   ItemInnerComponent?: FC<ItemInnerProps<TValue>>;
   EndComponent?: FC<ItemInnerProps<TValue>>;
-  size?: 'sm' | 'md';
   hideShadows?: boolean;
 };
 
@@ -20,7 +19,6 @@ export const SearchableList = memo(function SearchableList<TValue extends string
   onSelect,
   ItemInnerComponent,
   EndComponent,
-  size = 'md',
   hideShadows,
 }: SearchableListProps<TValue>) {
   const { t } = useTranslation();
@@ -42,7 +40,7 @@ export const SearchableList = memo(function SearchableList<TValue extends string
   );
 
   return (
-    <div className={cx(containerClass, size === 'sm' && smallClass)}>
+    <div className={containerClass}>
       <div className={searchbarClass}>
         <SearchInput value={search} onValueChange={setSearch} />
       </div>
@@ -66,7 +64,11 @@ export const SearchableList = memo(function SearchableList<TValue extends string
 });
 
 const containerClass = css({
-  '--searchable-list-padding-size': '24px',
+  // matches Step's content padding
+  '--searchable-list-padding-size': '16px',
+  sm: {
+    '--searchable-list-padding-size': '24px',
+  },
   '--searchable-list-form-gap': '24px',
   '--searchable-list-item-gap': '16px',
   display: 'grid',
@@ -94,10 +96,4 @@ const listClass = css({
 const noMatchesClass = css({
   padding:
     '0 var(--searchable-list-padding-size) var(--searchable-list-padding-size) var(--searchable-list-padding-size)',
-});
-
-const smallClass = css({
-  '--searchable-list-padding-size': '12px',
-  '--searchable-list-form-gap': '16px',
-  '--searchable-list-item-gap': '12px',
 });

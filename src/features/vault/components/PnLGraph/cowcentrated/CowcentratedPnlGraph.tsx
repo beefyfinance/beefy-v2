@@ -82,7 +82,7 @@ export const OverviewGraph = memo(function OverviewGraph({
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
   // one rule with the chart: the CLM-token line is drawn, and named, only on the autocompounding side
-  const { type } = useClmChartSides(vaultId, address);
+  const { type, hasRewards } = useClmChartSides(vaultId, address);
 
   return (
     <CardContent css={styles.content}>
@@ -100,6 +100,7 @@ export const OverviewGraph = memo(function OverviewGraph({
           period={period}
           handlePeriod={setPeriod}
           position={type === 'vault'}
+          rewards={hasRewards}
         />
       : null}
     </CardContent>
@@ -187,7 +188,7 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
 }: CowcentratedPnlGraphProps) {
   const classes = useStyles();
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
-  const { type } = useClmChartSides(vaultId, address);
+  const { type, hasRewards } = useClmChartSides(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
 
@@ -202,6 +203,7 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
             period={period}
             handlePeriod={setPeriod}
             position={type === 'vault'}
+            rewards={hasRewards}
           />
         </>
       : <GraphNoData reason="wait-collect" />}

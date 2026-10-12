@@ -67,5 +67,11 @@ export const styles = {
   }),
   noPadding: css.raw({
     padding: '0',
+    sm: {
+      padding: '0',
+    },
+    md: {
+      padding: '0',
+    },
   }),
 };

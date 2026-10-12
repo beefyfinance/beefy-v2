@@ -4,10 +4,8 @@ import { formatDateTime } from '../../../../../../../helpers/date.ts';
 import { formatTokenDisplayCondensed, formatUsd } from '../../../../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { featureFlag_detailedTooltips } from '../../../../../../data/utils/feature-flags.ts';
-import type {
-  ClmInvestorFeesTimeSeriesPoint,
-  ClmInvestorOverviewTimeSeriesPoint,
-} from '../../../../../../../helpers/graph/timeseries.ts';
+import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helpers/graph/timeseries.ts';
+import type { ClmOverviewChartPoint } from '../OverviewGraph/hooks.ts';
 import type { TokenEntity } from '../../../../../../data/entities/token.ts';
 import type { RechartsTooltipProps } from '../../../../../../../helpers/graph/types.ts';
 import { css } from '@repo/styles/css';
@@ -46,12 +44,16 @@ const useStyles = legacyMakeStyles({
 export type OverviewTooltipProps = RechartsTooltipProps<
   'underlyingUsd',
   'timestamp',
-  ClmInvestorOverviewTimeSeriesPoint
->;
+  ClmOverviewChartPoint
+> & {
+  /** show the rewards rows */
+  rewards?: boolean;
+};
 
 export const OverviewTooltip = memo(function OverviewTooltip({
   active,
   payload,
+  rewards,
 }: OverviewTooltipProps) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -65,7 +67,8 @@ export const OverviewTooltip = memo(function OverviewTooltip({
     return null;
   }
 
-  const { timestamp, underlying, underlyingUsd, heldUsd, debug } = valueLine.payload;
+  const { timestamp, underlying, underlyingUsd, heldUsd, rewardsUsd, withRewardsUsd, debug } =
+    valueLine.payload;
 
   return (
     <div className={classes.content}>
@@ -80,6 +83,20 @@ export const OverviewTooltip = memo(function OverviewTooltip({
         </div>
         <div className={classes.value}>{formatUsd(underlyingUsd)}</div>
       </div>
+      {rewards ?
+        <>
+          <div className={classes.itemContainer}>
+            <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-rewards')}:</div>
+            <div className={classes.value}>{formatUsd(rewardsUsd)}</div>
+          </div>
+          <div className={classes.itemContainer}>
+            <div className={classes.label}>
+              {t('Graph-cowcentrated-overview-tooltip-with-rewards')}:
+            </div>
+            <div className={classes.value}>{formatUsd(withRewardsUsd)}</div>
+          </div>
+        </>
+      : null}
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold-value')}:</div>
         <div className={classes.value}>{formatUsd(heldUsd)}</div>

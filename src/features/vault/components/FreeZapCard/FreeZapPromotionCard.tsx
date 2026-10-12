@@ -5,7 +5,19 @@ import FreeZapBoltIcon from '../../../../images/icons/freeZapBolt.svg?react';
 import { CardContent } from '../Card/CardContent.tsx';
 import { CardHeader } from '../Card/CardHeader.tsx';
 
-export const FreeZapPromotionCard = memo(function FreeZapPromotionCard() {
+const TEXT = {
+  vault: 'Vault-FreeZap-Text-Vault',
+  pool: 'Vault-FreeZap-Text-Pool',
+} as const;
+
+type FreeZapPromotionCardProps = {
+  /** the one CLM yield mode the campaign covers */
+  side?: keyof typeof TEXT;
+};
+
+export const FreeZapPromotionCard = memo(function FreeZapPromotionCard({
+  side,
+}: FreeZapPromotionCardProps) {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +30,7 @@ export const FreeZapPromotionCard = memo(function FreeZapPromotionCard() {
         </Title>
       </CardHeader>
       <Content>
-        <Text>{t('Vault-FreeZap-Text')}</Text>
+        <Text>{t(side ? TEXT[side] : 'Vault-FreeZap-Text')}</Text>
       </Content>
     </div>
   );
