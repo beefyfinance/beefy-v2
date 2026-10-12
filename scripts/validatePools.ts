@@ -99,6 +99,10 @@ const nonHarvestOnDepositPools = [
   'morpho-v2-monad-hyperithm-apex-cbbtc',
   'aavev3-monad-gho',
   'aavev3-monad-musd',
+  'aavev3-monad-usdt0',
+  'aavev3-monad-usdc',
+  'aavev3-monad-weth',
+  'aavev3-monad-ausd',
   'mellow-aero-usdc-cbbtc',
   'morpho-v2-arbitrum-gauntlet-premium-usdg',
 ];

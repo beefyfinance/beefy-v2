@@ -1,5 +1,49 @@
 [
   {
+    "id": "moo_aerodrome-usdc-pyplc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-pyplc-vault",
+    "assets": ["USDC", "PYPLc"],
+    "tokenAddress": "0x7818b61CFa261d9940173698A15Fedb2dc238Fab",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA44b0D314207cD8fE2Ad80fA59aD3EedbADAf5b2",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-rblxc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-usdc-rblxc-vault",
+    "assets": ["USDC", "RBLXc"],
+    "tokenAddress": "0x193E4F77f94CC6fdBc7e68df2e6e0DeA0F8C6bf0",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xbcc4669e12bB127E1986fCA1BB29457E35411211",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-usdc-amznc",
     "title": "Beefy",
     "vaultId": "aerodrome-cow-base-usdc-amznc-vault",
