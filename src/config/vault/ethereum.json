@@ -6568,12 +6568,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "single-lp",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "ethereum"
   },
   {
     "id": "convex-staked-cvxFXN",
@@ -6605,12 +6600,7 @@
     },
     "strategyTypeId": "single-lp",
     "addLiquidityUrl": "https://fx.convexfinance.com/stake",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "ethereum"
   },
   {
     "id": "aura-dola-sdola",
@@ -8240,9 +8230,6 @@
             ]
           }
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -8937,9 +8924,6 @@
           "0xae78736Cd615f374D3085123A210448E74Fc6393",
           "0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -8987,9 +8971,6 @@
           "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF"
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -10398,9 +10379,6 @@
             ]
           }
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -10525,9 +10503,6 @@
             ]
           }
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -11732,9 +11707,6 @@
             ]
           }
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -11788,9 +11760,6 @@
             ]
           }
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },

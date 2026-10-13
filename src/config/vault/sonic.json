@@ -110,12 +110,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "sonic"
   },
   {
     "id": "swapx-ichi-usdc-strike",
@@ -407,9 +402,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -538,9 +530,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -669,9 +658,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -914,9 +900,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1044,9 +1027,6 @@
       {
         "strategyId": "uniswap-v2",
         "ammId": "sonic-defive"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1128,9 +1108,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1418,12 +1395,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=bes+os&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "sonic"
   },
   {
     "id": "swapx-ichi-os-bes",
@@ -1495,12 +1467,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=usdc.e+bes&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=all-pools",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "sonic"
   },
   {
     "id": "beefy-besonic",
@@ -1711,9 +1678,6 @@
           "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
           "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
         ]
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -2346,9 +2310,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -2473,9 +2434,6 @@
       {
         "strategyId": "solidly",
         "ammId": "sonic-shadow"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -2512,12 +2470,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/add-liquidity",
     "removeLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/remove-liquidity",
-    "network": "sonic",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "sonic"
   },
   {
     "id": "swapx-ichi-sceth-weth-sceth",
@@ -3541,9 +3494,6 @@
       {
         "strategyId": "solidly",
         "ammId": "sonic-swapx"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -3892,9 +3842,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -4025,9 +3972,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },

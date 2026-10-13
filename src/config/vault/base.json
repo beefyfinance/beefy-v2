@@ -860,9 +860,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -985,9 +982,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1110,9 +1104,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1235,9 +1226,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1360,9 +1348,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1485,9 +1470,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1723,9 +1705,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1848,9 +1827,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1973,9 +1949,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -2098,9 +2071,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -17011,9 +16981,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -21157,9 +21124,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -22370,9 +22334,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -22451,9 +22412,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -24308,9 +24266,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25033,9 +24988,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25164,9 +25116,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25295,9 +25244,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25426,9 +25372,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25555,9 +25498,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25682,9 +25622,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -25811,9 +25748,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -26543,9 +26477,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -26668,9 +26599,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -26994,9 +26922,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -27036,9 +26961,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -27078,9 +27000,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -27122,9 +27041,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -28314,12 +28230,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "removeLiquidityUrl": "https://app.alienbase.xyz/liquidityBunni/0x7FE2c28497cb2bbD282b98e93b805ac1E4399d55",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "alienbase-alb-eth-wide",
@@ -28354,12 +28265,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.alienbase.xyz/add/ETH/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
     "removeLiquidityUrl": "https://app.alienbase.xyz/liquidityBunni/0x70DE8B9baC83E39cea0389EfDbCBAa0700400dAd",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "alienbase-cbeth-eth-narrow",
@@ -28394,12 +28300,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.alienbase.xyz/add/ETH/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "removeLiquidityUrl": "https://app.alienbase.xyz/liquidityBunni/0x9a85cA2ea6473CBedc27DF10C126711bEACe089e",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "alienbase-usdc-usdbc-narrow",
@@ -28432,12 +28333,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.alienbase.xyz/add/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     "removeLiquidityUrl": "https://app.alienbase.xyz/liquidityBunni/0xd8377fB904A98B1729cff086f08Be11f2c9044e3",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "uniswap-cow-base-weth-aifun-rp",
@@ -29072,9 +28968,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -30831,9 +30724,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -31561,9 +31451,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -31603,9 +31490,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -31684,9 +31568,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -31726,9 +31607,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -31770,9 +31648,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -33016,9 +32891,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -33307,9 +33179,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -33727,9 +33596,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -33986,9 +33852,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -34249,9 +34112,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -34382,9 +34242,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -34772,9 +34629,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -34944,9 +34798,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -34988,9 +34839,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35119,9 +34967,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35248,9 +35093,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35292,9 +35134,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35426,9 +35265,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35557,9 +35393,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35684,9 +35517,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35811,9 +35641,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -35980,9 +35807,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -36105,9 +35929,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -36232,9 +36053,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -38063,9 +37881,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -38359,9 +38174,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -38751,9 +38563,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -38793,9 +38602,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -38874,9 +38680,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -39035,9 +38838,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -39676,9 +39476,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -41342,9 +41139,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -42623,9 +42417,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -43026,9 +42817,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -43761,9 +43549,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ],
     "poolTogether": "https://app.cabana.fi/vault/8453/0x6428DDB6EF1818FA99552E10882D34c1db57BBcA?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
@@ -43930,9 +43715,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -44459,9 +44241,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -44540,9 +44319,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -44582,9 +44358,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -44899,9 +44672,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -45351,9 +45121,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -45976,9 +45743,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -46864,9 +46628,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -47116,9 +46877,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -47238,9 +46996,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -47399,9 +47154,6 @@
       {
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },

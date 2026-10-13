@@ -104,13 +104,12 @@ export function isOptionFeeable(option: { feeable?: boolean }): boolean {
   return option.feeable !== false;
 }
 
-/** drop single's identity (depositToken→depositToken) option: the picker uses the vault-type path; its boosted counterpart has no such twin and stays */
+/** drop single's identity (depositToken→depositToken) option: emitted for composable consumers; the picker uses the vault-type path */
 export function dropSingleIdentityOption<
   T extends {
     strategyId: string;
     inputs: { address: string }[];
     wantedOutputs: { address: string }[];
-    boostId?: string;
   },
 >(options: T[], tokenAddress: string): T[] {
   const lower = tokenAddress.toLowerCase();
@@ -118,7 +117,6 @@ export function dropSingleIdentityOption<
     o =>
       !(
         o.strategyId === 'single' &&
-        !o.boostId &&
         o.inputs.length === 1 &&
         o.wantedOutputs.length === 1 &&
         o.inputs[0].address.toLowerCase() === lower &&

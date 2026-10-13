@@ -233,9 +233,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -366,9 +363,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -499,9 +493,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -632,9 +623,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -851,9 +839,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -984,9 +969,6 @@
       },
       {
         "strategyId": "reward-pool-to-vault"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1202,9 +1184,6 @@
       {
         "strategyId": "solidly",
         "ammId": "scroll-nuri"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },
@@ -1245,9 +1224,6 @@
       {
         "strategyId": "solidly",
         "ammId": "scroll-nuri"
-      },
-      {
-        "strategyId": "single"
       }
     ]
   },

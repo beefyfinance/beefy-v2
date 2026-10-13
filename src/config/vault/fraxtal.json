@@ -334,12 +334,7 @@
     "addLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-1/vault/deposit",
     "removeLiquidityUrl": "https://curve.finance/lend/fraxtal/markets/one-way-market-1/vault/withdraw",
     "pointStructureIds": ["fraxtal"],
-    "network": "fraxtal",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "fraxtal"
   },
   {
     "id": "curve-lend-fraxtal-fxs-crvusd",

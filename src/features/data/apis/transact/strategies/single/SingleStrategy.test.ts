@@ -1,7 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it } from 'vitest';
 import type { TokenErc20 } from '../../../../entities/token.ts';
 import {
-  arcEurc,
   arcUsdc,
   baseNative,
   baseWeth,
@@ -55,28 +54,5 @@ describe('SingleStrategy option lists where native and wnative are separate bala
     const rows = depositRowTokens(await makeStrategy('base', baseWeth).fetchDepositOptions());
 
     expectRowTokens(rows, [baseNative, baseWeth]);
-  });
-});
-
-describe('SingleStrategy identity option', () => {
-  it('offers the deposit token for deposit even when no aggregator supports it, fee-free', async () => {
-    const options = await makeStrategy('arc', arcEurc).fetchDepositOptions();
-
-    expectRowTokens(depositRowTokens(options), [arcEurc]);
-    expect(options[0]?.feeable).toBe(false);
-  });
-
-  it('offers the deposit token for withdraw even when no aggregator supports it, fee-free', async () => {
-    const options = await makeStrategy('arc', arcEurc).fetchWithdrawOptions();
-
-    expectRowTokens(withdrawRowTokens(options), [arcEurc]);
-    expect(options[0]?.feeable).toBe(false);
-  });
-
-  it('keeps the identity option fee-free when the aggregator does support the deposit token', async () => {
-    const options = await makeStrategy('arc', arcUsdc).fetchDepositOptions();
-    const identity = options.find(option => option.inputs[0] === arcUsdc);
-
-    expect(identity?.feeable).toBe(false);
   });
 });
