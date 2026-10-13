@@ -1,5 +1,83 @@
 [
   {
+    "id": "pancake-cow-bsc-usdt-skhyb-rp",
+    "name": "SKHYB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscUSDT-SKHYB",
+    "tokenAddress": "0xDEF5BE4F6e340C46f68D02398dbD99F0242dc237",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xAd757F2fc4339849056F987Ddc8aa71a51Ae89Cc",
+    "earnedToken": "rCowPancakeBscUSDT-SKHYB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-skhyb",
+    "status": "active",
+    "createdAt": 1791869647,
+    "platformId": "pancakeswap",
+    "assets": ["SKHYB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdt-skhyb",
+    "name": "USDT-SKHYB",
+    "type": "cowcentrated",
+    "token": "USDT-SKHYB pancakeswap",
+    "tokenAddress": "0xD7d30F434b12F7Ed9b0Ae11fF1C754745a10aD52",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xCA750eF65f295BBECd685Abf54e82CAf297BDB61"
+    ],
+    "earnContractAddress": "0xDEF5BE4F6e340C46f68D02398dbD99F0242dc237",
+    "earnedToken": "cowPancakeBscUSDT-SKHYB",
+    "earnedTokenAddress": "0xDEF5BE4F6e340C46f68D02398dbD99F0242dc237",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdt-skhyb",
+    "status": "active",
+    "createdAt": 1791869647,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["USDT", "SKHYB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancakeswap-cow-bsc-xaut-wbnb-rp",
     "name": "XAUt-WBNB Reward Pool",
     "type": "gov",
