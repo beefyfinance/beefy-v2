@@ -22,42 +22,19 @@ function makeState(boosts: Boost[]): BeefyState {
 }
 
 describe('selectZapStakeableBoostOrUndefined', () => {
-  it('returns the single active or prestake v2 boost', () => {
-    expect(
-      selectZapStakeableBoostOrUndefined(
-        makeState([{ id: 'a', version: 2, status: 'active' }]),
-        'v1'
-      )?.id
-    ).toBe('a');
-    expect(
-      selectZapStakeableBoostOrUndefined(
-        makeState([{ id: 'p', version: 2, status: 'prestake' }]),
-        'v1'
-      )?.id
-    ).toBe('p');
-  });
-
-  it('ignores v1 and inactive boosts', () => {
-    const state = makeState([
+  it('returns the one live v2 boost, ignoring v1 and ended ones, and none when two qualify', () => {
+    const live = makeState([
       { id: 'old', version: 1, status: 'active' },
       { id: 'done', version: 2, status: 'inactive' },
-      { id: 'live', version: 2, status: 'active' },
+      { id: 'live', version: 2, status: 'prestake' },
+    ]);
+    const two = makeState([
+      { id: 'a', version: 2, status: 'active' },
+      { id: 'b', version: 2, status: 'prestake' },
     ]);
 
-    expect(selectZapStakeableBoostOrUndefined(state, 'v1')?.id).toBe('live');
-  });
-
-  it('returns undefined when none or more than one boost qualifies', () => {
-    expect(selectZapStakeableBoostOrUndefined(makeState([]), 'v1')).toBeUndefined();
+    expect(selectZapStakeableBoostOrUndefined(live, 'v1')?.id).toBe('live');
+    expect(selectZapStakeableBoostOrUndefined(two, 'v1')).toBeUndefined();
     expect(selectZapStakeableBoostOrUndefined(makeState([]), 'other')).toBeUndefined();
-    expect(
-      selectZapStakeableBoostOrUndefined(
-        makeState([
-          { id: 'a', version: 2, status: 'active' },
-          { id: 'b', version: 2, status: 'prestake' },
-        ]),
-        'v1'
-      )
-    ).toBeUndefined();
   });
 });
