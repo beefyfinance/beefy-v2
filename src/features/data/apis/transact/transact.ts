@@ -61,7 +61,7 @@ import {
 import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blacklist.ts';
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
 import { filterGeoBlockedOptions } from './helpers/geo.ts';
-import { insertBoostedCounterparts } from './helpers/boost.ts';
+import { boostedCounterpart } from './helpers/boost.ts';
 import { dropSingleIdentityOption, isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
@@ -239,46 +239,58 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    const allowedOptions = this.withBoostedCounterparts(
-      selectZapStakeableBoostOrUndefined(state, helpers.vault.id),
-      helpers.vault,
-      zapStrategies,
-      filterGeoBlockedOptions(state, helpers.vault, options)
-    );
+    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
-    if (vaultDepositOption) {
-      const deduped = dropSingleIdentityOption(
-        allowedOptions,
-        vaultDepositOption.inputs[0].address
-      );
-      return [vaultDepositOption, ...deduped];
-    }
+    const deduped: DepositOption[] =
+      vaultDepositOption ?
+        [
+          vaultDepositOption,
+          ...dropSingleIdentityOption(allowedOptions, vaultDepositOption.inputs[0].address),
+        ]
+      : allowedOptions;
 
-    return allowedOptions;
+    return this.withBoostedCounterparts(
+      selectZapStakeableBoostOrUndefined(state, helpers.vault.id),
+      helpers,
+      zapStrategies,
+      deduped,
+      strategy => strategy.fetchDepositOptions()
+    );
   }
 
-  // a boosted copy of every option the boost decorator can wrap
-  private withBoostedCounterparts<T extends TransactOption>(
+  // a boosted counterpart after every option the boost decorator can wrap;
+  // the vault option's counterpart is the plain route as a zap (vault-identity), which is not configured per vault
+  private async withBoostedCounterparts<T extends TransactOption>(
     boost: BoostPromoEntity | undefined,
-    vault: VaultEntity,
+    helpers: TransactHelpers,
     zapStrategies: IStrategy[],
-    options: T[]
-  ): T[] {
-    if (!boost || !isStandardVault(vault)) {
+    options: T[],
+    fetchIdentityOptions: (strategy: IStrategy) => Promise<T[]>
+  ): Promise<T[]> {
+    if (!boost || !isStandardVault(helpers.vault) || !isZapTransactHelpers(helpers)) {
       return options;
     }
     const composableStrategyIds = new Set<string>(
       zapStrategies.filter(isComposableStrategy).map(strategy => strategy.id)
     );
     // cross-chain / v2v routes are composable by construction: their handlers only pick composable inner strategies
-    return insertBoostedCounterparts(
-      options,
-      boost.id,
-      option =>
-        isCrossChainOption(option) ||
-        isVaultToVaultSingleTokenOption(option) ||
-        composableStrategyIds.has(option.strategyId)
+    const canBoost = (option: T) =>
+      isCrossChainOption(option) ||
+      isVaultToVaultSingleTokenOption(option) ||
+      composableStrategyIds.has(option.strategyId);
+    const identityOptions =
+      options.some(option => option.strategyId === 'vault') ?
+        await fetchIdentityOptions(
+          await this.buildZapStrategy({ strategyId: 'vault-identity' }, helpers, false)
+        )
+      : [];
+
+    return options.flatMap(option =>
+      option.strategyId === 'vault' ?
+        [option, ...identityOptions.map(identity => boostedCounterpart(identity, boost.id))]
+      : canBoost(option) ? [option, boostedCounterpart(option, boost.id)]
+      : [option]
     );
   }
 
@@ -424,23 +436,24 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    const allowedOptions = this.withBoostedCounterparts(
-      selectZapUnstakeableBoostOrUndefined(state, helpers.vault.id),
-      helpers.vault,
-      zapStrategies,
-      filterGeoBlockedOptions(state, helpers.vault, options)
-    );
+    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
-    if (vaultWithdrawOption) {
-      const deduped = dropSingleIdentityOption(
-        allowedOptions,
-        vaultWithdrawOption.inputs[0].address
-      );
-      return [vaultWithdrawOption, ...deduped];
-    }
+    const deduped: WithdrawOption[] =
+      vaultWithdrawOption ?
+        [
+          vaultWithdrawOption,
+          ...dropSingleIdentityOption(allowedOptions, vaultWithdrawOption.inputs[0].address),
+        ]
+      : allowedOptions;
 
-    return allowedOptions;
+    return this.withBoostedCounterparts(
+      selectZapUnstakeableBoostOrUndefined(state, helpers.vault.id),
+      helpers,
+      zapStrategies,
+      deduped,
+      strategy => strategy.fetchWithdrawOptions()
+    );
   }
 
   async fetchWithdrawQuotesFor(
@@ -776,6 +789,9 @@ export class TransactApi implements ITransactApi {
     // Synthetic strategies that aren't stored in vault.zaps — instantiate inline
     if (strategyId === 'cross-chain' || strategyId === 'vault-to-vault-single-token') {
       return await this.buildZapStrategy({ strategyId }, helpers, true);
+    }
+    if (strategyId === 'vault-identity') {
+      return await this.buildZapStrategy({ strategyId }, helpers, false);
     }
 
     if (!vault.zaps) {

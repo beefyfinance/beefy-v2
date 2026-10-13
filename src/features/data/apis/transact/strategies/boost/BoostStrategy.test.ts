@@ -5,11 +5,14 @@ import type { VaultStandard } from '../../../../entities/vault.ts';
 import type { BeefyState } from '../../../../store/types.ts';
 import { baseWeth, bn, erc20Token, makeState } from '../../helpers/same-balance.test-helper.ts';
 import { SwapAggregator } from '../../swap/SwapAggregator.ts';
-import type { SingleDepositOption, SingleWithdrawOption } from '../../transact-types.ts';
+import type {
+  VaultIdentityDepositOption,
+  VaultIdentityWithdrawOption,
+} from '../../transact-types.ts';
 import { BoostShareSource } from '../../vaults/ShareSource.ts';
 import { StandardVaultType } from '../../vaults/StandardVaultType.ts';
 import type { ZapTransactHelpers } from '../IStrategy.ts';
-import { SingleStrategy } from '../single/SingleStrategy.ts';
+import { VaultIdentityStrategy } from '../vault/VaultIdentityStrategy.ts';
 import { BoostStrategy, withBoost, withBoostShares } from './BoostStrategy.ts';
 
 // the withdraw order is built for a connected user
@@ -106,29 +109,33 @@ function makeBoosted() {
     getState,
   } as unknown as ZapTransactHelpers;
 
-  return new BoostStrategy(new SingleStrategy({ strategyId: 'single' }, helpers), helpers, boost);
+  return new BoostStrategy(
+    new VaultIdentityStrategy({ strategyId: 'vault-identity' }, helpers),
+    helpers,
+    boost
+  );
 }
 
 const identityOption = {
-  id: 'single-base-weth-identity-boost',
-  strategyId: 'single',
+  id: 'vault-identity-base-weth-boost',
+  strategyId: 'vault-identity',
   vaultId: vault.id,
   chainId: 'base',
   inputs: [baseWeth],
   wantedOutputs: [baseWeth],
   boostId: boost.id,
-} as unknown as SingleDepositOption;
+} as unknown as VaultIdentityDepositOption;
 
 const tenWeth = { token: baseWeth, amount: bn('10'), max: false };
 const withdrawOption = {
-  id: 'single-base-weth-identity-boost',
-  strategyId: 'single',
+  id: 'vault-identity-base-weth-boost',
+  strategyId: 'vault-identity',
   vaultId: vault.id,
   chainId: 'base',
   inputs: [baseWeth],
   wantedOutputs: [baseWeth],
   boostId: boost.id,
-} as unknown as SingleWithdrawOption;
+} as unknown as VaultIdentityWithdrawOption;
 const allWeth = { token: baseWeth, amount: bn('20'), max: true };
 
 describe('BoostStrategy deposit', () => {
@@ -213,9 +220,9 @@ describe('withBoost / withBoostShares', () => {
       vaultType: new StandardVaultType(other, getState),
       getState,
     } as unknown as ZapTransactHelpers;
-    const single = new SingleStrategy({ strategyId: 'single' }, helpers);
+    const identity = new VaultIdentityStrategy({ strategyId: 'vault-identity' }, helpers);
 
-    expect(() => withBoost(single, helpers, boost.id)).toThrow(/is for vault base-weth/);
+    expect(() => withBoost(identity, helpers, boost.id)).toThrow(/is for vault base-weth/);
     expect(() => withBoostShares(helpers, boost.id)).toThrow(/is for vault base-weth/);
   });
 });

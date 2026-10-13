@@ -1,31 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
-import { boostIdForLeg, insertBoostedCounterparts } from './boost.ts';
+import { boostedCounterpart, boostIdForLeg } from './boost.ts';
 
-type Opt = { id: string; strategyId: string; boostId?: string };
+describe('boostedCounterpart', () => {
+  it('copies the option under a boost-suffixed id', () => {
+    const option = { id: 'single-v1-USDC', strategyId: 'single', inputs: [] };
 
-const options: Opt[] = [
-  { id: 'vault-v1-usdc', strategyId: 'vault' },
-  { id: 'single-v1-usdc', strategyId: 'single' },
-  { id: 'conic-v1-usdc', strategyId: 'conic' },
-];
-
-describe('insertBoostedCounterparts', () => {
-  it('adds a boosted copy right after each boostable option only', () => {
-    const result = insertBoostedCounterparts(
-      options,
-      'moo_v1-boost',
-      o => o.strategyId === 'single'
-    );
-
-    expect(result.map(o => o.id)).toEqual([
-      'vault-v1-usdc',
-      'single-v1-usdc',
-      'single-v1-usdc-boost-moo_v1-boost',
-      'conic-v1-usdc',
-    ]);
-    expect(result[2]).toEqual({ ...options[1], id: result[2].id, boostId: 'moo_v1-boost' });
-    expect(result[1].boostId).toBeUndefined();
+    expect(boostedCounterpart(option, 'moo_v1-boost')).toEqual({
+      ...option,
+      id: 'single-v1-usdc-boost-moo_v1-boost',
+      boostId: 'moo_v1-boost',
+    });
+    expect(option).not.toHaveProperty('boostId');
   });
 });
 

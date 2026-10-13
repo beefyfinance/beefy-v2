@@ -15,15 +15,10 @@ export function boostIdForLeg(
   return (leg === 'dest') === isDeposit ? option.boostId : undefined;
 }
 
-/** inserts, after each option `canBoost` accepts, a copy of it that also stakes into `boostId` */
-export function insertBoostedCounterparts<T extends BoostableOption>(
-  options: T[],
-  boostId: BoostPromoEntity['id'],
-  canBoost: (option: T) => boolean
-): T[] {
-  return options.flatMap(option =>
-    canBoost(option) ?
-      [option, { ...option, id: `${option.id}-boost-${boostId}`.toLowerCase(), boostId }]
-    : [option]
-  );
+/** a copy of the option that also stakes into / unstakes from `boostId` */
+export function boostedCounterpart<T extends BoostableOption>(
+  option: T,
+  boostId: BoostPromoEntity['id']
+): T {
+  return { ...option, id: `${option.id}-boost-${boostId}`.toLowerCase(), boostId };
 }
