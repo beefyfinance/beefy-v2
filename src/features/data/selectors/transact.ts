@@ -39,7 +39,6 @@ import {
   selectBalanceKeyForToken,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenWithToken,
   selectUserVaultBalanceInShareToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
@@ -267,14 +266,13 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
-  const vaultId = selectTransactVaultId(state);
   const isVaultSourceWithdraw = selectTransactIsActiveSelectionVaultSourceWithdraw(state);
   // Vault-source withdraw (cross-chain or same-chain v2v) dispatches in share-math.
   // Composer-path withdraws still dispatch in deposit-token math.
   const userBalance =
     isVaultSourceWithdraw ?
-      selectUserVaultBalanceInShareToken(state, vaultId)
-    : selectUserVaultBalanceInDepositToken(state, vaultId);
+      selectTransactWithdrawAvailableInShareToken(state)
+    : selectTransactWithdrawAvailableWithToken(state).amount;
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
