@@ -81,6 +81,8 @@ class VaultIdentityStrategyImpl implements IComposableStrategy<StrategyId> {
   async fetchDepositOptions(): Promise<VaultIdentityDepositOption[]> {
     const inputs = [this.vaultType.depositToken];
     const selectionId = createSelectionId(this.vault.chainId, inputs);
+    // shares the plain route's selection, so it must hide under the same rule or the selection stays visible
+    const { selectionHideIfZeroBalance } = await this.vaultType.fetchDepositOption();
 
     return [
       {
@@ -89,6 +91,7 @@ class VaultIdentityStrategyImpl implements IComposableStrategy<StrategyId> {
         chainId: this.vault.chainId,
         selectionId,
         selectionOrder: SelectionOrder.Want,
+        selectionHideIfZeroBalance,
         inputs,
         wantedOutputs: inputs,
         strategyId,
@@ -198,6 +201,7 @@ class VaultIdentityStrategyImpl implements IComposableStrategy<StrategyId> {
   async fetchWithdrawOptions(): Promise<VaultIdentityWithdrawOption[]> {
     const inputs = [this.vaultType.depositToken];
     const selectionId = createSelectionId(this.vault.chainId, inputs);
+    const { selectionHideIfZeroBalance } = await this.vaultType.fetchWithdrawOption();
 
     return [
       {
@@ -206,6 +210,7 @@ class VaultIdentityStrategyImpl implements IComposableStrategy<StrategyId> {
         chainId: this.vault.chainId,
         selectionId,
         selectionOrder: SelectionOrder.Want,
+        selectionHideIfZeroBalance,
         inputs,
         wantedOutputs: inputs,
         strategyId,
