@@ -731,11 +731,7 @@ export const selectTransactSelectedZapFee = (state: BeefyState): SelectedZapFee 
     return { option: quote.option, fee: quote.fee };
   }
 
-  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
-  if (!optionIds) {
-    return undefined;
-  }
-  const option = optionIds.map(id => state.ui.transact.options.byOptionId[id]).find(isZapOption);
+  const option = selectTransactOptionsForSelectionId(state, selectionId).find(isZapOption);
   if (!option) {
     return undefined;
   }
