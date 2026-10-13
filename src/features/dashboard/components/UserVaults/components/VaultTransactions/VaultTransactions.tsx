@@ -96,6 +96,9 @@ export const VaultTransactions = memo(function VaultTransactions({
   const renderItem = useCallback(
     (index: number, _groupIndex: number) => {
       const tx = sortedTimeline[index];
+      if (!tx) {
+        return null;
+      }
       return <TxComponent tx={tx} />;
     },
     [TxComponent, sortedTimeline]
@@ -104,20 +107,36 @@ export const VaultTransactions = memo(function VaultTransactions({
   return (
     <TransactionsGrid>
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
-      <Transactions style={{ height: `${containerHeight}px` }}>
-        <GroupedVirtuoso
-          className={scrollerClass}
-          groupCounts={groupCounts}
-          components={components}
-          totalListHeightChanged={setListHeight}
-          groupContent={renderGroup}
-          itemContent={renderItem}
-          computeItemKey={computeItemKey}
-          increaseViewportBy={increaseViewportBy}
-        />
-      </Transactions>
+      {sortedTimeline.length === 0 ?
+        <TransactionsEmpty>{t('Dashboard-Transactions-Empty')}</TransactionsEmpty>
+      : <Transactions style={{ height: `${containerHeight}px` }}>
+          <GroupedVirtuoso
+            className={scrollerClass}
+            groupCounts={groupCounts}
+            components={components}
+            totalListHeightChanged={setListHeight}
+            groupContent={renderGroup}
+            itemContent={renderItem}
+            computeItemKey={computeItemKey}
+            increaseViewportBy={increaseViewportBy}
+          />
+        </Transactions>
+      }
     </TransactionsGrid>
   );
+});
+
+const TransactionsEmpty = styled('div', {
+  base: {
+    textStyle: 'body.medium',
+    color: 'text.dark',
+    textAlign: 'center',
+    padding: '16px',
+    backgroundColor: 'background.content',
+    mdDown: {
+      backgroundColor: 'background.content.dark',
+    },
+  },
 });
 
 const Transactions = styled('div', {

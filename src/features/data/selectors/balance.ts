@@ -45,6 +45,7 @@ import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
+  selectTokenPriceLookup,
 } from './tokens.ts';
 import {
   selectAllCowcentratedVaults,
@@ -751,11 +752,11 @@ export const selectGovVaultPendingRewards = createCachedSelector(
 export const selectGovVaultPendingRewardsWithPrice = createCachedSelector(
   selectGovVaultPendingRewards,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (rewards, prices) => {
+    selectTokenPriceLookup(state),
+  (rewards, priceLookup) => {
     return rewards.map(reward => ({
       ...reward,
-      price: prices[reward.token.oracleId] || undefined,
+      price: priceLookup(reward.token.chainId, reward.token.oracleId),
     }));
   }
 )(

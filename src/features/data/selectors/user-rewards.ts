@@ -13,6 +13,7 @@ import {
   selectVaultActiveStellaSwapCampaigns,
   type UnifiedRewardToken,
 } from './rewards.ts';
+import { selectTokenPriceLookup, type TokenPriceLookup } from './tokens.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import {
@@ -37,7 +38,6 @@ export type UnifiedReward = {
 };
 
 type TokensByChainId = BeefyState['entities']['tokens']['byChainId'];
-type PricesByOracleId = BeefyState['entities']['tokens']['prices']['byOracleId'];
 
 function unifiedRewardEqual(a: UnifiedReward, b: UnifiedReward): boolean {
   return (
@@ -65,7 +65,7 @@ export function unifiedRewardsEqual(
 
 function buildUnifiedReward(
   tokensByChainId: TokensByChainId,
-  pricesByOracleId: PricesByOracleId,
+  priceLookup: TokenPriceLookup,
   balance: BigNumber,
   token: UnifiedRewardToken,
   active: boolean,
@@ -73,7 +73,7 @@ function buildUnifiedReward(
 ): UnifiedReward {
   const abToken =
     tokensByChainId[token.chainId]?.byAddress[token.address.toLowerCase()] || undefined;
-  const price = abToken ? pricesByOracleId[abToken.oracleId] || BIG_ZERO : undefined;
+  const price = abToken ? priceLookup(abToken.chainId, abToken.oracleId) : undefined;
 
   return {
     amount: balance,
@@ -86,13 +86,13 @@ function buildUnifiedReward(
 
 function buildUnifiedMerklRewards(
   tokensByChainId: TokensByChainId,
-  pricesByOracleId: PricesByOracleId,
+  priceLookup: TokenPriceLookup,
   rewards: Pick<MerklVaultReward, 'token' | 'unclaimed'>[]
 ): UnifiedReward[] {
   return rewards.map(reward =>
     buildUnifiedReward(
       tokensByChainId,
-      pricesByOracleId,
+      priceLookup,
       reward.unclaimed,
       reward.token,
       false,
@@ -112,15 +112,15 @@ export const selectUserMerklUnifiedRewardsForVault = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
     state.entities.tokens.byChainId,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (unclaimedRewards, activeCampaigns, tokensByChainId, pricesByOracleId) => {
+    selectTokenPriceLookup(state),
+  (unclaimedRewards, activeCampaigns, tokensByChainId, priceLookup) => {
     if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
       return undefined;
     }
 
     const rewards: UnifiedReward[] =
       isNonEmptyArray(unclaimedRewards) ?
-        buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, unclaimedRewards)
+        buildUnifiedMerklRewards(tokensByChainId, priceLookup, unclaimedRewards)
       : [];
 
     if (isNonEmptyArray(activeCampaigns)) {
@@ -133,7 +133,7 @@ export const selectUserMerklUnifiedRewardsForVault = createSelector(
           rewards.push(
             buildUnifiedReward(
               tokensByChainId,
-              pricesByOracleId,
+              priceLookup,
               BIG_ZERO,
               campaign.rewardToken,
               true,
@@ -154,11 +154,9 @@ export const selectUserMerklUnifiedRewardsForChain = createSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], _walletAddress: string) =>
     state.entities.tokens.byChainId,
   (state: BeefyState, _chainId: ChainEntity['id'], _walletAddress: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (chainRewards, tokensByChainId, pricesByOracleId) =>
-    chainRewards ?
-      buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, chainRewards)
-    : undefined
+    selectTokenPriceLookup(state),
+  (chainRewards, tokensByChainId, priceLookup) =>
+    chainRewards ? buildUnifiedMerklRewards(tokensByChainId, priceLookup, chainRewards) : undefined
 );
 
 export function selectMayHaveOffchainUserRewards(_state: BeefyState, vault: VaultEntity) {
@@ -195,15 +193,15 @@ export const selectUserStellaSwapUnifiedRewardsForVault = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
     state.entities.tokens.byChainId,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (unclaimedRewards, activeCampaigns, tokensByChainId, pricesByOracleId) => {
+    selectTokenPriceLookup(state),
+  (unclaimedRewards, activeCampaigns, tokensByChainId, priceLookup) => {
     if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
       return undefined;
     }
 
     const rewards: UnifiedReward[] =
       isNonEmptyArray(unclaimedRewards) ?
-        buildUnifiedMerklRewards(tokensByChainId, pricesByOracleId, unclaimedRewards)
+        buildUnifiedMerklRewards(tokensByChainId, priceLookup, unclaimedRewards)
       : [];
 
     if (isNonEmptyArray(activeCampaigns)) {
@@ -216,7 +214,7 @@ export const selectUserStellaSwapUnifiedRewardsForVault = createSelector(
           rewards.push(
             buildUnifiedReward(
               tokensByChainId,
-              pricesByOracleId,
+              priceLookup,
               BIG_ZERO,
               campaign.rewardToken,
               true,

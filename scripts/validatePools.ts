@@ -99,7 +99,20 @@ const nonHarvestOnDepositPools = [
   'morpho-v2-monad-hyperithm-apex-cbbtc',
   'aavev3-monad-gho',
   'aavev3-monad-musd',
+  'aavev3-monad-usdt0',
+  'aavev3-monad-usdc',
+  'aavev3-monad-weth',
+  'aavev3-monad-ausd',
+  'aavev3-plasma-usdt0',
   'mellow-aero-usdc-cbbtc',
+  'curve-monad-cbbtc',
+  'neverland-monad-usdc',
+  'neverland-monad-ausd',
+  'curve-monad-mon-lsts',
+  'curvance-monad-wmon-wmon-ausd',
+  'curvance-monad-wmon-wmon-usdc',
+  'curvance-monad-usdc-wmon-usdc',
+  'curve-monad-3pool',
   'morpho-v2-arbitrum-gauntlet-premium-usdg',
 ];
 const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
@@ -229,7 +242,7 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
-  if (getChain(chainId).eol || 0 > 0) {
+  if (getChain(chainId).status === 'eol') {
     console.log(`${chainId} is EOL, consider exclude`);
   }
   const vaultsAndPromos = await Promise.all([

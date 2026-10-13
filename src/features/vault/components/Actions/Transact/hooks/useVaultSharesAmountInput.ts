@@ -12,7 +12,7 @@ import {
 } from '../../../../../data/selectors/balance.ts';
 import {
   selectTokenByAddress,
-  selectTokenPriceByTokenOracleId,
+  selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactInputIndexAmount,
@@ -72,7 +72,7 @@ export function useVaultSharesAmountInput(
     selectTransactInputIndexEnteredAmount(state, index)
   );
   const price = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
+    selectTokenPriceByAddress(state, depositToken.chainId, depositToken.address)
   );
 
   const value = useMemo(

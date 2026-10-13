@@ -1,4 +1,4 @@
-import type { ChainConfig } from '../apis/config-types.ts';
+import type { ChainConfig, ChainFeature } from '../apis/config-types.ts';
 
 /**
  * The chain entity as you know it
@@ -23,4 +23,12 @@ export type ChainId = ChainEntity['id'];
 /** native and wnative are one on-chain balance (arc, metis, celo), so nothing wraps or unwraps */
 export function isChainNativeSharedWithWrapped(chain: Pick<ChainEntity, 'native'>): boolean {
   return !!chain.native.balanceSharedWithWrapped;
+}
+
+/** chains missing from state are disabled, so have no features */
+export function chainHasFeature(
+  chain: Pick<ChainEntity, 'features'> | undefined,
+  feature: ChainFeature
+): boolean {
+  return chain?.features[feature] ?? false;
 }

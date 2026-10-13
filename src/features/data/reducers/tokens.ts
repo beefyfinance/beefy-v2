@@ -237,10 +237,10 @@ function addPriceToState(
   oracleId: string,
   price: number | undefined | null
 ) {
-  // when the api fails to fetch the token price, we say 1 token = $1
+  // when the api fails to fetch the token price, treat it as unknown (0)
   if (price === null || price === undefined) {
     console.warn(`API returned an empty price for oracle ${oracleId}`);
-    price = 1.0;
+    price = 0;
   }
 
   if (sliceState.prices.byOracleId[oracleId] === undefined) {

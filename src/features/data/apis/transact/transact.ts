@@ -62,6 +62,7 @@ import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blac
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
 import { filterGeoBlockedOptions } from './helpers/geo.ts';
 import { boostedCounterpart } from './helpers/boost.ts';
+import { filterUnpricedSwapOptions } from './helpers/unpriced.ts';
 import { dropSingleIdentityOption, isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
@@ -239,7 +240,11 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
+    const allowedOptions = filterUnpricedSwapOptions(
+      state,
+      helpers.vault,
+      filterGeoBlockedOptions(state, helpers.vault, options)
+    );
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
     const deduped: DepositOption[] =
@@ -436,7 +441,11 @@ export class TransactApi implements ITransactApi {
       }
     }
 
-    const allowedOptions = filterGeoBlockedOptions(state, helpers.vault, options);
+    const allowedOptions = filterUnpricedSwapOptions(
+      state,
+      helpers.vault,
+      filterGeoBlockedOptions(state, helpers.vault, options)
+    );
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
     const deduped: WithdrawOption[] =
@@ -569,7 +578,7 @@ export class TransactApi implements ITransactApi {
       zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
     );
 
-    return options.flat().length > 0;
+    return filterUnpricedSwapOptions(getState(), helpers.vault, options.flat()).length > 0;
   }
 
   async getZapStrategiesForVault(

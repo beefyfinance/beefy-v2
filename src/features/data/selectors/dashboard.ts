@@ -47,11 +47,11 @@ import {
   selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
-  selectTokenPriceByTokenOracleId,
+  selectTokenPriceByAddress,
   selectVaultTokenImageAssets,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens.ts';
-import { selectVaultById } from './vaults.ts';
+import { selectVaultById, selectVaultShouldShowPrice } from './vaults.ts';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
 import { selectIsAddressBookLoadedGlobal } from './data-loader/tokens.ts';
 import { selectIsAnalyticsLoadedByAddress } from './data-loader/analytics.ts';
@@ -220,7 +220,11 @@ const selectDashboardUserRewardsByVaultIdUncached = (
             boostReward.token.chainId,
             boostReward.token.address
           );
-          const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+          const oraclePrice = selectTokenPriceByAddress(
+            state,
+            rewardToken.chainId,
+            rewardToken.address
+          );
           const tokenRewardsUsd = boostReward.amount.times(oraclePrice);
 
           rewards.push({
@@ -296,6 +300,10 @@ export const selectDashboardUserRewardsOrStatusByVaultId = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
+  if (!selectVaultShouldShowPrice(state, vaultId)) {
+    return emptyUserRewards;
+  }
+
   const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
   if (status === DashboardDataStatus.Available) {
     return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
