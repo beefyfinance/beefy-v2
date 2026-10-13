@@ -362,12 +362,6 @@ export function featureFlag_disableLiquidSwap(): boolean {
   return featureFlag_disableSwapAggregators() || params.has('__disable_liquid');
 }
 
-/** opt-in while in beta */
-export function featureFlag_enableEnso(): boolean {
-  const params = getSearchParams();
-  return params.has('__enable_enso');
-}
-
 export function featureFlag_disableEnso(): boolean {
   const params = getSearchParams();
   return featureFlag_disableSwapAggregators() || params.has('__disable_enso');

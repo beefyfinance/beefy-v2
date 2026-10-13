@@ -10,7 +10,6 @@ import {
   featureFlag_disableKyber,
   featureFlag_disableLiquidSwap,
   featureFlag_disableOneInch,
-  featureFlag_enableEnso,
 } from '../utils/feature-flags.ts';
 
 export const getBeefyApi = createDependencyFactory(
@@ -87,7 +86,7 @@ export const getSwapAggregator = createDependencyFactory(
     }
 
     // after the others so enso loses ties
-    if (featureFlag_enableEnso() && !featureFlag_disableEnso()) {
+    if (!featureFlag_disableEnso()) {
       providers.push(new EnsoSwapProvider());
     }
 
