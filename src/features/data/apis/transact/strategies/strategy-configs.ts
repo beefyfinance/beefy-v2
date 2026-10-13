@@ -8,7 +8,7 @@ import type {
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { CurveMethod } from './curve/types.ts';
 
-export type SwapAggregatorId = 'kyber' | 'one-inch' | 'liquid-swap';
+export type SwapAggregatorId = 'kyber' | 'one-inch' | 'liquid-swap' | 'enso';
 
 export type StrategySwapConfig = {
   blockProviders?: SwapAggregatorId[];

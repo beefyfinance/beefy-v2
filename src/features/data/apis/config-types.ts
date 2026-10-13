@@ -344,7 +344,6 @@ type MakeSwapConfig<TType extends string, TExtra extends object = Record<never, 
   id: string;
   type: TType;
   chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
   /** liquidity source ids never routed through on this chain */
@@ -354,7 +353,23 @@ type MakeSwapConfig<TType extends string, TExtra extends object = Record<never, 
 export type OneInchSwapConfig = MakeSwapConfig<'one-inch'>;
 export type KyberSwapSwapConfig = MakeSwapConfig<'kyber'>;
 export type LiquidSwapSwapConfig = MakeSwapConfig<'liquid-swap'>;
-export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | LiquidSwapSwapConfig;
+export type EnsoSwapConfig = MakeSwapConfig<
+  'enso',
+  {
+    /** the api-supplied tx.to must match this */
+    routerAddress: string;
+  }
+>;
+export type SwapAggregatorConfig =
+  | OneInchSwapConfig
+  | KyberSwapSwapConfig
+  | LiquidSwapSwapConfig
+  | EnsoSwapConfig;
+
+/** Ranked first in aggregator token lists; shared by every aggregator on the chain */
+export type ZapPriorityTokensConfig = {
+  [chainId in ChainEntity['id']]?: TokenEntity['id'][];
+};
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

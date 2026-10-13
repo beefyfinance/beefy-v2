@@ -6,9 +6,11 @@ import {
 import type { WalletConnectionOptions } from './wallet/wallet-connection-types.ts';
 import type { ISwapProvider } from './transact/swap/ISwapProvider.ts';
 import {
+  featureFlag_disableEnso,
   featureFlag_disableKyber,
   featureFlag_disableLiquidSwap,
   featureFlag_disableOneInch,
+  featureFlag_enableEnso,
 } from '../utils/feature-flags.ts';
 
 export const getBeefyApi = createDependencyFactory(
@@ -68,6 +70,7 @@ export const getSwapAggregator = createDependencyFactory(
     OneInchSwapProvider,
     KyberSwapProvider,
     LiquidSwapSwapProvider,
+    EnsoSwapProvider,
   }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];
 
@@ -81,6 +84,11 @@ export const getSwapAggregator = createDependencyFactory(
 
     if (!featureFlag_disableLiquidSwap()) {
       providers.push(new LiquidSwapSwapProvider());
+    }
+
+    // after the others so enso loses ties
+    if (featureFlag_enableEnso() && !featureFlag_disableEnso()) {
+      providers.push(new EnsoSwapProvider());
     }
 
     return new SwapAggregator(providers);
@@ -132,6 +140,11 @@ export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
 export const getLiquidSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { LiquidSwapApi }) => new LiquidSwapApi(chain),
   () => import('./liquid-swap/liquid-swap.ts')
+);
+
+export const getEnsoApi = createDependencyFactoryWithCacheByChain(
+  async (chain, { EnsoApi }) => new EnsoApi(chain),
+  () => import('./enso/enso.ts')
 );
 
 export const getNameServicesApi = createDependencyFactory(
