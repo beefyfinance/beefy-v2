@@ -1,5 +1,161 @@
 [
   {
+    "id": "uniswap-cow-arc-usdc-cool-rp",
+    "name": "COOL-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArcCOOL-USDC",
+    "tokenAddress": "0x4f95D85389de296869A5a815A1AA05ec32F7efb5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x0365ce42fbe05C07Cb835c06d3B68dD871E94Ae4",
+    "earnedToken": "rCowUniswapArcCOOL-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-cool",
+    "status": "active",
+    "createdAt": 1791888709,
+    "platformId": "uniswap",
+    "assets": ["COOL", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-usdc-cool",
+    "name": "COOL-USDC",
+    "type": "cowcentrated",
+    "token": "COOL-USDC uniswap",
+    "tokenAddress": "0x40732e01ba7A829DEA44f51a10e7C58cd9F37765",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x3600000000000000000000000000000000000000",
+      "0xEb64987643db71c76b2a2BE7E723DECC995E5b37"
+    ],
+    "earnContractAddress": "0x4f95D85389de296869A5a815A1AA05ec32F7efb5",
+    "earnedToken": "cowUniswapArcCOOL-USDC",
+    "earnedTokenAddress": "0x4f95D85389de296869A5a815A1AA05ec32F7efb5",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-cool",
+    "status": "active",
+    "createdAt": 1791888709,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["COOL", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-usdc-tolly-rp",
+    "name": "TOLLY-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArcTOLLY-USDC",
+    "tokenAddress": "0xd5319D37F56C70F10da99BFB3A38694D5BD1fF22",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x5bc50ABa09C285529C14290179AC345D0baA033e",
+    "earnedToken": "rCowUniswapArcTOLLY-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-tolly",
+    "status": "active",
+    "createdAt": 1791888231,
+    "platformId": "uniswap",
+    "assets": ["TOLLY", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arc-usdc-tolly",
+    "name": "TOLLY-USDC",
+    "type": "cowcentrated",
+    "token": "TOLLY-USDC uniswap",
+    "tokenAddress": "0x162Df51C504e7b8321e07387932f333D9be16a72",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x3600000000000000000000000000000000000000",
+      "0xBc43CE8DEc648EA298C4275559b81D6261c90b67"
+    ],
+    "earnContractAddress": "0xd5319D37F56C70F10da99BFB3A38694D5BD1fF22",
+    "earnedToken": "cowUniswapArcTOLLY-USDC",
+    "earnedTokenAddress": "0xd5319D37F56C70F10da99BFB3A38694D5BD1fF22",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arc-usdc-tolly",
+    "status": "active",
+    "createdAt": 1791888231,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "tickSpacing": 200,
+    "assets": ["TOLLY", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "arc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arc-usdc-eurc-rp",
     "name": "EURC-USDC Reward Pool",
     "type": "gov",
