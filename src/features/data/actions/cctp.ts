@@ -51,11 +51,16 @@ export function pollCCTPBridgeStatus({
   txHash: string;
 }): BeefyThunk {
   return async (dispatch, getState) => {
+    const isStale = () => selectStepperBridgeStatus(getState())?.srcTxHash !== txHash;
+
     const poll = async () => {
       try {
         const result = await dispatch(
           fetchCCTPBridgeStatusByTxHash({ srcChainId, txHash })
         ).unwrap();
+        if (isStale()) {
+          return;
+        }
         const message = result.messages?.[0];
 
         if (!message) {
@@ -80,6 +85,7 @@ export function pollCCTPBridgeStatus({
               fetchCCTPDstTokensReturned({
                 destChainId: bridgeStatusForDst.destChainId,
                 dstTxHash: message.dstTxHash,
+                srcTxHash: txHash,
               })
             );
           }
@@ -126,6 +132,9 @@ export function pollCCTPBridgeStatus({
       setTimeout(() => dispatch(pollCCTPBridgeStatus({ srcChainId, txHash })), POLL_INTERVAL_MS);
     };
 
+    if (isStale()) {
+      return;
+    }
     await poll();
   };
 }
@@ -215,7 +224,7 @@ const transferAbi = [
 
 export const fetchCCTPDstTokensReturned = createAppAsyncThunk<
   DstTokenReturned[],
-  { destChainId: ChainEntity['id']; dstTxHash: string }
+  { destChainId: ChainEntity['id']; dstTxHash: string; srcTxHash: string }
 >('cctp/fetchCCTPDstTokensReturned', async ({ destChainId, dstTxHash }, { getState }) => {
   const publicClient = rpcClientManager.getSingleClient(destChainId);
   const receipt = await publicClient.getTransactionReceipt({
