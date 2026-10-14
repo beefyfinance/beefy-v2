@@ -78,7 +78,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-robinhood-weth-富贵-rp",
+    "id": "uniswap-cow-robinhood-weth-fugui-rp",
     "name": "富贵-WETH Reward Pool",
     "type": "gov",
     "version": 2,
@@ -91,11 +91,11 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-weth-富贵",
+    "oracleId": "uniswap-cow-robinhood-weth-fugui",
     "status": "active",
     "createdAt": 1791971694,
     "platformId": "uniswap",
-    "assets": ["富贵", "WETH"],
+    "assets": ["FUGUI", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-robinhood-weth-富贵",
+    "id": "uniswap-cow-robinhood-weth-fugui",
     "name": "富贵-WETH",
     "type": "cowcentrated",
     "token": "富贵-WETH uniswap",
@@ -130,13 +130,13 @@
     "earnedToken": "cowUniswapRobinhood富贵-WETH",
     "earnedTokenAddress": "0xca9567fd9A07971216417291551b07eA5dC40f4E",
     "oracle": "lps",
-    "oracleId": "uniswap-cow-robinhood-weth-富贵",
+    "oracleId": "uniswap-cow-robinhood-weth-fugui",
     "status": "active",
     "createdAt": 1791971694,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 200,
-    "assets": ["富贵", "WETH"],
+    "assets": ["FUGUI", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
