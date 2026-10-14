@@ -6,6 +6,7 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectBoostUserBalanceInDepositToken,
   selectHasUserDepositInVault,
   selectUserVaultBalanceInDepositTokenInBoosts,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
@@ -18,6 +19,7 @@ import {
 } from '../../../../../data/selectors/rewards.ts';
 import {
   selectTransactBoostAvailable,
+  selectTransactLiveBoostId,
   selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -86,17 +88,20 @@ const selectDepositClaimNotice = createSelector(
   }
 );
 
-const selectWithdrawBoostNotice = createSelector(
-  [vaultIdArgument, selectUserVaultBalanceInDepositTokenInBoosts, selectTransactBoostAvailable],
-  (vaultId, balance, available): FooterNotice | undefined => {
-    if (balance && !balance.isZero()) {
-      // unstaking happens in the withdraw itself when a route can do it; else link across to the boost tab
-      return { kind: available ? 'boost-unstake' : 'withdraw-boost', vaultId, balance };
-    }
-
-    return undefined;
+// plain function: the balance to show depends on which boost the route resolved to
+const selectWithdrawBoostNotice: FooterSelector = (state, vaultId) => {
+  const boostId = selectTransactLiveBoostId(state);
+  if (boostId) {
+    return {
+      kind: 'boost-unstake',
+      vaultId,
+      balance: selectBoostUserBalanceInDepositToken(state, boostId),
+    };
   }
-);
+
+  const balance = selectUserVaultBalanceInDepositTokenInBoosts(state, vaultId);
+  return balance.isZero() ? undefined : { kind: 'withdraw-boost', vaultId, balance };
+};
 
 // migrate has no boost route, so it keeps the link across to the boost tab
 const selectMigrateBoostNotice = createSelector(

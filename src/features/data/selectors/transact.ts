@@ -601,7 +601,7 @@ export const selectTransactWithBoost = (state: BeefyState) =>
   selectTransactWithBoostChoice(state) ?? selectTransactWithBoostDefault(state);
 
 // the vault's one boost a route can stake into (deposit) or unstake from (withdraw), if any fetched option does
-const selectTransactLiveBoostId = createSelector(
+export const selectTransactLiveBoostId = createSelector(
   (state: BeefyState) => state.ui.transact.options.byOptionId,
   (state: BeefyState) => {
     const vaultId = selectTransactVaultIdOrUndefined(state);
