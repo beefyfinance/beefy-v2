@@ -852,6 +852,7 @@
     "oracleId": "USDC",
     "status": "eol",
     "createdAt": 1768828284,
+    "retireReason": "liquidityPanic",
     "retiredAt": 1791788220,
     "platformId": "morpho",
     "curatorId": "hyperithm",
