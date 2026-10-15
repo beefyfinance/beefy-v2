@@ -22,7 +22,7 @@ import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import { selectBoostUserRewardsInToken } from '../../selectors/balance.ts';
+import { selectBoostUserHasRewards } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
@@ -34,6 +34,7 @@ import {
   transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
+import { withBoostDetails } from './boost-step-details.ts';
 import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
@@ -124,9 +125,13 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  steps.push(
-    wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
+  const step = withBoostDetails(
+    withZapDetails(originalStep, quote, getState()),
+    t,
+    quote.option.boostId,
+    !!claimStep
   );
+  steps.push(wrapStepConfirmQuote(step, quote, prefetchedRequote));
 
   return steps;
 }
@@ -144,8 +149,7 @@ function boostClaimStep(
   if (!boostId) {
     return undefined;
   }
-  const rewards = selectBoostUserRewardsInToken(state, boostId);
-  if (!rewards.some(reward => reward.amount.gt(BIG_ZERO))) {
+  if (!selectBoostUserHasRewards(state, boostId)) {
     return undefined;
   }
   return {
