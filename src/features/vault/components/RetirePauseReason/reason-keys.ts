@@ -12,7 +12,7 @@ type ReasonSentences = {
   /** `Vault-Reason-${cause}` copy key */
   cause: string;
   panic?: true;
-  /** one-off event copy: no panic/move sentence */
+  /** one-off event copy shown on its own; funds may still be deployed, so no status sentence */
   specific?: true;
 };
 
@@ -42,16 +42,18 @@ export function getRetirePauseReasonKeys({
   holding,
   hasReplacement,
 }: RetirePauseReasonTarget): Array<string | string[]> {
-  const keys: Array<string | string[]> = [`Vault-Status-${status}`];
+  const statusKey = `Vault-Status-${status}`;
   if (!reason) {
-    return keys;
+    return [statusKey];
   }
 
   const sentences: ReasonSentences = reasonSentences[reason];
-  keys.push([`Vault-Reason-${sentences.cause}-${status}`, `Vault-Reason-${sentences.cause}`]);
+  const causeKey = [`Vault-Reason-${sentences.cause}-${status}`, `Vault-Reason-${sentences.cause}`];
   if (sentences.specific) {
-    return keys;
+    return [causeKey];
   }
+
+  const keys: Array<string | string[]> = [statusKey, causeKey];
   if (sentences.panic) {
     keys.push(`Vault-Reason-panic-${holding}`);
   }

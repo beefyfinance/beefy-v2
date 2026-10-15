@@ -36,13 +36,10 @@ describe('getRetirePauseReasonKeys', () => {
     ]);
   });
 
-  it('shows specific reasons without move or panic sentences', () => {
+  it('shows specific reasons on their own', () => {
     expect(
       getRetirePauseReasonKeys(target({ reason: 'AerodromeMigration26', hasReplacement: true }))
-    ).toEqual([
-      'Vault-Status-eol',
-      ['Vault-Reason-AerodromeMigration26-eol', 'Vault-Reason-AerodromeMigration26'],
-    ]);
+    ).toEqual([['Vault-Reason-AerodromeMigration26-eol', 'Vault-Reason-AerodromeMigration26']]);
   });
 
   it('only emits keys that exist in the locale', () => {
