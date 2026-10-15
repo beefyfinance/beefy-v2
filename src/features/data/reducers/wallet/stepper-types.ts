@@ -3,6 +3,7 @@ import type BigNumber from 'bignumber.js';
 import type { MessageLifecycleState } from '../../apis/cctp/cctp-api-types.ts';
 import type { TokenAmount } from '../../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 
@@ -47,6 +48,10 @@ export type Step = {
     vaultId?: VaultEntity['id'];
     zap?: boolean;
     zapDetails?: ZapStepDetails;
+    /** the zap also staked into / unstaked from this boost */
+    boostId?: BoostPromoEntity['id'];
+    /** a claim step ran before the zap; the flow only reaches the zap if it succeeded */
+    boostClaimed?: boolean;
     rewards?: {
       token: TokenEntity;
       amount: BigNumber;

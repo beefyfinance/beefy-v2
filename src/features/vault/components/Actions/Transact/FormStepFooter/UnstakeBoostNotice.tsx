@@ -14,11 +14,14 @@ import { StakedTokenAmount } from './StakedTokenAmount.tsx';
 export type UnstakeBoostNoticeProps = {
   vaultId: VaultEntity['id'];
   balance: BigNumber;
+  /** the withdraw claims the boost's pending rewards first */
+  claim: boolean;
 };
 
 const UnstakeBoostNotice = memo(function UnstakeBoostNotice({
   vaultId,
   balance,
+  claim,
 }: UnstakeBoostNoticeProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -33,7 +36,11 @@ const UnstakeBoostNotice = memo(function UnstakeBoostNotice({
     <ActionTokensNotice onClick={handleToggle} checked={checked} disabled={locked}>
       <Trans
         t={t}
-        i18nKey="Transact-Notice-Withdraw-Boost-Unstake"
+        i18nKey={
+          claim ?
+            'Transact-Notice-Withdraw-Boost-Unstake-Claim'
+          : 'Transact-Notice-Withdraw-Boost-Unstake'
+        }
         components={{ Token: <StakedTokenAmount vaultId={vaultId} amount={balance} /> }}
       />
     </ActionTokensNotice>
