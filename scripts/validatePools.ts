@@ -29,6 +29,8 @@ import { fileExists } from './common/files.ts';
 import { isEmpty } from '../src/helpers/utils.ts';
 import { isNativeAlternativeAddress } from '../src/helpers/addresses.ts';
 import { isChainNativeSharedWithWrapped } from '../src/features/data/entities/chain.ts';
+import { PAUSE_REASONS, RETIRE_REASONS } from '../src/features/data/entities/vault.ts';
+import { isOneOf } from '../src/features/data/utils/array-utils.ts';
 import { keys } from '../src/helpers/object.ts';
 import { sleep } from '../src/features/data/utils/async-utils.ts';
 import { getViemClient } from './common/viem.ts';
@@ -398,6 +400,26 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
         console.error(`Error: ${pool.id} : Pool pausedAt timestamp wrong type, should be a number`);
         exitCode = 1;
       }
+    }
+
+    if (
+      pool.retireReason &&
+      (pool.status !== 'eol' || !isOneOf(RETIRE_REASONS, pool.retireReason))
+    ) {
+      console.error(
+        `Error: ${pool.id} : retireReason "${pool.retireReason}" is not a valid retire reason for status ${pool.status}`
+      );
+      exitCode = 1;
+    }
+
+    if (
+      pool.pauseReason &&
+      (pool.status !== 'paused' || !isOneOf(PAUSE_REASONS, pool.pauseReason))
+    ) {
+      console.error(
+        `Error: ${pool.id} : pauseReason "${pool.pauseReason}" is not a valid pause reason for status ${pool.status}`
+      );
+      exitCode = 1;
     }
 
     if (!pool.network) {

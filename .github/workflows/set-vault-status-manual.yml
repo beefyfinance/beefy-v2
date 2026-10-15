@@ -16,20 +16,20 @@ on:
           - active
           - paused
       reason:
-        description: 'Reason code for pause/retire (optional)'
+        description: 'Reason code for pause/retire (ignored when setting active)'
         required: true
         type: choice
         options:
           - tvl
           - rewards
-          - exploit
           - upgrade
+          - beta
+          - sunset
+          - sunsetPanic
+          - exploitPanic
           - exploitNoPanic
           - liquidityPanic
           - liquidityNoPanic
-          - withdraw
-          - viability
-          - noReason
       vaults:
         description: 'Comma-separated list of vault IDs'
         required: true
@@ -77,8 +77,8 @@ jobs:
             set -- "$@" --chain "$INPUT_CHAIN"
           fi
 
-          # Optionally include reason argument; "noReason" means leave the reason code unset
-          if [ -n "$INPUT_REASON" ] && [ "$INPUT_REASON" != "noReason" ]; then
+          # Reason is required for eol/paused; active has none
+          if [ "$INPUT_STATUS" != "active" ]; then
             set -- "$@" --reason "$INPUT_REASON"
           fi
 
