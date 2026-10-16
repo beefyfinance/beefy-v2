@@ -1,10 +1,9 @@
-import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
-export const styles = {
-  chartContainer: css.raw({
+/** Padded chart box: tick text style, y ticks fade while hovering the chart */
+export const ChartBox = styled('div', {
+  base: {
     padding: '16px 0px',
-  }),
-  graph: css.raw({
     '& text': {
       textStyle: 'subline.sm',
       fill: 'text.dark',
@@ -23,46 +22,5 @@ export const styles = {
         },
       },
     },
-  }),
-  cowcentratedHeader: css.raw({
-    display: 'grid',
-    gap: '1px',
-    gridTemplateColumns: 'repeat(3,minmax(0,1fr))',
-  }),
-  cowcentratedStat: css.raw({
-    backgroundColor: 'background.content',
-    padding: '16px',
-    sm: {
-      padding: '16px 24px',
-    },
-  }),
-  label: css.raw({
-    textStyle: 'body.sm.medium',
-    fontWeight: 'bold',
-    color: 'text.dark',
-    textTransform: 'uppercase',
-  }),
-  inRange: css.raw({
-    color: 'green.40',
-  }),
-  outOfRange: css.raw({
-    color: 'text.boosted',
-  }),
-  value: css.raw({
-    textStyle: 'body.medium',
-    fontWeight: 'medium',
-    color: 'text.lightest',
-    '& span': {
-      textStyle: 'body.sm.medium',
-      fontWeight: 'bold',
-      textTransform: 'uppercase',
-      color: 'text.dark',
-    },
-  }),
-  roundBottomLeft: css.raw({
-    borderBottomLeftRadius: '8px',
-  }),
-  roundBottomRight: css.raw({
-    borderBottomRightRadius: '8px',
-  }),
-};
+  },
+});

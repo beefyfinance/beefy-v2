@@ -12,6 +12,7 @@ import { TokenExposureLoader } from '../../dashboard/components/TokenExposure/To
 import { DepositSummary } from '../../dashboard/components/DepositSummary.tsx';
 import { useSortedDashboardVaults } from '../../dashboard/components/UserVaults/hook.ts';
 import { PortfolioStats } from '../../home/components/HomeHeader/Stats/PortfolioStats.tsx';
+import { PlatformStats } from '../../home/components/HomeHeader/Stats/PlatformStats.tsx';
 import { PastBoosts } from '../../vault/components/Actions/Boosts/PastBoosts.tsx';
 import { MerklRewards } from '../../vault/components/Actions/Transact/ClaimForm/Merkl/MerklRewards.tsx';
 import { StellaSwapRewards } from '../../vault/components/Actions/Transact/ClaimForm/StellaSwap/StellaSwapRewards.tsx';
@@ -121,10 +122,12 @@ describe('the trees the sibling file does not reach', () => {
       <>
         <DepositSummary address={FIXTURE_WALLET} />
         <PortfolioStats />
+        <PlatformStats />
       </>,
       fixture.state
     );
     expect(result.subscriptions).toBeGreaterThan(3);
+    expect(result.html).toContain('Weekly Revenue');
     expect(describeUnstable(result)).toEqual([]);
   });
 

@@ -1,17 +1,11 @@
 import { memo, useMemo } from 'react';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
 import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
 import { fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { formatDateTime } from '../../../../../helpers/date.ts';
-import { getBucketParams } from '../utils.ts';
-import { styles } from './styles.ts';
-import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 import type { ChartDataPoint, ChartStat } from '../types.ts';
 import type { RechartsTooltipProps } from '../../../../../helpers/graph/types.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type BaseTooltipProps<TStat extends ChartStat> = RechartsTooltipProps<
   'v',
@@ -19,17 +13,19 @@ export type BaseTooltipProps<TStat extends ChartStat> = RechartsTooltipProps<
   ChartDataPoint<TStat>
 >;
 
-export type ExtraTooltipContentProps<TStat extends ChartStat> = {
-  stat: TStat;
-  bucket: ApiTimeBucket;
+export type ExtraTooltipContentProps = {
+  /** name of the plotted value */
+  label: string;
+  /** moving average window, e.g. "30 days" */
+  maLabel: string;
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov' | 'cowcentrated' | 'erc4626';
+  formatTimestamp?: (timestamp: number) => string;
 };
 
 export type TooltipContentProps<TStat extends ChartStat> = BaseTooltipProps<TStat> &
-  ExtraTooltipContentProps<TStat>;
+  ExtraTooltipContentProps;
 
 function getPayload(props: TooltipContentProps<'clm'>): ChartDataPoint<'clm'> | undefined;
 function getPayload(props: TooltipContentProps<ChartStat>): ChartDataPoint<ChartStat> | undefined;
@@ -46,13 +42,20 @@ function getPayload(props: TooltipContentProps<ChartStat>): ChartDataPoint<Chart
   return valueLine.payload;
 }
 
+const formatUnixDateTime = (timestamp: number) => formatDateTime(fromUnixTime(timestamp));
+
 export const TooltipContent = memo(function TooltipContent<TStat extends ChartStat>(
   props: TooltipContentProps<TStat>
 ) {
-  const classes = useStyles();
   const { t } = useTranslation();
-  const { stat, bucket, toggles, valueFormatter, avg, vaultType } = props;
-  const { maPeriods, maUnit } = useMemo(() => getBucketParams(bucket), [bucket]);
+  const {
+    label,
+    maLabel,
+    toggles,
+    valueFormatter,
+    avg,
+    formatTimestamp = formatUnixDateTime,
+  } = props;
   const payload = getPayload(props);
   if (!payload) {
     return null;
@@ -62,36 +65,36 @@ export const TooltipContent = memo(function TooltipContent<TStat extends ChartSt
   const { t: timestamp, v: value, ma: movingAverage } = payload;
 
   return (
-    <div className={classes.content}>
-      <div className={classes.timestamp}>{formatDateTime(fromUnixTime(timestamp))}</div>
-      <div className={classes.itemContainer}>
-        <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
-        <div className={classes.value}>
+    <Content>
+      <Timestamp>{formatTimestamp(timestamp)}</Timestamp>
+      <Item>
+        <Label>{label}:</Label>
+        <Value>
           {isClmTooltip ?
             <RangeIndicator ranges={payload.ranges} value={value} />
           : null}
           {valueFormatter(value)}
-        </div>
-      </div>
+        </Value>
+      </Item>
       {toggles.average ?
-        <div className={classes.itemContainer}>
-          <div className={classes.label}>{t('Average')}:</div>
-          <div className={classes.value}>{valueFormatter(avg)}</div>
-        </div>
+        <Item>
+          <Label>{t('Average')}:</Label>
+          <Value>{valueFormatter(avg)}</Value>
+        </Item>
       : null}
       {toggles.movingAverage ?
-        <div className={classes.itemContainer}>
-          <div className={classes.label}>
+        <Item>
+          <Label>
             <div>{t('Moving-Average')}:</div>
-            <div className={classes.labelDetail}>{`(${maPeriods} ${t(maUnit)})`}</div>
-          </div>
-          <div className={classes.value}>{valueFormatter(movingAverage)}</div>
-        </div>
+            <LabelDetail>{`(${maLabel})`}</LabelDetail>
+          </Label>
+          <Value>{valueFormatter(movingAverage)}</Value>
+        </Item>
       : null}
       {isClmTooltip ?
         <Ranges valueFormatter={valueFormatter} ranges={payload.ranges} />
       : null}
-    </div>
+    </Content>
   );
 });
 
@@ -102,7 +105,7 @@ type RangeIndicatorProps = {
 const RangeIndicator = memo(function RangeIndicator({ ranges, value }: RangeIndicatorProps) {
   const isOnRange = useMemo(() => value >= ranges[0] && value <= ranges[1], [ranges, value]);
 
-  return <div className={css(styles.rangeIndicator, isOnRange && styles.onRange)} />;
+  return <Indicator onRange={isOnRange} />;
 });
 
 type RangesProps = {
@@ -110,15 +113,80 @@ type RangesProps = {
   valueFormatter: (value: number) => string;
 };
 const Ranges = memo(function Ranges({ ranges, valueFormatter }: RangesProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={classes.itemContainer}>
-      <div className={classes.label}>{t('Range')}:</div>
-      <div className={classes.value}>
+    <Item>
+      <Label>{t('Range')}:</Label>
+      <Value>
         {valueFormatter(ranges[0])} - {valueFormatter(ranges[1])}{' '}
-      </div>
-    </div>
+      </Value>
+    </Item>
   );
+});
+
+const Content = styled('div', {
+  base: {
+    textStyle: 'body',
+    color: 'text.lightest',
+    padding: '12px 16px',
+    minWidth: '250px',
+    background: 'graphTooltipBackground',
+    borderRadius: '8px',
+    textAlign: 'left',
+  },
+});
+
+const Timestamp = styled('div', {
+  base: {
+    marginBottom: '8px',
+  },
+});
+
+const Item = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+  },
+});
+
+const Label = styled('div', {
+  base: {
+    color: 'text.dark',
+  },
+});
+
+const LabelDetail = styled('div', {
+  base: {
+    textStyle: 'body.sm',
+    lineHeight: '1',
+  },
+});
+
+const Value = styled('div', {
+  base: {
+    textStyle: 'body.medium',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    textAlign: 'right',
+  },
+});
+
+const Indicator = styled('div', {
+  base: {
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    backgroundColor: 'indicators.error',
+  },
+  variants: {
+    onRange: {
+      true: {
+        backgroundColor: 'indicators.success',
+      },
+    },
+  },
 });

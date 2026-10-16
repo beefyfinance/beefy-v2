@@ -7,6 +7,7 @@ import type {
   ApiStat,
   ApiRevenueStatType,
   ApiTimeBucket,
+  ApiTvlByChains,
   IBeefyDataApi,
 } from './beefy-data-api-types.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
@@ -76,6 +77,13 @@ export class BeefyDataApi implements IBeefyDataApi {
   async getRevenueStatsByPeriod(statType: ApiRevenueStatType): Promise<ApiRevenueStats> {
     return await getJson<ApiRevenueStats>({
       url: `${this.data}/stats/${statType}`,
+    });
+  }
+
+  async getTvlByChains(bucket: ApiTimeBucket): Promise<ApiTvlByChains> {
+    return await getJson<ApiTvlByChains>({
+      url: `${this.data}/tvlByChains`,
+      params: { bucket },
     });
   }
 
