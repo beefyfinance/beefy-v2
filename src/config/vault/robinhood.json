@@ -96,7 +96,7 @@
     "createdAt": 1791971694,
     "platformId": "uniswap",
     "assets": ["FUGUI", "WETH"],
-    "icons": ["FUGUI", "WETH"],
+    "icons": ["富贵", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -138,7 +138,7 @@
     "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["FUGUI", "WETH"],
-    "icons": ["FUGUI", "WETH"],
+    "icons": ["富贵", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
