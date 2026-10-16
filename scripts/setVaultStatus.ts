@@ -9,7 +9,13 @@ import { sortVaultKeys } from './common/vault-fields.ts';
 import { saveJson } from './common/files.ts';
 import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
 import { cloneDeep, isEqual, keyBy, uniqBy } from 'lodash-es';
-import i18keys from '../src/locales/en/main.json';
+import {
+  PAUSE_REASONS,
+  type PauseReason,
+  RETIRE_REASONS,
+  type RetireReason,
+} from '../src/features/data/entities/vault.ts';
+import { isOneOf } from '../src/features/data/utils/array-utils.ts';
 
 type RunArgs = {
   help?: boolean;
@@ -50,7 +56,8 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
   reason: {
     type: String,
     alias: 'r',
-    description: '(retire|pause)Reason code to set, must have a matching locale key',
+    description:
+      '(retire|pause)Reason code, required for eol/paused, see RETIRE_REASONS / PAUSE_REASONS',
     optional: true,
   },
   vaults: {
@@ -79,31 +86,34 @@ function getRunArgs() {
   });
 }
 
-/** retire and pause reasons are separate sets; the app renders `Vault-(Retire|Pause)Reason-{code}` */
-function getValidReasons(status: Exclude<RunArgs['status'], 'active'>): string[] {
-  const prefix = status === 'eol' ? 'Vault-RetireReason-' : 'Vault-PauseReason-';
-  return Object.keys(i18keys)
-    .filter(key => key.startsWith(prefix))
-    .map(key => key.substring(prefix.length))
-    .sort();
-}
+type StatusChange =
+  | { status: 'active' }
+  | { status: 'eol'; retireReason: RetireReason }
+  | { status: 'paused'; pauseReason: PauseReason };
 
-function validateReason(args: RunArgs) {
-  if (!args.reason) {
-    return;
-  }
-
+function parseStatusChange(args: RunArgs): StatusChange {
   if (args.status === 'active') {
-    console.warn(`[WARN] --reason is ignored when setting status to active`);
-    return;
+    if (args.reason) {
+      console.warn(`[WARN] --reason is ignored when setting status to active`);
+    }
+    return { status: 'active' };
   }
 
-  const validReasons = getValidReasons(args.status);
-  if (!validReasons.includes(args.reason)) {
+  const validReasons = args.status === 'eol' ? RETIRE_REASONS : PAUSE_REASONS;
+  if (!args.reason) {
     throw new Error(
-      `Invalid ${args.status === 'eol' ? 'retire' : 'pause'} reason "${args.reason}", expected one of: ${validReasons.join(', ')}`
+      `--reason is required for ${args.status}, expected one of: ${validReasons.join(', ')}`
     );
   }
+  if (args.status === 'eol' && isOneOf(RETIRE_REASONS, args.reason)) {
+    return { status: 'eol', retireReason: args.reason };
+  }
+  if (args.status === 'paused' && isOneOf(PAUSE_REASONS, args.reason)) {
+    return { status: 'paused', pauseReason: args.reason };
+  }
+  throw new Error(
+    `Invalid ${args.status} reason "${args.reason}", expected one of: ${validReasons.join(', ')}`
+  );
 }
 
 function findRelatedVaults(vault: VaultConfig, allVaults: VaultConfig[]): VaultConfig[] {
@@ -147,49 +157,20 @@ function findRelatedVaults(vault: VaultConfig, allVaults: VaultConfig[]): VaultC
   return uniqBy(allRelatedVaults, v => v.id).filter(v => v.id !== vault.id);
 }
 
-function applyChange(vault: VaultConfig, args: RunArgs, now: number): VaultConfig {
+function applyChange(vault: VaultConfig, change: StatusChange, now: number): VaultConfig {
   const newVault = cloneDeep(vault);
   delete newVault.retireReason;
   delete newVault.retiredAt;
   delete newVault.pauseReason;
   delete newVault.pausedAt;
 
-  if (args.status === 'eol') {
-    if (args.reason) {
-      return sortVaultKeys({
-        ...newVault,
-        status: args.status,
-        retireReason: args.reason,
-        retiredAt: now,
-      });
-    } else {
-      return sortVaultKeys({
-        ...newVault,
-        status: args.status,
-        retiredAt: now,
-      });
-    }
-  } else if (args.status === 'paused') {
-    if (args.reason) {
-      return sortVaultKeys({
-        ...newVault,
-        status: args.status,
-        pauseReason: args.reason,
-        pausedAt: now,
-      });
-    } else {
-      return sortVaultKeys({
-        ...newVault,
-        status: args.status,
-        pausedAt: now,
-      });
-    }
-  } else {
-    return sortVaultKeys({
-      ...newVault,
-      status: args.status,
-    });
-  }
+  return sortVaultKeys({
+    ...newVault,
+    ...change,
+    ...(change.status === 'eol' ? { retiredAt: now }
+    : change.status === 'paused' ? { pausedAt: now }
+    : {}),
+  });
 }
 
 async function updateVaults(vaultsToUpdate: VaultConfig[], chainId: string) {
@@ -236,7 +217,7 @@ async function main() {
     return;
   }
 
-  validateReason(args);
+  const change = parseStatusChange(args);
 
   const timestamp = Math.floor(Date.now() / 1000);
 
@@ -247,13 +228,13 @@ async function main() {
     const allVaults = await getVaultsForChain(chainId);
 
     for (const vault of vaultsToUpdate[chainId]) {
-      const newVault = applyChange(vault, args, timestamp);
+      const newVault = applyChange(vault, change, timestamp);
       modifiedVaults.push(newVault);
 
       if (args.includeRelated) {
         const relatedVaults = findRelatedVaults(vault, allVaults);
         for (const relatedVault of relatedVaults) {
-          modifiedVaults.push(applyChange(relatedVault, args, timestamp));
+          modifiedVaults.push(applyChange(relatedVault, change, timestamp));
         }
       }
     }

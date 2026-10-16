@@ -415,7 +415,7 @@ export const selectVaultIdForVaultPage = createSelector(
 export const selectVaultShouldShowPrice = (state: BeefyState, vaultId: VaultEntity['id']) =>
   selectChainHasFeature(state, selectVaultById(state, vaultId).chainId, 'price');
 
-/** Returns false if chain has apy disabled, or vault is retired or paused and not earning */
+/** Returns false if chain has apy disabled, or vault is retired or paused */
 export const selectVaultShouldShowInterest = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return shouldVaultShowInterest(vault, selectChainById(state, vault.chainId));

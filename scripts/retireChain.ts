@@ -7,6 +7,8 @@ import { config } from '../src/config/config.ts';
 import type { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types.ts';
 import { loadJson, saveJson } from './common/files.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
+import { RETIRE_REASONS } from '../src/features/data/entities/vault.ts';
+import { isOneOf } from '../src/features/data/utils/array-utils.ts';
 
 type RunArgs = {
   help?: boolean;
@@ -151,6 +153,14 @@ async function main() {
     process.exit(1);
   }
 
+  const reason = args.reason;
+  if (!isOneOf(RETIRE_REASONS, reason)) {
+    console.error(
+      `[ERROR] Invalid retire reason "${reason}", expected one of: ${RETIRE_REASONS.join(', ')}`
+    );
+    process.exit(1);
+  }
+
   const chainConfig = config[chainId as keyof typeof config];
   if (chainConfig.status !== 'active') {
     console.error(
@@ -181,7 +191,7 @@ async function main() {
       return sortVaultKeys({
         ...rest,
         status: 'eol',
-        retireReason: args.reason,
+        retireReason: reason,
         retiredAt: timestamp,
       } as VaultConfig);
     });
