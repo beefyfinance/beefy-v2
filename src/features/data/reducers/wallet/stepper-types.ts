@@ -3,6 +3,7 @@ import type BigNumber from 'bignumber.js';
 import type { MessageLifecycleState } from '../../apis/cctp/cctp-api-types.ts';
 import type { TokenAmount } from '../../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 
@@ -68,6 +69,8 @@ export type ZapStepDetails = {
     srcVaultId: VaultEntity['id'];
     destVaultId: VaultEntity['id'];
   };
+  /** the zap also staked into / unstaked from this boost */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type DstTokenReturned = {

@@ -719,6 +719,9 @@ export const selectBoostUserRewardsInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
 
+export const selectBoostUserHasRewards = (state: BeefyState, boostId: BoostPromoEntity['id']) =>
+  selectBoostUserRewardsInToken(state, boostId).some(reward => reward.amount.gt(BIG_ZERO));
+
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens
  */
