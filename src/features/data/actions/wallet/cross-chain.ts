@@ -53,7 +53,6 @@ import {
   txWallet,
 } from './common.ts';
 import { approve } from './approval.ts';
-import { withRecoveryBoostDetails } from './boost-step-details.ts';
 import {
   stepperSetBridgeStatus,
   stepperSetRecoveryExecution,
@@ -642,7 +641,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
         t,
         op.vaultId
       );
-      steps.push(withRecoveryBoostDetails(recoveryStep, op, t));
+      steps.push(recoveryStep);
 
       console.debug('[Recovery] Starting stepper with', steps.length, 'steps');
       const existingBridgeStatus = getState().ui.stepperState.bridgeStatus;

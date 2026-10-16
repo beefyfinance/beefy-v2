@@ -2,15 +2,20 @@ import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import { memo, type ReactNode, useMemo } from 'react';
 import { type Namespace, type TFunction, Trans, useTranslation } from 'react-i18next';
-import type { TokenAmount } from '../../../../../features/data/apis/transact/transact-types.ts';
+import {
+  isZapQuoteStepUnstake,
+  type TokenAmount,
+} from '../../../../../features/data/apis/transact/transact-types.ts';
 import type { VaultEntity } from '../../../../../features/data/entities/vault.ts';
 import type { ZapStepDetails } from '../../../../../features/data/reducers/wallet/stepper-types.ts';
+import type { PendingCrossChainOp } from '../../../../../features/data/reducers/wallet/transact-types.ts';
 import { selectChainById } from '../../../../../features/data/selectors/chains.ts';
 import {
   selectCrossChainDstDust,
   selectCrossChainDstReceived,
   selectCrossChainSrcReturned,
   selectStepperBridgeStatus,
+  selectStepperHasBoostClaim,
   selectZapReceived,
   selectZapReturned,
 } from '../../../../../features/data/selectors/stepper.ts';
@@ -44,12 +49,10 @@ const SameChainZapSuccessContent = memo(function SameChainZapSuccessContent({
   details,
 }: SameChainZapSuccessContentProps) {
   const { t } = useTranslation();
-  const { inputs, outputTokens, vaultToVault } = details;
+  const { inputs, outputTokens, vaultToVault, boostId } = details;
   const isDeposit = step.step === 'zap-in';
-  const boost =
-    step.extraInfo?.boostId ?
-      boostCopy(t, isDeposit, !!step.extraInfo.boostClaimed, false)
-    : undefined;
+  const claimed = useAppSelector(selectStepperHasBoostClaim);
+  const boost = boostId ? boostCopy(t, isDeposit, claimed, false) : undefined;
   // the vault the zap ends in, whose shares the user receives
   const sharesVaultId =
     vaultToVault ? vaultToVault.destVaultId
@@ -213,10 +216,8 @@ type ZapSuccessMessageProps = {
 function ZapSuccessMessage({ main, boost, received, dust }: ZapSuccessMessageProps) {
   return (
     <>
-      <div>
-        {main}
-        {boost && <> {boost}</>}
-      </div>
+      <div>{main}</div>
+      {boost && <div>{boost}</div>}
       {received || dust ?
         <Details>
           {received}
@@ -233,6 +234,14 @@ const Details = styled('div', {
     marginTop: '12px',
   },
 });
+
+/** a deposit stakes on the destination leg; a withdraw unstaked on the source leg */
+function pendingOpBoostId(op: PendingCrossChainOp) {
+  if (op.direction === 'deposit') {
+    return op.recovery.destHandlerKind === 'vault' ? op.recovery.boostId : undefined;
+  }
+  return op.sourceDisplaySteps.find(isZapQuoteStepUnstake)?.boostId;
+}
 
 /** Also the fallback for zap steps built without zapDetails */
 const CrossChainZapSuccessContent = memo(function CrossChainZapSuccessContent({
@@ -257,11 +266,13 @@ const CrossChainZapSuccessContent = memo(function CrossChainZapSuccessContent({
   const dstReceived = useAppSelector(selectCrossChainDstReceived, tokenAmountsEqual);
   const dstDust = useAppSelector(selectCrossChainDstDust, tokenAmountsEqual);
 
+  const claimed = useAppSelector(selectStepperHasBoostClaim);
+
   const isCrossChain = !!pendingOp && !!vault && !!srcChain && !!destChain;
   const isDeposit = isCrossChain ? pendingOp.direction === 'deposit' : step.step === 'zap-in';
   const boost =
-    isCrossChain && step.extraInfo?.boostId ?
-      boostCopy(t, isDeposit, !!step.extraInfo.boostClaimed, true)
+    isCrossChain && pendingOpBoostId(pendingOp) ?
+      boostCopy(t, isDeposit, claimed, true)
     : undefined;
 
   const dust = useMemo(() => {
