@@ -393,7 +393,13 @@ export const crossChainRecoveryExecuteOrder = (
                   destTxHash: hash,
                 })
               );
-              dispatch(fetchCCTPDstTokensReturned({ destChainId, dstTxHash: hash }));
+              dispatch(
+                fetchCCTPDstTokensReturned({
+                  destChainId,
+                  dstTxHash: hash,
+                  srcTxHash: state.ui.transact.crossChain.pendingOps[opId].sourceTxHash,
+                })
+              );
             } else {
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
               dispatch(crossChainMarkRecoveryQuoteStale());
@@ -643,6 +649,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
           ...existingBridgeStatus,
           opId,
           srcChainId: op.sourceChainId,
+          srcTxHash: op.sourceTxHash,
           destChainId: op.destChainId,
           vaultId: op.vaultId,
         })
