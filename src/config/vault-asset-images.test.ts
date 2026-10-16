@@ -25,6 +25,7 @@ function findAssetsWithoutImages(): string[] {
       for (const assetId of vault.assets ?? []) {
         const token = tokens[assetId];
         if (!token) {
+          missing.push(`${vault.id}: ${assetId} (not in addressbook)`);
           continue;
         }
 
