@@ -48,10 +48,6 @@ export type Step = {
     vaultId?: VaultEntity['id'];
     zap?: boolean;
     zapDetails?: ZapStepDetails;
-    /** the zap also staked into / unstaked from this boost */
-    boostId?: BoostPromoEntity['id'];
-    /** a claim step ran before the zap; the flow only reaches the zap if it succeeded */
-    boostClaimed?: boolean;
     rewards?: {
       token: TokenEntity;
       amount: BigNumber;
@@ -73,6 +69,8 @@ export type ZapStepDetails = {
     srcVaultId: VaultEntity['id'];
     destVaultId: VaultEntity['id'];
   };
+  /** the zap also staked into / unstaked from this boost */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type DstTokenReturned = {

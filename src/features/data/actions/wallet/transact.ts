@@ -34,7 +34,6 @@ import {
   transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
-import { withBoostDetails } from './boost-step-details.ts';
 import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
@@ -125,13 +124,9 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  const step = withBoostDetails(
-    withZapDetails(originalStep, quote, getState()),
-    t,
-    quote.option.boostId,
-    !!claimStep
+  steps.push(
+    wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
   );
-  steps.push(wrapStepConfirmQuote(step, quote, prefetchedRequote));
 
   return steps;
 }
@@ -188,8 +183,12 @@ export function withZapDetails(step: Step, quote: TransactQuote, state: BeefySta
   // neither what the user typed nor what the rest of the app calls that position
   const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
   const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
-  const zapDetails: ZapStepDetails =
-    vaultToVault ? { inputs: sent, outputTokens, vaultToVault } : { inputs: sent, outputTokens };
+  const zapDetails: ZapStepDetails = {
+    inputs: sent,
+    outputTokens,
+    ...(vaultToVault && { vaultToVault }),
+    ...(option.boostId && { boostId: option.boostId }),
+  };
 
   return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }
