@@ -6,6 +6,7 @@ import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
+  selectBoostUserBalanceInDepositToken,
   selectHasUserDepositInVault,
   selectUserVaultBalanceInDepositTokenInBoosts,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
@@ -17,6 +18,8 @@ import {
   type UnifiedRewardToken,
 } from '../../../../../data/selectors/rewards.ts';
 import {
+  selectTransactBoostAvailable,
+  selectTransactLiveBoostId,
   selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
@@ -26,6 +29,7 @@ import type { BeefyState } from '../../../../../data/store/types.ts';
 const BoostDepositNotice = lazy(() => import('./DepositBoostNotice.tsx'));
 const DepositClaimNotice = lazy(() => import('./DepositClaimNotice.tsx'));
 const WithdrawBoostNotice = lazy(() => import('./WithdrawBoostNotice.tsx'));
+const UnstakeBoostNotice = lazy(() => import('./UnstakeBoostNotice.tsx'));
 
 type FooterNotice =
   | {
@@ -41,6 +45,11 @@ type FooterNotice =
       kind: 'withdraw-boost';
       vaultId: VaultEntity['id'];
       balance: BigNumber;
+    }
+  | {
+      kind: 'boost-unstake';
+      vaultId: VaultEntity['id'];
+      balance: BigNumber;
     };
 
 const vaultIdArgument = (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId;
@@ -51,9 +60,16 @@ const selectBoostDepositNotice = createSelector(
     selectVaultCurrentBoostRewardTokens,
     selectUserVaultBalanceInShareTokenIncludingDisplaced,
     selectUserVaultBalanceNotInActiveBoostInShareToken,
+    selectTransactBoostAvailable,
   ],
-  (vaultId, rewardTokens, inVaultAnywhere, notInActiveBoost): FooterNotice | undefined => {
-    if (!!rewardTokens && (inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
+  (
+    vaultId,
+    rewardTokens,
+    inVaultAnywhere,
+    notInActiveBoost,
+    available
+  ): FooterNotice | undefined => {
+    if (!!rewardTokens && (available || inVaultAnywhere.isZero() || !notInActiveBoost.isZero())) {
       return { kind: 'boost-deposit', vaultId, rewardTokens };
     }
 
@@ -72,7 +88,23 @@ const selectDepositClaimNotice = createSelector(
   }
 );
 
-const selectWithdrawBoostNotice = createSelector(
+// plain function: the balance to show depends on which boost the route resolved to
+const selectWithdrawBoostNotice: FooterSelector = (state, vaultId) => {
+  const boostId = selectTransactLiveBoostId(state);
+  if (boostId) {
+    return {
+      kind: 'boost-unstake',
+      vaultId,
+      balance: selectBoostUserBalanceInDepositToken(state, boostId),
+    };
+  }
+
+  const balance = selectUserVaultBalanceInDepositTokenInBoosts(state, vaultId);
+  return balance.isZero() ? undefined : { kind: 'withdraw-boost', vaultId, balance };
+};
+
+// migrate has no boost route, so it keeps the link across to the boost tab
+const selectMigrateBoostNotice = createSelector(
   [vaultIdArgument, selectUserVaultBalanceInDepositTokenInBoosts],
   (vaultId, balance): FooterNotice | undefined => {
     if (balance && !balance.isZero()) {
@@ -92,7 +124,7 @@ type ModeToFooters = {
 const modeToFooters: ModeToFooters = {
   [TransactMode.Deposit]: [selectBoostDepositNotice, selectDepositClaimNotice],
   [TransactMode.Withdraw]: [selectWithdrawBoostNotice],
-  [TransactMode.Migrate]: [selectWithdrawBoostNotice],
+  [TransactMode.Migrate]: [selectMigrateBoostNotice],
 };
 
 const selectFooter = (state: BeefyState): FooterNotice | undefined => {
@@ -130,7 +162,10 @@ function footerNoticeEqual(a: FooterNotice | undefined, b: FooterNotice | undefi
   if (a.kind === 'deposit-claim' && b.kind === 'deposit-claim') {
     return rewardTokensEqual(a.rewardTokens, b.rewardTokens);
   }
-  if (a.kind === 'withdraw-boost' && b.kind === 'withdraw-boost') {
+  if (
+    (a.kind === 'withdraw-boost' && b.kind === 'withdraw-boost') ||
+    (a.kind === 'boost-unstake' && b.kind === 'boost-unstake')
+  ) {
     return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
   }
   return false;
@@ -150,5 +185,7 @@ export const FormStepFooter = memo(function FormStepFooter() {
       return <DepositClaimNotice rewardTokens={notice.rewardTokens} />;
     case 'withdraw-boost':
       return <WithdrawBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
+    case 'boost-unstake':
+      return <UnstakeBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
   }
 });

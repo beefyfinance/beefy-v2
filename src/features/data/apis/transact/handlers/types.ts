@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../../entities/chain.ts';
+import type { BoostPromoEntity } from '../../../entities/promo.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import type {
@@ -80,6 +81,8 @@ export type SourceHandlerContext = {
   pageVaultId: VaultEntity['id'];
   /** Async resolver for vault-bound `ZapTransactHelpers`; called by `VaultSourceHandler` with its own src vault id. */
   resolveHelpersForVault: (vaultId: VaultEntity['id']) => Promise<ZapTransactHelpers>;
+  /** unstake the source vault's shares from this boost (from the option's `boostId`) */
+  boostId?: BoostPromoEntity['id'];
 };
 
 /**
@@ -97,6 +100,8 @@ export type DestHandlerContext = {
   pageVaultId: VaultEntity['id'];
   /** Async resolver for vault-bound `ZapTransactHelpers`; called by `VaultDestHandler` with its own dst vault id. */
   resolveHelpersForVault: (vaultId: VaultEntity['id']) => Promise<ZapTransactHelpers>;
+  /** stake the destination vault's shares into this boost (from the option's `boostId`) */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export interface ISourceHandler<Q = unknown> {

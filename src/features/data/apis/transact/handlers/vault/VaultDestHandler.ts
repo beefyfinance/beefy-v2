@@ -4,7 +4,12 @@ import type { TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { getTransactApi } from '../../../instances.ts';
 import { isZapQuote, type DepositOption } from '../../transact-types.ts';
-import { isComposableStrategy, type IStrategy } from '../../strategies/IStrategy.ts';
+import { withBoost } from '../../strategies/boost/BoostStrategy.ts';
+import {
+  type IComposableStrategy,
+  isComposableStrategy,
+  type IStrategy,
+} from '../../strategies/IStrategy.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
   DestHandlerContext,
@@ -14,7 +19,7 @@ import type {
   VaultDestState,
 } from '../types.ts';
 
-type StrategyMatch = { strategy: IStrategy; option: DepositOption };
+type StrategyMatch = { strategy: IComposableStrategy; option: DepositOption };
 
 /**
  * Vault dest handler: deposit the handler's `inputToken` into a vault on the dst chain.
@@ -44,8 +49,9 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       );
     }
 
-    await match.strategy.beforeQuote?.();
-    const destQuote = await match.strategy.fetchDepositQuote(
+    const strategy: IStrategy = withBoost(match.strategy, destHelpers, ctx.boostId);
+    await strategy.beforeQuote?.();
+    const destQuote = await strategy.fetchDepositQuote(
       [{ token: ctx.inputToken, amount: inputAmount, max: false }],
       match.option
     );
@@ -85,12 +91,13 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     ).getInnerZapStrategiesForVault(destHelpers);
 
     const { destQuote } = quote.state;
-    const destStrategy = destStrategies.find(s => s.id === destQuote.strategyId);
-    if (!destStrategy || !isComposableStrategy(destStrategy)) {
+    const found = destStrategies.find(s => s.id === destQuote.strategyId);
+    if (!found || !isComposableStrategy(found)) {
       throw new Error(
         `[vault-dest] Destination strategy '${destQuote.strategyId}' on chain ${ctx.destChainId} is not composable`
       );
     }
+    const destStrategy = withBoost(found, destHelpers, ctx.boostId);
 
     await destStrategy.beforeStep?.();
     const breakdown = await destStrategy.fetchDepositUserlessZapBreakdown(destQuote);

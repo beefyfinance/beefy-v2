@@ -1,6 +1,11 @@
 import type BigNumber from 'bignumber.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { TokenAmount, VaultToVaultSingleTokenDepositOption } from '../../transact-types.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
+import type {
+  TokenAmount,
+  VaultToVaultSingleTokenDepositOption,
+  VaultToVaultSingleTokenWithdrawOption,
+} from '../../transact-types.ts';
 import type { ZapTransactHelpers } from '../IStrategy.ts';
 import type * as FeeHelpers from '../../helpers/fee.ts';
 import type * as QuoteHelpers from '../../helpers/quotes.ts';
@@ -46,6 +51,7 @@ const helpers = {
 } as unknown as ZapTransactHelpers;
 const option = {
   id: 'v2v',
+  mode: TransactMode.Deposit,
   srcVaultId: 'src',
   destVaultId: 'dest',
   routingToken: baseWeth,
@@ -118,5 +124,31 @@ describe('VaultToVaultSingleTokenStrategy quote', () => {
     const q = await quote();
 
     expect(q.returned).toEqual([{ token: baseWeth, amount: bn('0.10095') }]);
+  });
+});
+
+describe('VaultToVaultSingleTokenStrategy boost', () => {
+  const input = { token: baseWeth, amount: bn('10'), max: false };
+
+  it('stakes into the page vault boost on the destination leg of a deposit only', async () => {
+    await strategy.fetchDepositQuote([input], { ...option, boostId: 'moo_dest-boost' });
+
+    expect(src.fetchQuote.mock.calls[0][1]).toMatchObject({ boostId: undefined });
+    expect(dest.fetchQuote.mock.calls[0][1]).toMatchObject({ boostId: 'moo_dest-boost' });
+  });
+
+  it('unstakes from the page vault boost on the source leg of a withdraw only', async () => {
+    const withdraw = {
+      ...option,
+      mode: TransactMode.Withdraw,
+      srcVaultId: 'dest',
+      destVaultId: 'src',
+      boostId: 'moo_dest-boost',
+    } as unknown as VaultToVaultSingleTokenWithdrawOption;
+
+    await strategy.fetchWithdrawQuote([input], withdraw);
+
+    expect(src.fetchQuote.mock.calls[0][1]).toMatchObject({ boostId: 'moo_dest-boost' });
+    expect(dest.fetchQuote.mock.calls[0][1]).toMatchObject({ boostId: undefined });
   });
 });

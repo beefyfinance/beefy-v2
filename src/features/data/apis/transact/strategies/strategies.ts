@@ -35,6 +35,8 @@ const strategyLoadersByIdUnchecked = {
   'vault-to-vault-single-token': async () =>
     (await import('./vault-to-vault/VaultToVaultSingleTokenStrategy.ts'))
       .VaultToVaultSingleTokenStrategy,
+  'vault-identity': async () =>
+    (await import('./vault/VaultIdentityStrategy.ts')).VaultIdentityStrategy,
 } as const satisfies Record<ZapStrategyId, AnyLoader>;
 
 type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;
