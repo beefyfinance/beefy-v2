@@ -104,7 +104,6 @@ const nonHarvestOnDepositPools = [
   'aavev3-monad-weth',
   'aavev3-monad-ausd',
   'aavev3-plasma-usdt0',
-  'mellow-aero-usdc-cbbtc',
   'curve-monad-cbbtc',
   'neverland-monad-usdc',
   'neverland-monad-ausd',
