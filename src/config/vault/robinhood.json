@@ -2262,8 +2262,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-ram-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["RAM", "WETH"],
     "risks": {
@@ -2301,8 +2303,10 @@
     "earnedTokenAddress": "0x0674d06804C8E134eDa798263a1FB93036212dAf",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-ram-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 100,
@@ -2340,11 +2344,12 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-spy-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["SPYrh", "USDG"],
-    "icons": ["SPY", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2361,7 +2366,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["SPY", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-spy-usdg",
@@ -2380,13 +2386,14 @@
     "earnedTokenAddress": "0x324F6Dd622e8ee5EA3d5181d8B927443f9566e42",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-spy-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 5,
     "assets": ["SPYrh", "USDG"],
-    "icons": ["SPY", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2403,7 +2410,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["SPY", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-nvda-weth-rp",
@@ -2420,11 +2428,12 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-nvda-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["NVDArh", "WETH"],
-    "icons": ["NVDA", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2441,7 +2450,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["NVDA", "WETH"]
   },
   {
     "id": "ramses-cow-robinhood-nvda-weth",
@@ -2460,13 +2470,14 @@
     "earnedTokenAddress": "0x13805bAfC3800d14a14BDbab038C5750f6D54077",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-nvda-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 50,
     "assets": ["NVDArh", "WETH"],
-    "icons": ["NVDA", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2483,7 +2494,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["NVDA", "WETH"]
   },
   {
     "id": "ramses-cow-robinhood-microduck-usdg-rp",
@@ -2500,8 +2512,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-microduck-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["microduck", "USDG"],
     "risks": {
@@ -2539,8 +2553,10 @@
     "earnedTokenAddress": "0xe2B1c9DCdF2cbe25F33b1d245FfD8ad943ABAf98",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-microduck-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "0.75",
     "tickSpacing": 300,
@@ -2656,11 +2672,12 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cbbtc-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["rhcbBTC", "USDG"],
-    "icons": ["cbBTC", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2677,7 +2694,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["cbBTC", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-cbbtc-usdg",
@@ -2696,13 +2714,14 @@
     "earnedTokenAddress": "0x0186715dEB2d13Fe0B440A69Da910b442889919C",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cbbtc-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["rhcbBTC", "USDG"],
-    "icons": ["cbBTC", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2719,7 +2738,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["cbBTC", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-cashcat-usdg-rp",
@@ -2736,8 +2756,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cashcat-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "ramses",
     "assets": ["CASHCAT", "USDG"],
     "risks": {
@@ -2775,8 +2797,10 @@
     "earnedTokenAddress": "0xeE429A657b2495336049456745eBBA962fB63CEc",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cashcat-usdg",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1790564400,
+    "retireReason": "upgrade",
+    "retiredAt": 1792078298,
     "platformId": "beefy",
     "feeTier": "0.25",
     "tickSpacing": 100,
