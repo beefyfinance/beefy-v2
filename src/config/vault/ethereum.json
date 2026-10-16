@@ -1,5 +1,42 @@
 [
   {
+    "id": "morpho-v2-ethereum-armitage-pendle-ecosystem-high-yield-usdc",
+    "name": "USDC (Armitage, Pendle Ecosystem High Yield V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xAA5e4EEdfEC704c0F4c63A35Cf34b4Ec62c737Cc",
+    "earnedToken": "mooMorphoV2EthereumArmitagePendleEcosystemHighYieldUSDC",
+    "earnedTokenAddress": "0xAA5e4EEdfEC704c0F4c63A35Cf34b4Ec62c737Cc",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1792056810,
+    "platformId": "morpho",
+    "curatorId": "armitage",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xcf609F8327E68b42AF54F9D529b9f65d68038435/armitage-pendle-ecosystem-high-yield-usdc",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "yb-cbbtc",
     "name": "cbBTC",
     "type": "standard",
