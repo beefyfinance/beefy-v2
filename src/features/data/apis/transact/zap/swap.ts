@@ -83,7 +83,7 @@ export async function fetchZapAggregatorSwap(
         data: swap.tx.data,
         value: swap.tx.value,
         tokens:
-          isFromNative && !insertBalance ?
+          isFromNative && (!insertBalance || swap.tx.exactValue) ?
             []
           : [
               {

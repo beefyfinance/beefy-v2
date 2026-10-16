@@ -12,6 +12,7 @@ import type {
   PlatformType,
   SwapAggregatorConfig,
   SwapAggregatorConfigLoose,
+  ZapPriorityTokensConfig,
   VaultConfig,
   ZapConfig,
   ZapFeeRule,
@@ -65,6 +66,12 @@ export class ConfigAPI {
       await import('../../../config/zap/swap-aggregators.json')
     ).default; // json types are wide
     return config as SwapAggregatorConfig[];
+  }
+
+  public async fetchZapPriorityTokens(): Promise<ZapPriorityTokensConfig> {
+    // json chain id string isn't automatically narrowed to ChainId
+    return (await import('../../../config/zap/priority-tokens.json'))
+      .default as ZapPriorityTokensConfig;
   }
 
   public async fetchZapConfigs(): Promise<ZapConfig[]> {
