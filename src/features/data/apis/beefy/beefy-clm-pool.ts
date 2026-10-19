@@ -12,7 +12,17 @@ import {
   fromWei,
   toWei,
 } from '../../../../helpers/big-number.ts';
+import { parseAbi } from 'viem';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
+
+// Arc Aero uses a block-based action lock, unlike the timestamp-based Base strategies.
+const ARC_AERO_STRATEGIES = new Set([
+  '0x177ff2938ddac11f8c909fcdb9fdd15dbfa04f37',
+  '0x8337c691c3afa52cce418178e52ed472f034cb8b',
+  '0xd7f3bcdafcff0018953bb6944db2683ff2e42b07',
+  '0x64c54158587297f937a24a78691a9964c4caa0a3',
+]);
+const AeroActionableAbi = parseAbi(['function actionable() view returns (bool)']);
 
 export const ACTIONABLE_AT_FROM = 1776378070;
 
@@ -221,6 +231,17 @@ export class BeefyCLMPool {
   }
 
   private async readActionableAt(): Promise<bigint> {
+    if (this.chain.id === 'arc' && ARC_AERO_STRATEGIES.has(this.strategy.toLowerCase())) {
+      const actionable = await fetchContract(
+        this.strategy,
+        AeroActionableAbi,
+        this.chain.id
+      ).read.actionable();
+      if (!actionable) {
+        throw new Error('The Aero gauge lock is still active. Wait a few blocks and retry.');
+      }
+      return 0n;
+    }
     if (!this.supportsActionableAt) {
       return 0n;
     }
