@@ -1,5 +1,54 @@
 [
   {
+    "id": "stakedao-evausdt-evausdc",
+    "name": "evaUSDT/evaUSDC",
+    "type": "standard",
+    "token": "evaUSDMAIN",
+    "tokenAddress": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC4fA3d52Ac82B00c45020dFabFCe6826A76942e4",
+    "earnedToken": "mooStakeDao-evaUSDT-evaUSDC",
+    "earnedTokenAddress": "0xC4fA3d52Ac82B00c45020dFabFCe6826A76942e4",
+    "oracle": "lps",
+    "oracleId": "curve-evausdt-evausdc",
+    "status": "active",
+    "createdAt": 1792386596,
+    "platformId": "stakedao",
+    "assets": ["evaUSDT", "evaUSDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-794/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-794/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+            "coins": [
+              "0x501eBf66d76A96D4FB26ccead42957653e16B8B8",
+              "0x741bD193B6b40f8703d2e116FD1965421f290F58"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-v2-ethereum-armitage-pendle-ecosystem-high-yield-usdc",
     "name": "USDC (Armitage, Pendle Ecosystem High Yield V2)",
     "type": "standard",
