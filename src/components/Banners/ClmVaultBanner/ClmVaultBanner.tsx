@@ -21,11 +21,7 @@ export type ClmVaultBannerProps = {
 export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner({ vaultId }) {
   const maybeClmPool = useAppSelector(state => selectVaultById(state, vaultId));
 
-  if (
-    !isCowcentratedGovVault(maybeClmPool) ||
-    !maybeClmPool.cowcentratedIds.vault ||
-    isVaultAeroUpgradeSoon(maybeClmPool)
-  ) {
+  if (!isCowcentratedGovVault(maybeClmPool) || !maybeClmPool.cowcentratedIds.vault) {
     return null;
   }
 
@@ -49,6 +45,10 @@ const ClmVaultBannerImpl = memo<ClmVaultBannerImplProps>(function ClmVaultBanner
     }),
     [vaultId]
   );
+
+  if (isDeposited && isVaultAeroUpgradeSoon(pool)) {
+    return null;
+  }
 
   return (
     <DismissibleBanner
