@@ -20,6 +20,10 @@ const AeroActionableAbi = parseAbi(['function actionable() view returns (bool)']
 
 export const ACTIONABLE_AT_FROM = 1776378070;
 
+/**
+ * Only velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
+ * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
+ */
 export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
   if (vault.chainId === 'arc') {
     return vault.tokenProviderId === 'aerodrome';
