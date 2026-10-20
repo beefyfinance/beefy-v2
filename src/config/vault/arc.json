@@ -6,7 +6,7 @@
     "token": "EURC-USDC",
     "tokenAddress": "0xcB968f8382e3Fd875F47fbbde59Fdf46feB8b447",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x9804a9454E63F6aFE9775BBd793340E508451Df8",
     "earnedToken": "mooBeefyAeroEURC-USDC",
     "earnedTokenAddress": "0x9804a9454E63F6aFE9775BBd793340E508451Df8",
@@ -14,7 +14,7 @@
     "oracleId": "aerodrome-cow-arc-eurc-usdc",
     "status": "active",
     "createdAt": 1790346434,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["EURC", "USDC"],
     "risks": {
       "complex": true,
@@ -45,7 +45,7 @@
     "token": "WETH-USDC",
     "tokenAddress": "0x4319C71984790f96ac190a7709B380F6F27DD238",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0xFd7F2B10d0384195D6f1bb89179dda20A0189FbE",
     "earnedToken": "mooBeefyAeroWETH-USDC",
     "earnedTokenAddress": "0xFd7F2B10d0384195D6f1bb89179dda20A0189FbE",
@@ -53,7 +53,7 @@
     "oracleId": "aerodrome-cow-arc-weth-usdc",
     "status": "active",
     "createdAt": 1790346393,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["WETH", "USDC"],
     "risks": {
       "complex": true,
@@ -84,7 +84,7 @@
     "token": "cirBTC-USDC",
     "tokenAddress": "0x137731B8B2D7Cd24aB4A4A9061f2D7b4Fd1aBFEE",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x305Be0f7d4bA28D13803c2186Bc0F95c79d487F5",
     "earnedToken": "mooBeefyAerocirBTC-USDC",
     "earnedTokenAddress": "0x305Be0f7d4bA28D13803c2186Bc0F95c79d487F5",
@@ -92,7 +92,7 @@
     "oracleId": "aerodrome-cow-arc-cirbtc-usdc",
     "status": "active",
     "createdAt": 1790346354,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["cirBTC", "USDC"],
     "risks": {
       "complex": true,
@@ -123,7 +123,7 @@
     "token": "cirBTC-WETH",
     "tokenAddress": "0x4F702C76dd9D7841784922f87470E3F718aAF6DA",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x5b9Bc16e6C142BabF0b5C33571459FAD98Bd2E10",
     "earnedToken": "mooBeefyAerocirBTC-WETH",
     "earnedTokenAddress": "0x5b9Bc16e6C142BabF0b5C33571459FAD98Bd2E10",
@@ -131,7 +131,7 @@
     "oracleId": "aerodrome-cow-arc-cirbtc-weth",
     "status": "active",
     "createdAt": 1790346474,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["cirBTC", "WETH"],
     "risks": {
       "complex": true,
@@ -163,7 +163,7 @@
     "token": "cowAeroEURC-USDC",
     "tokenAddress": "0xcB968f8382e3Fd875F47fbbde59Fdf46feB8b447",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x41691Cb706ed97eF1AaF675D627EF5B01145E7d6",
     "earnedToken": "rcowAeroEURC-USDC",
     "earnedTokenDecimals": 18,
@@ -172,7 +172,7 @@
     "oracleId": "aerodrome-cow-arc-eurc-usdc",
     "status": "active",
     "createdAt": 1790346414,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["EURC", "USDC"],
     "risks": {
       "complex": true,
@@ -204,7 +204,7 @@
     "token": "cowAeroWETH-USDC",
     "tokenAddress": "0x4319C71984790f96ac190a7709B380F6F27DD238",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x55fD3b49Ef7E5f9a31DA68051989F5f749658f99",
     "earnedToken": "rcowAeroWETH-USDC",
     "earnedTokenDecimals": 18,
@@ -213,7 +213,7 @@
     "oracleId": "aerodrome-cow-arc-weth-usdc",
     "status": "active",
     "createdAt": 1790346373,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["WETH", "USDC"],
     "risks": {
       "complex": true,
@@ -245,7 +245,7 @@
     "token": "cowAerocirBTC-USDC",
     "tokenAddress": "0x137731B8B2D7Cd24aB4A4A9061f2D7b4Fd1aBFEE",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0x3B2162ea5C3F6f20Eb05818f40d54857d1Aa3B45",
     "earnedToken": "rcowAerocirBTC-USDC",
     "earnedTokenDecimals": 18,
@@ -254,7 +254,7 @@
     "oracleId": "aerodrome-cow-arc-cirbtc-usdc",
     "status": "active",
     "createdAt": 1790346334,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["cirBTC", "USDC"],
     "risks": {
       "complex": true,
@@ -286,7 +286,7 @@
     "token": "cowAerocirBTC-WETH",
     "tokenAddress": "0x4F702C76dd9D7841784922f87470E3F718aAF6DA",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "earnContractAddress": "0xedBAa34DCBA4250F6BF9582ddED03244e623268D",
     "earnedToken": "rcowAerocirBTC-WETH",
     "earnedTokenDecimals": 18,
@@ -295,7 +295,7 @@
     "oracleId": "aerodrome-cow-arc-cirbtc-weth",
     "status": "active",
     "createdAt": 1790346454,
-    "platformId": "aerodrome",
+    "platformId": "aero",
     "assets": ["cirBTC", "WETH"],
     "risks": {
       "complex": true,
@@ -326,7 +326,7 @@
     "token": "EURC-USDC aerodrome",
     "tokenAddress": "0xbe080aC37ad1305DFCc9521F5e6F68CFDc41B7fa",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "depositTokenAddresses": [
       "0x3600000000000000000000000000000000000000",
       "0xbEf5f6d51CB62b58e6A8f77868681825C6fe21c1"
@@ -368,7 +368,7 @@
     "token": "WETH-USDC aerodrome",
     "tokenAddress": "0x6F302dECb49fB30B2D2c609BDD16e04e7Dd096FC",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "depositTokenAddresses": [
       "0x128cC466B61f542da60c70e3aA11c10e19B84EDB",
       "0x3600000000000000000000000000000000000000"
@@ -410,7 +410,7 @@
     "token": "cirBTC-USDC aerodrome",
     "tokenAddress": "0xd945cAEe4635BcD7FB8A9fA74dC1D0c4C1472782",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "depositTokenAddresses": [
       "0x171A4217b86A807A64eB94757Db6849fb4bDbAA0",
       "0x3600000000000000000000000000000000000000"
@@ -452,7 +452,7 @@
     "token": "cirBTC-WETH aerodrome",
     "tokenAddress": "0x72DfF32c9C5c28758565bE0a7d4E6E42FB498506",
     "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
+    "tokenProviderId": "aero",
     "depositTokenAddresses": [
       "0x128cC466B61f542da60c70e3aA11c10e19B84EDB",
       "0x171A4217b86A807A64eB94757Db6849fb4bDbAA0"
