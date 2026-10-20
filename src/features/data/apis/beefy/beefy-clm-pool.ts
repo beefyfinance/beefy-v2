@@ -26,7 +26,7 @@ export const ACTIONABLE_AT_FROM = 1776378070;
  */
 export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
   if (vault.chainId === 'arc') {
-    return vault.tokenProviderId === 'aerodrome';
+    return vault.tokenProviderId === 'aero';
   }
   return (
     (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
