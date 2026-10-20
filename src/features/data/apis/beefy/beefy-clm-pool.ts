@@ -16,21 +16,14 @@ import { parseAbi } from 'viem';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 // Arc Aero uses a block-based action lock, unlike the timestamp-based Base strategies.
-const ARC_AERO_STRATEGIES = new Set([
-  '0x177ff2938ddac11f8c909fcdb9fdd15dbfa04f37',
-  '0x8337c691c3afa52cce418178e52ed472f034cb8b',
-  '0xd7f3bcdafcff0018953bb6944db2683ff2e42b07',
-  '0x64c54158587297f937a24a78691a9964c4caa0a3',
-]);
 const AeroActionableAbi = parseAbi(['function actionable() view returns (bool)']);
 
 export const ACTIONABLE_AT_FROM = 1776378070;
 
-/**
- * Only velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
- * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
- */
 export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
+  if (vault.chainId === 'arc') {
+    return vault.tokenProviderId === 'aerodrome';
+  }
   return (
     (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
     vault.createdAt >= ACTIONABLE_AT_FROM
@@ -231,7 +224,7 @@ export class BeefyCLMPool {
   }
 
   private async readActionableAt(): Promise<bigint> {
-    if (this.chain.id === 'arc' && ARC_AERO_STRATEGIES.has(this.strategy.toLowerCase())) {
+    if (this.chain.id === 'arc' && this.supportsActionableAt) {
       const actionable = await fetchContract(
         this.strategy,
         AeroActionableAbi,
