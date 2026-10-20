@@ -1643,7 +1643,7 @@
     "website": "https://aero.xyz/",
     "twitter": "aeroxyz",
     "documentation": "https://app.aero.xyz/docs/",
-    "description": "Aero is the unified liquidty layer for Ethereum: a cross-chain exchange where anyone can trade, earn, and launch onchain.",
+    "description": "Aero is the unified liquidity layer for Ethereum: a cross-chain exchange where anyone can trade, earn, and launch onchain.",
     "type": "amm"
   }
 ]
