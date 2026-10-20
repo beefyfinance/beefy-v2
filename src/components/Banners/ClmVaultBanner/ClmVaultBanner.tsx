@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   isCowcentratedGovVault,
+  isVaultAeroUpgrade,
   type VaultEntity,
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
@@ -20,7 +21,11 @@ export type ClmVaultBannerProps = {
 export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner({ vaultId }) {
   const maybeClmPool = useAppSelector(state => selectVaultById(state, vaultId));
 
-  if (!isCowcentratedGovVault(maybeClmPool) || !maybeClmPool.cowcentratedIds.vault) {
+  if (
+    !isCowcentratedGovVault(maybeClmPool) ||
+    !maybeClmPool.cowcentratedIds.vault ||
+    isVaultAeroUpgrade(maybeClmPool)
+  ) {
     return null;
   }
 

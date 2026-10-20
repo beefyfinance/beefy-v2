@@ -9,6 +9,7 @@ import {
   isCowcentratedVault,
   isGovVault,
   isVaultActive,
+  isVaultAeroUpgrade,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -23,7 +24,10 @@ import {
   selectActivePromoForVault,
   selectPromoById,
 } from '../../../../features/data/selectors/promos.ts';
-import { selectUserHasBalanceToMigrate } from '../../../../features/data/selectors/balance.ts';
+import {
+  selectHasUserDepositInVault,
+  selectUserHasBalanceToMigrate,
+} from '../../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
   selectCowcentratedVaultById,
@@ -114,12 +118,11 @@ const VaultFreeZapTag = memo(function VaultFreeZapTag() {
   );
 });
 
-const VaultMigrateTag = memo(function VaultMigrateTag() {
-  const { t } = useTranslation();
+const VaultMigrateTag = memo(function VaultMigrateTag({ text }: { text: string }) {
   return (
     <VaultTag
       css={css.raw(styles.vaultTagMigrate, styles.inverted)}
-      text={t('VaultTag-Migrate')}
+      text={text}
       icon={<MigrateIcon className={css(styles.vaultTagMigrateIcon)} />}
     />
   );
@@ -370,13 +373,24 @@ export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
   isVaultPaused?: boolean;
   hidePlatform?: boolean;
+  /** holder to check deposits for, defaults to the connected wallet */
+  address?: string;
 };
-export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: VaultTagsProps) {
+export const VaultTags = memo(function VaultTags({
+  vaultId,
+  hidePlatform,
+  address,
+}: VaultTagsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
   const zapCampaign = useAppSelector(state => selectZapCampaignByVaultId(state, vaultId));
-  const isMigratable = useAppSelector(state => selectUserHasBalanceToMigrate(state, vaultId));
+  const isMigratable = useAppSelector(state =>
+    selectUserHasBalanceToMigrate(state, vaultId, address)
+  );
+  const isMigrateSoon = useAppSelector(
+    state => isVaultAeroUpgrade(vault) && selectHasUserDepositInVault(state, vaultId, address)
+  );
   const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
@@ -387,8 +401,8 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
   // Tag 2: CLM -> CLM Pool -> CLM Vault --> Vault --> Pool
   // Tag 3: Stocks
   // Tag 4: Free Zap -> none
-  // Tag 5: Migrate -> none
-  // Tag 6: Retired -> Paused -> Promo -> none
+  // Tag 5: Migrate -> Migrate soon -> none
+  // Tag 6: Retired -> Paused (unless Migrate soon) -> Promo -> none
   // Tag 7: Points -> none
   return (
     <VaultTagsContainer isVaultPage={hidePlatform}>
@@ -400,11 +414,15 @@ export const VaultTags = memo(function VaultTags({ vaultId, hidePlatform }: Vaul
       : <VaultTag css={styles.vaultTagVault} text={t('VaultTag-Vault')} />}
       {isStock && <VaultTag css={styles.vaultTagStocks} text={t('VaultTag-Stocks')} />}
       {zapCampaign && <VaultFreeZapTag />}
-      {isMigratable && <VaultMigrateTag />}
+      {isMigratable ?
+        <VaultMigrateTag text={t('VaultTag-Migrate')} />
+      : isMigrateSoon ?
+        <VaultMigrateTag text={t('VaultTag-MigrateSoon')} />
+      : null}
       {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
       : isVaultPaused(vault) ?
-        <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
+        !isMigrateSoon && <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
       : promo ?
         <VaultPromoTag onlyIcon={onlyShowIcon} promoId={promo.id} />
       : null}
