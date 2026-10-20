@@ -9,7 +9,7 @@ import {
   isCowcentratedVault,
   isGovVault,
   isVaultActive,
-  isVaultAeroUpgrade,
+  isVaultAeroUpgradeSoon,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -389,7 +389,7 @@ export const VaultTags = memo(function VaultTags({
     selectUserHasBalanceToMigrate(state, vaultId, address)
   );
   const isMigrateSoon = useAppSelector(
-    state => isVaultAeroUpgrade(vault) && selectHasUserDepositInVault(state, vaultId, address)
+    state => isVaultAeroUpgradeSoon(vault) && selectHasUserDepositInVault(state, vaultId, address)
   );
   const isStock = useAppSelector(state => selectIsVaultStock(state, vaultId));
   const isGov = isGovVault(vault);

@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   isCowcentratedGovVault,
-  isVaultAeroUpgrade,
+  isVaultAeroUpgradeSoon,
   type VaultEntity,
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
@@ -24,7 +24,7 @@ export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner(
   if (
     !isCowcentratedGovVault(maybeClmPool) ||
     !maybeClmPool.cowcentratedIds.vault ||
-    isVaultAeroUpgrade(maybeClmPool)
+    isVaultAeroUpgradeSoon(maybeClmPool)
   ) {
     return null;
   }

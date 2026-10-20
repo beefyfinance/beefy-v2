@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  isVaultAeroUpgrade,
+  isVaultAeroUpgradeSoon,
   isVaultPaused,
   type VaultEntity,
 } from '../../../features/data/entities/vault.ts';
 import {
   selectHasUserDepositInVault,
-  selectUserHasDepositInAeroUpgradeVault,
+  selectUserHasDepositInAeroUpgradeSoonVault,
 } from '../../../features/data/selectors/balance.ts';
 import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
 import { useAppSelector } from '../../../features/data/store/hooks.ts';
@@ -32,7 +32,7 @@ const AeroUpgradeBanner = memo(function AeroUpgradeBanner() {
 });
 
 export const AeroUpgradeBannerHome = memo(function AeroUpgradeBannerHome() {
-  const show = useAppSelector(selectUserHasDepositInAeroUpgradeVault);
+  const show = useAppSelector(selectUserHasDepositInAeroUpgradeSoonVault);
   return show ? <AeroUpgradeBanner /> : null;
 });
 
@@ -45,7 +45,7 @@ export const AeroUpgradeBannerVault = memo(function AeroUpgradeBannerVault({
   // once paused, the deposit tab's pause reason takes over
   const show = useAppSelector(
     state =>
-      isVaultAeroUpgrade(vault) &&
+      isVaultAeroUpgradeSoon(vault) &&
       !isVaultPaused(vault) &&
       selectHasUserDepositInVault(state, vaultId)
   );
@@ -57,7 +57,7 @@ export const AeroUpgradeBannerDashboard = memo(function AeroUpgradeBannerDashboa
 }: {
   address: string;
 }) {
-  const show = useAppSelector(state => selectUserHasDepositInAeroUpgradeVault(state, address));
+  const show = useAppSelector(state => selectUserHasDepositInAeroUpgradeSoonVault(state, address));
   return show ?
       <BannerWrapper>
         <BannerContainer maxWidth="lg">

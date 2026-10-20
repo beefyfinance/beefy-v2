@@ -15,7 +15,7 @@ import {
   isSingleGovVault,
   isStandardVault,
   isVaultActive,
-  isVaultAeroUpgrade,
+  isVaultAeroUpgradeSoon,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -99,13 +99,13 @@ export const selectUserDepositedVaultIdsForAsset = createSelector(
     arrayOrStaticEmpty(vaultIds.filter(vaultId => vaultsById[vaultId]?.assetIds.includes(asset)))
 );
 
-export const selectUserHasDepositInAeroUpgradeVault = createSelector(
+export const selectUserHasDepositInAeroUpgradeSoonVault = createSelector(
   selectUserDepositedVaultIds,
   (state: BeefyState, _walletAddress?: string) => state.entities.vaults.byId,
   (vaultIds, vaultsById) =>
     vaultIds.some(vaultId => {
       const vault = vaultsById[vaultId];
-      return !!vault && isVaultAeroUpgrade(vault);
+      return !!vault && isVaultAeroUpgradeSoon(vault);
     })
 );
 
