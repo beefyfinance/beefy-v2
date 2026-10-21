@@ -69,6 +69,13 @@ export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
 };
 
+/** Claims batched ahead of a zap have no row in the zap route */
+export const selectStepperLeadingClaimStepCount = (state: BeefyState) => {
+  const items = state.ui.stepperState.items;
+  const firstNonClaim = items.findIndex(item => item.step !== 'claim-gov');
+  return firstNonClaim === -1 ? items.length : firstNonClaim;
+};
+
 export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };

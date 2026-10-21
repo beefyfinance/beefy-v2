@@ -7,10 +7,14 @@ import { toDepositTokenIfVaultShare } from '../../apis/transact/helpers/quotes.t
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
   isCrossChainOption,
+  isCrossChainVaultSrcDepositOption,
+  isCrossChainWithdrawOption,
   isDepositOption,
   isDepositQuote,
   isRewardPoolToVaultDepositOption,
+  isVaultToVaultSingleTokenDepositOption,
   isVaultToVaultSingleTokenOption,
+  isVaultToVaultSingleTokenWithdrawOption,
   isWithdrawOption,
   isWithdrawQuote,
   type QuoteOutputTokenAmountChange,
@@ -18,11 +22,15 @@ import {
   type TransactQuote,
 } from '../../apis/transact/transact-types.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
-import type { VaultGov } from '../../entities/vault.ts';
+import { isGovVault, type VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import { selectGovVaultPendingRewards } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
-import { selectTransactSlippage } from '../../selectors/transact.ts';
+import { selectTransactMode, selectTransactSlippage } from '../../selectors/transact.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectWalletAddress } from '../../selectors/wallet.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
@@ -43,6 +51,55 @@ type PrefetchedRequote = {
 
 const REQUOTE_MAX_AGE_MS = 30_000;
 
+/** The vault a zap unwinds the user's position from, for routes that pull out of another vault */
+function sourceVaultIdOf(option: TransactOption, state: BeefyState) {
+  if (isCrossChainVaultSrcDepositOption(option) || isCrossChainWithdrawOption(option)) {
+    return option.srcVaultId;
+  }
+  if (isVaultToVaultSingleTokenWithdrawOption(option)) {
+    return option.srcVaultId;
+  }
+  // same-chain v2v deposits are also offered on the Deposit tab; only claim when migrating
+  if (
+    isVaultToVaultSingleTokenDepositOption(option) &&
+    selectTransactMode(state) === TransactMode.Migrate
+  ) {
+    return option.srcVaultId;
+  }
+  return undefined;
+}
+
+/**
+ * Leaving a reward pool through a zap calls `withdraw()`, which leaves pending rewards behind in the
+ * pool. Claiming in the same batch saves the user a trip back to it.
+ */
+function maybeSourcePoolClaimStep(
+  quote: TransactQuote,
+  state: BeefyState,
+  t: TFunction<Namespace>
+): Step | undefined {
+  const srcVaultId = sourceVaultIdOf(quote.option, state);
+  if (!srcVaultId) {
+    return undefined;
+  }
+  const srcVault = selectVaultById(state, srcVaultId);
+  if (!isGovVault(srcVault)) {
+    return undefined;
+  }
+  const rewards = selectGovVaultPendingRewards(state, srcVault.id, selectWalletAddress(state));
+  if (!rewards.some(reward => reward.amount.gt(BIG_ZERO))) {
+    return undefined;
+  }
+
+  return {
+    step: 'claim-gov',
+    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+    // keep the quote alive for the zap step that follows
+    action: claimGovVault(srcVault, { clearInput: false }),
+    pending: false,
+  };
+}
+
 export async function getTransactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>,
@@ -60,6 +117,11 @@ export async function getTransactSteps(
   if (isCrossChainOption(quote.option)) {
     const sourceChain = selectChainById(state, quote.option.sourceChainId);
     prefetchGasPrice(sourceChain);
+  }
+
+  const claimStep = maybeSourcePoolClaimStep(quote, state, t);
+  if (claimStep) {
+    steps.push(claimStep);
   }
 
   const api = await getTransactApi();
