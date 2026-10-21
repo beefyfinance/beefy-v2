@@ -13,6 +13,7 @@ import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../sel
 import { selectVaultPricePerFullShare } from '../../../../selectors/vaults.ts';
 import type { BeefyThunk } from '../../../../store/types.ts';
 import { oracleAmountToMooAmount } from '../../../../utils/ppfs.ts';
+import { zapTxnNoun } from '../../helpers/boost.ts';
 import { getInsertIndex } from '../../helpers/zap.ts';
 import type {
   InputTokenAmount,
@@ -164,7 +165,7 @@ export class BoostStrategy implements IComposableStrategy {
 
     return {
       step: 'zap-in',
-      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      message: t('Vault-TxnConfirm', { type: zapTxnNoun(t, true, this.boost.id) }),
       action: zapAction,
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },
@@ -240,7 +241,7 @@ export class BoostStrategy implements IComposableStrategy {
 
     return {
       step: 'zap-out',
-      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      message: t('Vault-TxnConfirm', { type: zapTxnNoun(t, false, this.boost.id) }),
       action: zapAction,
       pending: false,
       extraInfo: { zap: true, vaultId: quote.option.vaultId },

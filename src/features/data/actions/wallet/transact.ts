@@ -22,7 +22,7 @@ import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import { selectBoostUserRewardsInToken } from '../../selectors/balance.ts';
+import { selectBoostUserHasRewards } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
@@ -144,8 +144,7 @@ function boostClaimStep(
   if (!boostId) {
     return undefined;
   }
-  const rewards = selectBoostUserRewardsInToken(state, boostId);
-  if (!rewards.some(reward => reward.amount.gt(BIG_ZERO))) {
+  if (!selectBoostUserHasRewards(state, boostId)) {
     return undefined;
   }
   return {
@@ -184,8 +183,12 @@ export function withZapDetails(step: Step, quote: TransactQuote, state: BeefySta
   // neither what the user typed nor what the rest of the app calls that position
   const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
   const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
-  const zapDetails: ZapStepDetails =
-    vaultToVault ? { inputs: sent, outputTokens, vaultToVault } : { inputs: sent, outputTokens };
+  const zapDetails: ZapStepDetails = {
+    inputs: sent,
+    outputTokens,
+    ...(vaultToVault && { vaultToVault }),
+    ...(option.boostId && { boostId: option.boostId }),
+  };
 
   return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }

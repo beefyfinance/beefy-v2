@@ -7,6 +7,7 @@ import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectBoostUserBalanceInDepositToken,
+  selectBoostUserHasRewards,
   selectHasUserDepositInVault,
   selectUserVaultBalanceInDepositTokenInBoosts,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
@@ -50,6 +51,7 @@ type FooterNotice =
       kind: 'boost-unstake';
       vaultId: VaultEntity['id'];
       balance: BigNumber;
+      claim: boolean;
     };
 
 const vaultIdArgument = (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId;
@@ -96,6 +98,7 @@ const selectWithdrawBoostNotice: FooterSelector = (state, vaultId) => {
       kind: 'boost-unstake',
       vaultId,
       balance: selectBoostUserBalanceInDepositToken(state, boostId),
+      claim: selectBoostUserHasRewards(state, boostId),
     };
   }
 
@@ -162,11 +165,11 @@ function footerNoticeEqual(a: FooterNotice | undefined, b: FooterNotice | undefi
   if (a.kind === 'deposit-claim' && b.kind === 'deposit-claim') {
     return rewardTokensEqual(a.rewardTokens, b.rewardTokens);
   }
-  if (
-    (a.kind === 'withdraw-boost' && b.kind === 'withdraw-boost') ||
-    (a.kind === 'boost-unstake' && b.kind === 'boost-unstake')
-  ) {
+  if (a.kind === 'withdraw-boost' && b.kind === 'withdraw-boost') {
     return a.vaultId === b.vaultId && bigNumberEqual(a.balance, b.balance);
+  }
+  if (a.kind === 'boost-unstake' && b.kind === 'boost-unstake') {
+    return a.vaultId === b.vaultId && a.claim === b.claim && bigNumberEqual(a.balance, b.balance);
   }
   return false;
 }
@@ -186,6 +189,12 @@ export const FormStepFooter = memo(function FormStepFooter() {
     case 'withdraw-boost':
       return <WithdrawBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
     case 'boost-unstake':
-      return <UnstakeBoostNotice vaultId={notice.vaultId} balance={notice.balance} />;
+      return (
+        <UnstakeBoostNotice
+          vaultId={notice.vaultId}
+          balance={notice.balance}
+          claim={notice.claim}
+        />
+      );
   }
 });

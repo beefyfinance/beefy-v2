@@ -70,6 +70,11 @@ export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
 };
 
+/** a boosted withdraw claims in its own step before the zap; the zap only runs if that succeeded */
+export const selectStepperHasBoostClaim = (state: BeefyState) => {
+  return state.ui.stepperState.items.some(item => item.step === 'boost-claim');
+};
+
 export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };

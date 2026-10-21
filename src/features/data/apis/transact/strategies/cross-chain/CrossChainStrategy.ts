@@ -30,7 +30,7 @@ import {
 } from '../../cctp/CCTPProvider.ts';
 import type { ZapPayload } from '../../cctp/types.ts';
 import { bridgeSlippageReturned, mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import { boostIdForLeg } from '../../helpers/boost.ts';
+import { boostIdForLeg, zapTxnNoun } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -646,9 +646,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
 
     return {
       step: isDeposit ? 'zap-in' : 'zap-out',
-      message: t('Vault-TxnConfirm', {
-        type: t(isDeposit ? 'Deposit-noun' : 'Withdraw-noun'),
-      }),
+      message: t('Vault-TxnConfirm', { type: zapTxnNoun(t, isDeposit, quote.option.boostId) }),
       action: crossChainZapExecuteOrder(
         sourceChainId,
         quote.option.vaultId,
@@ -1009,9 +1007,7 @@ class CrossChainStrategyImpl implements IZapStrategy<StrategyId> {
     const isDepositLike = handler.kind === 'vault';
     return {
       step: isDepositLike ? 'zap-in' : 'zap-out',
-      message: t('Vault-TxnConfirm', {
-        type: t(isDepositLike ? 'Deposit-noun' : 'Withdraw-noun'),
-      }),
+      message: t('Vault-TxnConfirm', { type: zapTxnNoun(t, isDepositLike, destCtx.boostId) }),
       action: crossChainRecoveryExecuteOrder(
         opId,
         destCtx.destChainId,
