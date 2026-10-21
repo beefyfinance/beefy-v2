@@ -70,17 +70,24 @@ export type VaultIdentityProps = {
   vaultId: VaultEntity['id'];
   networkCss?: CssStyles;
   isLink?: boolean;
+  address?: string;
 };
 export const VaultIdentity = memo(function VaultIdentity({
   vaultId,
   networkCss,
   isLink,
+  address,
 }: VaultIdentityProps) {
   const classes = useStyles();
 
   return (
     <div className={classes.vaultIdentity}>
-      <VaultIdentityContent isLink={isLink} vaultId={vaultId} networkCss={networkCss} />
+      <VaultIdentityContent
+        isLink={isLink}
+        vaultId={vaultId}
+        networkCss={networkCss}
+        address={address}
+      />
     </div>
   );
 });
@@ -89,6 +96,7 @@ export const VaultIdentityContent = memo(function VaultIdentityContent({
   vaultId,
   networkCss,
   isLink,
+  address,
 }: VaultIdentityProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -99,7 +107,7 @@ export const VaultIdentityContent = memo(function VaultIdentityContent({
       <VaultIcon vaultId={vaultId} />
       <div className={classes.vaultNameTags}>
         <VaultName isLink={isLink} vaultId={vaultId} />
-        <VaultTags vaultId={vaultId} />
+        <VaultTags vaultId={vaultId} address={address} />
       </div>
     </>
   );
