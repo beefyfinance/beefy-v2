@@ -19,6 +19,7 @@ import type {
   WithdrawQuote,
 } from '../transact-types.ts';
 import type { ZapStep } from '../zap/types.ts';
+import type { ShareSource } from './ShareSource.ts';
 
 export type VaultDepositRequest = {
   inputs: InputTokenAmount[];
@@ -61,6 +62,8 @@ export interface IStandardVaultType extends IVaultType {
   readonly vault: VaultStandard;
   readonly depositToken: TokenEntity;
   readonly shareToken: TokenErc20;
+  readonly shareSource: ShareSource;
+  withShareSource(shareSource: ShareSource): IStandardVaultType;
 }
 
 export interface IGovVaultType extends IVaultType {
@@ -81,6 +84,7 @@ export interface IErc4626VaultType extends IVaultType {
   readonly vault: VaultErc4626;
   readonly depositToken: TokenEntity;
   readonly shareToken: TokenErc20;
+  readonly shareSource: ShareSource;
 }
 
 export type VaultType =

@@ -16,11 +16,13 @@ import {
   type QuoteOutputTokenAmountChange,
   type TransactOption,
   type TransactQuote,
+  isZapQuote,
 } from '../../apis/transact/transact-types.ts';
 import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import { selectBoostUserHasRewards } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
@@ -32,6 +34,7 @@ import {
   transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
+import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
 import { stepperReset, stepperStartWithSteps } from './stepper.ts';
@@ -60,6 +63,11 @@ export async function getTransactSteps(
   if (isCrossChainOption(quote.option)) {
     const sourceChain = selectChainById(state, quote.option.sourceChainId);
     prefetchGasPrice(sourceChain);
+  }
+
+  const claimStep = boostClaimStep(quote, state, t);
+  if (claimStep) {
+    steps.push(claimStep);
   }
 
   const api = await getTransactApi();
@@ -123,6 +131,30 @@ export async function getTransactSteps(
   return steps;
 }
 
+// the unstake leaves the rewards claimable by the user, so claiming first is a convenience, not a requirement
+function boostClaimStep(
+  quote: TransactQuote,
+  state: BeefyState,
+  t: TFunction<Namespace>
+): Step | undefined {
+  if (!isWithdrawQuote(quote) || !isZapQuote(quote)) {
+    return undefined;
+  }
+  const boostId = quote.steps.find(step => step.type === 'unstake')?.boostId;
+  if (!boostId) {
+    return undefined;
+  }
+  if (!selectBoostUserHasRewards(state, boostId)) {
+    return undefined;
+  }
+  return {
+    step: 'boost-claim',
+    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+    action: claimBoost(boostId),
+    pending: false,
+  };
+}
+
 /** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
 function vaultToVaultOf(option: TransactOption) {
   if (isVaultToVaultSingleTokenOption(option)) {
@@ -151,8 +183,12 @@ export function withZapDetails(step: Step, quote: TransactQuote, state: BeefySta
   // neither what the user typed nor what the rest of the app calls that position
   const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
   const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
-  const zapDetails: ZapStepDetails =
-    vaultToVault ? { inputs: sent, outputTokens, vaultToVault } : { inputs: sent, outputTokens };
+  const zapDetails: ZapStepDetails = {
+    inputs: sent,
+    outputTokens,
+    ...(vaultToVault && { vaultToVault }),
+    ...(option.boostId && { boostId: option.boostId }),
+  };
 
   return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }

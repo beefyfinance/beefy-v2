@@ -123,6 +123,10 @@ export type VaultToVaultSingleTokenStrategyConfig = {
   strategyId: 'vault-to-vault-single-token';
 } & OptionalStrategySwapConfig;
 
+export type VaultIdentityStrategyConfig = {
+  strategyId: 'vault-identity';
+};
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -139,7 +143,8 @@ export type ZapStrategyConfig =
   | PendleV2StrategyConfig
   | YieldBasisStrategyConfig
   | CrossChainStrategyConfig
-  | VaultToVaultSingleTokenStrategyConfig;
+  | VaultToVaultSingleTokenStrategyConfig
+  | VaultIdentityStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

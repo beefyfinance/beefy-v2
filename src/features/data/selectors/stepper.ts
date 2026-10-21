@@ -24,6 +24,7 @@ import {
 } from '../reducers/wallet/wallet-action-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
+import type { CrossChainRecoveryParams } from '../reducers/wallet/transact-types.ts';
 import { selectBoostById } from './boosts.ts';
 import {
   selectChainNativeToken,
@@ -67,6 +68,11 @@ export const selectStepperCurrentStepData = (state: BeefyState): Step => {
 
 export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
+};
+
+/** a boosted withdraw claims in its own step before the zap; the zap only runs if that succeeded */
+export const selectStepperHasBoostClaim = (state: BeefyState) => {
+  return state.ui.stepperState.items.some(item => item.step === 'boost-claim');
 };
 
 export const selectStepperStepContent = (state: BeefyState) => {
@@ -412,11 +418,17 @@ function selectReceivedAddresses(
     vaultId: string;
     destChainId: ChainEntity['id'];
     expectedOutput: TokenAmount;
+    recovery: CrossChainRecoveryParams;
   }
 ): Set<string> {
   if (op.direction === 'deposit') {
     const vault = selectVaultById(state, op.vaultId);
-    return new Set([vault.contractAddress.toLowerCase(), vault.depositTokenAddress.toLowerCase()]);
+    const boostId = op.recovery.destHandlerKind === 'vault' ? op.recovery.boostId : undefined;
+    return new Set([
+      vault.contractAddress.toLowerCase(),
+      vault.depositTokenAddress.toLowerCase(),
+      ...(boostId ? [selectBoostById(state, boostId).contractAddress.toLowerCase()] : []),
+    ]);
   }
   if (isTokenNative(op.expectedOutput.token)) {
     const wnative = selectChainWrappedNativeToken(state, op.destChainId);

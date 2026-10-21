@@ -1,19 +1,23 @@
-import type { Address } from 'viem';
 import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { toWei } from '../../../../../helpers/big-number.ts';
 import type { VaultStandard, VaultWithPricePerFullShare } from '../../../entities/vault.ts';
-import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
+import type { ShareSource } from '../vaults/ShareSource.ts';
+
+type VaultWithShares<T extends VaultWithPricePerFullShare> = {
+  vault: T;
+  shareSource: ShareSource;
+};
 
 export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
-  vault: VaultWithPricePerFullShare,
+  { vault, shareSource }: VaultWithShares<VaultWithPricePerFullShare>,
   state: BeefyState,
   userAddress?: string
 ) {
@@ -21,10 +25,7 @@ export function getVaultWithdrawnFromState(
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const totalSharesWei = toWei(
-    selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
-    shareToken.decimals
-  );
+  const totalSharesWei = shareSource.sharesWeiFromState(state, userAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
@@ -56,7 +57,7 @@ export function getVaultWithdrawnFromState(
 
 export async function getVaultWithdrawnFromContract(
   userInput: InputTokenAmount,
-  vault: VaultStandard,
+  { vault, shareSource }: VaultWithShares<VaultStandard>,
   state: BeefyState,
   userAddress: string
 ) {
@@ -69,13 +70,12 @@ export async function getVaultWithdrawnFromContract(
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
 
-  const [balance, totalSupply, userBalance] = await Promise.all([
+  const [balance, totalSupply, totalSharesWei] = await Promise.all([
     vaultContract.read.balance(),
     vaultContract.read.totalSupply(),
-    vaultContract.read.balanceOf([userAddress as Address]),
+    shareSource.fetchSharesWei(userAddress),
   ]);
 
-  const totalSharesWei = new BigNumber(userBalance.toString(10));
   const vaultTotalSupplyWei = new BigNumber(totalSupply.toString(10));
   const vaultBalanceWei = new BigNumber(balance.toString(10));
 

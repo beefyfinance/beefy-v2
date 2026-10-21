@@ -220,10 +220,7 @@ export const selectUserVaultBalanceInDepositTokenInBoosts = createSelector(
     selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectVaultSharesToDepositTokenData(state, vaultId),
-  (shares, shareData) =>
-    shareData.shareToken ?
-      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
-    : shares
+  sharesToDepositToken
 );
 
 /**
@@ -313,6 +310,15 @@ export const selectUserVaultBalanceInShareTokenPendingWithdrawal = createSelecto
     selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, maybeWalletAddress)?.shares,
   shares => bigNumberOrStaticZero(shares)
 );
+
+function sharesToDepositToken(
+  shares: BigNumber,
+  shareData: ReturnType<typeof selectVaultSharesToDepositTokenData>
+): BigNumber {
+  return shareData.shareToken ?
+      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
+    : shares;
+}
 
 export const selectVaultSharesToDepositTokenData = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
@@ -711,6 +717,14 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+export const selectBoostUserBalanceInDepositToken = createSelector(
+  (state: BeefyState, boostId: BoostPromoEntity['id'], maybeWalletAddress?: string) =>
+    selectBoostUserBalanceInToken(state, boostId, maybeWalletAddress),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, selectBoostById(state, boostId).vaultId),
+  sharesToDepositToken
+);
+
 const NO_REWARDS: BoostReward[] = [];
 export const selectBoostUserRewardsInToken = (
   state: BeefyState,
@@ -720,6 +734,9 @@ export const selectBoostUserRewardsInToken = (
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
+
+export const selectBoostUserHasRewards = (state: BeefyState, boostId: BoostPromoEntity['id']) =>
+  selectBoostUserRewardsInToken(state, boostId).some(reward => reward.amount.gt(BIG_ZERO));
 
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens

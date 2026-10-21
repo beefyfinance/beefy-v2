@@ -1,10 +1,19 @@
 import type BigNumber from 'bignumber.js';
-import { partition, uniq } from 'lodash-es';
+import { partition, uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
+import {
+  isCowcentratedLikeVault,
+  isStandardVault,
+  type VaultEntity,
+} from '../../entities/vault.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import {
+  selectZapStakeableBoostOrUndefined,
+  selectZapUnstakeableBoostOrUndefined,
+} from '../../selectors/boosts.ts';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
 import type { CrossChainRecoveryParams } from '../../reducers/wallet/transact-types.ts';
@@ -44,6 +53,7 @@ import { CrossChainStrategy } from './strategies/cross-chain/CrossChainStrategy.
 import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
+import { withBoost, withBoostShares } from './strategies/boost/BoostStrategy.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -51,17 +61,21 @@ import {
 import { isVaultBlacklistedForV2V } from '../../../../config/vault-to-vault/blacklist.ts';
 import { resolveOptionFeeCampaign } from './helpers/fee.ts';
 import { filterGeoBlockedOptions } from './helpers/geo.ts';
+import { boostedCounterpart } from './helpers/boost.ts';
 import { filterUnpricedSwapOptions } from './helpers/unpriced.ts';
-import { isOptionFeeable } from './helpers/options.ts';
+import { dropSingleIdentityOption, isOptionFeeable } from './helpers/options.ts';
 import {
   type DepositOption,
   type DepositQuote,
   type InputTokenAmount,
   type ITransactApi,
   type RecoveryQuote,
+  type TransactOption,
   type TransactQuote,
   type WithdrawOption,
   type WithdrawQuote,
+  isCrossChainOption,
+  isVaultToVaultSingleTokenOption,
 } from './transact-types.ts';
 import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
 import { getVaultTypeBuilder } from './vaults/vaults.ts';
@@ -76,6 +90,9 @@ function maybeWrapFee(
   }
   return strategy;
 }
+
+const optionStrategyKey = (option: TransactOption) =>
+  option.boostId ? `${option.strategyId}:${option.boostId}` : option.strategyId;
 
 type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
   [K in TId]: {
@@ -230,15 +247,56 @@ export class TransactApi implements ITransactApi {
     );
 
     // if not disabled by a zap strategy, add the vault deposit option as the first item
-    if (vaultDepositOption) {
-      const deduped = dropSingleIdentityOption(
-        allowedOptions,
-        vaultDepositOption.inputs[0].address
-      );
-      return [vaultDepositOption, ...deduped];
-    }
+    const deduped: DepositOption[] =
+      vaultDepositOption ?
+        [
+          vaultDepositOption,
+          ...dropSingleIdentityOption(allowedOptions, vaultDepositOption.inputs[0].address),
+        ]
+      : allowedOptions;
 
-    return allowedOptions;
+    return this.withBoostedCounterparts(
+      selectZapStakeableBoostOrUndefined(state, helpers.vault.id),
+      helpers,
+      zapStrategies,
+      deduped,
+      strategy => strategy.fetchDepositOptions()
+    );
+  }
+
+  // a boosted counterpart after every option the boost decorator can wrap;
+  // the vault option's counterpart is the plain route as a zap (vault-identity), which is not configured per vault
+  private async withBoostedCounterparts<T extends TransactOption>(
+    boost: BoostPromoEntity | undefined,
+    helpers: TransactHelpers,
+    zapStrategies: IStrategy[],
+    options: T[],
+    fetchIdentityOptions: (strategy: IStrategy) => Promise<T[]>
+  ): Promise<T[]> {
+    if (!boost || !isStandardVault(helpers.vault) || !isZapTransactHelpers(helpers)) {
+      return options;
+    }
+    const composableStrategyIds = new Set<string>(
+      zapStrategies.filter(isComposableStrategy).map(strategy => strategy.id)
+    );
+    // cross-chain / v2v routes are composable by construction: their handlers only pick composable inner strategies
+    const canBoost = (option: T) =>
+      isCrossChainOption(option) ||
+      isVaultToVaultSingleTokenOption(option) ||
+      composableStrategyIds.has(option.strategyId);
+    const identityOptions =
+      options.some(option => option.strategyId === 'vault') ?
+        await fetchIdentityOptions(
+          await this.buildZapStrategy({ strategyId: 'vault-identity' }, helpers, false)
+        )
+      : [];
+
+    return options.flatMap(option =>
+      option.strategyId === 'vault' ?
+        [option, ...identityOptions.map(identity => boostedCounterpart(identity, boost.id))]
+      : canBoost(option) ? [option, boostedCounterpart(option, boost.id)]
+      : [option]
+    );
   }
 
   async fetchDepositQuotesFor(
@@ -247,13 +305,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn
   ): Promise<DepositQuote[]> {
     const vaultId = options[0].vaultId;
-    const strategyIds = uniq(options.map(option => option.strategyId));
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
-    // Init each strategy at most once
-    const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
+    // Init each strategy (plain or boosted) at most once
+    const keyedOptions = uniqBy(options, optionStrategyKey);
+    const strategies = await Promise.all(
+      keyedOptions.map(option => this.getStrategyForOption(option, helpers))
+    );
     const strategiesById = Object.fromEntries(
-      strategies.map((strategy, i) => [strategyIds[i], strategy])
+      strategies.map((strategy, i) => [optionStrategyKey(keyedOptions[i]), strategy])
     );
 
     await Promise.allSettled(
@@ -266,7 +326,7 @@ export class TransactApi implements ITransactApi {
 
     const quotes = await Promise.allSettled(
       options.map(async option => {
-        const strategy = strategiesById[option.strategyId];
+        const strategy = strategiesById[optionStrategyKey(option)];
         const quote = await strategy.fetchDepositQuote(amounts, option);
         if (!quote) {
           throw new Error(`Strategy ${option.strategyId} failed to return quote`);
@@ -302,7 +362,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyForOption(quote.option, helpers);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -388,15 +448,21 @@ export class TransactApi implements ITransactApi {
     );
 
     // if not disabled by a zap strategy, add the vault withdraw option as the first item
-    if (vaultWithdrawOption) {
-      const deduped = dropSingleIdentityOption(
-        allowedOptions,
-        vaultWithdrawOption.inputs[0].address
-      );
-      return [vaultWithdrawOption, ...deduped];
-    }
+    const deduped: WithdrawOption[] =
+      vaultWithdrawOption ?
+        [
+          vaultWithdrawOption,
+          ...dropSingleIdentityOption(allowedOptions, vaultWithdrawOption.inputs[0].address),
+        ]
+      : allowedOptions;
 
-    return allowedOptions;
+    return this.withBoostedCounterparts(
+      selectZapUnstakeableBoostOrUndefined(state, helpers.vault.id),
+      helpers,
+      zapStrategies,
+      deduped,
+      strategy => strategy.fetchWithdrawOptions()
+    );
   }
 
   async fetchWithdrawQuotesFor(
@@ -405,13 +471,15 @@ export class TransactApi implements ITransactApi {
     getState: BeefyStateFn
   ): Promise<WithdrawQuote[]> {
     const vaultId = options[0].vaultId;
-    const strategyIds = uniq(options.map(option => option.strategyId));
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
-    // Init each strategy at most once
-    const strategies = await Promise.all(strategyIds.map(id => this.getStrategyById(id, helpers)));
+    // Init each strategy (plain or boosted) at most once
+    const keyedOptions = uniqBy(options, optionStrategyKey);
+    const strategies = await Promise.all(
+      keyedOptions.map(option => this.getStrategyForOption(option, helpers))
+    );
     const strategiesById = Object.fromEntries(
-      strategies.map((strategy, i) => [strategyIds[i], strategy])
+      strategies.map((strategy, i) => [optionStrategyKey(keyedOptions[i]), strategy])
     );
 
     await Promise.allSettled(
@@ -424,7 +492,7 @@ export class TransactApi implements ITransactApi {
 
     const quotes = await Promise.allSettled(
       options.map(option => {
-        const strategy = strategiesById[option.strategyId];
+        const strategy = strategiesById[optionStrategyKey(option)];
         return strategy.fetchWithdrawQuote(amounts, option);
       })
     );
@@ -475,7 +543,7 @@ export class TransactApi implements ITransactApi {
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
-    const strategy = await this.getStrategyById(quote.option.strategyId, helpers);
+    const strategy = await this.getStrategyForOption(quote.option, helpers);
 
     if (strategy.beforeStep) {
       await strategy.beforeStep();
@@ -696,6 +764,23 @@ export class TransactApi implements ITransactApi {
     });
   }
 
+  /** the strategy for an option; a boosted option's route is wrapped to also stake into the boost */
+  private async getStrategyForOption(
+    option: TransactOption,
+    helpers: TransactHelpers
+  ): Promise<IStrategy> {
+    if (!option.boostId || !isZapTransactHelpers(helpers)) {
+      return this.getStrategyById(option.strategyId, helpers);
+    }
+    // only withdraw reads the share source; a deposit route is built the same way for uniformity
+    const routeHelpers = withBoostShares(helpers, option.boostId);
+    const strategy = await this.getStrategyById(option.strategyId, routeHelpers);
+    // cross-chain / v2v orchestrator are not composable; their destination handler wraps instead
+    return isComposableStrategy(strategy) ?
+        withBoost(strategy, routeHelpers, option.boostId)
+      : strategy;
+  }
+
   private async getStrategyById(
     strategyId: AnyStrategyId,
     helpers: TransactHelpers
@@ -713,6 +798,9 @@ export class TransactApi implements ITransactApi {
     // Synthetic strategies that aren't stored in vault.zaps — instantiate inline
     if (strategyId === 'cross-chain' || strategyId === 'vault-to-vault-single-token') {
       return await this.buildZapStrategy({ strategyId }, helpers, true);
+    }
+    if (strategyId === 'vault-identity') {
+      return await this.buildZapStrategy({ strategyId }, helpers, false);
     }
 
     if (!vault.zaps) {
@@ -901,28 +989,4 @@ export class TransactApi implements ITransactApi {
   //
   //   return false;
   // }
-}
-
-/**
- * Drop SingleStrategy's identity (depositToken→depositToken) option — emitted so
- *  cross-chain can find the vault via fetchOptions; the picker uses the vault-type path instead.
- */
-function dropSingleIdentityOption<
-  T extends {
-    strategyId: string;
-    inputs: { address: string }[];
-    wantedOutputs: { address: string }[];
-  },
->(options: T[], tokenAddress: string): T[] {
-  const lower = tokenAddress.toLowerCase();
-  return options.filter(
-    o =>
-      !(
-        o.strategyId === 'single' &&
-        o.inputs.length === 1 &&
-        o.wantedOutputs.length === 1 &&
-        o.inputs[0].address.toLowerCase() === lower &&
-        o.wantedOutputs[0].address.toLowerCase() === lower
-      )
-  );
 }
