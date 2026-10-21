@@ -15,6 +15,7 @@ import {
   isSingleGovVault,
   isStandardVault,
   isVaultActive,
+  isVaultAeroUpgradeSoon,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -98,8 +99,22 @@ export const selectUserDepositedVaultIdsForAsset = createSelector(
     arrayOrStaticEmpty(vaultIds.filter(vaultId => vaultsById[vaultId]?.assetIds.includes(asset)))
 );
 
-export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
+export const selectUserHasDepositInAeroUpgradeSoonVault = createSelector(
+  selectUserDepositedVaultIds,
+  (state: BeefyState, _walletAddress?: string) => state.entities.vaults.byId,
+  (vaultIds, vaultsById) =>
+    vaultIds.some(vaultId => {
+      const vault = vaultsById[vaultId];
+      return !!vault && isVaultAeroUpgradeSoon(vault);
+    })
+);
+
+export const selectHasUserDepositInVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
@@ -387,13 +402,14 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createSelect
  */
 export const selectUserHasBalanceToMigrate = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
 ): boolean => {
   const migration = selectVaultReplacementMigration(state, vaultId);
   if (!migration) {
     return false;
   }
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return false;
   }

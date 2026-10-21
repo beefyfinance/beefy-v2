@@ -26,14 +26,14 @@ export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
   }
 );
 
-const BannerWrapper = styled('div', {
+export const BannerWrapper = styled('div', {
   base: {
     backgroundColor: 'background.header',
     paddingBottom: '24px',
   },
 });
 
-const BannerContainer = styled(Container, {
+export const BannerContainer = styled(Container, {
   base: {
     lg: {
       paddingInline: '26px',

@@ -362,6 +362,15 @@ export function isVaultPaused(vault: VaultEntity): vault is VaultEntityPaused {
   return vault.status === 'paused';
 }
 
+/** pre-Aero Aerodrome/Velodrome products, new Aero vaults use a new platformId */
+export function isVaultAeroUpgradeSoon(vault: VaultEntity) {
+  return (
+    !isVaultRetired(vault) &&
+    (!isVaultPaused(vault) || vault.pauseReason === 'AeroLaunch26') &&
+    (vault.platformId === 'aerodrome' || vault.platformId === 'velodrome')
+  );
+}
+
 export function isVaultEarningPoints(vault: VaultEntity) {
   return vault.earningPoints === true;
 }
