@@ -4820,7 +4820,7 @@
     "oracleId": "balancer-stmatic-bbawmatic",
     "status": "eol",
     "createdAt": 1682857348,
-    "retireReason": "exploit",
+    "retireReason": "exploitPanic",
     "retiredAt": 1692947480,
     "platformId": "balancer",
     "assets": ["stMATIC", "bbaWMATIC"],

@@ -90,7 +90,36 @@ export type VaultBase = {
   poolTogether?: string;
   /** id to use to look up lp breakdown/underlying tvl */
   breakdownId: string;
+  /** deposit token is priced as an LP (config oracle 'lps'); unlike assetType, includes single-asset LPs e.g. Pendle */
+  depositTokenIsLp: boolean;
 };
+
+/** `*Panic`: funds were emergency-withdrawn, so the alert says what users now hold */
+export const PAUSE_REASONS = [
+  'rewards',
+  'tvl',
+  'upgrade',
+  'sunset',
+  'sunsetPanic',
+  'exploitNoPanic',
+  'exploitPanic',
+  'liquidityNoPanic',
+  'liquidityPanic',
+] as const;
+export type PauseReason = (typeof PAUSE_REASONS)[number];
+
+export const RETIRE_REASONS = [
+  ...PAUSE_REASONS,
+  'beta',
+  // one-off events with their own copy
+  'bifiV2',
+  'bevelo',
+  'scream',
+  'Balancer2025',
+  'Stream2025',
+  'AerodromeMigration26',
+] as const;
+export type RetireReason = (typeof RETIRE_REASONS)[number];
 
 export type VaultActive = {
   status: 'active';
@@ -98,16 +127,14 @@ export type VaultActive = {
 
 export type VaultRetired = {
   status: 'eol';
-  /** retire reason code */
-  retireReason: string;
+  retireReason?: RetireReason;
   /** when the vault was retired, unix timestamp */
   retiredAt: number;
 };
 
 export type VaultPaused = {
   status: 'paused';
-  /** paused reason code */
-  pauseReason: string;
+  pauseReason?: PauseReason;
   /** when the vault was paused, unix timestamp */
   pausedAt: number;
 };
@@ -393,18 +420,5 @@ export function getCowcentratedVault(vault: VaultCowcentratedLike): string | und
 }
 
 export function shouldVaultShowInterest(vault: VaultEntity, chain: Pick<ChainEntity, 'features'>) {
-  if (!chain.features.apy) {
-    return false;
-  }
-
-  if (isVaultRetired(vault)) {
-    return false;
-  }
-
-  if (isVaultPaused(vault)) {
-    // Still earning reasons
-    return !!vault.pauseReason && ['viability', 'ren-sunset'].includes(vault.pauseReason);
-  }
-
-  return true;
+  return !!chain.features.apy && isVaultActive(vault);
 }

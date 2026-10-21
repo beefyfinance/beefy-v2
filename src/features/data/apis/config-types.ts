@@ -1,4 +1,4 @@
-import type { VaultEntity } from '../entities/vault.ts';
+import type { PauseReason, RetireReason, VaultEntity } from '../entities/vault.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
@@ -61,9 +61,9 @@ export interface VaultConfig {
   createdAt: number;
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
-  retireReason?: string;
+  retireReason?: RetireReason;
   retiredAt?: number;
-  pauseReason?: string;
+  pauseReason?: PauseReason;
   pausedAt?: number;
   /** Used for sorting, not required in config, defaults to createdAt */
   updatedAt?: number;

@@ -358,12 +358,12 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
     : apiVault.status === 'eol' ?
       {
         status: 'eol',
-        retireReason: apiVault.retireReason || 'default',
+        retireReason: apiVault.retireReason,
         retiredAt: apiVault.retiredAt || 0,
       }
     : {
         status: 'paused',
-        pauseReason: apiVault.pauseReason || 'default',
+        pauseReason: apiVault.pauseReason,
         pausedAt: apiVault.pausedAt || 0,
       }
   );
@@ -400,5 +400,6 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     hidden: false,
     poolTogether: config.poolTogether,
     breakdownId: config.oracle === 'tokens' ? config.id : config.oracleId, // use vault id when deposit token is not a LP
+    depositTokenIsLp: config.oracle === 'lps',
   };
 }
