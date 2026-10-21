@@ -8,7 +8,9 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { DstTokenReturned } from '../reducers/wallet/stepper-types.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
+import { selectBoostById } from '../selectors/boosts.ts';
 import { selectChainById } from '../selectors/chains.ts';
+import { selectCrossChainOpById } from '../selectors/transact.ts';
 import { selectStepperBridgeStatus } from '../selectors/stepper.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
@@ -332,8 +334,16 @@ function fetchVaultChainBalances(getState: () => BeefyState): BeefyThunk {
     if (vaultChainCctp) {
       vaultChainTokens.push(selectTokenByAddress(state, vault.chainId, vaultChainCctp.usdcAddress));
     }
+    const recovery =
+      bridgeStatus.opId ? selectCrossChainOpById(state, bridgeStatus.opId)?.recovery : undefined;
+    const boostId = recovery?.destHandlerKind === 'vault' ? recovery.boostId : undefined;
     dispatch(
-      fetchBalanceAction({ chainId: vault.chainId, tokens: vaultChainTokens, vaults: [vault] })
+      fetchBalanceAction({
+        chainId: vault.chainId,
+        tokens: vaultChainTokens,
+        vaults: [vault],
+        boosts: boostId ? [selectBoostById(state, boostId)] : [],
+      })
     );
 
     if (destChainId !== vault.chainId) {

@@ -4,10 +4,22 @@ import type { VaultConfig } from '../apis/config-types.ts';
 import { getPromosApi } from '../apis/promos/promos.ts';
 import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types.ts';
 import type { PromoCampaignEntity, PromoEntity, PromoPartnerEntity } from '../entities/promo.ts';
-import { selectVaultCurrentBoostId } from '../selectors/boosts.ts';
+import { isTokenErc20, type TokenErc20 } from '../entities/token.ts';
+import { BOOST_ZAP_MIN_VERSION } from '../apis/transact/helpers/boost.ts';
+import { selectAllChainIds } from '../selectors/chains.ts';
+import { selectTokenByAddressOrUndefined } from '../selectors/tokens.ts';
+import {
+  selectBoostById,
+  selectBoostsByChainId,
+  selectVaultCurrentBoostId,
+} from '../selectors/boosts.ts';
 import { selectVaultIsBoostedForFilter } from '../selectors/filtered-vaults.ts';
 import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards.ts';
-import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults.ts';
+import {
+  selectAllVisibleVaultIds,
+  selectVaultByIdOrUndefined,
+  selectVaultsPinnedConfigs,
+} from '../selectors/vaults.ts';
 import type { BeefyState } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 
@@ -268,5 +280,50 @@ export const promosRecalculatePinned = createAppAsyncThunk<FulfilledVaultsPinned
     }
 
     return { byId };
+  }
+);
+
+export type FulfilledInitBoostReceiptTokensPayload = {
+  tokens: TokenErc20[];
+};
+
+/** v2+ boost contracts are ERC20 receipts for the staked shares; register them so zaps can route them like any token */
+export const initBoostReceiptTokens = createAppAsyncThunk<FulfilledInitBoostReceiptTokensPayload>(
+  'promos/initBoostReceiptTokens',
+  async (_, { getState }) => {
+    const state = getState();
+    const tokens: TokenErc20[] = [];
+
+    for (const chainId of selectAllChainIds(state)) {
+      for (const boostId of selectBoostsByChainId(state, chainId)) {
+        const boost = selectBoostById(state, boostId);
+        if (boost.version < BOOST_ZAP_MIN_VERSION) {
+          continue;
+        }
+        const vault = selectVaultByIdOrUndefined(state, boost.vaultId);
+        const shareToken =
+          vault && selectTokenByAddressOrUndefined(state, chainId, vault.contractAddress);
+        if (!shareToken || !isTokenErc20(shareToken)) {
+          continue;
+        }
+        tokens.push({
+          type: 'erc20',
+          id: boost.id,
+          chainId,
+          address: boost.contractAddress,
+          decimals: shareToken.decimals,
+          symbol: `r${shareToken.symbol}`,
+          oracleId: shareToken.oracleId,
+          providerId: shareToken.providerId,
+          buyUrl: undefined,
+          website: undefined,
+          description: undefined,
+          documentation: undefined,
+          tags: [],
+        });
+      }
+    }
+
+    return { tokens };
   }
 );

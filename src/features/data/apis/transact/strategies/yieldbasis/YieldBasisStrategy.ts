@@ -323,7 +323,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultWithdrawnFromState(input, this.vaultType, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
 
     const approveAmount = fromWei(sharesToWithdrawWei, shareToken.decimals);

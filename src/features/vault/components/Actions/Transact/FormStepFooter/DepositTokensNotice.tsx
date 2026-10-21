@@ -10,12 +10,16 @@ type DepositTokensNoticeProps = {
   i18nKey: string;
   rewardTokens: UnifiedRewardToken[];
   onClick?: () => void;
+  checked?: boolean;
+  disabled?: boolean;
 };
 
 export const DepositTokensNotice = memo(function DepositTokensNotice({
   i18nKey,
   rewardTokens,
   onClick,
+  checked,
+  disabled,
 }: DepositTokensNoticeProps) {
   const { t } = useTranslation();
   const inner = useMemo(() => {
@@ -32,7 +36,12 @@ export const DepositTokensNotice = memo(function DepositTokensNotice({
   }, [i18nKey, rewardTokens, t]);
 
   return (
-    <ActionTokensNotice multiline={rewardTokens.length > 1} onClick={onClick}>
+    <ActionTokensNotice
+      multiline={rewardTokens.length > 1}
+      onClick={onClick}
+      checked={checked}
+      disabled={disabled}
+    >
       {inner}
     </ActionTokensNotice>
   );

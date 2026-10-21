@@ -9,6 +9,7 @@ import { selectWalletAddress } from '../../../../selectors/wallet.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import { getRoutingTokensForChain } from '../../../../../../config/vault-to-vault/routing-tokens.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { boostIdForLeg } from '../../helpers/boost.ts';
 import { buildFeeZapSteps, optionFeeEndpoints, resolveZapFee } from '../../helpers/fee.ts';
 import {
   createOptionId,
@@ -56,6 +57,7 @@ import {
 } from '../IStrategy.ts';
 import type { VaultToVaultSingleTokenStrategyConfig } from '../strategy-configs.ts';
 import { getTransactApi } from '../../../instances.ts';
+import type { BoostPromoEntity } from '../../../../entities/promo.ts';
 import type { TokenEntity } from '../../../../entities/token.ts';
 import { enumerateSameChainDstCandidates, enumerateSameChainSrcCandidates } from './enumeration.ts';
 
@@ -86,7 +88,10 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
 
   // --- CONTEXT FACTORIES ---
 
-  private makeSourceContext(routingToken: TokenEntity): SourceHandlerContext {
+  private makeSourceContext(
+    routingToken: TokenEntity,
+    boostId?: BoostPromoEntity['id']
+  ): SourceHandlerContext {
     return {
       helpers: this.helpers,
       sourceChainId: this.helpers.vault.chainId,
@@ -94,10 +99,14 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
+      boostId,
     };
   }
 
-  private makeDestContext(routingToken: TokenEntity): DestHandlerContext {
+  private makeDestContext(
+    routingToken: TokenEntity,
+    boostId?: BoostPromoEntity['id']
+  ): DestHandlerContext {
     return {
       helpers: this.helpers,
       destChainId: this.helpers.vault.chainId,
@@ -105,6 +114,7 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       slippage: selectTransactSlippage(this.helpers.getState()),
       pageVaultId: this.helpers.vault.id,
       resolveHelpersForVault: vaultId => this.resolveHelpersForVault(vaultId),
+      boostId,
     };
   }
 
@@ -223,8 +233,8 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const { routingToken } = option;
 
-    const srcCtx = this.makeSourceContext(routingToken);
-    const destCtx = this.makeDestContext(routingToken);
+    const srcCtx = this.makeSourceContext(routingToken, boostIdForLeg(option, 'source'));
+    const destCtx = this.makeDestContext(routingToken, boostIdForLeg(option, 'dest'));
 
     const srcHandler = new VaultSourceHandler(option.srcVaultId);
     const destHandler = new VaultDestHandler(option.destVaultId);
@@ -290,8 +300,8 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<Step> {
     const { routingToken } = quote.option;
 
-    const srcCtx = this.makeSourceContext(routingToken);
-    const destCtx = this.makeDestContext(routingToken);
+    const srcCtx = this.makeSourceContext(routingToken, boostIdForLeg(quote.option, 'source'));
+    const destCtx = this.makeDestContext(routingToken, boostIdForLeg(quote.option, 'dest'));
 
     const srcHandler: ISourceHandler = new VaultSourceHandler(quote.option.srcVaultId);
     const destHandler: IDestHandler = new VaultDestHandler(quote.option.destVaultId);
@@ -332,7 +342,12 @@ class VaultToVaultSingleTokenStrategyImpl implements IZapStrategy<StrategyId> {
       message: t('Vault-TxnConfirm', {
         type: t(isDeposit ? 'Deposit-noun' : 'Withdraw-noun'),
       }),
-      action: zapExecuteOrder(this.helpers.vault.id, zapRequest, destSteps.expectedTokens),
+      action: zapExecuteOrder(
+        this.helpers.vault.id,
+        zapRequest,
+        destSteps.expectedTokens,
+        quote.option.boostId
+      ),
       pending: false,
       extraInfo: { zap: true, vaultId: this.helpers.vault.id },
     };

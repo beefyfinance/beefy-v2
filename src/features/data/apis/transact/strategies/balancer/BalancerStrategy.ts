@@ -1238,7 +1238,7 @@ class BalancerStrategyImpl implements IComposableStrategy<StrategyId> {
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultWithdrawnFromState(input, this.vaultType, state);
     const liquidityWithdrawn = fromWeiToTokenAmount(withdrawnAmountAfterFeeWei, withdrawnToken);
     const returned: TokenAmount[] = [];
 

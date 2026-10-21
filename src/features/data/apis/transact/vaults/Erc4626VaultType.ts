@@ -31,6 +31,7 @@ import {
   onlyOneInput,
 } from '../helpers/options.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
+import { type ShareSource, WalletShareSource } from './ShareSource.ts';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
 import {
   type AllowanceTokenAmount,
@@ -57,9 +58,10 @@ export class Erc4626VaultType implements IErc4626VaultType {
   public readonly vault: VaultErc4626;
   public readonly depositToken: TokenEntity;
   public readonly shareToken: TokenErc20;
+  public readonly shareSource: ShareSource;
   protected readonly getState: BeefyStateFn;
 
-  constructor(vault: VaultErc4626, getState: BeefyStateFn) {
+  constructor(vault: VaultErc4626, getState: BeefyStateFn, shareSource?: ShareSource) {
     if (!isErc4626Vault(vault)) {
       throw new Error('Vault is not a erc4626 vault');
     }
@@ -74,6 +76,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
       throw new Error('Share token is not an ERC20 token');
     }
     this.shareToken = shareToken;
+    this.shareSource = shareSource ?? new WalletShareSource(this.shareToken);
   }
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
@@ -272,7 +275,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
     }
 
     const state = this.getState();
-    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this.vault, state);
+    const { withdrawnAmountAfterFeeWei } = getVaultWithdrawnFromState(input, this, state);
     const outputs = [
       {
         token: input.token,

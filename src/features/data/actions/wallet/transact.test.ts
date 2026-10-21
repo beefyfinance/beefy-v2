@@ -29,6 +29,7 @@ const usdc = erc20(USDC, 'USDC');
 function makeState(): BeefyState {
   return {
     entities: {
+      promos: { byChainId: {} },
       tokens: {
         byChainId: {
           [CHAIN]: {
