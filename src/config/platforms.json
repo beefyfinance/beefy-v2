@@ -59,6 +59,15 @@
     "name": "ApeSwap"
   },
   {
+    "id": "aero",
+    "name": "Aero",
+    "website": "https://aero.xyz/",
+    "twitter": "aeroxyz",
+    "documentation": "https://app.aero.xyz/docs/",
+    "description": "Aero is the unified liquidity layer for Ethereum: a cross-chain exchange where anyone can trade, earn, and launch onchain.",
+    "type": "amm"
+  },
+  {
     "id": "aerodrome",
     "name": "Aerodrome",
     "website": "https://aerodrome.finance/",
