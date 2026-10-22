@@ -28,7 +28,7 @@ import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectGovVaultPendingRewardsWithPrice } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
-import { selectTransactMode, selectTransactSlippage } from '../../selectors/transact.ts';
+import { selectTransactSlippage } from '../../selectors/transact.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
@@ -53,7 +53,7 @@ const REQUOTE_MAX_AGE_MS = 30_000;
 const MIN_SOURCE_CLAIM_USD = 0.05;
 
 /** The vault a zap unwinds the user's position from, for routes that pull out of another vault */
-function sourceVaultIdOf(option: TransactOption, state: BeefyState) {
+function sourceVaultIdOf(option: TransactOption) {
   if (isCrossChainVaultSrcDepositOption(option) || isCrossChainWithdrawOption(option)) {
     return option.srcVaultId;
   }
@@ -66,11 +66,7 @@ function sourceVaultIdOf(option: TransactOption, state: BeefyState) {
   if (option.strategyId === 'gov-composer' && option.mode === TransactMode.Withdraw) {
     return option.vaultId;
   }
-  // same-chain v2v deposits are also offered on the Deposit tab; only claim when migrating
-  if (
-    isVaultToVaultSingleTokenDepositOption(option) &&
-    selectTransactMode(state) === TransactMode.Migrate
-  ) {
+  if (isVaultToVaultSingleTokenDepositOption(option)) {
     return option.srcVaultId;
   }
   return undefined;
@@ -89,7 +85,7 @@ function maybeSourcePoolClaimStep(
   if (!quote.inputs.every(input => input.max)) {
     return undefined;
   }
-  const srcVaultId = sourceVaultIdOf(quote.option, state);
+  const srcVaultId = sourceVaultIdOf(quote.option);
   if (!srcVaultId) {
     return undefined;
   }
