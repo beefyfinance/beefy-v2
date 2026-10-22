@@ -311,7 +311,6 @@
   "Vault-PauseReason-viability": "This {{type}} is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",
   "Vault-PauseReason-ren-sunset": "This {{type}} is paused to new deposits due to the sunsetting of Ren 1.0",
   "Vault-PauseReason-default": "This {{type}} is paused. New deposits are temporarily unavailable.",
-  "Vault-PauseReason-AeroLaunch26": "This {{type}} is being migrated to the new Aero protocol. Emissions have now ended and a new product will be available soon. Stay deposited in this {{type}} and a migration route will be added including a fee-free zap to the new product. <Link href=\"https://beefy.com/articles/aero\">More details</Link>.",
   "Vault-GeoRestricted-default": "{{asset}} is restricted for users located in your region ({{region}}). New deposits into this {{type}} are disabled. You may withdraw your funds at any time.",
   "Vault-GeoRestricted-default-UnknownRegion": "{{asset}} is restricted for users located in your region. New deposits into this {{type}} are disabled. You may withdraw your funds at any time.",
   "Vault-GeoRestricted-ThisAsset": "This asset",
