@@ -7,6 +7,7 @@ import {
   type SerializedQuoteCowcentratedNotCalmError,
 } from './error-types.ts';
 import { miniSerializeError } from '@reduxjs/toolkit';
+import type { ClmActionable } from '../../beefy/beefy-clm-pool.ts';
 
 export class QuoteChangedError extends Error {
   constructor(message: string) {
@@ -107,19 +108,18 @@ export class QuoteCowcentratedNotActionableError extends SerializableError {
   }
 }
 
-/** Throws if the CLM would revert the action now: not calm, or still in its actionableAt cooldown. */
+/** Throws if the CLM would revert the action now: not calm, or still in its post-action lock. */
 export function assertCowcentratedActionable(
   action: 'deposit' | 'withdraw',
   isCalm: boolean,
-  actionableAt: bigint
+  actionable: ClmActionable
 ) {
   // not-calm takes precedence: it re-quotes on a short timer, so it's the more actionable of the two
   if (!isCalm) {
     throw new QuoteCowcentratedNotCalmError(action);
   }
-  const actionableAtSeconds = Number(actionableAt);
-  if (actionableAtSeconds > Math.floor(Date.now() / 1000)) {
-    throw new QuoteCowcentratedNotActionableError(action, actionableAtSeconds);
+  if (!actionable.actionable) {
+    throw new QuoteCowcentratedNotActionableError(action, actionable.actionableAt);
   }
 }
 
