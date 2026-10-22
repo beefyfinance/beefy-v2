@@ -26,7 +26,7 @@ import { isGovVault, type VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import { selectGovVaultPendingRewards } from '../../selectors/balance.ts';
+import { selectGovVaultPendingRewardsWithPrice } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactMode, selectTransactSlippage } from '../../selectors/transact.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
@@ -50,14 +50,21 @@ type PrefetchedRequote = {
 };
 
 const REQUOTE_MAX_AGE_MS = 30_000;
+const MIN_SOURCE_CLAIM_USD = 0.05;
 
 /** The vault a zap unwinds the user's position from, for routes that pull out of another vault */
 function sourceVaultIdOf(option: TransactOption, state: BeefyState) {
   if (isCrossChainVaultSrcDepositOption(option) || isCrossChainWithdrawOption(option)) {
     return option.srcVaultId;
   }
+  if (isRewardPoolToVaultDepositOption(option)) {
+    return option.srcVaultId;
+  }
   if (isVaultToVaultSingleTokenWithdrawOption(option)) {
     return option.srcVaultId;
+  }
+  if (option.strategyId === 'gov-composer' && option.mode === TransactMode.Withdraw) {
+    return option.vaultId;
   }
   // same-chain v2v deposits are also offered on the Deposit tab; only claim when migrating
   if (
@@ -71,13 +78,17 @@ function sourceVaultIdOf(option: TransactOption, state: BeefyState) {
 
 /**
  * Leaving a reward pool through a zap calls `withdraw()`, which leaves pending rewards behind in the
- * pool. Claiming in the same batch saves the user a trip back to it.
+ * pool. Claiming in the same batch saves the user a trip back to it. Partial exits keep earning, so
+ * their rewards stay in the pool.
  */
 function maybeSourcePoolClaimStep(
   quote: TransactQuote,
   state: BeefyState,
   t: TFunction<Namespace>
 ): Step | undefined {
+  if (!quote.inputs.every(input => input.max)) {
+    return undefined;
+  }
   const srcVaultId = sourceVaultIdOf(quote.option, state);
   if (!srcVaultId) {
     return undefined;
@@ -86,8 +97,19 @@ function maybeSourcePoolClaimStep(
   if (!isGovVault(srcVault)) {
     return undefined;
   }
-  const rewards = selectGovVaultPendingRewards(state, srcVault.id, selectWalletAddress(state));
-  if (!rewards.some(reward => reward.amount.gt(BIG_ZERO))) {
+  const rewards = selectGovVaultPendingRewardsWithPrice(
+    state,
+    srcVault.id,
+    selectWalletAddress(state)
+  );
+  // a dust floor, so a re-confirm or retry right after claiming doesn't ask for a second claim;
+  // unpriced rewards are always claimed
+  const worthClaiming = rewards.some(
+    reward =>
+      reward.amount.gt(BIG_ZERO) &&
+      (reward.price.lte(BIG_ZERO) || reward.amount.times(reward.price).gte(MIN_SOURCE_CLAIM_USD))
+  );
+  if (!worthClaiming) {
     return undefined;
   }
 
