@@ -947,7 +947,7 @@ export abstract class UniswapLikeStrategy<
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultWithdrawnFromState(input, this.vaultType, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const chain = selectChainById(state, this.vault.chainId);
     const breakSteps: ZapQuoteStep[] = [

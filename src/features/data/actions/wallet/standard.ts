@@ -17,6 +17,7 @@ import {
   selectTokenByAddress,
 } from '../../selectors/tokens.ts';
 import { getVaultWithdrawnFromContract } from '../../apis/transact/helpers/vault.ts';
+import { WalletShareSource } from '../../apis/transact/vaults/ShareSource.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { StandardVaultAbi } from '../../../../config/abi/StandardVaultAbi.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
@@ -103,6 +104,7 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
     const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
       {
@@ -110,7 +112,7 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
         amount: oracleAmount,
         max,
       },
-      vault,
+      { vault, shareSource: new WalletShareSource(shareToken) },
       state,
       address
     );

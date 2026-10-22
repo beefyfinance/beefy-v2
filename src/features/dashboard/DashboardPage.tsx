@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useParams } from 'react-router';
+import { AeroUpgradeBannerDashboard } from '../../components/Banners/AeroUpgradeBanner/AeroUpgradeBanner.tsx';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { FullscreenTechLoader, TechLoader } from '../../components/TechLoader/TechLoader.tsx';
@@ -144,6 +145,7 @@ const DashboardForAddress = memo(function DashboardForAddress({
         header={
           <>
             <UnstakedClmBannerDashboard address={address} />
+            <AeroUpgradeBannerDashboard address={address} />
             <Header address={address} addressLabel={addressLabel}>
               {loading ?
                 <DepositSummaryPlaceholder />

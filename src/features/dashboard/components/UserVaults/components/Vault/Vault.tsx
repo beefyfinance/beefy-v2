@@ -57,7 +57,7 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
         )}
       >
         <div className={classes.vaultInner}>
-          <VaultIdentity isLink={true} vaultId={vaultId} />
+          <VaultIdentity isLink={true} vaultId={vaultId} address={address} />
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>

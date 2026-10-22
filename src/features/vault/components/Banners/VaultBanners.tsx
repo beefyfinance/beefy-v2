@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { AeroUpgradeBannerVault } from '../../../../components/Banners/AeroUpgradeBanner/AeroUpgradeBanner.tsx';
 import { BusdBannerVault } from '../../../../components/Banners/BusdBanner/BusdBannerVault.tsx';
 import { UnstakedClmBannerVault } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBannerVault.tsx';
 import { RetiredSuggestClmBanner } from '../../../../components/Banners/RetiredSuggestClmBanner/RetiredSuggestClmBanner.tsx';
@@ -14,6 +15,7 @@ export const VaultBanners = memo(function VaultBanners({ vaultId }: VaultBanners
       <BusdBannerVault vaultId={vaultId} />
       <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
       <RetiredSuggestClmBanner vaultId={vaultId} />
+      <AeroUpgradeBannerVault vaultId={vaultId} />
     </>
   );
 });
