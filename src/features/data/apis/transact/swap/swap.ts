@@ -5,3 +5,4 @@ export { KyberSwapProvider } from './kyber/KyberSwapProvider.ts';
 export { WNativeSwapProvider } from './wnative/WNativeSwapProvider.ts';
 export { LiquidSwapSwapProvider } from './liquid-swap/LiquidSwapSwapProvider.ts';
 export { EnsoSwapProvider } from './enso/EnsoSwapProvider.ts';
+export { OkxSwapProvider } from './okx/OkxSwapProvider.ts';

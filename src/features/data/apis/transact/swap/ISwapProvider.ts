@@ -46,6 +46,8 @@ export type SwapTx = {
   inputPosition: number;
   /** send exactly `value`, never the router's whole native balance */
   exactValue?: boolean;
+  /** spender that must be approved instead of toAddress */
+  approvalAddress?: string;
 };
 
 export type SwapResponse = {

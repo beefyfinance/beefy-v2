@@ -321,5 +321,113 @@
     "chainId": "arc",
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "okx-ethereum",
+    "type": "okx",
+    "chainId": "ethereum",
+    "routerAddress": "0x8feAB81D36E7576107D5dE0758c1b839Be31B4F6",
+    "approveAddress": "0x40aA958dd87FC8305b97f2BA922CDdCa374bcD7f",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-polygon",
+    "type": "okx",
+    "chainId": "polygon",
+    "routerAddress": "0x3C4829196BFadFF4394726b45159aeaAC6FCd41c",
+    "approveAddress": "0x3B86917369B83a6892f553609F3c2F439C184e31",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-bsc",
+    "type": "okx",
+    "chainId": "bsc",
+    "routerAddress": "0x5994814f2C4040b863A0125A45DE152a8c2A4DEc",
+    "approveAddress": "0x2c34A2Fb1d0b4f55de51E1d0bDEfaDDce6b7cDD6",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-avax",
+    "type": "okx",
+    "chainId": "avax",
+    "routerAddress": "0xAB96dcFA7A7D669d9BF5918faB8641479973dD0A",
+    "approveAddress": "0x40aA958dd87FC8305b97f2BA922CDdCa374bcD7f",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-arbitrum",
+    "type": "okx",
+    "chainId": "arbitrum",
+    "routerAddress": "0x09f94b5Fc68e227C323A6FbaE3Bd98C97fD8c849",
+    "approveAddress": "0x70cBb871E8f30Fc8Ce23609E9E0Ea87B6b222F58",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-optimism",
+    "type": "okx",
+    "chainId": "optimism",
+    "routerAddress": "0x1f5B43127414E36c31eCb5Ff5567262997CD24D0",
+    "approveAddress": "0x68D6B739D2020067D1e2F713b999dA97E4d54812",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-base",
+    "type": "okx",
+    "chainId": "base",
+    "routerAddress": "0x67d03631FE51B741C0C00c4E16eb662AC84381df",
+    "approveAddress": "0x57df6092665eb6058DE53939612413ff4B09114E",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-hyperevm",
+    "type": "okx",
+    "chainId": "hyperevm",
+    "routerAddress": "0xb193874f0C77948d2bCFeC2EfAF8Bc65B4C2ca89",
+    "approveAddress": "0x56e6983D59bF472Ced0E63966A14d94A3A291589",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-plasma",
+    "type": "okx",
+    "chainId": "plasma",
+    "routerAddress": "0xd72f9Af181A0eB1B8550a00124ECdb71Bb758C89",
+    "approveAddress": "0x9FD43F5E4c24543b2eBC807321E58e6D350d6a5A",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-monad",
+    "type": "okx",
+    "chainId": "monad",
+    "routerAddress": "0xc1C76E784Db8D68585fb608ce68FC5DcFF14000E",
+    "approveAddress": "0xf534A8a1CAD0543Cd6438f7534CA3486c01998d4",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-robinhood",
+    "type": "okx",
+    "chainId": "robinhood",
+    "routerAddress": "0x6e2A35A7AD683cF634D91492d73bb7FF774c6919",
+    "approveAddress": "0x42170295F1173c9e5874ea9d00c6d137E1a4f53d",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "okx-arc",
+    "type": "okx",
+    "chainId": "arc",
+    "routerAddress": "0x4E3bcCE28cAf98A143Fd8BD9e4875ccAb3E7bBE0",
+    "approveAddress": "0x2B9899bC46Bf0eE094225995f4bD496d42f261Af",
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

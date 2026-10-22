@@ -342,6 +342,20 @@ export function featureFlag_ensoSupport(): {
   return [];
 }
 
+export function featureFlag_okxSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
+  const params = getSearchParams();
+  if (params.has('__okx_support')) {
+    return (params.get('__okx_support') || '').split(',').map(s => {
+      const [chainId, tokenAddress] = s.split(':');
+      return { chainId, tokenAddress };
+    });
+  }
+  return [];
+}
+
 export function featureFlag_disableSwapAggregators(): boolean {
   const params = getSearchParams();
   return params.has('__disable_swap_aggregators');
@@ -365,6 +379,11 @@ export function featureFlag_disableLiquidSwap(): boolean {
 export function featureFlag_disableEnso(): boolean {
   const params = getSearchParams();
   return featureFlag_disableSwapAggregators() || params.has('__disable_enso');
+}
+
+export function featureFlag_disableOkx(): boolean {
+  const params = getSearchParams();
+  return featureFlag_disableSwapAggregators() || params.has('__disable_okx');
 }
 
 export function featureFlag_detailedTooltips(): boolean {

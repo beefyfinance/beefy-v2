@@ -9,6 +9,7 @@ import {
   featureFlag_disableEnso,
   featureFlag_disableKyber,
   featureFlag_disableLiquidSwap,
+  featureFlag_disableOkx,
   featureFlag_disableOneInch,
 } from '../utils/feature-flags.ts';
 
@@ -70,6 +71,7 @@ export const getSwapAggregator = createDependencyFactory(
     KyberSwapProvider,
     LiquidSwapSwapProvider,
     EnsoSwapProvider,
+    OkxSwapProvider,
   }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];
 
@@ -88,6 +90,11 @@ export const getSwapAggregator = createDependencyFactory(
     // after the others so enso loses ties
     if (!featureFlag_disableEnso()) {
       providers.push(new EnsoSwapProvider());
+    }
+
+    // after enso so okx loses ties
+    if (!featureFlag_disableOkx()) {
+      providers.push(new OkxSwapProvider());
     }
 
     return new SwapAggregator(providers);
@@ -144,6 +151,11 @@ export const getLiquidSwapApi = createDependencyFactoryWithCacheByChain(
 export const getEnsoApi = createDependencyFactoryWithCacheByChain(
   async (chain, { EnsoApi }) => new EnsoApi(chain),
   () => import('./enso/enso.ts')
+);
+
+export const getOkxApi = createDependencyFactoryWithCacheByChain(
+  async (chain, { OkxApi }) => new OkxApi(chain),
+  () => import('./okx/okx.ts')
 );
 
 export const getNameServicesApi = createDependencyFactory(

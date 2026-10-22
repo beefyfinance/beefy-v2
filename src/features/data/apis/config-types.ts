@@ -360,11 +360,21 @@ export type EnsoSwapConfig = MakeSwapConfig<
     routerAddress: string;
   }
 >;
+export type OkxSwapConfig = MakeSwapConfig<
+  'okx',
+  {
+    /** the api-supplied tx.to must match this */
+    routerAddress: string;
+    /** okx router pulls erc20 input via this contract, so it is the spender to approve */
+    approveAddress: string;
+  }
+>;
 export type SwapAggregatorConfig =
   | OneInchSwapConfig
   | KyberSwapSwapConfig
   | LiquidSwapSwapConfig
-  | EnsoSwapConfig;
+  | EnsoSwapConfig
+  | OkxSwapConfig;
 
 /** Ranked first in aggregator token lists; shared by every aggregator on the chain */
 export type ZapPriorityTokensConfig = {
