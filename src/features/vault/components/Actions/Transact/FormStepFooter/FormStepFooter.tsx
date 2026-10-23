@@ -7,8 +7,9 @@ import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import {
   selectBoostUserBalanceInDepositToken,
-  selectBoostUserHasRewards,
+  selectBoostUserRewardsInToken,
   selectHasUserDepositInVault,
+  selectRewardsWorthClaiming,
   selectUserVaultBalanceInDepositTokenInBoosts,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
@@ -20,6 +21,7 @@ import {
 } from '../../../../../data/selectors/rewards.ts';
 import {
   selectTransactBoostAvailable,
+  selectTransactInputMaxes,
   selectTransactLiveBoostId,
   selectTransactMode,
   selectTransactVaultId,
@@ -98,7 +100,10 @@ const selectWithdrawBoostNotice: FooterSelector = (state, vaultId) => {
       kind: 'boost-unstake',
       vaultId,
       balance: selectBoostUserBalanceInDepositToken(state, boostId),
-      claim: selectBoostUserHasRewards(state, boostId),
+      // the claim is only batched on a full exit
+      claim:
+        selectTransactInputMaxes(state).some(Boolean) &&
+        selectRewardsWorthClaiming(state, selectBoostUserRewardsInToken(state, boostId)),
     };
   }
 

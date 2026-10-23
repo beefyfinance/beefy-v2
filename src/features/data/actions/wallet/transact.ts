@@ -18,13 +18,20 @@ import {
   type TransactQuote,
   isZapQuote,
 } from '../../apis/transact/transact-types.ts';
-import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
-import type { VaultGov } from '../../entities/vault.ts';
+import { type ContractRewardToken, isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
+import { isGovVault, type VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
+import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
-import { selectBoostUserHasRewards } from '../../selectors/balance.ts';
+import {
+  selectBoostUserRewardsInToken,
+  selectGovVaultPendingRewards,
+  selectRewardsWorthClaiming,
+} from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectWalletAddress } from '../../selectors/wallet.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
@@ -46,6 +53,77 @@ type PrefetchedRequote = {
 
 const REQUOTE_MAX_AGE_MS = 30_000;
 
+/** The vault a zap unwinds the user's position from, for routes that pull out of another vault */
+function sourceVaultIdOf(option: TransactOption) {
+  if ('srcVaultId' in option) {
+    return option.srcVaultId;
+  }
+  if (option.strategyId === 'gov-composer' && option.mode === TransactMode.Withdraw) {
+    return option.vaultId;
+  }
+  return undefined;
+}
+
+type PendingClaim = {
+  step: 'boost-claim' | 'claim-gov';
+  rewards: ReadonlyArray<{ token: ContractRewardToken; amount: BigNumber }>;
+  action: BeefyThunk;
+};
+
+/**
+ * Rewards a zap leaves behind: it unstakes boosts and leaves pools with `withdraw()`, as `exit()`
+ * would send the rewards to the router, which can't pass them on.
+ */
+function pendingClaimOf(quote: TransactQuote, state: BeefyState): PendingClaim | undefined {
+  const boostId =
+    isZapQuote(quote) ? quote.steps.find(step => step.type === 'unstake')?.boostId : undefined;
+  if (boostId) {
+    return {
+      step: 'boost-claim',
+      rewards: selectBoostUserRewardsInToken(state, boostId),
+      action: claimBoost(boostId),
+    };
+  }
+
+  const srcVaultId = sourceVaultIdOf(quote.option);
+  const srcVault = srcVaultId ? selectVaultById(state, srcVaultId) : undefined;
+  if (srcVault && isGovVault(srcVault)) {
+    return {
+      step: 'claim-gov',
+      rewards: selectGovVaultPendingRewards(state, srcVault.id, selectWalletAddress(state)),
+      // keep the quote alive for the zap step that follows
+      action: claimGovVault(srcVault, { clearInput: false }),
+    };
+  }
+
+  return undefined;
+}
+
+/**
+ * Claims what a full exit would leave behind, in the same batch, to save the user a trip back.
+ * Partial exits keep earning, so their rewards stay put.
+ */
+function maybeClaimStep(
+  quote: TransactQuote,
+  state: BeefyState,
+  t: TFunction<Namespace>
+): Step | undefined {
+  if (!quote.inputs.every(input => input.max)) {
+    return undefined;
+  }
+  const claim = pendingClaimOf(quote, state);
+  if (!claim || !selectRewardsWorthClaiming(state, claim.rewards)) {
+    return undefined;
+  }
+
+  return {
+    step: claim.step,
+    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+    action: claim.action,
+    pending: false,
+  };
+}
+
 export async function getTransactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>,
@@ -65,7 +143,7 @@ export async function getTransactSteps(
     prefetchGasPrice(sourceChain);
   }
 
-  const claimStep = boostClaimStep(quote, state, t);
+  const claimStep = maybeClaimStep(quote, state, t);
   if (claimStep) {
     steps.push(claimStep);
   }
@@ -129,30 +207,6 @@ export async function getTransactSteps(
   );
 
   return steps;
-}
-
-// the unstake leaves the rewards claimable by the user, so claiming first is a convenience, not a requirement
-function boostClaimStep(
-  quote: TransactQuote,
-  state: BeefyState,
-  t: TFunction<Namespace>
-): Step | undefined {
-  if (!isWithdrawQuote(quote) || !isZapQuote(quote)) {
-    return undefined;
-  }
-  const boostId = quote.steps.find(step => step.type === 'unstake')?.boostId;
-  if (!boostId) {
-    return undefined;
-  }
-  if (!selectBoostUserHasRewards(state, boostId)) {
-    return undefined;
-  }
-  return {
-    step: 'boost-claim',
-    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-    action: claimBoost(boostId),
-    pending: false,
-  };
 }
 
 /** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
