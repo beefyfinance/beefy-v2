@@ -1,34 +1,34 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, type MouseEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type BigNumber from 'bignumber.js';
+import { styled } from '@repo/styles/jsx';
 import { Modal } from '../../../../../components/Modal/Modal.tsx';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
+import { Sparkline } from '../../../../../components/Sparkline/Sparkline.tsx';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import { selectTotalTvl } from '../../../../data/selectors/tvl.ts';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults.ts';
-import { ModalTvl } from '../ModalTvl/ModalTvl.tsx';
+import { PlatformStatsModal } from '../PlatformStatsModal/PlatformStatsModal.tsx';
 import { Stat } from './Stat.tsx';
 import { PlatformStatsContainer } from './Stats.tsx';
 import { useBreakpoint } from '../../../../../hooks/useBreakpoint.ts';
 import ExpandMore from '../../../../../images/icons/mui/ExpandMore.svg?react';
-import { styled } from '@repo/styles/jsx';
-import { selectPreviousWeekRevenueStats } from '../../../../data/selectors/revenue.ts';
+import type { BuybackUnit } from '../../../../data/utils/platform-stats.ts';
+import {
+  formatMetricValue,
+  METRIC_CONFIG,
+  PLATFORM_METRICS,
+  type PlatformMetric,
+  type PlatformMetricData,
+  usePlatformMetrics,
+} from './usePlatformMetrics.ts';
 
 export const PlatformStats = memo(function PlatformStats() {
-  const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const { t } = useTranslation();
-  const totalTvl = useAppSelector(selectTotalTvl);
+  const [openMetric, setOpenMetric] = useState<PlatformMetric | null>(null);
+  const [buybackUnit, setBuybackUnit] = useState<BuybackUnit>('usd');
   const totalActiveVaults = useAppSelector(selectTotalActiveVaults);
-  const previousWeek = useAppSelector(selectPreviousWeekRevenueStats);
-
-  const handleTvlModalOpen = useCallback(() => {
-    setIsTvlModalOpen(true);
-  }, [setIsTvlModalOpen]);
-
-  const handleTvlModalClose = useCallback(() => {
-    setIsTvlModalOpen(false);
-  }, [setIsTvlModalOpen]);
-
+  const metrics = usePlatformMetrics(buybackUnit);
   const isMobile = useBreakpoint({ to: 'xs' });
+  const handleClose = useCallback(() => setOpenMetric(null), []);
 
   return (
     <PlatformStatsContainer>
@@ -37,77 +37,121 @@ export const PlatformStats = memo(function PlatformStats() {
         value={totalActiveVaults.toString()}
         loading={!totalActiveVaults}
       />
-      <Stat
-        label={t('Platform-TVL')}
-        value={<ValueTvlStat totalTvl={totalTvl} />}
-        onClick={handleTvlModalOpen}
-        loading={!totalTvl}
-      />
-      <Stat
-        label={t('Platform-7DaysYield')}
-        value={previousWeek.yieldUsd ? formatLargeUsd(previousWeek.yieldUsd) : '-'}
-        loading={previousWeek.yieldUsd === undefined}
-        tooltip={t('Platform-7DaysYield-Tooltip')}
-      />
-      <Stat
-        label={t('Platform-7DaysRevenue')}
-        value={previousWeek.revenueUsd ? formatLargeUsd(previousWeek.revenueUsd) : '-'}
-        loading={previousWeek.revenueUsd === undefined}
-        tooltip={t('Platform-7DaysRevenue-Tooltip')}
-      />
-      <Stat
-        label={t('Platform-7DaysBuyback')}
-        value={
-          <BuybackAmountStat amount={previousWeek.buybackAmount} usd={previousWeek.buybackUsd} />
-        }
-        loading={previousWeek.buybackAmount === undefined && previousWeek.buybackUsd === undefined}
-        tooltip={t('Platform-7DaysBuyback-Tooltip')}
-      />
+      {PLATFORM_METRICS.map(metric => (
+        <MetricStat
+          key={metric}
+          metric={metric}
+          data={metrics[metric]}
+          buybackUnit={buybackUnit}
+          onBuybackUnitChange={setBuybackUnit}
+          onOpen={setOpenMetric}
+        />
+      ))}
       <Modal
         position={isMobile ? 'bottom' : 'center'}
-        open={isTvlModalOpen}
-        onClose={handleTvlModalClose}
+        open={openMetric !== null}
+        onClose={handleClose}
         scrollable={false}
       >
-        <ModalTvl close={handleTvlModalClose} />
+        {openMetric ?
+          <PlatformStatsModal
+            metric={openMetric}
+            onMetricChange={setOpenMetric}
+            metrics={metrics}
+            buybackUnit={buybackUnit}
+            onBuybackUnitChange={setBuybackUnit}
+            close={handleClose}
+          />
+        : null}
       </Modal>
     </PlatformStatsContainer>
   );
 });
 
-const ValueTvlStat = memo(function ValueTvlStat({ totalTvl }: { totalTvl: BigNumber }) {
+type MetricStatProps = {
+  metric: PlatformMetric;
+  data: PlatformMetricData;
+  buybackUnit: BuybackUnit;
+  onBuybackUnitChange: (unit: BuybackUnit) => void;
+  onOpen: (metric: PlatformMetric) => void;
+};
+
+const MetricStat = memo(function MetricStat({
+  metric,
+  data,
+  buybackUnit,
+  onBuybackUnitChange,
+  onOpen,
+}: MetricStatProps) {
+  const { t } = useTranslation();
+  const handleClick = useCallback(() => onOpen(metric), [onOpen, metric]);
+
+  return (
+    <Stat
+      label={t(METRIC_CONFIG[metric].label)}
+      value={
+        metric === 'buyback' ?
+          <BuybackAmountStat
+            value={data.value}
+            unit={buybackUnit}
+            onUnitChange={onBuybackUnitChange}
+          />
+        : <ValueWithChevron value={formatMetricValue(metric, data.value, buybackUnit)} />
+      }
+      onClick={handleClick}
+      loading={data.loading}
+      trend={<Sparkline values={data.trend} variant={METRIC_CONFIG[metric].trend} />}
+    />
+  );
+});
+
+const ValueWithChevron = memo(function ValueWithChevron({ value }: { value: string }) {
   return (
     <ValueStatContainer>
-      {formatLargeUsd(totalTvl)} <ExpandMoreIcon />
+      {value}
+      <Chevron />
     </ValueStatContainer>
   );
 });
 
+// focusable target; its click bubbles to the stat tile
+const Chevron = memo(function Chevron() {
+  const { t } = useTranslation();
+  return (
+    <ChevronButton type="button" aria-label={t('Platform-Stats')}>
+      <ExpandMoreIcon />
+    </ChevronButton>
+  );
+});
+
 type BuybackAmountStatProps = {
-  usd: BigNumber | null;
-  amount: BigNumber | null;
+  value: BigNumber.Value | undefined;
+  unit: BuybackUnit;
+  onUnitChange: (unit: BuybackUnit) => void;
 };
 
-const BuybackAmountStat = memo(function BuybackAmountStat({ usd, amount }: BuybackAmountStatProps) {
-  const [mode, setMode] = useState<'usd' | 'amount'>('usd');
-  const label = mode === 'usd' ? 'USD' : 'BIFI';
-  const value = useMemo(() => {
-    return (
-      mode === 'usd' ?
-        usd ? formatLargeUsd(usd)
-        : '-'
-      : amount ? formatTokenDisplayCondensed(amount, 18, 6)
-      : '-'
-    );
-  }, [mode, usd, amount]);
-  const handleModeChange = useCallback(() => {
-    setMode(m => (m === 'usd' ? 'amount' : 'usd'));
-  }, [setMode]);
+const BuybackAmountStat = memo(function BuybackAmountStat({
+  value,
+  unit,
+  onUnitChange,
+}: BuybackAmountStatProps) {
+  const formatted = formatMetricValue('buyback', value, unit);
+  const handleUnitChange = useCallback(
+    (e: MouseEvent) => {
+      // the switch sits inside the clickable tile
+      e.stopPropagation();
+      onUnitChange(unit === 'usd' ? 'bifi' : 'usd');
+    },
+    [unit, onUnitChange]
+  );
 
   return (
     <ValueStatContainer buyback={true}>
-      {value}
-      <StyledSwitchButton onClick={handleModeChange}>{label}</StyledSwitchButton>
+      {formatted}
+      <StyledSwitchButton onClick={handleUnitChange}>
+        {unit === 'usd' ? 'USD' : 'BIFI'}
+      </StyledSwitchButton>
+      <Chevron />
     </ValueStatContainer>
   );
 });
@@ -118,20 +162,25 @@ const ValueStatContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '2px',
-    _hover: {
-      cursor: 'pointer',
-    },
+    whiteSpace: 'nowrap',
   },
   variants: {
     buyback: {
       true: {
         gap: '4px',
         alignItems: 'flex-end',
-        _hover: {
-          cursor: 'default',
-        },
       },
     },
+  },
+});
+
+const ChevronButton = styled('button', {
+  base: {
+    display: 'flex',
+    // centred on the value, also in the buyback row that aligns to the bottom
+    alignSelf: 'center',
+    padding: 0,
+    color: 'text.dark',
   },
 });
 
@@ -140,7 +189,6 @@ const ExpandMoreIcon = styled(ExpandMore, {
     transform: 'rotate(270deg)',
     width: '20px',
     height: '20px',
-    color: 'text.light',
   },
 });
 
