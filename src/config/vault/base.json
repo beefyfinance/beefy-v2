@@ -1260,7 +1260,7 @@
       "0xB2000000000000000000008501b13360000cb2EC"
     ],
     "earnContractAddress": "0x64C5c987815ccB115D8ba7C121A979B1AAc05f2D",
-    "earnedToken": "cowAerodromeBasecbZEC-USDC",
+    "earnedToken": "cowAeroBasecbZEC-USDC",
     "earnedTokenAddress": "0x64C5c987815ccB115D8ba7C121A979B1AAc05f2D",
     "feeTier": "Dynamic",
     "tickSpacing": 200,
@@ -1475,7 +1475,7 @@
       "0xb2000000000000000000001e800a7f5189430cD0"
     ],
     "earnContractAddress": "0x6f7149Ac939f178BDE4BD346B7c9234fa641B6A0",
-    "earnedToken": "cowAerodromeBaseTSLAc-USDC",
+    "earnedToken": "cowAeroBaseTSLAc-USDC",
     "earnedTokenAddress": "0x6f7149Ac939f178BDE4BD346B7c9234fa641B6A0",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
@@ -1518,7 +1518,7 @@
       "0xb200000000000000000000397293Cb8cda9a10c5"
     ],
     "earnContractAddress": "0x30c23fB48A81392C4e453cacd714bfAD848d1661",
-    "earnedToken": "cowAerodromeBaseSNDKc-USDC",
+    "earnedToken": "cowAeroBaseSNDKc-USDC",
     "earnedTokenAddress": "0x30c23fB48A81392C4e453cacd714bfAD848d1661",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
@@ -1561,7 +1561,7 @@
       "0xB200000000000000000000Ab99cFa739E253872B"
     ],
     "earnContractAddress": "0xAA4743151ac49BF80D13C51e2B2836b143B64732",
-    "earnedToken": "cowAerodromeBaseMSFTc-USDC",
+    "earnedToken": "cowAeroBaseMSFTc-USDC",
     "earnedTokenAddress": "0xAA4743151ac49BF80D13C51e2B2836b143B64732",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
@@ -1604,7 +1604,7 @@
       "0xb200000000000000000000d9192b6B456483C2E8"
     ],
     "earnContractAddress": "0x7a83f56a9D2a7f6c327ADA3d2b7F0ce6Ba489361",
-    "earnedToken": "cowAerodromeBaseAMZNc-USDC",
+    "earnedToken": "cowAeroBaseAMZNc-USDC",
     "earnedTokenAddress": "0x7a83f56a9D2a7f6c327ADA3d2b7F0ce6Ba489361",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
@@ -1647,7 +1647,7 @@
       "0xb2000000000000000000004884b426556b92883d"
     ],
     "earnContractAddress": "0xd145b66F74B73a441ec15Eff80EeB653D8E45dFf",
-    "earnedToken": "cowAerodromeBaseMSTRc-USDC",
+    "earnedToken": "cowAeroBaseMSTRc-USDC",
     "earnedTokenAddress": "0xd145b66F74B73a441ec15Eff80EeB653D8E45dFf",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
@@ -2082,7 +2082,7 @@
   {
     "id": "aero-cow-base-cbzec-usdc-rp",
     "name": "cbZEC-USDC Reward Pool",
-    "token": "cowAerodromeBasecbZEC-USDC",
+    "token": "cowAeroBasecbZEC-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
@@ -2292,7 +2292,7 @@
   {
     "id": "aero-cow-base-tslac-usdc-rp",
     "name": "TSLAc-USDC Reward Pool",
-    "token": "cowAerodromeBaseTSLAc-USDC",
+    "token": "cowAeroBaseTSLAc-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
@@ -2334,7 +2334,7 @@
   {
     "id": "aero-cow-base-sndkc-usdc-rp",
     "name": "SNDKc-USDC Reward Pool",
-    "token": "cowAerodromeBaseSNDKc-USDC",
+    "token": "cowAeroBaseSNDKc-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
@@ -2376,7 +2376,7 @@
   {
     "id": "aero-cow-base-msftc-usdc-rp",
     "name": "MSFTc-USDC Reward Pool",
-    "token": "cowAerodromeBaseMSFTc-USDC",
+    "token": "cowAeroBaseMSFTc-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
@@ -2418,7 +2418,7 @@
   {
     "id": "aero-cow-base-amznc-usdc-rp",
     "name": "AMZNc-USDC Reward Pool",
-    "token": "cowAerodromeBaseAMZNc-USDC",
+    "token": "cowAeroBaseAMZNc-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
@@ -2460,7 +2460,7 @@
   {
     "id": "aero-cow-base-mstrc-usdc-rp",
     "name": "MSTRc-USDC Reward Pool",
-    "token": "cowAerodromeBaseMSTRc-USDC",
+    "token": "cowAeroBaseMSTRc-USDC",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
     "oracle": "lps",
