@@ -10,7 +10,7 @@ export type SwapOptions = {
   deadlineSeconds?: number; // seconds from swap build until the calldata expires
 };
 
-export type QuoteOptions = Pick<SwapOptions, 'excludeRfq'>;
+export type QuoteOptions = Pick<SwapOptions, 'excludeRfq' | 'deadlineSeconds'>;
 export type SwapBuildOptions = Pick<SwapOptions, 'deadlineSeconds'>;
 
 export type QuoteRequest = {

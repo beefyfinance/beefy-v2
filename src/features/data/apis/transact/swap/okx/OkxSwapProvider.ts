@@ -23,7 +23,7 @@ import type {
 } from '../ISwapProvider.ts';
 
 const OKX_NATIVE_ADDRESS = EEEE_ADDRESS.toLowerCase();
-// okx sets the calldata deadline 1h after the swap is built
+// okx sets the calldata deadline 1h after the swap is built, the api rejects anything sooner
 const OKX_DEADLINE_SECONDS = 60 * 60;
 
 type OkxQuoteExtra = { excludeRfq: boolean };
@@ -48,6 +48,11 @@ export class OkxSwapProvider implements ISwapProvider {
     request: QuoteRequest,
     state: BeefyState
   ): Promise<QuoteResponse<OkxQuoteExtra>> {
+    const deadlineSeconds = request.options?.deadlineSeconds;
+    if (deadlineSeconds && deadlineSeconds > OKX_DEADLINE_SECONDS) {
+      throw new Error(`okx calldata expires after ${OKX_DEADLINE_SECONDS}s`);
+    }
+
     const excludeRfq = !!request.options?.excludeRfq;
     const chain = selectChainById(state, request.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
@@ -61,6 +66,9 @@ export class OkxSwapProvider implements ISwapProvider {
       tokenOut: this.getTokenAddress(request.toToken),
       amountIn: toWeiString(request.fromAmount, request.fromToken.decimals),
       ...(excludeRfq ? { excludeRfq: 'true' as const } : {}),
+      ...(config.excludedSources?.length ?
+        { excludeDexIds: config.excludedSources.join(',') }
+      : {}),
     });
 
     return {
@@ -75,20 +83,17 @@ export class OkxSwapProvider implements ISwapProvider {
   }
 
   async fetchSwap(request: SwapRequest<OkxQuoteExtra>, state: BeefyState): Promise<SwapResponse> {
-    const { quote, fromAddress, slippage, options } = request;
-    if (options?.deadlineSeconds && options.deadlineSeconds > OKX_DEADLINE_SECONDS) {
-      throw new Error(`okx calldata expires after ${OKX_DEADLINE_SECONDS}s`);
-    }
-
+    const { quote, fromAddress, slippage } = request;
     const chain = selectChainById(state, quote.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
       throw new Error(`No okx aggregator config found for chain ${chain.id}`);
     }
 
-    // okx re-quotes on /swap and derives its min from that, so half the slippage lets the
-    // re-quote drop by ~half before its min falls below the user's; whole bps for the api
-    const slippageBps = Math.trunc(slippage * 0.5 * 10_000);
+    // okx re-quotes on /swap and derives its min from that, which must stay above the user's min:
+    // half the slippage tolerates a re-quote drop, delayed swaps trade that for more on-chain headroom
+    const slippageShare = request.options?.deadlineSeconds ? 0.9 : 0.5;
+    const slippageBps = Math.trunc(slippage * slippageShare * 10_000);
     if (slippageBps <= 0) {
       throw new Error(`okx slippage ${slippage} is too low`);
     }
@@ -105,6 +110,9 @@ export class OkxSwapProvider implements ISwapProvider {
       minAmountOut: toWeiString(minAmountOut, quote.toToken.decimals),
       // okx re-quotes on /swap, so the quote's RFQ exclusion must be repeated
       ...(quote.extra?.excludeRfq ? { excludeRfq: 'true' as const } : {}),
+      ...(config.excludedSources?.length ?
+        { excludeDexIds: config.excludedSources.join(',') }
+      : {}),
     });
 
     this.validateSwap(swap, config, quote.fromToken, amountIn);

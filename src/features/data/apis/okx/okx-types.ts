@@ -10,6 +10,8 @@ export type QuoteRequest = {
   amountIn: string;
   /** okx disableRFQ, for swaps executed later (cross-chain) */
   excludeRfq?: 'true';
+  /** comma-separated okx dexIds to skip */
+  excludeDexIds?: string;
 };
 
 /** raw okx quote data, only the fields we use */
