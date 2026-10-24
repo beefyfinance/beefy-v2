@@ -76,13 +76,15 @@ export async function fetchZapAggregatorSwap(
 
   if (swap.tx.approvalAddress && !isFromNative) {
     // the zap router only approves the step target, so approve the other spender in its own steps;
-    // reset to 0 after so no allowance is left behind (usdt-style tokens reject non-zero -> non-zero)
+    // reset first: anyone can leave a router allowance via executeOrder, and usdt-style tokens
+    // reject non-zero -> non-zero. the swap pulls the exact amount so nothing is left after
     return {
       inputs: inputs,
       outputs: [swapOutput],
       minOutputs: [swapOutputMin],
       returned: [],
       zaps: [
+        buildTokenApproveTx(swap.fromToken.address, swap.tx.approvalAddress, BIG_ZERO),
         buildTokenApproveTx(
           swap.fromToken.address,
           swap.tx.approvalAddress,
@@ -94,7 +96,6 @@ export async function fetchZapAggregatorSwap(
           value: swap.tx.value,
           tokens: [],
         },
-        buildTokenApproveTx(swap.fromToken.address, swap.tx.approvalAddress, BIG_ZERO),
       ],
     };
   }
