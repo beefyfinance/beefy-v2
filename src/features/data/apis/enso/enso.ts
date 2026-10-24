@@ -42,11 +42,12 @@ export class EnsoApi implements IEnsoApi {
   protected async get<
     ResponseType extends object,
     RequestType extends Record<string, string | number | boolean>,
-  >(url: string, request: RequestType): Promise<ResponseType> {
+  >(url: string, request: RequestType, timeout?: number): Promise<ResponseType> {
     try {
       return await getJson<ResponseType>({
         url: `${this.api}${url}`,
         params: request,
+        timeout,
       });
     } catch (error: unknown) {
       if (isFetchResponseError(error)) {
@@ -59,8 +60,8 @@ export class EnsoApi implements IEnsoApi {
     }
   }
 
-  async getQuote(request: QuoteRequest): Promise<QuoteResponse> {
-    return await this.get<QuoteResponse, QuoteRequest>('/quote', request);
+  async getQuote(request: QuoteRequest, timeoutMs?: number): Promise<QuoteResponse> {
+    return await this.get<QuoteResponse, QuoteRequest>('/quote', request, timeoutMs);
   }
 
   async getSwap(request: SwapRequest): Promise<SwapResponse> {

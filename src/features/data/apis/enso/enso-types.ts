@@ -8,6 +8,8 @@ export type QuoteRequest = {
   tokenOut: string;
   /** wei string */
   amountIn: string;
+  /** comma-separated enso aggregator slugs to skip */
+  ignoreAggregators?: string;
 };
 
 export type QuoteResponse = {
@@ -45,7 +47,7 @@ export type SwapResponse = {
 };
 
 export interface IEnsoApi {
-  getQuote(request: QuoteRequest): Promise<QuoteResponse>;
+  getQuote(request: QuoteRequest, timeoutMs?: number): Promise<QuoteResponse>;
 
   getSwap(request: SwapRequest): Promise<SwapResponse>;
 }

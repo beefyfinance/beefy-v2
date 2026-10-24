@@ -29,6 +29,8 @@ const ENSO_NATIVE_ADDRESS = EEEE_ADDRESS.toLowerCase();
 const TOKEN_TYPE_NATIVE = 0;
 const TOKEN_TYPE_ERC20 = 1;
 
+const DEFAULT_QUOTE_TIMEOUT_MS = 2500;
+
 export class EnsoSwapProvider implements ISwapProvider {
   getId(): string {
     return 'enso';
@@ -46,9 +48,9 @@ export class EnsoSwapProvider implements ISwapProvider {
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
-    // enso may route via RFQ and has no option to exclude it
+    // enso can ignore aggregators/standards but has no rfq flag, and aggregator legs may still fill via rfq
     if (request.options?.excludeRfq) {
-      throw new Error('enso does not support excluding RFQ sources');
+      throw new Error('enso cannot exclude RFQ sources');
     }
 
     const chain = selectChainById(state, request.fromToken.chainId);
@@ -58,11 +60,17 @@ export class EnsoSwapProvider implements ISwapProvider {
     }
 
     const api = await getEnsoApi(chain);
-    const quote = await api.getQuote({
-      tokenIn: this.getTokenAddress(request.fromToken),
-      tokenOut: this.getTokenAddress(request.toToken),
-      amountIn: toWeiString(request.fromAmount, request.fromToken.decimals),
-    });
+    const quote = await api.getQuote(
+      {
+        tokenIn: this.getTokenAddress(request.fromToken),
+        tokenOut: this.getTokenAddress(request.toToken),
+        amountIn: toWeiString(request.fromAmount, request.fromToken.decimals),
+        ...(config.excludedSources?.length ?
+          { ignoreAggregators: config.excludedSources.join(',') }
+        : {}),
+      },
+      config.quoteTimeoutMs ?? DEFAULT_QUOTE_TIMEOUT_MS
+    );
 
     return {
       providerId: this.getId(),
@@ -92,6 +100,9 @@ export class EnsoSwapProvider implements ISwapProvider {
       amountIn,
       fromAddress,
       minAmountOut: toWeiString(minAmountOut, quote.toToken.decimals),
+      ...(config.excludedSources?.length ?
+        { ignoreAggregators: config.excludedSources.join(',') }
+      : {}),
     });
 
     this.validateSwapTx(swap.tx, config, quote.fromToken, amountIn);
