@@ -150,35 +150,5 @@
     "output": {
       "vault": { "ids": ["aero-cow-optimism-usdc-op-vault"] }
     }
-  },
-  {
-    "id": "migrate-to-aero-cow-optimism-weth-tbtc-vault",
-    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
-    "bps": 0,
-    "input": {
-      "vault": {
-        "ids": ["velo-cow-op-weth-tbtc-vault", "velo-cow-op-weth-tbtc-rp", "velo-cow-op-weth-tbtc"]
-      }
-    },
-    "output": {
-      "vault": { "ids": ["aero-cow-optimism-weth-tbtc-vault"] }
-    }
-  },
-  {
-    "id": "migrate-to-aero-cow-optimism-aleth-alusd-vault",
-    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
-    "bps": 0,
-    "input": {
-      "vault": {
-        "ids": [
-          "velodrome-cow-optimism-aleth-alusd-vault",
-          "velodrome-cow-optimism-aleth-alusd-rp",
-          "velodrome-cow-optimism-aleth-alusd"
-        ]
-      }
-    },
-    "output": {
-      "vault": { "ids": ["aero-cow-optimism-aleth-alusd-vault"] }
-    }
   }
 ]
