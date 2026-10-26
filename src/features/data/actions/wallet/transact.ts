@@ -17,11 +17,11 @@ import {
   type TransactOption,
   type TransactQuote,
   isZapQuote,
+  isZapQuoteStepUnstake,
 } from '../../apis/transact/transact-types.ts';
 import { type ContractRewardToken, isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
-import { isGovVault, type VaultGov } from '../../entities/vault.ts';
+import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
-import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import {
   selectBoostUserRewardsInToken,
@@ -30,7 +30,7 @@ import {
 } from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
-import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectGovVaultById } from '../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
@@ -53,17 +53,6 @@ type PrefetchedRequote = {
 
 const REQUOTE_MAX_AGE_MS = 30_000;
 
-/** The vault a zap unwinds the user's position from, for routes that pull out of another vault */
-function sourceVaultIdOf(option: TransactOption) {
-  if ('srcVaultId' in option) {
-    return option.srcVaultId;
-  }
-  if (option.strategyId === 'gov-composer' && option.mode === TransactMode.Withdraw) {
-    return option.vaultId;
-  }
-  return undefined;
-}
-
 type PendingClaim = {
   step: 'boost-claim' | 'claim-gov';
   rewards: ReadonlyArray<{ token: ContractRewardToken; amount: BigNumber }>;
@@ -75,24 +64,26 @@ type PendingClaim = {
  * would send the rewards to the router, which can't pass them on.
  */
 function pendingClaimOf(quote: TransactQuote, state: BeefyState): PendingClaim | undefined {
-  const boostId =
-    isZapQuote(quote) ? quote.steps.find(step => step.type === 'unstake')?.boostId : undefined;
-  if (boostId) {
+  const unstake =
+    isZapQuote(quote) ?
+      quote.steps.filter(isZapQuoteStepUnstake).find(step => step.boostId || step.govVaultId)
+    : undefined;
+
+  if (unstake?.boostId) {
     return {
       step: 'boost-claim',
-      rewards: selectBoostUserRewardsInToken(state, boostId),
-      action: claimBoost(boostId),
+      rewards: selectBoostUserRewardsInToken(state, unstake.boostId),
+      action: claimBoost(unstake.boostId),
     };
   }
 
-  const srcVaultId = sourceVaultIdOf(quote.option);
-  const srcVault = srcVaultId ? selectVaultById(state, srcVaultId) : undefined;
-  if (srcVault && isGovVault(srcVault)) {
+  if (unstake?.govVaultId) {
+    const pool = selectGovVaultById(state, unstake.govVaultId);
     return {
       step: 'claim-gov',
-      rewards: selectGovVaultPendingRewards(state, srcVault.id, selectWalletAddress(state)),
+      rewards: selectGovVaultPendingRewards(state, pool.id, selectWalletAddress(state)),
       // keep the quote alive for the zap step that follows
-      action: claimGovVault(srcVault, { clearInput: false }),
+      action: claimGovVault(pool, { clearInput: false }),
     };
   }
 

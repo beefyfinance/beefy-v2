@@ -534,6 +534,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           token: input.token,
           amount: input.amount,
         })),
+        govVaultId: this.vault.id,
       });
 
       const modInputs = underlyingQuote.inputs.map(input => ({
@@ -585,6 +586,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         token: input.token,
         amount: input.amount,
       })),
+      govVaultId: this.vault.id,
     });
 
     const modInputs = [
