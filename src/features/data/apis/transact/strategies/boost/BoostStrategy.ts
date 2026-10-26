@@ -248,7 +248,7 @@ export class BoostStrategy implements IComposableStrategy {
     };
   }
 
-  // `withdraw` burns the receipt the router holds; not `exit`, which would also send the rewards to the router
+  // `withdraw` burns the receipt the router holds; `exit` would claim nothing, the rewards accrue to the user
   private buildUnstakeZapStep(amountWei: BigNumber): ZapStep {
     return {
       target: this.boost.contractAddress,

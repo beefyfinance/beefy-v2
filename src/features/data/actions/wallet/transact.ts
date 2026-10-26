@@ -59,10 +59,7 @@ type PendingClaim = {
   action: BeefyThunk;
 };
 
-/**
- * Rewards a zap leaves behind: it unstakes boosts and leaves pools with `withdraw()`, as `exit()`
- * would send the rewards to the router, which can't pass them on.
- */
+/** Rewards a zap leaves behind: they accrue to the user's address, so the router can't claim them */
 function pendingClaimOf(quote: TransactQuote, state: BeefyState): PendingClaim | undefined {
   const unstake =
     isZapQuote(quote) ?

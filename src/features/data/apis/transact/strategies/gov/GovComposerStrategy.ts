@@ -773,7 +773,6 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   }
 
   protected buildZapUnstakeTx(govVaultAddress: string, amount: BigNumber, _max: boolean): ZapStep {
-    // TODO Add support for exit when max => we should also be adding every reward token to the list to be returned
     return {
       target: govVaultAddress,
       value: '0',
