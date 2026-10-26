@@ -16,6 +16,7 @@ import {
   selectCrossChainSrcReturned,
   selectStepperBridgeStatus,
   selectStepperHasBoostClaim,
+  selectStepperHasPoolClaim,
   selectZapReceived,
   selectZapReturned,
 } from '../../../../../features/data/selectors/stepper.ts';
@@ -53,6 +54,8 @@ const SameChainZapSuccessContent = memo(function SameChainZapSuccessContent({
   const isDeposit = step.step === 'zap-in';
   const claimed = useAppSelector(selectStepperHasBoostClaim);
   const boost = boostId ? boostCopy(t, isDeposit, claimed, false) : undefined;
+  const poolClaimed = useAppSelector(selectStepperHasPoolClaim);
+  const note = boost?.line ?? (poolClaimed ? t('Stepper-Zap-Pool-Claimed') : undefined);
   // the vault the zap ends in, whose shares the user receives
   const sharesVaultId =
     vaultToVault ? vaultToVault.destVaultId
@@ -145,15 +148,8 @@ const SameChainZapSuccessContent = memo(function SameChainZapSuccessContent({
   }, [returned, t]);
 
   const message = useMemo(
-    () => (
-      <ZapSuccessMessage
-        main={mainText}
-        boost={boost?.line}
-        received={receivedLine}
-        dust={dustLine}
-      />
-    ),
-    [mainText, boost?.line, receivedLine, dustLine]
+    () => <ZapSuccessMessage main={mainText} note={note} received={receivedLine} dust={dustLine} />,
+    [mainText, note, receivedLine, dustLine]
   );
 
   return (
@@ -208,16 +204,16 @@ function boostCopy(
 
 type ZapSuccessMessageProps = {
   main: ReactNode;
-  boost?: ReactNode;
+  note?: ReactNode;
   received?: ReactNode;
   dust?: ReactNode;
 };
 
-function ZapSuccessMessage({ main, boost, received, dust }: ZapSuccessMessageProps) {
+function ZapSuccessMessage({ main, note, received, dust }: ZapSuccessMessageProps) {
   return (
     <>
       <div>{main}</div>
-      {boost && <div>{boost}</div>}
+      {note && <div>{note}</div>}
       {received || dust ?
         <Details>
           {received}
@@ -274,6 +270,8 @@ const CrossChainZapSuccessContent = memo(function CrossChainZapSuccessContent({
     isCrossChain && pendingOpBoostId(pendingOp) ?
       boostCopy(t, isDeposit, claimed, true)
     : undefined;
+  const poolClaimed = useAppSelector(selectStepperHasPoolClaim);
+  const note = boost?.line ?? (poolClaimed ? t('Stepper-Zap-Pool-Claimed') : undefined);
 
   const dust = useMemo(() => {
     if (!isCrossChain) {
@@ -386,12 +384,7 @@ const CrossChainZapSuccessContent = memo(function CrossChainZapSuccessContent({
           });
 
       return (
-        <ZapSuccessMessage
-          main={mainText}
-          boost={boost?.line}
-          received={receivedLine}
-          dust={dustLine}
-        />
+        <ZapSuccessMessage main={mainText} note={note} received={receivedLine} dust={dustLine} />
       );
     }
     return t(`Stepper-${step.step}-Success-Content`);
@@ -403,7 +396,7 @@ const CrossChainZapSuccessContent = memo(function CrossChainZapSuccessContent({
     destChain,
     step.step,
     t,
-    boost?.line,
+    note,
     receivedLine,
     dustLine,
   ]);

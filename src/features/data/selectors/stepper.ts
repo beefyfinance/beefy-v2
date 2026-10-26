@@ -84,6 +84,10 @@ export const selectStepperHasBoostClaim = (state: BeefyState) => {
   return state.ui.stepperState.items.some(item => item.step === 'boost-claim');
 };
 
+export const selectStepperHasPoolClaim = (state: BeefyState) => {
+  return state.ui.stepperState.items.some(item => item.step === 'claim-gov');
+};
+
 export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };
