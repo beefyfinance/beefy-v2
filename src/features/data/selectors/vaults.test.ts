@@ -99,6 +99,38 @@ describe('selectVaultReplacementMigration for CLM wrappers', () => {
     expect(selectVaultReplacementMigration(state, 'old-clm-rp')?.newVaultId).toBe('new-clm-vault');
   });
 
+  it('keeps pool holders in a pool when the replacement points at the new pool', () => {
+    const state = stateWith(
+      clmFamily('old-clm', { replacementVaultId: 'new-clm-rp' }),
+      clmFamily('new-clm')
+    );
+    expect(selectVaultReplacementMigration(state, 'old-clm-rp')?.newVaultId).toBe('new-clm-rp');
+    expect(selectVaultReplacementMigration(state, 'old-clm-vault')?.newVaultId).toBe(
+      'new-clm-vault'
+    );
+  });
+
+  it('sends pool holders to the new vault when the named new pool is not active', () => {
+    const state = stateWith(
+      clmFamily('old-clm', { replacementVaultId: 'new-clm-rp' }),
+      clmFamily('new-clm', { poolStatus: 'paused' })
+    );
+    expect(selectVaultReplacementMigration(state, 'old-clm-rp')?.newVaultId).toBe('new-clm-vault');
+  });
+
+  it('sends vault holders to the new pool when the opt-out target has no active vault', () => {
+    const state = stateWith(
+      clmFamily('old-clm', { replacementVaultId: 'new-clm-rp' }),
+      clmFamily('new-clm', { vaultStatus: 'eol' })
+    );
+    expect(selectVaultReplacementMigration(state, 'old-clm-vault')?.newVaultId).toBe('new-clm-rp');
+  });
+
+  it('resolves nothing when the replacement is in the same CLM family', () => {
+    const state = stateWith(clmFamily('old-clm', { replacementVaultId: 'old-clm-vault' }));
+    expect(selectVaultReplacementMigration(state, 'old-clm-rp')).toBeUndefined();
+  });
+
   it('resolves nothing when no new wrapper is active', () => {
     const state = stateWith(old, clmFamily('new-clm', { vaultStatus: 'eol', poolStatus: 'eol' }));
     expect(selectVaultReplacementMigration(state, 'old-clm-rp')).toBeUndefined();

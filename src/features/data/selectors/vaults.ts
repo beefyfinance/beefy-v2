@@ -117,7 +117,8 @@ export type VaultReplacementMigration = {
  * - CLM wrappers: `replacementVaultId` is set on the naked CLM, but users hold a wrapper (gov "-rp"
  *   pool or standard "-vault"). So we map the page wrapper -> its CLM -> the replacement CLM -> its
  *   vault, for pool holders too (the vault compounds, so it earns more), or its pool if it has no
- *   active vault.
+ *   active vault. Pointing `replacementVaultId` at the replacement's pool keeps pool holders in a
+ *   pool instead.
  * - Common vaults (standard / gov / erc4626): users hold the vault directly, so `replacementVaultId`
  *   is set on the vault itself and points straight at the new vault.
  *
@@ -136,15 +137,22 @@ export const selectVaultReplacementMigration = createCachedSelector(
     // CLM wrappers (gov pool / standard vault) are the user-holdable side; the replacement is
     // declared on their hidden naked CLM, so map page wrapper -> CLM -> replacement CLM -> wrapper.
     if (isCowcentratedGovVault(pageVault) || isCowcentratedStandardVault(pageVault)) {
-      const newClmId = byId[pageVault.cowcentratedIds.clm]?.replacementVaultId;
-      const newClm = newClmId ? byId[newClmId] : undefined;
-      if (!newClm || !isCowcentratedLikeVault(newClm)) return undefined;
+      // the naked CLM's replacement: the new CLM, or one of its wrappers
+      const replacementId = byId[pageVault.cowcentratedIds.clm]?.replacementVaultId;
+      const replacement = replacementId ? byId[replacementId] : undefined;
+      if (!replacement || !isCowcentratedLikeVault(replacement)) return undefined;
 
+      if (replacement.cowcentratedIds.clm === pageVault.cowcentratedIds.clm) return undefined;
+
+      const newVault = getCowcentratedVault(replacement);
+      const newPool = getCowcentratedPool(replacement);
+      // a replacement aimed at the pool opts pool holders out of the default move into the vault
+      const poolToPool = isCowcentratedGovVault(replacement) && isCowcentratedGovVault(pageVault);
       // getCowcentratedPool/Vault prefer the active wrapper but fall back to the most recent
       // (possibly paused/retired) one, so gate the resolved wrapper the same as common vaults.
-      const newWrapperId = [getCowcentratedVault(newClm), getCowcentratedPool(newClm)].find(id => {
+      const newWrapperId = (poolToPool ? [newPool, newVault] : [newVault, newPool]).find(id => {
         const wrapper = id ? byId[id] : undefined;
-        return !!wrapper && id !== pageVaultId && !isVaultPausedOrRetired(wrapper);
+        return !!wrapper && !isVaultPausedOrRetired(wrapper);
       });
       if (!newWrapperId) return undefined;
 
