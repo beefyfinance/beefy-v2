@@ -279,6 +279,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
             amount: input.amount,
           },
         ],
+        govVaultId: this.rewardPool.id,
       },
       {
         type: 'deposit',

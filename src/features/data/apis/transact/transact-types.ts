@@ -714,6 +714,7 @@ export type ZapQuoteStepUnstake = {
   type: 'unstake';
   outputs: TokenAmount[];
   boostId?: BoostPromoEntity['id'];
+  govVaultId?: VaultEntity['id'];
 };
 
 export type ZapQuoteStepBridge = {
