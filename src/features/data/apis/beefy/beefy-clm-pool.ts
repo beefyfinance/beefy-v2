@@ -12,7 +12,11 @@ import {
   fromWei,
   toWei,
 } from '../../../../helpers/big-number.ts';
+import { parseAbi } from 'viem';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
+
+// Arc Aero uses a block-based action lock, unlike the timestamp-based Base strategies.
+const AeroActionableAbi = parseAbi(['function actionable() view returns (bool)']);
 
 export const ACTIONABLE_AT_FROM = 1776378070;
 
@@ -21,6 +25,9 @@ export const ACTIONABLE_AT_FROM = 1776378070;
  * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
  */
 export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
+  if (vault.chainId === 'arc') {
+    return vault.tokenProviderId === 'aero';
+  }
   return (
     (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
     vault.createdAt >= ACTIONABLE_AT_FROM
@@ -221,6 +228,17 @@ export class BeefyCLMPool {
   }
 
   private async readActionableAt(): Promise<bigint> {
+    if (this.chain.id === 'arc' && this.supportsActionableAt) {
+      const actionable = await fetchContract(
+        this.strategy,
+        AeroActionableAbi,
+        this.chain.id
+      ).read.actionable();
+      if (!actionable) {
+        throw new Error('The Aero gauge lock is still active. Wait a few blocks and retry.');
+      }
+      return 0n;
+    }
     if (!this.supportsActionableAt) {
       return 0n;
     }
