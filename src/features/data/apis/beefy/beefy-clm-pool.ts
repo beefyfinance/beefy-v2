@@ -12,19 +12,37 @@ import {
   fromWei,
   toWei,
 } from '../../../../helpers/big-number.ts';
+import { rpcClientManager } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 export const ACTIONABLE_AT_FROM = 1776378070;
 
+/** blocks sampled to estimate the average block time when converting actionableBlock to seconds */
+const BLOCK_TIME_SAMPLE = 100n;
+/** countdown used when the block-time estimate can't be read; the re-quote re-checks the lock anyway */
+const FALLBACK_LOCK_SECONDS = 10;
+const secondsPerBlockByChain = new Map<ChainEntity['id'], number>();
+
+/** How a CLM strategy exposes its post-action lock. */
+export type ClmActionableCheck = 'none' | 'actionableAt' | 'actionableBlock';
+
+/** actionableAt: unix seconds the lock lifts; estimated from block time for 'actionableBlock' strategies */
+export type ClmActionable = { actionable: true } | { actionable: false; actionableAt: number };
+
 /**
- * Only velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
+ * Velodrome/aerodrome CLM strategies from this generation expose actionableAt(); older ones revert.
  * Inclusive: validatePools.ts tests the same cutoff against the standard wrapper, whose createdAt is >= the CLM's.
+ * Aero strategies on all chains lock by block instead: actionable() plus actionableBlock() for the countdown.
  */
-export function clmSupportsActionableAt(vault: VaultCowcentrated): boolean {
-  return (
+export function getClmActionableCheck(vault: VaultCowcentrated): ClmActionableCheck {
+  if (vault.tokenProviderId === 'aero') return 'actionableBlock';
+  if (
     (vault.tokenProviderId === 'velodrome' || vault.tokenProviderId === 'aerodrome') &&
     vault.createdAt >= ACTIONABLE_AT_FROM
-  );
+  ) {
+    return 'actionableAt';
+  }
+  return 'none';
 }
 
 export class BeefyCLMPool {
@@ -37,7 +55,7 @@ export class BeefyCLMPool {
     protected strategy: string,
     protected chain: ChainEntity,
     protected tokens: TokenEntity[],
-    protected supportsActionableAt: boolean
+    protected actionableCheck: ClmActionableCheck
   ) {}
 
   public async getDepositRatioData(
@@ -220,17 +238,51 @@ export class BeefyCLMPool {
       : [half.div(total), balancingAmount.plus(half).div(total)];
   }
 
-  private async readActionableAt(): Promise<bigint> {
-    if (!this.supportsActionableAt) {
-      return 0n;
+  // let a failed read reject: treating it as actionable would let the user send a tx that reverts
+  private async readActionable(): Promise<ClmActionable> {
+    if (this.actionableCheck === 'none') {
+      return { actionable: true };
     }
-    // let a failed read reject: falling back to 0 reads as "actionable" and would let the user
-    // send a tx that reverts
-    return fetchContract(
+    const strategyContract = fetchContract(
       this.strategy,
       BeefyCowcentratedLiquidityStrategyAbi,
       this.chain.id
-    ).read.actionableAt();
+    );
+    if (this.actionableCheck === 'actionableBlock') {
+      const [actionable, actionableBlock] = await Promise.all([
+        strategyContract.read.actionable(),
+        strategyContract.read.actionableBlock(),
+      ]);
+      return actionable ?
+          { actionable: true }
+        : { actionable: false, actionableAt: await this.estimateBlockTimestamp(actionableBlock) };
+    }
+    const actionableAt = Number(await strategyContract.read.actionableAt());
+    return actionableAt > Math.floor(Date.now() / 1000) ?
+        { actionable: false, actionableAt }
+      : { actionable: true };
+  }
+
+  // estimate only: failures fall back to a short countdown instead of failing the quote
+  private async estimateBlockTimestamp(block: bigint): Promise<number> {
+    const now = Math.floor(Date.now() / 1000);
+    try {
+      const client = rpcClientManager.getSingleClient(this.chain.id);
+      const latest = await client.getBlock();
+      let secondsPerBlock = secondsPerBlockByChain.get(this.chain.id);
+      if (secondsPerBlock === undefined) {
+        const sample = latest.number < BLOCK_TIME_SAMPLE ? latest.number : BLOCK_TIME_SAMPLE;
+        const past = await client.getBlock({ blockNumber: latest.number - sample });
+        secondsPerBlock =
+          sample > 0n ? Number(latest.timestamp - past.timestamp) / Number(sample) : 1;
+        secondsPerBlockByChain.set(this.chain.id, secondsPerBlock);
+      }
+      // still locked at/after its block (other node, or a strict check): re-check after one block
+      const blocksLeft = block > latest.number ? Number(block - latest.number) : 1;
+      return Math.max(now, Math.ceil(Number(latest.timestamp) + blocksLeft * secondsPerBlock));
+    } catch {
+      return now + FALLBACK_LOCK_SECONDS;
+    }
   }
 
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
@@ -243,13 +295,13 @@ export class BeefyCLMPool {
       this.chain.id
     );
 
-    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult, actionableAt] =
+    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult, actionable] =
       await Promise.all([
         clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
         clmContract.read.isCalm(),
         clmContract.read.balances(),
         clmContract.read.totalSupply(),
-        this.readActionableAt(),
+        this.readActionable(),
       ]);
 
     const [liquidity, used0, used1] = [
@@ -281,7 +333,7 @@ export class BeefyCLMPool {
       unused0,
       unused1,
       isCalm,
-      actionableAt,
+      actionable,
     };
   }
 
@@ -291,17 +343,17 @@ export class BeefyCLMPool {
       BeefyCowcentratedLiquidityVaultAbi,
       this.chain.id
     );
-    const [withdrawResult, isCalm, actionableAt] = await Promise.all([
+    const [withdrawResult, isCalm, actionable] = await Promise.all([
       clmContract.read.previewWithdraw([bigNumberToBigInt(toWei(liquidity, 18))]),
       clmContract.read.isCalm(),
-      this.readActionableAt(),
+      this.readActionable(),
     ]);
 
     return {
       amount0: new BigNumber(withdrawResult[0]),
       amount1: new BigNumber(withdrawResult[1]),
       isCalm,
-      actionableAt,
+      actionable,
     };
   }
 }
