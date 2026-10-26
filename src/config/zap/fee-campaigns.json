@@ -9,5 +9,283 @@
         "ids": ["pancakeswap-cow-base-sol-cbbtc-vault", "pancakeswap-cow-base-sol-jitosol-vault"]
       }
     }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-usdc-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aero-cow-weth-usdc-rp",
+          "aero-cow-weth-usdc-vault",
+          "aerodrome-cow-base-usdc-weth-v2-rp",
+          "aerodrome-cow-base-usdc-weth-v2-vault",
+          "aerodrome-cow-base-weth-usdc-v2-rp",
+          "aerodrome-cow-base-weth-usdc-v2-vault",
+          "aerodrome-weth-usdc"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-usdc-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-link-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-weth-link-rp",
+          "aerodrome-cow-base-weth-link-vault",
+          "aerodrome-cow-base-weth-ulink-rp",
+          "aerodrome-cow-base-weth-ulink-vault"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-link-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-vvv-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-weth-vvv-v2-rp",
+          "aerodrome-cow-base-weth-vvv-v2-vault",
+          "aerodrome-weth-vvv"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-vvv-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-eurc-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-weth-eurc-rp", "aerodrome-cow-base-weth-eurc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-eurc-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-cbxrp-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-uxrp-weth-rp",
+          "aerodrome-cow-base-uxrp-weth-vault",
+          "aerodrome-cow-base-weth-cbxrp-v2-rp",
+          "aerodrome-cow-base-weth-cbxrp-v2-vault"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-cbxrp-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-moobifi-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aero-cow-weth-moobifi-rp", "aero-cow-weth-moobifi-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-moobifi-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-sol-cbbtc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-sol-cbbtc-rp", "aerodrome-cow-base-sol-cbbtc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-sol-cbbtc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-sol-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-sol-usdc-v2-rp", "aerodrome-cow-base-sol-usdc-v2-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-sol-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-cbzec-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-cbzec-rp", "aerodrome-cow-base-usdc-cbzec-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-cbzec-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-cbbtc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aero-cow-tbtc-usdc-rp",
+          "aero-cow-tbtc-usdc-vault",
+          "aero-cow-usdc-cbbtc-rp",
+          "aero-cow-usdc-cbbtc-vault",
+          "aerodrome-cow-base-cbbtc-usdc-rp",
+          "aerodrome-cow-base-cbbtc-usdc-vault",
+          "aerodrome-cow-base-usdc-cbbtc-v2-rp",
+          "aerodrome-cow-base-usdc-cbbtc-v2-vault",
+          "aerodrome-tbtc-usdbc",
+          "aerodrome-usdc-cbbtc"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-cbbtc-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-eurc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aero-cow-eurc-usdc-rp",
+          "aero-cow-eurc-usdc-vault",
+          "aerodrome-cow-base-eurc-usdc-rp",
+          "aerodrome-cow-base-eurc-usdc-vault"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-eurc-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-tslac-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-tslac-rp", "aerodrome-cow-base-usdc-tslac-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-tslac-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-sndkc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-sndkc-rp", "aerodrome-cow-base-usdc-sndkc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-sndkc-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-msftc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-msftc-rp", "aerodrome-cow-base-usdc-msftc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-msftc-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-amznc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-amznc-rp", "aerodrome-cow-base-usdc-amznc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-amznc-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-mstrc-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-mstrc-rp", "aerodrome-cow-base-usdc-mstrc-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-mstrc-usdc-vault"]
+      }
+    }
   }
 ]
