@@ -108,7 +108,7 @@ export const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     );
   });
 };
-export const claimGovVault = (vault: VaultGov) => {
+export const claimGovVault = (vault: VaultGov, { clearInput = true } = {}) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -154,7 +154,7 @@ export const claimGovVault = (vault: VaultGov) => {
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
-        clearInput: true,
+        clearInput,
       }
     );
   });
