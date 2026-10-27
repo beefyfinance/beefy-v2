@@ -38,6 +38,7 @@ import {
   selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
+  selectStepperLeadingClaimStepCount,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
@@ -489,7 +490,10 @@ function useStepStatuses(
 ): StepStatusState[] {
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
-  const currentStepIndex = useAppSelector(selectStepperCurrentStep);
+  const stepperStepIndex = useAppSelector(selectStepperCurrentStep);
+  const leadingClaimStepCount = useAppSelector(selectStepperLeadingClaimStepCount);
+  // index into the route rows, which start after any batched claim
+  const currentStepIndex = stepperStepIndex - leadingClaimStepCount;
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
   const successClosed = useAppSelector(selectTransactSuccessClosed);

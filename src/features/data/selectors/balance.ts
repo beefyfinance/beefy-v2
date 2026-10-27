@@ -735,8 +735,22 @@ export const selectBoostUserRewardsInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
 
-export const selectBoostUserHasRewards = (state: BeefyState, boostId: BoostPromoEntity['id']) =>
-  selectBoostUserRewardsInToken(state, boostId).some(reward => reward.amount.gt(BIG_ZERO));
+const MIN_CLAIM_USD = 0.05;
+
+/**
+ * Whether rewards are worth a claim tx batched ahead of a zap. The dust floor stops a re-confirm or
+ * retry right after claiming from asking for a second claim; unpriced rewards always count.
+ */
+export const selectRewardsWorthClaiming = (
+  state: BeefyState,
+  rewards: ReadonlyArray<{ token: Pick<TokenEntity, 'chainId' | 'oracleId'>; amount: BigNumber }>
+) => {
+  const priceOf = selectTokenPriceLookup(state);
+  return rewards.some(({ token, amount }) => {
+    const price = priceOf(token.chainId, token.oracleId);
+    return amount.gt(BIG_ZERO) && (price.lte(BIG_ZERO) || amount.times(price).gte(MIN_CLAIM_USD));
+  });
+};
 
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens

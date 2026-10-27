@@ -617,6 +617,7 @@
   "Stepper-Zap-Boost-Staked": "Your new mooTokens were staked in the Boost.",
   "Stepper-Zap-Boost-Unstaked": "The mooTokens you withdrew were unstaked from the Boost.",
   "Stepper-Zap-Boost-Unstaked-Claimed": "The mooTokens you withdrew were unstaked from the Boost and your rewards were claimed.",
+  "Stepper-Zap-Pool-Claimed": "Your rewards were claimed.",
 
   "Stepper-approve-Building-Content": "Building approve transaction...",
 
@@ -985,8 +986,8 @@
   "Migration-Title": "Migrate your deposit",
   "Migration-Text": "You have <Balance>{{balance}} {{symbol}}</Balance> staked on {{migrator}} that are available for an easy migration into this autocompounding vault",
   "Migration-Action": "Migrate Now",
-  "ReplacementVault-Notice": "This {{type}} is being retired and will stop earning soon. To keep earning, migrate to the replacement {{type}}:",
-  "ReplacementVault-Notice-Retired": "This {{type}} has been retired and is no longer earning. To keep earning, migrate to the replacement {{type}}:",
+  "ReplacementVault-Notice": "This {{type}} is being retired and will stop earning soon. To keep earning, migrate to the replacement {{newType}}:",
+  "ReplacementVault-Notice-Retired": "This {{type}} has been retired and is no longer earning. To keep earning, migrate to the replacement {{newType}}:",
   "ReplacementVault-Zap": "<Highlight>Powered by Beefy Zap.</Highlight> Withdraw, swap and redeposit in just one click. Keeping your portfolio fluid and your capital in motion.",
   "ReplacementVault-Noun-vault": "vault",
   "ReplacementVault-Noun-pool": "pool",
