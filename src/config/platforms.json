@@ -1645,14 +1645,5 @@
     "documentation": "https://alandale.gitbook.io/alandale/",
     "description": "Alandale is the outlaw liquidity market: a ve(3,3) MetaDEX for Robinhood chain; a singular venue where every trading fee, every emission, and every vote flows through the same flywheel.",
     "type": "amm"
-  },
-  {
-    "id": "aero",
-    "name": "Aero",
-    "website": "https://aero.xyz/",
-    "twitter": "aeroxyz",
-    "documentation": "https://app.aero.xyz/docs/",
-    "description": "Aero is the unified liquidity layer for Ethereum: a cross-chain exchange where anyone can trade, earn, and launch onchain.",
-    "type": "amm"
   }
 ]

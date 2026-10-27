@@ -294,7 +294,12 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": ["velo-cow-op-weth-usdc-vault", "velo-cow-op-weth-usdc-rp", "velo-cow-op-weth-usdc"]
+        "ids": [
+          "velo-cow-op-weth-usdc-vault",
+          "velo-cow-op-weth-usdc-rp",
+          "velodrome-v2-usdc-weth",
+          "velodrome-v2-weth-usdc"
+        ]
       }
     },
     "output": {
@@ -307,11 +312,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "velo-cow-op-usdt-weth-v2-vault",
-          "velo-cow-op-usdt-weth-v2-rp",
-          "velo-cow-op-usdt-weth-v2"
-        ]
+        "ids": ["velo-cow-op-usdt-weth-v2-vault", "velo-cow-op-usdt-weth-v2-rp"]
       }
     },
     "output": {
@@ -324,11 +325,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "velo-cow-op-wbtc-usdc-v2-vault",
-          "velo-cow-op-wbtc-usdc-v2-rp",
-          "velo-cow-op-wbtc-usdc-v2"
-        ]
+        "ids": ["velo-cow-op-wbtc-usdc-v2-vault", "velo-cow-op-wbtc-usdc-v2-rp"]
       }
     },
     "output": {
@@ -344,10 +341,11 @@
         "ids": [
           "velo-cow-op-wbtc-weth-v2-vault",
           "velo-cow-op-wbtc-weth-v2-rp",
-          "velo-cow-op-wbtc-weth-v2",
           "velo-cow-op-weth-wbtc-vault",
           "velo-cow-op-weth-wbtc-rp",
-          "velo-cow-op-weth-wbtc"
+          "velo-cow-op-weth-tbtc-vault",
+          "velo-cow-op-weth-tbtc-rp",
+          "velodrome-v2-weth-tbtc"
         ]
       }
     },
@@ -361,11 +359,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "velo-cow-op-op-weth-v2-vault",
-          "velo-cow-op-op-weth-v2-rp",
-          "velo-cow-op-op-weth-v2"
-        ]
+        "ids": ["velo-cow-op-op-weth-v2-vault", "velo-cow-op-op-weth-v2-rp", "velodrome-v2-weth-op"]
       }
     },
     "output": {
@@ -381,10 +375,9 @@
         "ids": [
           "velo-cow-op-wsteth-usdc-v2-vault",
           "velo-cow-op-wsteth-usdc-v2-rp",
-          "velo-cow-op-wsteth-usdc-v2",
           "velo-cow-op-wsteth-usdc-vault",
           "velo-cow-op-wsteth-usdc-rp",
-          "velo-cow-op-wsteth-usdc"
+          "velodrome-v2-usdc-wsteth"
         ]
       }
     },
@@ -398,11 +391,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "velo-cow-op-moobifi-usdc-vault",
-          "velo-cow-op-moobifi-usdc-rp",
-          "velo-cow-op-moobifi-usdc"
-        ]
+        "ids": ["velo-cow-op-moobifi-usdc-vault", "velo-cow-op-moobifi-usdc-rp"]
       }
     },
     "output": {
@@ -418,10 +407,10 @@
         "ids": [
           "velo-cow-op-op-usdc-v2-vault",
           "velo-cow-op-op-usdc-v2-rp",
-          "velo-cow-op-op-usdc-v2",
           "velo-cow-op-op-usdc-vault",
           "velo-cow-op-op-usdc-rp",
-          "velo-cow-op-op-usdc"
+          "velodrome-v2-usdc-op",
+          "velodrome-v2-op-usdc"
         ]
       }
     },
