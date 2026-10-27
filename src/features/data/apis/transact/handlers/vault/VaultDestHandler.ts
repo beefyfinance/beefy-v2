@@ -3,12 +3,13 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import type { TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { getTransactApi } from '../../../instances.ts';
-import { isZapQuote, type DepositOption } from '../../transact-types.ts';
+import { isZapQuote, type DepositOption, type ZapDepositQuote } from '../../transact-types.ts';
 import { withBoost } from '../../strategies/boost/BoostStrategy.ts';
 import {
   type IComposableStrategy,
   isComposableStrategy,
   type IStrategy,
+  type ZapTransactHelpers,
 } from '../../strategies/IStrategy.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
@@ -19,7 +20,7 @@ import type {
   VaultDestState,
 } from '../types.ts';
 
-type StrategyMatch = { strategy: IComposableStrategy; option: DepositOption };
+type StrategyCandidates = { strategy: IComposableStrategy; options: DepositOption[] };
 
 /**
  * Vault dest handler: deposit the handler's `inputToken` into a vault on the dst chain.
@@ -39,27 +40,14 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       await getTransactApi()
     ).getInnerZapStrategiesForVault(destHelpers);
 
-    const match = await VaultDestHandler.findStrategyForInputDeposit(
-      destStrategies,
-      ctx.inputToken
-    );
-    if (!match) {
+    const candidates = await VaultDestHandler.findDepositCandidates(destStrategies, ctx.inputToken);
+    if (!candidates.length) {
       throw new Error(
         `[vault-dest] No composable destination strategy accepts input token on chain ${ctx.destChainId} for vault ${this.destVaultId}`
       );
     }
 
-    const strategy: IStrategy = withBoost(match.strategy, destHelpers, ctx.boostId);
-    await strategy.beforeQuote?.();
-    const destQuote = await strategy.fetchDepositQuote(
-      [{ token: ctx.inputToken, amount: inputAmount, max: false }],
-      match.option
-    );
-    if (!isZapQuote(destQuote)) {
-      throw new Error(
-        `[vault-dest] Composable strategy '${match.strategy.id}' returned a non-zap deposit quote`
-      );
-    }
+    const destQuote = await this.quoteBestCandidate(candidates, inputAmount, destHelpers, ctx);
 
     const dustTokens = collectIntermediateTokens({
       anchorToken: ctx.inputToken,
@@ -108,31 +96,80 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     };
   }
 
-  /** Find a composable dst strategy accepting the input token; identity case is handled by SingleStrategy's identity option. */
-  private static async findStrategyForInputDeposit(
+  // A strategy can offer several routes from the same token (e.g. pool swap vs aggregator); quote them all and keep the best
+  private async quoteBestCandidate(
+    candidates: StrategyCandidates[],
+    inputAmount: BigNumber,
+    destHelpers: ZapTransactHelpers,
+    ctx: DestHandlerContext
+  ): Promise<ZapDepositQuote> {
+    const quoted: ZapDepositQuote[] = [];
+    for (const { strategy, options } of candidates) {
+      const wrapped: IStrategy = withBoost(strategy, destHelpers, ctx.boostId);
+      await wrapped.beforeQuote?.();
+      const results = await Promise.allSettled(
+        options.map(async option => {
+          const quote = await wrapped.fetchDepositQuote(
+            [{ token: ctx.inputToken, amount: inputAmount, max: false }],
+            option
+          );
+          if (!isZapQuote(quote)) {
+            throw new Error(
+              `[vault-dest] Composable strategy '${strategy.id}' returned a non-zap deposit quote`
+            );
+          }
+          return quote;
+        })
+      );
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          quoted.push(result.value);
+        } else {
+          console.warn(`[vault-dest] quote via '${strategy.id}' failed`, result.reason);
+        }
+      }
+    }
+
+    // All candidates deposit into the same vault, so outputs are denominated in the same share token
+    const best = quoted.reduce<ZapDepositQuote | undefined>(
+      (acc, q) => (acc && totalOutput(acc).gte(totalOutput(q)) ? acc : q),
+      undefined
+    );
+    if (!best) {
+      throw new Error(
+        `[vault-dest] No deposit route from input token could be quoted for vault ${this.destVaultId}`
+      );
+    }
+    return best;
+  }
+
+  /** Every composable dst strategy option accepting the input token; identity case is handled by SingleStrategy's identity option. */
+  private static async findDepositCandidates(
     strategies: IStrategy[],
     inputToken: TokenErc20 | { address: string }
-  ): Promise<StrategyMatch | undefined> {
+  ): Promise<StrategyCandidates[]> {
+    const candidates: StrategyCandidates[] = [];
     for (const strategy of strategies) {
       if (!isComposableStrategy(strategy)) continue;
       try {
         const options = await strategy.fetchDepositOptions();
-        const matched = options.find(
+        const matched = options.filter(
           o =>
             o.inputs.length === 1 &&
             o.inputs[0].address.toLowerCase() === inputToken.address.toLowerCase()
         );
-        if (matched) {
-          return { strategy, option: matched };
+        if (matched.length) {
+          candidates.push({ strategy, options: matched });
         }
       } catch (err) {
-        console.warn(
-          `[vault-dest] findStrategyForInputDeposit: strategy '${strategy.id}' failed`,
-          err
-        );
+        console.warn(`[vault-dest] findDepositCandidates: strategy '${strategy.id}' failed`, err);
       }
     }
 
-    return undefined;
+    return candidates;
   }
+}
+
+function totalOutput(quote: ZapDepositQuote): BigNumber {
+  return quote.outputs.reduce((sum, o) => sum.plus(o.amount), BIG_ZERO);
 }
