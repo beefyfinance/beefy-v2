@@ -799,6 +799,32 @@ export const BeefyCowcentratedLiquidityStrategyAbi = [
   },
   {
     inputs: [],
+    name: 'actionable',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'actionableBlock',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'actionableAt',
     outputs: [
       {
