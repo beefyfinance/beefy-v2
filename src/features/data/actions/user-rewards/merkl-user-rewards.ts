@@ -13,7 +13,11 @@ import type {
   MerklTokenReward,
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
-import { selectChainById, selectChainByNetworkChainId } from '../../selectors/chains.ts';
+import {
+  selectChainById,
+  selectChainByIdOrUndefined,
+  selectChainByNetworkChainId,
+} from '../../selectors/chains.ts';
 import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
@@ -151,10 +155,16 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
   async ({ walletAddress, reloadChainId }, { getState }) => {
     const state = getState();
     const api = await getMerklRewardsApi();
-    const supportedChainIds = Array.from(MERKL_SUPPORTED_CHAINS.keys());
+    const supportedChains = Array.from(MERKL_SUPPORTED_CHAINS.keys())
+      .map(chainId => selectChainByIdOrUndefined(state, chainId))
+      .filter(isDefined);
+    if (supportedChains.length === 0) {
+      throw new Error(`No supported merkl chains defined.`);
+    }
+
     const response = await api.fetchRewards({
       user: walletAddress,
-      chainId: supportedChainIds.map(chainId => selectChainById(state, chainId).networkChainId),
+      chainId: supportedChains.map(chain => chain.networkChainId),
       reloadChainId:
         reloadChainId ? selectChainById(state, reloadChainId).networkChainId : undefined,
     });
@@ -229,8 +239,8 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
             continue;
           }
 
-          const vaults = supportedChainIds
-            .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
+          const vaults = supportedChains
+            .map(chain => selectVaultByAddressOrUndefined(state, chain.id, reason.address))
             .filter(isDefined);
 
           if (vaults.length === 0) {
