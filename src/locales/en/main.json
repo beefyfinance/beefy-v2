@@ -878,7 +878,6 @@
   "Transact-SwapProvider-kyber": "KyberSwap",
   "Transact-SwapProvider-liquid-swap": "LiquidSwap",
   "Transact-SwapProvider-enso": "Enso",
-  "Transact-SwapProvider-okx": "OKX",
   "Transact-SwapProvider-wnative": "WNative",
   "Transact-Notice-Deposit-Boost": "Make a deposit to get extra <Tokens/>",
   "Transact-Notice-Deposit-Boost_plural": "Make a deposit to get extra <Tokens/>",

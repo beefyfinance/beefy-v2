@@ -1,5 +1,4 @@
 import { first } from 'lodash-es';
-import { BIG_ZERO, toWei } from '../../../../../helpers/big-number.ts';
 import { isTokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { slipBy } from '../helpers/amounts.ts';
@@ -10,7 +9,6 @@ import { QuoteChangedError } from '../strategies/error.ts';
 import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 import type { ZapStepRequest, ZapStepResponse } from './types.ts';
-import { buildTokenApproveTx } from './approve.ts';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;
@@ -73,32 +71,6 @@ export async function fetchZapAggregatorSwap(
   };
 
   const isFromNative = isTokenNative(swap.fromToken);
-
-  if (swap.tx.approvalAddress && !isFromNative) {
-    // the zap router only approves the step target, so approve the other spender in its own steps;
-    // reset first: anyone can leave a router allowance via executeOrder, and usdt-style tokens
-    // reject non-zero -> non-zero. the swap pulls the exact amount so nothing is left after
-    return {
-      inputs: inputs,
-      outputs: [swapOutput],
-      minOutputs: [swapOutputMin],
-      returned: [],
-      zaps: [
-        buildTokenApproveTx(swap.fromToken.address, swap.tx.approvalAddress, BIG_ZERO),
-        buildTokenApproveTx(
-          swap.fromToken.address,
-          swap.tx.approvalAddress,
-          toWei(swap.fromAmount, swap.fromToken.decimals)
-        ),
-        {
-          target: swap.tx.toAddress,
-          data: swap.tx.data,
-          value: swap.tx.value,
-          tokens: [],
-        },
-      ],
-    };
-  }
 
   return {
     inputs: inputs,

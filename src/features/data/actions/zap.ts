@@ -19,7 +19,6 @@ import {
   featureFlag_ensoSupport,
   featureFlag_kyberSwapSupport,
   featureFlag_liquidSwapSupport,
-  featureFlag_okxSupport,
   featureFlag_oneInchSupport,
 } from '../utils/feature-flags.ts';
 import { cooperativeAllSettled } from '../utils/async-utils.ts';
@@ -126,7 +125,6 @@ export const fetchZapAggregatorTokenSupportAction =
         kyber: featureFlag_kyberSwapSupport(),
         'liquid-swap': featureFlag_liquidSwapSupport(),
         enso: featureFlag_ensoSupport(),
-        okx: featureFlag_okxSupport(),
       };
 
       for (const [key, support] of entries(extraSupport)) {
