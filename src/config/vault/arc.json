@@ -28,8 +28,8 @@
     "earnContractAddress": "0x6F1df3B2974877f8Db9aA42e29621c362ba84D42",
     "earnedToken": "mooBeefyAeroWETH-USDC",
     "earnedTokenAddress": "0x6F1df3B2974877f8Db9aA42e29621c362ba84D42",
-    "createdAt": 1792783832,
-    "updatedAt": 1792784014,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119486,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -68,8 +68,8 @@
     "earnContractAddress": "0x98fF4C9BbB06aC23beeEF038c14D0B8c485a414A",
     "earnedToken": "mooBeefyAerocirBTC-USDC",
     "earnedTokenAddress": "0x98fF4C9BbB06aC23beeEF038c14D0B8c485a414A",
-    "createdAt": 1792783918,
-    "updatedAt": 1792784013,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119485,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -108,8 +108,8 @@
     "earnContractAddress": "0xA798397117C38949796DBBEA38b33ea7F880C77d",
     "earnedToken": "mooBeefyAerocirBTC-WETH",
     "earnedTokenAddress": "0xA798397117C38949796DBBEA38b33ea7F880C77d",
-    "createdAt": 1792784005,
-    "updatedAt": 1792784012,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119484,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -154,8 +154,8 @@
     "earnedTokenAddress": "0xCf65C5ab9E90ADb45d10d66b81BC9b0D95278423",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "createdAt": 1792783783,
-    "updatedAt": 1792784011,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119483,
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -197,8 +197,8 @@
     "earnedTokenAddress": "0x9CcCE25f82f37ef777552E3BBB2A01BC5574AbE8",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "createdAt": 1792783867,
-    "updatedAt": 1792784010,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119482,
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -240,8 +240,8 @@
     "earnedTokenAddress": "0x3AB58808c6feC9CC0Ec56A04800e306C08fFB5e0",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
-    "createdAt": 1792783953,
-    "updatedAt": 1792784009,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119481,
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -279,8 +279,8 @@
     "earnedToken": "rcowAeroWETH-USDC",
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
-    "createdAt": 1792783788,
-    "updatedAt": 1792784008,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119480,
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -321,8 +321,8 @@
     "earnedToken": "rcowAerocirBTC-USDC",
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
-    "createdAt": 1792783873,
-    "updatedAt": 1792784007,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119479,
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -363,8 +363,8 @@
     "earnedToken": "rcowAerocirBTC-WETH",
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
-    "createdAt": 1792783958,
-    "updatedAt": 1792784006,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119478,
     "zaps": [
       {
         "strategyId": "gov-composer"
