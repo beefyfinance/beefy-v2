@@ -1,5 +1,380 @@
 [
   {
+    "id": "aero-cow-arc-weth-usdc-vault",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-weth-usdc",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["WETH", "USDC"],
+    "icons": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "standard",
+    "tokenAddress": "0xCf65C5ab9E90ADb45d10d66b81BC9b0D95278423",
+    "earnContractAddress": "0x6F1df3B2974877f8Db9aA42e29621c362ba84D42",
+    "earnedToken": "mooBeefyAeroWETH-USDC",
+    "earnedTokenAddress": "0x6F1df3B2974877f8Db9aA42e29621c362ba84D42",
+    "createdAt": 1793119477,
+    "updatedAt": 1793119486,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-usdc-vault",
+    "name": "cirBTC-USDC",
+    "token": "cirBTC-USDC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-usdc",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["cirBTC", "USDC"],
+    "icons": ["cirBTC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "standard",
+    "tokenAddress": "0x9CcCE25f82f37ef777552E3BBB2A01BC5574AbE8",
+    "earnContractAddress": "0x98fF4C9BbB06aC23beeEF038c14D0B8c485a414A",
+    "earnedToken": "mooBeefyAerocirBTC-USDC",
+    "earnedTokenAddress": "0x98fF4C9BbB06aC23beeEF038c14D0B8c485a414A",
+    "createdAt": 1793119477,
+    "updatedAt": 1793119485,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-weth-vault",
+    "name": "cirBTC-WETH",
+    "token": "cirBTC-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["cirBTC", "WETH"],
+    "icons": ["cirBTC", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "standard",
+    "tokenAddress": "0x3AB58808c6feC9CC0Ec56A04800e306C08fFB5e0",
+    "earnContractAddress": "0xA798397117C38949796DBBEA38b33ea7F880C77d",
+    "earnedToken": "mooBeefyAerocirBTC-WETH",
+    "earnedTokenAddress": "0xA798397117C38949796DBBEA38b33ea7F880C77d",
+    "createdAt": 1793119477,
+    "updatedAt": 1793119484,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-weth-usdc",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-weth-usdc",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "icons": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "cowcentrated",
+    "tokenAddress": "0xAd5eea00214715cce97cdc4D0D13E9Ee2B57EacE",
+    "depositTokenAddresses": [
+      "0x128cC466B61f542da60c70e3aA11c10e19B84EDB",
+      "0x3600000000000000000000000000000000000000"
+    ],
+    "earnContractAddress": "0xCf65C5ab9E90ADb45d10d66b81BC9b0D95278423",
+    "earnedToken": "cowAeroWETH-USDC",
+    "earnedTokenAddress": "0xCf65C5ab9E90ADb45d10d66b81BC9b0D95278423",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119483,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-usdc",
+    "name": "cirBTC-USDC",
+    "token": "cirBTC-USDC aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-usdc",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["cirBTC", "USDC"],
+    "icons": ["cirBTC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "cowcentrated",
+    "tokenAddress": "0x86A68d86465bCf19779454e1b4d31368740503c7",
+    "depositTokenAddresses": [
+      "0x171A4217b86A807A64eB94757Db6849fb4bDbAA0",
+      "0x3600000000000000000000000000000000000000"
+    ],
+    "earnContractAddress": "0x9CcCE25f82f37ef777552E3BBB2A01BC5574AbE8",
+    "earnedToken": "cowAerocirBTC-USDC",
+    "earnedTokenAddress": "0x9CcCE25f82f37ef777552E3BBB2A01BC5574AbE8",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119482,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-weth",
+    "name": "cirBTC-WETH",
+    "token": "cirBTC-WETH aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-weth",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["cirBTC", "WETH"],
+    "icons": ["cirBTC", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "cowcentrated",
+    "tokenAddress": "0x5E4D45a31beab080b73123B07F4757573e69f922",
+    "depositTokenAddresses": [
+      "0x128cC466B61f542da60c70e3aA11c10e19B84EDB",
+      "0x171A4217b86A807A64eB94757Db6849fb4bDbAA0"
+    ],
+    "earnContractAddress": "0x3AB58808c6feC9CC0Ec56A04800e306C08fFB5e0",
+    "earnedToken": "cowAerocirBTC-WETH",
+    "earnedTokenAddress": "0x3AB58808c6feC9CC0Ec56A04800e306C08fFB5e0",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "createdAt": 1793119477,
+    "updatedAt": 1793119481,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "token": "cowAeroWETH-USDC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-weth-usdc",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["WETH", "USDC"],
+    "icons": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0xCf65C5ab9E90ADb45d10d66b81BC9b0D95278423",
+    "earnContractAddress": "0x541EC9D0523F18B48309B8914D8E424fC144CeB9",
+    "earnedToken": "rcowAeroWETH-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
+    "createdAt": 1793119477,
+    "updatedAt": 1793119480,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-usdc-rp",
+    "name": "cirBTC-USDC Reward Pool",
+    "token": "cowAerocirBTC-USDC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-usdc",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["cirBTC", "USDC"],
+    "icons": ["cirBTC", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x9CcCE25f82f37ef777552E3BBB2A01BC5574AbE8",
+    "earnContractAddress": "0xDAceb29D88ee1b5eFE8ac134523dC93A35548703",
+    "earnedToken": "rcowAerocirBTC-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
+    "createdAt": 1793119477,
+    "updatedAt": 1793119479,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-arc-cirbtc-weth-rp",
+    "name": "cirBTC-WETH Reward Pool",
+    "token": "cowAerocirBTC-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-arc-cirbtc-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["cirBTC", "WETH"],
+    "icons": ["cirBTC", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "arc",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x3AB58808c6feC9CC0Ec56A04800e306C08fFB5e0",
+    "earnContractAddress": "0x28a7d169942bb50F51A2E53262Ca736980FE183f",
+    "earnedToken": "rcowAerocirBTC-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x20077cC0d5E385A0Fe9C91bbC7DC744f51559307"],
+    "createdAt": 1793119477,
+    "updatedAt": 1793119478,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arc-usdc-cool-rp",
     "name": "COOL-USDC Reward Pool",
     "type": "gov",
