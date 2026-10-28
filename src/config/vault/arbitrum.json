@@ -744,48 +744,6 @@
     ]
   },
   {
-    "id": "pendle-arb-reth-25jun26",
-    "name": "rETH 25Jun26",
-    "type": "standard",
-    "token": "rETH-25JUN26",
-    "tokenAddress": "0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0xA2D947B550F88f3367a2FD1647152ac47ebB3DB4",
-    "earnedToken": "mooPenpie-rETH-25JUN26",
-    "earnedTokenAddress": "0xA2D947B550F88f3367a2FD1647152ac47ebB3DB4",
-    "oracle": "lps",
-    "oracleId": "pendle-arb-reth-25jun26",
-    "status": "eol",
-    "createdAt": 1751430117,
-    "retireReason": "rewards",
-    "retiredAt": 1775809382,
-    "platformId": "magpie",
-    "assets": ["rETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xd7Eac6c9109D8c3977EBCe4e7DBf0A5A9532E240/zap/out?chain=arbitrum",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"]
-      }
-    ]
-  },
-  {
     "id": "pendle-eqb-arb-dusdc-18dec25",
     "name": "dUSDC 18Dec25",
     "type": "standard",

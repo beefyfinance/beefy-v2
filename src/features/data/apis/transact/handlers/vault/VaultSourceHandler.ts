@@ -19,6 +19,7 @@ import {
   type IComposableStrategy,
   isComposableStrategy,
   type IStrategy,
+  type ZapTransactHelpers,
 } from '../../strategies/IStrategy.ts';
 import { collectIntermediateTokens } from '../dust.ts';
 import type {
@@ -27,8 +28,10 @@ import type {
   SourceHandlerQuote,
   SourceHandlerSteps,
 } from '../types.ts';
+import type BigNumber from 'bignumber.js';
 
-type StrategyMatch = { strategy: IComposableStrategy; option: WithdrawOption };
+type StrategyCandidates = { strategy: IComposableStrategy; options: WithdrawOption[] };
+type CandidateQuote = { quote: ZapWithdrawQuote; outputAmount: BigNumber };
 
 /** Strategy is re-resolved at step time (via underlyingQuote.strategyId) to avoid stale state across RPC calls. */
 type VaultSourceState = {
@@ -54,33 +57,19 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     );
     const strategies = await (await getTransactApi()).getInnerZapStrategiesForVault(srcHelpers);
 
-    const match = await VaultSourceHandler.findStrategyForOutputWithdraw(
-      strategies,
-      ctx.outputToken
-    );
-    if (!match) {
+    const candidates = await VaultSourceHandler.findWithdrawCandidates(strategies, ctx.outputToken);
+    if (!candidates.length) {
       throw new Error(
         `[vault-source] No composable vault strategy can withdraw to output token on chain ${ctx.sourceChainId} for vault ${this.srcVaultId}`
       );
     }
 
-    const strategy: IStrategy = withBoost(match.strategy, srcHelpers, ctx.boostId);
-    await strategy.beforeQuote?.();
-
-    const adaptedInput = this.adaptInputToStrategy(input, match, srcHelpers.getState());
-    const underlyingQuote = await strategy.fetchWithdrawQuote([adaptedInput], match.option);
-    if (!isZapQuote(underlyingQuote)) {
-      throw new Error(
-        `[vault-source] Composable strategy '${match.strategy.id}' returned a non-zap withdraw quote`
-      );
-    }
-
-    const outputTokenAmount = underlyingQuote.outputs.find(
-      o => o.token.address.toLowerCase() === ctx.outputToken.address.toLowerCase()
+    const { quote: underlyingQuote, outputAmount } = await this.quoteBestCandidate(
+      candidates,
+      input,
+      srcHelpers,
+      ctx
     );
-    if (!outputTokenAmount || outputTokenAmount.amount.lte(BIG_ZERO)) {
-      throw new Error('Withdrawal did not produce output token');
-    }
 
     const dustTokens = collectIntermediateTokens({
       anchorToken: ctx.outputToken,
@@ -95,7 +84,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
 
     return {
       sourceSteps: [...underlyingQuote.steps],
-      outputAmount: outputTokenAmount.amount,
+      outputAmount,
       allowances: underlyingQuote.allowances,
       returned: underlyingQuote.returned,
       dustTokens,
@@ -133,13 +122,65 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     };
   }
 
+  // A strategy can offer several routes to the same token (e.g. pool swap vs aggregator); quote them all and keep the best
+  private async quoteBestCandidate(
+    candidates: StrategyCandidates[],
+    input: InputTokenAmount,
+    srcHelpers: ZapTransactHelpers,
+    ctx: SourceHandlerContext
+  ): Promise<CandidateQuote> {
+    const state = srcHelpers.getState();
+    const quoted: CandidateQuote[] = [];
+    for (const { strategy, options } of candidates) {
+      const wrapped: IStrategy = withBoost(strategy, srcHelpers, ctx.boostId);
+      await wrapped.beforeQuote?.();
+      const results = await Promise.allSettled(
+        options.map(async option => {
+          const adaptedInput = this.adaptInputToStrategy(input, option, strategy.id, state);
+          const quote = await wrapped.fetchWithdrawQuote([adaptedInput], option);
+          if (!isZapQuote(quote)) {
+            throw new Error(
+              `[vault-source] Composable strategy '${strategy.id}' returned a non-zap withdraw quote`
+            );
+          }
+          const output = quote.outputs.find(
+            o => o.token.address.toLowerCase() === ctx.outputToken.address.toLowerCase()
+          );
+          if (!output || output.amount.lte(BIG_ZERO)) {
+            throw new Error('Withdrawal did not produce output token');
+          }
+          return { quote, outputAmount: output.amount };
+        })
+      );
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          quoted.push(result.value);
+        } else {
+          console.warn(`[vault-source] quote via '${strategy.id}' failed`, result.reason);
+        }
+      }
+    }
+
+    const best = quoted.reduce<CandidateQuote | undefined>(
+      (acc, c) => (acc && acc.outputAmount.gte(c.outputAmount) ? acc : c),
+      undefined
+    );
+    if (!best) {
+      throw new Error(
+        `[vault-source] No withdraw route to output token could be quoted for vault ${this.srcVaultId}`
+      );
+    }
+    return best;
+  }
+
   // Adapt source vault's shareToken input to what the matched underlying strategy declares
   private adaptInputToStrategy(
     input: InputTokenAmount,
-    match: StrategyMatch,
+    option: WithdrawOption,
+    strategyId: IStrategy['id'],
     state: BeefyState
   ): InputTokenAmount {
-    const expectedToken = match.option.inputs[0];
+    const expectedToken = option.inputs[0];
     if (isTokenEqual(expectedToken, input.token)) return input;
 
     const srcVault = selectVaultByIdWithReceipt(state, this.srcVaultId);
@@ -149,7 +190,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       expectedToken.address.toLowerCase() === srcVault.depositTokenAddress.toLowerCase();
     if (!inputIsShare || !expectedIsDeposit) {
       throw new Error(
-        `[vault-source] Boundary translator cannot adapt input ${input.token.symbol} → ${expectedToken.symbol} for vault ${this.srcVaultId} (matched strategy '${match.strategy.id}'). Expected source vault shareToken → depositToken.`
+        `[vault-source] Boundary translator cannot adapt input ${input.token.symbol} → ${expectedToken.symbol} for vault ${this.srcVaultId} (matched strategy '${strategyId}'). Expected source vault shareToken → depositToken.`
       );
     }
     return {
@@ -164,31 +205,32 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
     };
   }
 
-  /** Find a composable src strategy whose withdraw produces the output token; identity case is handled by SingleStrategy's identity option. */
-  private static async findStrategyForOutputWithdraw(
+  /** Every composable src strategy option whose withdraw produces the output token; identity case is handled by SingleStrategy's identity option. */
+  private static async findWithdrawCandidates(
     strategies: IStrategy[],
     outputToken: TokenErc20 | { address: string }
-  ): Promise<StrategyMatch | undefined> {
+  ): Promise<StrategyCandidates[]> {
+    const candidates: StrategyCandidates[] = [];
     for (const strategy of strategies) {
       if (!isComposableStrategy(strategy)) continue;
       try {
         const options = await strategy.fetchWithdrawOptions();
-        const matched = options.find(
+        const matched = options.filter(
           o =>
             o.wantedOutputs.length === 1 &&
             o.wantedOutputs[0].address.toLowerCase() === outputToken.address.toLowerCase()
         );
-        if (matched) {
-          return { strategy, option: matched };
+        if (matched.length) {
+          candidates.push({ strategy, options: matched });
         }
       } catch (err) {
         console.warn(
-          `[vault-source] findStrategyForOutputWithdraw: strategy '${strategy.id}' failed`,
+          `[vault-source] findWithdrawCandidates: strategy '${strategy.id}' failed`,
           err
         );
       }
     }
 
-    return undefined;
+    return candidates;
   }
 }
