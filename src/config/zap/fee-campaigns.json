@@ -23,6 +23,7 @@
           "aerodrome-cow-base-usdc-weth-v2-vault",
           "aerodrome-cow-base-weth-usdc-v2-rp",
           "aerodrome-cow-base-weth-usdc-v2-vault",
+          "aerodrome-weth-usdbc",
           "aerodrome-weth-usdc"
         ]
       }
@@ -30,6 +31,25 @@
     "output": {
       "vault": {
         "ids": ["aero-cow-base-usdc-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-aero-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-weth-aero-rp",
+          "aerodrome-cow-base-weth-aero-vault",
+          "aerodrome-weth-aero"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-aero-weth-vault"]
       }
     }
   },
@@ -342,10 +362,7 @@
           "velo-cow-op-wbtc-weth-v2-vault",
           "velo-cow-op-wbtc-weth-v2-rp",
           "velo-cow-op-weth-wbtc-vault",
-          "velo-cow-op-weth-wbtc-rp",
-          "velo-cow-op-weth-tbtc-vault",
-          "velo-cow-op-weth-tbtc-rp",
-          "velodrome-v2-weth-tbtc"
+          "velo-cow-op-weth-wbtc-rp"
         ]
       }
     },
