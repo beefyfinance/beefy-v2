@@ -7663,48 +7663,6 @@
     "network": "avax"
   },
   {
-    "id": "png-mim-usdc.e-eol",
-    "name": "MIM-USDC.e LP",
-    "type": "standard",
-    "token": "MIM-USDC.e LP",
-    "tokenAddress": "0xE75eD6E50e3e2dc6b06FAf38b943560BD22e343B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnContractAddress": "0x83E05C8a4AdEfA875ABe0f30a18bb6F9b54b807e",
-    "earnedToken": "mooPangolinV2MIM-USDC.e",
-    "earnedTokenAddress": "0x83E05C8a4AdEfA875ABe0f30a18bb6F9b54b807e",
-    "oracle": "lps",
-    "oracleId": "png-mim-usdc.e",
-    "status": "eol",
-    "createdAt": 1643465038,
-    "retireReason": "rewards",
-    "retiredAt": 1651451661,
-    "platformId": "pangolin",
-    "assets": ["MIM", "USDCe"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": true
-    },
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664&outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/0x130966628846BFd36ff31a822705796e8cb8C18D/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "avax-pangolin"
-      }
-    ]
-  },
-  {
     "id": "joe-wavax-boo-eol",
     "name": "BOO-AVAX LP",
     "type": "standard",
