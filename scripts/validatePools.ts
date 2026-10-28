@@ -123,7 +123,7 @@ const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['velodrome', 'aerodrome', 'aero'].includes(pool.platformId) &&
   pool.type === 'standard' &&
-  pool.strategyTypeId === 'pool' &&
+  ['pool', 'compounds'].includes(pool.strategyTypeId) &&
   pool.createdAt > ACTIONABLE_AT_FROM;
 
 const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
