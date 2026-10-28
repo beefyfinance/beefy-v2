@@ -4,6 +4,10 @@
     "exclude": [
       "alandale-cow-robinhood-usdg-lute-vault",
       "alandale-cow-robinhood-weth-lute-vault",
+      "alandale-cow-robinhood-weth-shop-vault",
+      "alandale-cow-robinhood-usdg-net-vault",
+      "alandale-cow-robinhood-weth-usdg-vault",
+      "alandale-cow-robinhood-weth-spy-vault",
       "aerodrome-cow-base-usdc-pyplc-vault",
       "aerodrome-cow-base-usdc-rblxc-vault"
     ],
