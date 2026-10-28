@@ -642,11 +642,11 @@
     "earnedTokenAddress": "0xEBe70034de92614ebe06Cde98C12257f9397dC0e",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-shop",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790759158,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["SHOPrh", "WETH"],
-    "icons": ["SHOP", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -666,7 +666,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["SHOP", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-weth-shop-rp",
@@ -683,11 +684,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-shop",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["SHOPrh", "WETH"],
-    "icons": ["SHOP", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -707,7 +708,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["SHOP", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-weth-shop",
@@ -726,13 +728,13 @@
     "earnedTokenAddress": "0x530fa5699EB20be4D18BED24e57A6D0DEFdE218C",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-shop",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.50",
     "tickSpacing": 60,
     "assets": ["SHOPrh", "WETH"],
-    "icons": ["SHOP", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -749,7 +751,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["SHOP", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-usdg-net-vault",
@@ -764,8 +767,9 @@
     "earnedTokenAddress": "0x857b3971E8038a8f8E2C0Da797145447eFbf6b86",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-net",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790759158,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["NET", "USDG"],
     "risks": {
@@ -804,8 +808,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-net",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["NET", "USDG"],
     "risks": {
@@ -846,8 +851,9 @@
     "earnedTokenAddress": "0xBC712b9726e6346E9C700Df14B2a6a558Efd222A",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-net",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.50",
     "tickSpacing": 60,
@@ -2262,8 +2268,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-ram-weth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["RAM", "WETH"],
     "risks": {
@@ -2301,8 +2308,9 @@
     "earnedTokenAddress": "0x0674d06804C8E134eDa798263a1FB93036212dAf",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-ram-weth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "1",
     "tickSpacing": 100,
@@ -2340,11 +2348,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-spy-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["SPYrh", "USDG"],
-    "icons": ["SPY", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2361,7 +2369,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["SPY", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-spy-usdg",
@@ -2380,13 +2389,13 @@
     "earnedTokenAddress": "0x324F6Dd622e8ee5EA3d5181d8B927443f9566e42",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-spy-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 5,
     "assets": ["SPYrh", "USDG"],
-    "icons": ["SPY", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2403,7 +2412,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["SPY", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-nvda-weth-rp",
@@ -2420,11 +2430,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-nvda-weth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["NVDArh", "WETH"],
-    "icons": ["NVDA", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2441,7 +2451,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["NVDA", "WETH"]
   },
   {
     "id": "ramses-cow-robinhood-nvda-weth",
@@ -2460,13 +2471,13 @@
     "earnedTokenAddress": "0x13805bAfC3800d14a14BDbab038C5750f6D54077",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-nvda-weth",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 50,
     "assets": ["NVDArh", "WETH"],
-    "icons": ["NVDA", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2483,7 +2494,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["NVDA", "WETH"]
   },
   {
     "id": "ramses-cow-robinhood-microduck-usdg-rp",
@@ -2500,8 +2512,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-microduck-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["microduck", "USDG"],
     "risks": {
@@ -2539,8 +2552,9 @@
     "earnedTokenAddress": "0xe2B1c9DCdF2cbe25F33b1d245FfD8ad943ABAf98",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-microduck-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.75",
     "tickSpacing": 300,
@@ -2578,8 +2592,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-pons-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["PONS", "USDG"],
     "risks": {
@@ -2617,8 +2632,9 @@
     "earnedTokenAddress": "0x8866F1E2b251606E9Da67a462D18e4c15c7979e9",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-pons-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.1",
     "tickSpacing": 50,
@@ -2656,11 +2672,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cbbtc-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["rhcbBTC", "USDG"],
-    "icons": ["cbBTC", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2677,7 +2693,8 @@
       {
         "strategyId": "gov-composer"
       }
-    ]
+    ],
+    "icons": ["cbBTC", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-cbbtc-usdg",
@@ -2696,13 +2713,13 @@
     "earnedTokenAddress": "0x0186715dEB2d13Fe0B440A69Da910b442889919C",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cbbtc-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 10,
     "assets": ["rhcbBTC", "USDG"],
-    "icons": ["cbBTC", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2719,7 +2736,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["cbBTC", "USDG"]
   },
   {
     "id": "ramses-cow-robinhood-cashcat-usdg-rp",
@@ -2736,8 +2754,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cashcat-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "ramses",
     "assets": ["CASHCAT", "USDG"],
     "risks": {
@@ -2775,8 +2794,9 @@
     "earnedTokenAddress": "0xeE429A657b2495336049456745eBBA962fB63CEc",
     "oracle": "lps",
     "oracleId": "ramses-cow-robinhood-cashcat-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1790564400,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.25",
     "tickSpacing": 100,
@@ -2812,11 +2832,11 @@
     "earnedTokenAddress": "0x87673A619Fc4F3Fc08068A0BB04f60aA2D04ca62",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-spy",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1789555197,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["SPYrh", "WETH"],
-    "icons": ["SPY", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2836,7 +2856,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["SPY", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-weth-spy-rp",
@@ -2853,11 +2874,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-spy",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["SPYrh", "WETH"],
-    "icons": ["SPY", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2877,7 +2898,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["SPY", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-weth-spy",
@@ -2896,13 +2918,13 @@
     "earnedTokenAddress": "0xd9B95DcECf21528D5e98D4167EBd30Eb5fd1666f",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-spy",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["SPYrh", "WETH"],
-    "icons": ["SPY", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2919,7 +2941,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["SPY", "WETH"]
   },
   {
     "id": "alandale-cow-robinhood-usdg-lute-vault",
@@ -2934,8 +2957,9 @@
     "earnedTokenAddress": "0xe50D89C43D0D13eE1439Bb5E94876A1163a26434",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1789554997,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["LUTE", "USDG"],
     "risks": {
@@ -2974,8 +2998,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["LUTE", "USDG"],
     "risks": {
@@ -3016,8 +3041,9 @@
     "earnedTokenAddress": "0xAC82Faa24D9139D5abB943DCdEE18995847A4525",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-usdg-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -3053,8 +3079,9 @@
     "earnedTokenAddress": "0xd4A452bB077618b931603DbcB60ea43c05eBEa45",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1789554911,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["LUTE", "WETH"],
     "risks": {
@@ -3093,8 +3120,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["LUTE", "WETH"],
     "risks": {
@@ -3135,8 +3163,9 @@
     "earnedTokenAddress": "0xE232CC0841445c39A0de44F887277a6882067aE6",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-lute",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
@@ -3172,8 +3201,9 @@
     "earnedTokenAddress": "0x4ED469Ac0080bE3CD192530D482E4d321823e743",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1789554886,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["WETH", "USDG"],
     "risks": {
@@ -3212,8 +3242,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "alandale",
     "assets": ["WETH", "USDG"],
     "risks": {
@@ -3254,8 +3285,9 @@
     "earnedTokenAddress": "0x9fB66d84764c66A7f5C11F8eE3074d0e9F610C59",
     "oracle": "lps",
     "oracleId": "alandale-cow-robinhood-weth-usdg",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635001,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.004",
     "tickSpacing": 10,
@@ -5724,11 +5756,11 @@
     "earnedTokenAddress": "0x612afcA34f218F9EB434b6C7458da0670F84DDf0",
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635000,
+    "pausedAt": 1793173082,
     "platformId": "up",
     "assets": ["NVDArh", "USDG"],
-    "icons": ["NVDA", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5748,7 +5780,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["NVDA", "USDG"]
   },
   {
     "id": "up33-cow-robinhood-usdg-nvda-rp",
@@ -5765,11 +5798,11 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635000,
+    "pausedAt": 1793173082,
     "platformId": "up",
     "assets": ["NVDArh", "USDG"],
-    "icons": ["NVDA", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5789,7 +5822,8 @@
       {
         "strategyId": "reward-pool-to-vault"
       }
-    ]
+    ],
+    "icons": ["NVDA", "USDG"]
   },
   {
     "id": "up33-cow-robinhood-usdg-nvda",
@@ -5808,13 +5842,13 @@
     "earnedTokenAddress": "0x63185DA98b76E7FA49d5d0611a6E211ee2988201",
     "oracle": "lps",
     "oracleId": "up33-cow-robinhood-usdg-nvda",
-    "status": "active",
+    "status": "paused",
     "createdAt": 1786635000,
+    "pausedAt": 1793173082,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 60,
     "assets": ["NVDArh", "USDG"],
-    "icons": ["NVDA", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5831,7 +5865,8 @@
       {
         "strategyId": "cowcentrated"
       }
-    ]
+    ],
+    "icons": ["NVDA", "USDG"]
   },
   {
     "id": "up33-cow-robinhood-weth-frong-vault",
