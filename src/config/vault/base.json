@@ -329,8 +329,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthAsset": false,
-      "concentratedSupply": true
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "base",
@@ -729,8 +728,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthAsset": false,
-      "concentratedSupply": true
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "base",
@@ -1143,8 +1141,7 @@
       "notCorrelated": true,
       "notTimelocked": true,
       "notVerified": false,
-      "synthAsset": false,
-      "concentratedSupply": true
+      "synthAsset": false
     },
     "strategyTypeId": "compounds",
     "network": "base",
