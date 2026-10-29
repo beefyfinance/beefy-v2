@@ -14,6 +14,7 @@ import {
   type WithdrawOption,
   type ZapWithdrawQuote,
 } from '../../transact-types.ts';
+import { isSerializableError } from '../../strategies/error.ts';
 import { withBoost, withBoostShares } from '../../strategies/boost/BoostStrategy.ts';
 import {
   type IComposableStrategy,
@@ -131,6 +132,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
   ): Promise<CandidateQuote> {
     const state = srcHelpers.getState();
     const quoted: CandidateQuote[] = [];
+    const failures: unknown[] = [];
     for (const { strategy, options } of candidates) {
       const wrapped: IStrategy = withBoost(strategy, srcHelpers, ctx.boostId);
       await wrapped.beforeQuote?.();
@@ -157,6 +159,7 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
           quoted.push(result.value);
         } else {
           console.warn(`[vault-source] quote via '${strategy.id}' failed`, result.reason);
+          failures.push(result.reason);
         }
       }
     }
@@ -166,8 +169,12 @@ export class VaultSourceHandler implements ISourceHandler<VaultSourceState> {
       undefined
     );
     if (!best) {
-      throw new Error(
-        `[vault-source] No withdraw route to output token could be quoted for vault ${this.srcVaultId}`
+      // prefer typed errors (e.g. CLM not calm / locked) so the UI shows its retry alert
+      throw (
+        failures.find(isSerializableError) ??
+        new Error(
+          `[vault-source] No withdraw route to output token could be quoted for vault ${this.srcVaultId}`
+        )
       );
     }
     return best;
