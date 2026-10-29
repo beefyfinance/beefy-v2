@@ -129,8 +129,8 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["AERO", "USDC"],
-    "icons": ["AERO", "USDC"],
+    "assets": ["AEROv2", "USDC"],
+    "icons": ["AEROv2", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -519,8 +519,8 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["AERO", "USDC"],
-    "icons": ["AERO", "USDC"],
+    "assets": ["AEROv2", "USDC"],
+    "icons": ["AEROv2", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -928,8 +928,8 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 100,
-    "assets": ["AERO", "USDC"],
-    "icons": ["AERO", "USDC"],
+    "assets": ["AEROv2", "USDC"],
+    "icons": ["AEROv2", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -2317,7 +2317,7 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["AEROv2", "WETH"],
-    "icons": ["AERO", "WETH"],
+    "icons": ["AEROv2", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -3120,7 +3120,7 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["AEROv2", "WETH"],
-    "icons": ["AERO", "WETH"],
+    "icons": ["AEROv2", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -3979,7 +3979,7 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["AEROv2", "WETH"],
-    "icons": ["AERO", "WETH"],
+    "icons": ["AEROv2", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
