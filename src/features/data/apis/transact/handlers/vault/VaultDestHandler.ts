@@ -4,6 +4,7 @@ import type { TokenErc20 } from '../../../../entities/token.ts';
 import type { VaultEntity } from '../../../../entities/vault.ts';
 import { getTransactApi } from '../../../instances.ts';
 import { isZapQuote, type DepositOption, type ZapDepositQuote } from '../../transact-types.ts';
+import { isSerializableError } from '../../strategies/error.ts';
 import { withBoost } from '../../strategies/boost/BoostStrategy.ts';
 import {
   type IComposableStrategy,
@@ -104,6 +105,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
     ctx: DestHandlerContext
   ): Promise<ZapDepositQuote> {
     const quoted: ZapDepositQuote[] = [];
+    const failures: unknown[] = [];
     for (const { strategy, options } of candidates) {
       const wrapped: IStrategy = withBoost(strategy, destHelpers, ctx.boostId);
       await wrapped.beforeQuote?.();
@@ -126,6 +128,7 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
           quoted.push(result.value);
         } else {
           console.warn(`[vault-dest] quote via '${strategy.id}' failed`, result.reason);
+          failures.push(result.reason);
         }
       }
     }
@@ -136,8 +139,12 @@ export class VaultDestHandler implements IDestHandler<VaultDestState> {
       undefined
     );
     if (!best) {
-      throw new Error(
-        `[vault-dest] No deposit route from input token could be quoted for vault ${this.destVaultId}`
+      // prefer typed errors (e.g. CLM not calm / locked) so the UI shows its retry alert
+      throw (
+        failures.find(isSerializableError) ??
+        new Error(
+          `[vault-dest] No deposit route from input token could be quoted for vault ${this.destVaultId}`
+        )
       );
     }
     return best;
