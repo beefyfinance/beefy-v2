@@ -1,5 +1,1380 @@
 [
   {
+    "id": "aero-cow-robinhood-usdg-weth-vault",
+    "name": "USDG-WETH",
+    "token": "USDG-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-usdg-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["USDG", "WETH"],
+    "icons": ["USDG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x48f08a5Cef81bA1BF1172cE8614a69835706d8B3",
+    "earnContractAddress": "0x965f69d0a64d436defEB4e0d2f49521D89c11894",
+    "earnedToken": "mooBeefyAeroUSDG-WETH",
+    "earnedTokenAddress": "0x965f69d0a64d436defEB4e0d2f49521D89c11894",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329233,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-cashcat-weth-vault",
+    "name": "CASHCAT-WETH",
+    "token": "CASHCAT-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-cashcat-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["CASHCAT", "WETH"],
+    "icons": ["CASHCAT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
+    "earnContractAddress": "0xF7c3fF5d69B4c294FfCd69ac3185B61EAeEB45a5",
+    "earnedToken": "mooBeefyAeroCASHCAT-WETH",
+    "earnedTokenAddress": "0xF7c3fF5d69B4c294FfCd69ac3185B61EAeEB45a5",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329232,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-pons-usdg-vault",
+    "name": "PONS-USDG",
+    "token": "PONS-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-pons-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["PONS", "USDG"],
+    "icons": ["PONS", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
+    "earnContractAddress": "0x248f6c803F778AAcBAe541908bF64fD91108E834",
+    "earnedToken": "mooBeefyAeroPONS-USDG",
+    "earnedTokenAddress": "0x248f6c803F778AAcBAe541908bF64fD91108E834",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329231,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-ai-usdg-vault",
+    "name": "AI-USDG",
+    "token": "AI-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-ai-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["AI", "USDG"],
+    "icons": ["AI", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
+    "earnContractAddress": "0x4B56ccF807126627F954fdD7Df834ab88F886447",
+    "earnedToken": "mooBeefyAeroAI-USDG",
+    "earnedTokenAddress": "0x4B56ccF807126627F954fdD7Df834ab88F886447",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329230,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-weth-vault",
+    "name": "SPY-WETH",
+    "token": "SPY-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPYrh", "WETH"],
+    "icons": ["SPY", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x47F8D24D42f1905561De75765373B3FCb1416d26",
+    "earnContractAddress": "0xa43343D9561d48990217F736d571aDF058E02089",
+    "earnedToken": "mooBeefyAeroSPY-WETH",
+    "earnedTokenAddress": "0xa43343D9561d48990217F736d571aDF058E02089",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329229,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-usdg-vault",
+    "name": "SPY-USDG",
+    "token": "SPY-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0xEcC3B7c5F272B34a7C353b5544c1Ec82AB8c8Fc4",
+    "earnContractAddress": "0x74c5E207a47d1CE34054f97CAa38174B7ac7B323",
+    "earnedToken": "mooBeefyAeroSPY-USDG",
+    "earnedTokenAddress": "0x74c5E207a47d1CE34054f97CAa38174B7ac7B323",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329228,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-gld-usdg-vault",
+    "name": "GLD-USDG",
+    "token": "GLD-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-gld-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["GLDrh", "USDG"],
+    "icons": ["GLD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x16A0cce13eD2dBBFBA1eE55C9F15b8529F1fedC1",
+    "earnContractAddress": "0x6f2b3681adD33eBeE45592BE2456f4452f3e4364",
+    "earnedToken": "mooBeefyAeroGLD-USDG",
+    "earnedTokenAddress": "0x6f2b3681adD33eBeE45592BE2456f4452f3e4364",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329227,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-nvda-usdg-vault",
+    "name": "NVDA-USDG",
+    "token": "NVDA-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-nvda-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0xa6193651b28155023b31151D8603Aa3b6809BF3A",
+    "earnContractAddress": "0xC5F5BA2f3a25A209a25CB5e77Bde1d1aa5c2C034",
+    "earnedToken": "mooBeefyAeroNVDA-USDG",
+    "earnedTokenAddress": "0xC5F5BA2f3a25A209a25CB5e77Bde1d1aa5c2C034",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329226,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-meta-usdg-vault",
+    "name": "META-USDG",
+    "token": "META-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-meta-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["METArh", "USDG"],
+    "icons": ["META", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x2B346FC5275b78b6E9e7550A954093A4A64a4557",
+    "earnContractAddress": "0x2877408233cF17fCbfD6345455f791F2663B5AbF",
+    "earnedToken": "mooBeefyAeroMETA-USDG",
+    "earnedTokenAddress": "0x2877408233cF17fCbfD6345455f791F2663B5AbF",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329225,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spcx-usdg-vault",
+    "name": "SPCX-USDG",
+    "token": "SPCX-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spcx-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPCXrh", "USDG"],
+    "icons": ["SPCX", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x72A28eC278eD68724a00c7a368FF5637AedCB024",
+    "earnContractAddress": "0x024Dd1E9253aD6A33F49c3db943D2ffFB0403a2A",
+    "earnedToken": "mooBeefyAeroSPCX-USDG",
+    "earnedTokenAddress": "0x024Dd1E9253aD6A33F49c3db943D2ffFB0403a2A",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329224,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-amd-usdg-vault",
+    "name": "AMD-USDG",
+    "token": "AMD-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-amd-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["AMDrh", "USDG"],
+    "icons": ["AMD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "standard",
+    "tokenAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
+    "earnContractAddress": "0x53dbb65D50eFA9d84bcbAa3ddD18b3c962e3dAa6",
+    "earnedToken": "mooBeefyAeroAMD-USDG",
+    "earnedTokenAddress": "0x53dbb65D50eFA9d84bcbAa3ddD18b3c962e3dAa6",
+    "createdAt": 1793329200,
+    "updatedAt": 1793329223,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-usdg-weth",
+    "name": "USDG-WETH",
+    "token": "USDG-WETH aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-usdg-weth",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["USDG", "WETH"],
+    "icons": ["USDG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x7615926023bb149f36095645C2a81DC367d39750",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x48f08a5Cef81bA1BF1172cE8614a69835706d8B3",
+    "earnedToken": "cowAeroUSDG-WETH",
+    "earnedTokenAddress": "0x48f08a5Cef81bA1BF1172cE8614a69835706d8B3",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329222,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-cashcat-weth",
+    "name": "CASHCAT-WETH",
+    "token": "CASHCAT-WETH aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-cashcat-weth",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["CASHCAT", "WETH"],
+    "icons": ["CASHCAT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x644032146cF140963b530EB76a0fD8fd463BE041",
+    "depositTokenAddresses": [
+      "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
+    ],
+    "earnContractAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
+    "earnedToken": "cowAeroCASHCAT-WETH",
+    "earnedTokenAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
+    "feeTier": "Dynamic",
+    "tickSpacing": 100,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329221,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-pons-usdg",
+    "name": "PONS-USDG",
+    "token": "PONS-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-pons-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["PONS", "USDG"],
+    "icons": ["PONS", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0xD75790f3a3F639FEdB7406DF6dABB5bb8605949b",
+    "depositTokenAddresses": [
+      "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
+    "earnedToken": "cowAeroPONS-USDG",
+    "earnedTokenAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
+    "feeTier": "Dynamic",
+    "tickSpacing": 100,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329220,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-ai-usdg",
+    "name": "AI-USDG",
+    "token": "AI-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-ai-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["AI", "USDG"],
+    "icons": ["AI", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0xdcd2043fFB830072A10C692b38E1EB0A2ce45F8F",
+    "depositTokenAddresses": [
+      "0x2E8c31162b855A2ffa90F6F8634643Ad6F111e18",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
+    "earnedToken": "cowAeroAI-USDG",
+    "earnedTokenAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
+    "feeTier": "Dynamic",
+    "tickSpacing": 100,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329219,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-weth",
+    "name": "SPY-WETH",
+    "token": "SPY-WETH aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-weth",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["SPYrh", "WETH"],
+    "icons": ["SPY", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x05aFb8E895e77Ce70F79056137eA606b05BF5abD",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C"
+    ],
+    "earnContractAddress": "0x47F8D24D42f1905561De75765373B3FCb1416d26",
+    "earnedToken": "cowAeroSPY-WETH",
+    "earnedTokenAddress": "0x47F8D24D42f1905561De75765373B3FCb1416d26",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329218,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-usdg",
+    "name": "SPY-USDG",
+    "token": "SPY-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x4A9b7cCBa4a3CD9Ee604AfA95d3DfA77D0d593e5",
+    "depositTokenAddresses": [
+      "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xEcC3B7c5F272B34a7C353b5544c1Ec82AB8c8Fc4",
+    "earnedToken": "cowAeroSPY-USDG",
+    "earnedTokenAddress": "0xEcC3B7c5F272B34a7C353b5544c1Ec82AB8c8Fc4",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329217,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-gld-usdg",
+    "name": "GLD-USDG",
+    "token": "GLD-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-gld-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["GLDrh", "USDG"],
+    "icons": ["GLD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x17e5BD3aB5F33FBe2e1dC40d6580Be42C86e38aD",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xC9a981FEE1F9DEc688bb123ccDeCc63D0deBFC4e"
+    ],
+    "earnContractAddress": "0x16A0cce13eD2dBBFBA1eE55C9F15b8529F1fedC1",
+    "earnedToken": "cowAeroGLD-USDG",
+    "earnedTokenAddress": "0x16A0cce13eD2dBBFBA1eE55C9F15b8529F1fedC1",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329216,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-nvda-usdg",
+    "name": "NVDA-USDG",
+    "token": "NVDA-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-nvda-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0xA1513DA56f71b83D98124D645828A14a191b8010",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"
+    ],
+    "earnContractAddress": "0xa6193651b28155023b31151D8603Aa3b6809BF3A",
+    "earnedToken": "cowAeroNVDA-USDG",
+    "earnedTokenAddress": "0xa6193651b28155023b31151D8603Aa3b6809BF3A",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329215,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-meta-usdg",
+    "name": "META-USDG",
+    "token": "META-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-meta-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["METArh", "USDG"],
+    "icons": ["META", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x09B8dE3DeD768478376D98FBBe80d09AE8e6cD3c",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35"
+    ],
+    "earnContractAddress": "0x2B346FC5275b78b6E9e7550A954093A4A64a4557",
+    "earnedToken": "cowAeroMETA-USDG",
+    "earnedTokenAddress": "0x2B346FC5275b78b6E9e7550A954093A4A64a4557",
+    "feeTier": "Dynamic",
+    "tickSpacing": 100,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329214,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spcx-usdg",
+    "name": "SPCX-USDG",
+    "token": "SPCX-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spcx-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["SPCXrh", "USDG"],
+    "icons": ["SPCX", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0x79aC9e4F5382B2157Ad06cE57392aD3677A09C83",
+    "depositTokenAddresses": [
+      "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0x72A28eC278eD68724a00c7a368FF5637AedCB024",
+    "earnedToken": "cowAeroSPCX-USDG",
+    "earnedTokenAddress": "0x72A28eC278eD68724a00c7a368FF5637AedCB024",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329213,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-amd-usdg",
+    "name": "AMD-USDG",
+    "token": "AMD-USDG aero",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-amd-usdg",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["AMDrh", "USDG"],
+    "icons": ["AMD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "cowcentrated",
+    "tokenAddress": "0xa64cd5e4490Fc6a79095194Ada6A4eBAdC08c57a",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC"
+    ],
+    "earnContractAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
+    "earnedToken": "cowAeroAMD-USDG",
+    "earnedTokenAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "createdAt": 1793329200,
+    "updatedAt": 1793329212,
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-usdg-weth-rp",
+    "name": "USDG-WETH Reward Pool",
+    "token": "cowAeroUSDG-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-usdg-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["USDG", "WETH"],
+    "icons": ["USDG", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x48f08a5Cef81bA1BF1172cE8614a69835706d8B3",
+    "earnContractAddress": "0x3b1a5484C74975f9FEa6fdb450F0de6585B3926D",
+    "earnedToken": "rcowAeroUSDG-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329211,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-cashcat-weth-rp",
+    "name": "CASHCAT-WETH Reward Pool",
+    "token": "cowAeroCASHCAT-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-cashcat-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["CASHCAT", "WETH"],
+    "icons": ["CASHCAT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
+    "earnContractAddress": "0x8cBb0B3a31075Dba01A5B5d2dfA849f7c639b14c",
+    "earnedToken": "rcowAeroCASHCAT-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329210,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-pons-usdg-rp",
+    "name": "PONS-USDG Reward Pool",
+    "token": "cowAeroPONS-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-pons-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["PONS", "USDG"],
+    "icons": ["PONS", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
+    "earnContractAddress": "0x7362b70A2aB67c500b94210f721ea6a106C6Df08",
+    "earnedToken": "rcowAeroPONS-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329209,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-ai-usdg-rp",
+    "name": "AI-USDG Reward Pool",
+    "token": "cowAeroAI-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-ai-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["AI", "USDG"],
+    "icons": ["AI", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
+    "earnContractAddress": "0x1d0ddF7EB33E50CC794a8071cCB93F426E8340F4",
+    "earnedToken": "rcowAeroAI-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329208,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-weth-rp",
+    "name": "SPY-WETH Reward Pool",
+    "token": "cowAeroSPY-WETH",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-weth",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPYrh", "WETH"],
+    "icons": ["SPY", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x47F8D24D42f1905561De75765373B3FCb1416d26",
+    "earnContractAddress": "0x3E0f152c1323299FE91a24dcb915808950C74feE",
+    "earnedToken": "rcowAeroSPY-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329207,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spy-usdg-rp",
+    "name": "SPY-USDG Reward Pool",
+    "token": "cowAeroSPY-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spy-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPYrh", "USDG"],
+    "icons": ["SPY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0xEcC3B7c5F272B34a7C353b5544c1Ec82AB8c8Fc4",
+    "earnContractAddress": "0x8e56226E71F2F280BC540E46aAF519917C541dE5",
+    "earnedToken": "rcowAeroSPY-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329206,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-gld-usdg-rp",
+    "name": "GLD-USDG Reward Pool",
+    "token": "cowAeroGLD-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-gld-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["GLDrh", "USDG"],
+    "icons": ["GLD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x16A0cce13eD2dBBFBA1eE55C9F15b8529F1fedC1",
+    "earnContractAddress": "0x03c2060cC82277908E39071F70A8176d9993aff6",
+    "earnedToken": "rcowAeroGLD-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329205,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-nvda-usdg-rp",
+    "name": "NVDA-USDG Reward Pool",
+    "token": "cowAeroNVDA-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-nvda-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["NVDArh", "USDG"],
+    "icons": ["NVDA", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0xa6193651b28155023b31151D8603Aa3b6809BF3A",
+    "earnContractAddress": "0xE4b6264eD8f2265b384dbAae11e8CAD6c4EAb26B",
+    "earnedToken": "rcowAeroNVDA-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329204,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-meta-usdg-rp",
+    "name": "META-USDG Reward Pool",
+    "token": "cowAeroMETA-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-meta-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["METArh", "USDG"],
+    "icons": ["META", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x2B346FC5275b78b6E9e7550A954093A4A64a4557",
+    "earnContractAddress": "0xCd97bb62b754e38C810230E06cb6260fE2D9b024",
+    "earnedToken": "rcowAeroMETA-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329203,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-spcx-usdg-rp",
+    "name": "SPCX-USDG Reward Pool",
+    "token": "cowAeroSPCX-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-spcx-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["SPCXrh", "USDG"],
+    "icons": ["SPCX", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x72A28eC278eD68724a00c7a368FF5637AedCB024",
+    "earnContractAddress": "0xC01043A011f6166C0715110D7A2d4E3857A40Df9",
+    "earnedToken": "rcowAeroSPCX-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329202,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-robinhood-amd-usdg-rp",
+    "name": "AMD-USDG Reward Pool",
+    "token": "cowAeroAMD-USDG",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "oracle": "lps",
+    "oracleId": "aero-cow-robinhood-amd-usdg",
+    "status": "active",
+    "platformId": "aero",
+    "assets": ["AMDrh", "USDG"],
+    "icons": ["AMD", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "pool",
+    "network": "robinhood",
+    "type": "gov",
+    "version": 2,
+    "tokenAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
+    "earnContractAddress": "0x1CCA680DC620737Ef43b0ddCFC529d0f1e3bec01",
+    "earnedToken": "rcowAeroAMD-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x9e148C5716b5aAdCFD3B71cEAE9EE7a9e22C29E2"],
+    "createdAt": 1793329200,
+    "updatedAt": 1793329201,
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-shroom-rp",
     "name": "SHROOM-WETH Reward Pool",
     "type": "gov",
