@@ -54,6 +54,7 @@ import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
 import { VaultToVaultSingleTokenStrategy } from './strategies/vault-to-vault/VaultToVaultSingleTokenStrategy.ts';
 import { ChargeFeeStrategy } from './strategies/ChargeFeeStrategy.ts';
 import { withBoost, withBoostShares } from './strategies/boost/BoostStrategy.ts';
+import { isSerializableError } from './strategies/error.ts';
 import {
   getRoutingTokensForChain,
   hasRoutingTokensForChain,
@@ -350,7 +351,8 @@ export class TransactApi implements ITransactApi {
     }
 
     if (rejected.length > 0) {
-      throw rejected[0].reason;
+      // prefer typed errors (e.g. CLM not calm / locked) so the UI shows its retry alert
+      throw (rejected.find(r => isSerializableError(r.reason)) ?? rejected[0]).reason;
     }
 
     throw new Error('No quotes succeeded');
@@ -512,7 +514,8 @@ export class TransactApi implements ITransactApi {
     }
 
     if (rejected.length > 0) {
-      throw rejected[0].reason;
+      // prefer typed errors (e.g. CLM not calm / locked) so the UI shows its retry alert
+      throw (rejected.find(r => isSerializableError(r.reason)) ?? rejected[0]).reason;
     }
 
     throw new Error('No quotes succeeded');
