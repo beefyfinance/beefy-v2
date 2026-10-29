@@ -23,6 +23,7 @@ export const Sparkline = memo(function Sparkline({ values, variant }: SparklineP
   const span = max - min || 1;
   const y = (v: number) => HEIGHT - ((v - min) / span) * HEIGHT;
   const line = values.map((v, i) => `${(i / (values.length - 1)) * WIDTH},${y(v)}`).join(' ');
+  const barWidth = (WIDTH - BAR_GAP * (values.length - 1)) / values.length;
 
   return (
     <svg
@@ -51,7 +52,6 @@ export const Sparkline = memo(function Sparkline({ values, variant }: SparklineP
           />
         </>
       : values.map((v, i) => {
-          const barWidth = (WIDTH - BAR_GAP * (values.length - 1)) / values.length;
           const top = Math.min(y(v), HEIGHT - 1);
           return (
             <rect
