@@ -569,5 +569,161 @@
         "ids": ["aero-cow-base-weth-cbltc-vault"]
       }
     }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-aero-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-aero-usdbc",
+          "aerodrome-cow-base-usdc-aero-rp",
+          "aerodrome-cow-base-usdc-aero-vault",
+          "aerodrome-usdc-aero"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-aero-usdc-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-cbeth-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aero-cow-cbeth-weth-rp", "aero-cow-cbeth-weth-vault", "aerodrome-cbeth-weth"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-cbeth-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-hype-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-hype-weth-rp", "aerodrome-cow-base-hype-weth-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-hype-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-usdc-cbhype-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-usdc-cbhype-rp", "aerodrome-cow-base-usdc-cbhype-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-usdc-cbhype-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-virtual-weth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-virtual-weth-rp",
+          "aerodrome-cow-base-virtual-weth-v2-rp",
+          "aerodrome-cow-base-virtual-weth-v2-vault",
+          "aerodrome-cow-base-virtual-weth-v3-rp",
+          "aerodrome-cow-base-virtual-weth-v3-vault",
+          "aerodrome-cow-base-virtual-weth-vault",
+          "aerodrome-virtual-weth"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-virtual-weth-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-weth-cbbtc-v2-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aero-cow-weth-cbbtc-rp",
+          "aero-cow-weth-cbbtc-vault",
+          "aerodrome-cow-base-cbbtc-weth-rp",
+          "aerodrome-cow-base-cbbtc-weth-vault",
+          "aerodrome-cow-base-weth-cbbtc-v2-rp",
+          "aerodrome-cow-base-weth-cbbtc-v2-vault",
+          "aerodrome-weth-cbbtc"
+        ]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-weth-cbbtc-v2-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-weth-morpho-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-weth-morpho-rp", "aerodrome-cow-base-weth-morpho-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-weth-morpho-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-weth-usdt-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aero-cow-weth-usdt-rp", "aero-cow-weth-usdt-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-weth-usdt-vault"]
+      }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-weth-zro-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-cow-base-weth-zro-rp", "aerodrome-cow-base-weth-zro-vault"]
+      }
+    },
+    "output": {
+      "vault": {
+        "ids": ["aero-cow-base-weth-zro-vault"]
+      }
+    }
   }
 ]
