@@ -24,6 +24,7 @@ import { isDefined } from '../../utils/array-utils.ts';
 import { storageGet, storageRemove, storageSet } from '../../../../helpers/storage.ts';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
 import { customInjectedWallets } from './custom-injected-wallets.ts';
+import { createOathWalletModule } from './oath-wallet.ts';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
 import { isEip6963AnnounceProviderEvent } from '../../../../helpers/eip6963.ts';
 
@@ -133,6 +134,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createOnboardWalletInitializers() {
     return [
       WalletConnectionApi.createInjectedWalletsModule(),
+      createOathWalletModule(
+        'af38b343e1be64b27c3e4a272cb453b9',
+        featureFlag_walletConnectChainId()
+      ),
       WalletConnectionApi.createWalletConnectModule(),
       WalletConnectionApi.createMetamaskModule(),
       createCoinbaseWalletModule(),
