@@ -8719,47 +8719,6 @@
     ]
   },
   {
-    "id": "aerodrome-virtual-aero",
-    "name": "VIRTUAL-AERO vLP",
-    "type": "standard",
-    "token": "vAMM-VIRTUAL-AERO",
-    "tokenAddress": "0x8B49c7eC53Cb4CA3666bB16727FC5C5F6d12226f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0x81336F242caa6Cf779D56a775AC1f642e3AC3b84",
-    "earnedToken": "mooAerodromeBaseVIRTUAL-AERO",
-    "earnedTokenAddress": "0x81336F242caa6Cf779D56a775AC1f642e3AC3b84",
-    "oracle": "lps",
-    "oracleId": "aerodrome-virtual-aero",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
-    "createdAt": 1782717833,
-    "platformId": "aerodrome",
-    "assets": ["VIRTUAL", "AERO"],
-    "risks": {
-      "updatedAt": 1782717833,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b&token1=0x940181a94A35A4569E4529A3CDfB74e38FD98631&type=-1&chain0=8453&chain1=8453&factory=0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
-    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aerodrome"
-      }
-    ]
-  },
-  {
     "id": "pancakeswap-cow-base-sol-jitosol-vault",
     "name": "JitoSOL-SOL",
     "type": "standard",
@@ -19198,46 +19157,6 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-bnkr-weth-vault",
-    "name": "BNKR-WETH",
-    "type": "standard",
-    "token": "BNKR-WETH",
-    "tokenAddress": "0xd36207A408e06F688A5191549D16D47eCeDfc66f",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xCb7CD0b5DD3fC0B61531366A9E68e1a092c2F6eF",
-    "earnedToken": "mooCowAerodromeBNKR-WETH",
-    "earnedTokenAddress": "0xCb7CD0b5DD3fC0B61531366A9E68e1a092c2F6eF",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-bnkr-weth",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
-    "createdAt": 1769588829,
-    "platformId": "aerodrome",
-    "assets": ["BNKR", "WETH"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-cow-base-bnkr-weth-rp",
     "name": "BNKR-WETH Reward Pool",
     "type": "gov",
@@ -21080,46 +20999,6 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "aerodrome-cow-base-flock-usdc-vault",
-    "name": "FLOCK-USDC",
-    "type": "standard",
-    "token": "FLOCK-USDC",
-    "tokenAddress": "0xc38d5c15Bb01f8368244232AE2dddC193E7E1ad5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xcEB0E7d5A102aa26049BB843FF561EF7faa8A27E",
-    "earnedToken": "mooCowAerodromeFLOCK-USDC",
-    "earnedTokenAddress": "0xcEB0E7d5A102aa26049BB843FF561EF7faa8A27E",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-flock-usdc",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
-    "createdAt": 1768476681,
-    "platformId": "aerodrome",
-    "assets": ["FLOCK", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
