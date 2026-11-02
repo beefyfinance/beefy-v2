@@ -9389,47 +9389,6 @@
     ]
   },
   {
-    "id": "thena-gamma-wbnb-the-wide",
-    "name": "THE-BNB LP Wide",
-    "type": "standard",
-    "token": "aTHE-BNB",
-    "tokenAddress": "0xe8EC29b75d98d3cdc47dB9797B00dCaaBeA2b15b",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnContractAddress": "0xA5d3c08E0afb5F4d2428630e10d31DC53a14e2E5",
-    "earnedToken": "mooThenaTHE-BNBWide",
-    "earnedTokenAddress": "0xA5d3c08E0afb5F4d2428630e10d31DC53a14e2E5",
-    "oracle": "lps",
-    "oracleId": "thena-gamma-wbnb-the-wide",
-    "status": "eol",
-    "createdAt": 1710331580,
-    "retiredAt": 1731274075,
-    "platformId": "gamma",
-    "assets": ["THE", "WBNB"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": true,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/the/bnb/details/wbnb-the-wide",
-    "removeLiquidityUrl": "https://www.thena.fi/liquidity",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "bsc-gamma-thena-f75c",
-        "tokenHolder": "0xFBfda960853C7002bb3f4614392503Bbd92fbA74"
-      }
-    ]
-  },
-  {
     "id": "thena-usdv-usdt",
     "name": "USDV-USDT sLP",
     "type": "standard",
