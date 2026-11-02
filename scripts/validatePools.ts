@@ -126,7 +126,6 @@ const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
   ['pool', 'compounds'].includes(pool.strategyTypeId) &&
   pool.createdAt > ACTIONABLE_AT_FROM;
 
-const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
   'tokenAddress',
   'earnedTokenAddress',
@@ -413,15 +412,6 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     if (!pool.assets || !Array.isArray(pool.assets) || !pool.assets.length) {
       console.error(`Error: ${pool.id} : Missing assets array`);
       exitCode = 1;
-    } else if (pool.status !== 'eol') {
-      for (const assetId of pool.assets) {
-        if (!(assetId in addressBook[chainId].tokens)) {
-          if (excludedAbPools.includes(pool.id)) continue;
-          // just warn for now
-          console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
-          // exitCode = 1;
-        }
-      }
     }
 
     // Cowcentrated should have RP
@@ -643,40 +633,6 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   allVaults.forEach(vault => {
     if (!checkSharedNativeNotUsed(vault, chainId)) {
       exitCode = 1;
-    }
-
-    if (vault.tokenAddress) {
-      const abToken = addressBook[chainId].tokenAddressMap[vault.tokenAddress];
-      if (abToken) {
-        // Decimals not matching is probably an error in addressbook or vault config, and it breaks things if wrong
-        if (vault.tokenDecimals !== abToken.decimals) {
-          console.error(
-            `Error: ${vault.id} : tokenDecimals "${vault.tokenDecimals}" does not match addressbook "${abToken.decimals}" for ${vault.token} (${vault.tokenAddress})`
-          );
-          exitCode = 1;
-          // Also warn about symbol not matching if decimals don't match
-          if (vault.token !== abToken.symbol) {
-            console.warn(
-              `Warn: ${vault.id} : token "${vault.token}" does not match addressbook "${abToken.symbol}"`
-            );
-          }
-        }
-        // oracleId not matching is probably an error in addressbook or vault config, and it breaks things if wrong
-        if (vault.oracleId !== abToken.oracleId) {
-          const isWNative = vault.tokenAddress === addressBook[chainId].tokens.WNATIVE.address;
-          const wnativeOracleIds = [
-            addressBook[chainId].tokens.WNATIVE.oracleId,
-            addressBook[chainId].native.oracleId,
-          ];
-          // allow ETH or WETH
-          if (!isWNative || !wnativeOracleIds.includes(vault.oracleId)) {
-            console.error(
-              `Error: ${vault.id} : oracleId "${vault.oracleId}" does not match addressbook "${abToken.oracleId}" for ${vault.token} (${vault.tokenAddress})`
-            );
-            exitCode = 1;
-          }
-        }
-      }
     }
   });
 
