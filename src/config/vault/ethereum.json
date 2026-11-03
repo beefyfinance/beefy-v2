@@ -1,5 +1,45 @@
 [
   {
+    "id": "yb-eth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "staked-g(yb-WETH)",
+    "tokenAddress": "0xd829456FD63Ada7DE0657714A3A7A26DE403E3D8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "yb",
+    "earnContractAddress": "0xBe2D808C30E45b445cAd2aA147b2c6BA7c56A5d7",
+    "earnedToken": "mooYieldBasisWETH",
+    "earnedTokenAddress": "0xBe2D808C30E45b445cAd2aA147b2c6BA7c56A5d7",
+    "oracle": "lps",
+    "oracleId": "yb-eth",
+    "status": "active",
+    "createdAt": 1793600650,
+    "platformId": "yb",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "yieldbasis",
+    "addLiquidityUrl": "https://yieldbasis.com/earn/0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+    "removeLiquidityUrl": "https://yieldbasis.com/earn/0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "yieldbasis",
+        "ybToken": "0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+        "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      }
+    ]
+  },
+  {
     "id": "stakedao-evausdt-evausdc",
     "name": "evaUSDT/evaUSDC",
     "type": "standard",
