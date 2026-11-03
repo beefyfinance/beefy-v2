@@ -781,7 +781,7 @@
     "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
     "bps": 0,
     "input": {
-      "vault": { "ids": ["aerodrome-cow-base-usdc-tao-vault", "aerodrome-cow-base-usdc-tao-rp"] }
+      "vault": { "ids": ["aerodrome-cow-base-usdc-tao-rp"] }
     },
     "output": {
       "vault": { "ids": ["aero-cow-base-usdc-tao-rp"] }
@@ -863,6 +863,28 @@
     },
     "output": {
       "vault": { "ids": ["aero-cow-base-aero-cbbtc-vault"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-chip-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-cow-base-chip-usdc-rp", "aerodrome-cow-base-chip-usdc-vault"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-chip-usdc-vault"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-zora-usdc-rp",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-cow-base-zora-usdc-rp", "aerodrome-cow-base-zora-usdc-vault"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-zora-usdc-rp"] }
     }
   }
 ]
