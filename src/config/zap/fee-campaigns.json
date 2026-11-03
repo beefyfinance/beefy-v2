@@ -24,7 +24,11 @@
           "aerodrome-cow-base-weth-usdc-v2-rp",
           "aerodrome-cow-base-weth-usdc-v2-vault",
           "aerodrome-weth-usdbc",
-          "aerodrome-weth-usdc"
+          "aerodrome-weth-usdc",
+          "aerodrome-cow-base-usdz-weth-v2-rp",
+          "aerodrome-cow-base-usdz-weth-v2-vault",
+          "aero-cow-usd+-weth-rp",
+          "aero-cow-usd+-weth-vault"
         ]
       }
     },
@@ -318,7 +322,8 @@
           "velo-cow-op-weth-usdc-vault",
           "velo-cow-op-weth-usdc-rp",
           "velodrome-v2-usdc-weth",
-          "velodrome-v2-weth-usdc"
+          "velodrome-v2-weth-usdc",
+          "velodrome-v2-weth-lusd"
         ]
       }
     },
@@ -376,7 +381,12 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": ["velo-cow-op-op-weth-v2-vault", "velo-cow-op-op-weth-v2-rp", "velodrome-v2-weth-op"]
+        "ids": [
+          "velo-cow-op-op-weth-v2-vault",
+          "velo-cow-op-op-weth-v2-rp",
+          "velodrome-v2-weth-op",
+          "velodrome-v2-op-frxeth"
+        ]
       }
     },
     "output": {
