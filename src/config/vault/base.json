@@ -6893,46 +6893,6 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-usdc-tao-vault",
-    "name": "TAO-USDC",
-    "type": "standard",
-    "token": "TAO-USDC",
-    "tokenAddress": "0xE52C9267Db0Cfe862375FFF7F342aEF60726173D",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0xb13384c75f019D0f7a9fE661B90E18E660A6e9b9",
-    "earnedToken": "mooCowAerodromeBaseTAO-USDC",
-    "earnedTokenAddress": "0xb13384c75f019D0f7a9fE661B90E18E660A6e9b9",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-usdc-tao",
-    "status": "eol",
-    "createdAt": 1790587717,
-    "retireReason": "AeroLaunch26",
-    "retiredAt": 1793563105,
-    "platformId": "aerodrome",
-    "assets": ["TAO", "USDC"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-cow-base-usdc-tao-rp",
     "name": "TAO-USDC Reward Pool",
     "type": "gov",
