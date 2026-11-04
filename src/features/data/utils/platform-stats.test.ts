@@ -55,6 +55,7 @@ describe('parseCompleteWeeks', () => {
 });
 
 describe('sumChainTvl', () => {
+  const active = { retiredAt: undefined };
   const data = {
     ethereum: [
       [1, 10, 0, 0, 0],
@@ -69,15 +70,15 @@ describe('sumChainTvl', () => {
   } as Record<string, Array<[number, number, number, number, number]>>;
 
   it('sums configured chains per timestamp across the union of timestamps', () => {
-    expect(sumChainTvl(data, { ethereum: {}, fantom: {} })).toEqual([
+    expect(sumChainTvl(data, { ethereum: active, fantom: active })).toEqual([
       { t: 1, v: 15 },
       { t: 2, v: 25 },
       { t: 3, v: 5 },
     ]);
   });
 
-  it('counts a chain only until its eol', () => {
-    expect(sumChainTvl(data, { ethereum: {}, fantom: { eol: 1 } })).toEqual([
+  it('counts a chain only until it is retired', () => {
+    expect(sumChainTvl(data, { ethereum: active, fantom: { retiredAt: 1 } })).toEqual([
       { t: 1, v: 15 },
       { t: 2, v: 20 },
     ]);
@@ -87,14 +88,14 @@ describe('sumChainTvl', () => {
     const broken = {
       ethereum: [[1, 7.39e44, 0, 0, 0] as [number, number, number, number, number]],
     };
-    expect(sumChainTvl({ ...data, ...broken }, { ethereum: {}, fantom: {} })).toEqual([
+    expect(sumChainTvl({ ...data, ...broken }, { ethereum: active, fantom: active })).toEqual([
       { t: 2, v: 5 },
       { t: 3, v: 5 },
     ]);
   });
 
   it('ignores chains missing from config', () => {
-    expect(sumChainTvl({ unknown: data.unknown }, { ethereum: {} })).toEqual([]);
+    expect(sumChainTvl({ unknown: data.unknown }, { ethereum: active })).toEqual([]);
   });
 });
 

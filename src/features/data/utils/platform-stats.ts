@@ -70,10 +70,10 @@ export function weekSeries(
 // snapshots with broken prices report 1e25+ for a chain (no chain has held $10B); such days are dropped whole
 const MAX_CHAIN_TVL_USD = 1e10;
 
-/** Platform TVL per timestamp; a chain counts while configured and not past its eol, like the chains reducer's activeIds */
+/** Platform TVL per timestamp; a chain counts while configured and not yet retired, like the chains reducer's activeIds */
 export function sumChainTvl(
   data: ApiTvlByChains['data'],
-  chainsById: Partial<Record<string, Pick<ChainEntity, 'eol'>>>
+  chainsById: Partial<Record<string, Pick<ChainEntity, 'retiredAt'>>>
 ): TimePoint[] {
   const totals = new Map<number, number>();
   const broken = new Set<number>();
@@ -81,7 +81,7 @@ export function sumChainTvl(
     const chain = chainsById[chainId];
     if (!chain) continue;
     for (const [t, total] of rows) {
-      if (chain.eol && t > chain.eol) continue;
+      if (chain.retiredAt && t > chain.retiredAt) continue;
       if (total > MAX_CHAIN_TVL_USD) broken.add(t);
       totals.set(t, (totals.get(t) ?? 0) + total);
     }
