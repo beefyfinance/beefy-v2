@@ -63,7 +63,6 @@ export function useCalculatedBreakdown(
   }, [assets, totalUnderlyingValue, totalValue]);
 
   return {
-    chainId: vault.chainId,
     assets: assetsWithTokens,
     token: lpToken,
     totalAmount: lpTotalSupplyDecimal,

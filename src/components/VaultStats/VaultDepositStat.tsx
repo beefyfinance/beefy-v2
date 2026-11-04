@@ -55,7 +55,7 @@ type SelectDataReturn =
       totalDeposit: BigNumber;
       hideBalance: boolean;
       depositToken: TokenEntity;
-      totalDepositUsd: BigNumber;
+      totalDepositUsd: BigNumber | undefined;
       vaultDeposit: BigNumber;
       notEarning: BigNumber;
     };
@@ -133,7 +133,7 @@ const selectVaultDepositStat = createSelector(
       hideBalance,
       depositToken,
       totalDeposit,
-      totalDepositUsd: totalDeposit.multipliedBy(oraclePrice),
+      totalDepositUsd: oraclePrice.isZero() ? undefined : totalDeposit.multipliedBy(oraclePrice),
       vaultDeposit,
       notEarning,
     };
@@ -189,7 +189,7 @@ export const VaultDepositStat = memo(function VaultDepositStat({
       label={t(label)}
       value={depositFormattedCondensed}
       Icon={isNotEarning ? ExclaimRoundedSquare : undefined}
-      subValue={formatLargeUsd(data.totalDepositUsd)}
+      subValue={data.totalDepositUsd ? formatLargeUsd(data.totalDepositUsd) : null}
       blur={data.hideBalance}
       loading={false}
       tooltip={

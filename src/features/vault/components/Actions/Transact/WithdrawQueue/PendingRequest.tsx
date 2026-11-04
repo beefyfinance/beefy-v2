@@ -4,7 +4,7 @@ import type BigNumber from 'bignumber.js';
 import type { Erc4626PendingBalanceRequest } from '../../../../../data/apis/balance/balance-types.ts';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { formatLargeUsdAtPrice } from '../../../../../../helpers/format.ts';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { Countdown } from './Countdown.tsx';
 import { WithdrawButton } from './WithdrawButton.tsx';
@@ -27,7 +27,7 @@ export const PendingRequest = memo(function PendingRequest({
 }: PendingRequestProps) {
   const { id, assets } = request;
   const value = useMemo(
-    () => formatLargeUsd(assets.multipliedBy(depositTokenPrice)),
+    () => formatLargeUsdAtPrice(assets, depositTokenPrice),
     [assets, depositTokenPrice]
   );
   const handleWithdraw = useCallback(() => {

@@ -3,6 +3,8 @@ import { orderBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types.ts';
+import { BOOST_ZAP_MIN_VERSION } from '../apis/transact/helpers/boost.ts';
+import { selectBoostUserBalanceInToken } from './balance.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity, PromoEntity } from '../entities/promo.ts';
 import type { VaultEntity } from '../entities/vault.ts';
@@ -153,6 +155,40 @@ export const selectPreStakeOrActiveBoostIds = (state: BeefyState, vaultId: Vault
   selectVaultHasBoosts(state, vaultId) ?
     selectPreStakeOrActiveBoostIdsCached(state, vaultId)
   : NO_BOOST_IDS;
+
+const selectZapStakeableBoostOrUndefinedCached = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeOrActiveBoostIds(state, vaultId),
+  (state: BeefyState) => state.entities.promos.byId,
+  (boostIds, promosById) => {
+    const stakeable = boostIds.filter(
+      id => requireBoost(promosById, id).version >= BOOST_ZAP_MIN_VERSION
+    );
+    return stakeable.length === 1 ? requireBoost(promosById, stakeable[0]) : undefined;
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+/** the one boost a zap can stake into; undefined when none or more than one qualifies */
+export const selectZapStakeableBoostOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) =>
+  selectVaultHasBoosts(state, vaultId) ?
+    selectZapStakeableBoostOrUndefinedCached(state, vaultId)
+  : undefined;
+
+/** the one v2 boost the user has shares staked in; undefined when none, or more than one has a stake */
+export const selectZapUnstakeableBoostOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const staked = selectAllVaultBoostIds(state, vaultId).filter(
+    id =>
+      selectBoostById(state, id).version >= BOOST_ZAP_MIN_VERSION &&
+      selectBoostUserBalanceInToken(state, id, walletAddress).gt(BIG_ZERO)
+  );
+  return staked.length === 1 ? selectBoostById(state, staked[0]) : undefined;
+};
 
 export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) =>
   arrayOrStaticEmpty(selectVaultBoostIds(state, vaultId));

@@ -29,6 +29,7 @@ import {
   selectTokenByAddress,
   selectTokenById,
 } from '../../../../selectors/tokens.ts';
+import { selectIsChainNativeSharedWithWrapped } from '../../../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import type { BeefyThunk } from '../../../../store/types.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
@@ -45,7 +46,6 @@ import {
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import {
   includeWrappedAndNative,
-  nativeAndWrappedAreSame,
   nativeToWNative,
   pickTokens,
   wnativeToNative,
@@ -337,7 +337,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     // Token Allowances
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, this.vault, state);
+      getVaultWithdrawnFromState(input, this.vaultType, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const allowances = [
       {
@@ -381,7 +381,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     if (
       isTokenEqual(desiredToken, this.wnative) &&
       isTokenEqual(customOutputToken, this.native) &&
-      !nativeAndWrappedAreSame(desiredToken.chainId)
+      !selectIsChainNativeSharedWithWrapped(state, desiredToken.chainId)
     ) {
       const unwrapQuotes = await swapAggregator.fetchQuotes(
         {

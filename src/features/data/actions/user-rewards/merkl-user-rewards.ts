@@ -13,7 +13,11 @@ import type {
   MerklTokenReward,
   MerklVaultReward,
 } from '../../reducers/wallet/user-rewards-types.ts';
-import { selectChainById, selectChainByNetworkChainId } from '../../selectors/chains.ts';
+import {
+  selectChainById,
+  selectChainByIdOrUndefined,
+  selectChainByNetworkChainId,
+} from '../../selectors/chains.ts';
 import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { createAppAsyncThunk } from '../../utils/store-utils.ts';
@@ -32,14 +36,12 @@ export const MERKL_SUPPORTED_CHAINS = new Map<ChainEntity['id'], Address>([
   ['arbitrum', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['base', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['gnosis', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
-  ['zkevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['mantle', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['mode', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['linea', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['bsc', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['zksync', '0xe117ed7Ef16d3c28fCBA7eC49AFAD77f451a6a21'],
   ['fuse', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
-  ['moonbeam', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['manta', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['fraxtal', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['celo', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
@@ -47,7 +49,6 @@ export const MERKL_SUPPORTED_CHAINS = new Map<ChainEntity['id'], Address>([
   ['rootstock', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['sonic', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['saga', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
-  ['lisk', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['hyperevm', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['plasma', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
   ['monad', '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae'],
@@ -151,10 +152,16 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
   async ({ walletAddress, reloadChainId }, { getState }) => {
     const state = getState();
     const api = await getMerklRewardsApi();
-    const supportedChainIds = Array.from(MERKL_SUPPORTED_CHAINS.keys());
+    const supportedChains = Array.from(MERKL_SUPPORTED_CHAINS.keys())
+      .map(chainId => selectChainByIdOrUndefined(state, chainId))
+      .filter(isDefined);
+    if (supportedChains.length === 0) {
+      throw new Error(`No supported merkl chains defined.`);
+    }
+
     const response = await api.fetchRewards({
       user: walletAddress,
-      chainId: supportedChainIds.map(chainId => selectChainById(state, chainId).networkChainId),
+      chainId: supportedChains.map(chain => chain.networkChainId),
       reloadChainId:
         reloadChainId ? selectChainById(state, reloadChainId).networkChainId : undefined,
     });
@@ -229,8 +236,8 @@ export const fetchUserMerklRewardsAction = createAppAsyncThunk<
             continue;
           }
 
-          const vaults = supportedChainIds
-            .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
+          const vaults = supportedChains
+            .map(chain => selectVaultByAddressOrUndefined(state, chain.id, reason.address))
             .filter(isDefined);
 
           if (vaults.length === 0) {

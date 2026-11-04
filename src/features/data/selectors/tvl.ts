@@ -15,7 +15,7 @@ import {
   selectTokenByAddress,
 } from './tokens.ts';
 import type { TvlBreakdown, TvlBreakdownUnderlying } from './tvl-types.ts';
-import { selectVaultById } from './vaults.ts';
+import { selectVaultById, selectVaultShouldShowPrice } from './vaults.ts';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.tvl || BIG_ZERO;
@@ -41,7 +41,8 @@ export function computeUnderlyingTvlUsd(
 export const selectVaultUnderlyingTvlUsd = createCachedSelector(
   selectVaultById,
   selectLpBreakdownForVaultId,
-  computeUnderlyingTvlUsd
+  selectVaultShouldShowPrice,
+  (vault, breakdown, hasPrice) => (hasPrice ? computeUnderlyingTvlUsd(vault, breakdown) : BIG_ZERO)
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectTotalTvl = (state: BeefyState) => state.biz.tvl.totalTvl;

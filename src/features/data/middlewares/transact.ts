@@ -41,6 +41,7 @@ import {
 import { fetchUserGeoCountry } from '../actions/restrictions.ts';
 import {
   selectTransactMode,
+  selectTransactOptionsMode,
   selectTransactOptionsStatus,
   selectTransactOptionsWalletAddress,
   selectTransactPendingVaultIdOrUndefined,
@@ -292,7 +293,7 @@ export function addTransactListeners() {
     },
   });
 
-  /** switch away from boost tab if unstaked from all boosts */
+  /** after a boost tx from the boost tab: drop withdraw options fetched before it, and switch away if unstaked from all boosts */
   startAppListening({
     actionCreator: reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
     effect: async (action, { getState, dispatch }) => {
@@ -323,6 +324,14 @@ export function addTransactListeners() {
       if (!vaultId || vaultId !== boost.vaultId) {
         // not on the same vault this boost is for
         return;
+      }
+
+      // withdraw options carry an unstake counterpart only if a stake existed when they were fetched
+      if (
+        selectTransactOptionsMode(state) === TransactMode.Withdraw &&
+        selectTransactOptionsStatus(state) === TransactStatus.Fulfilled
+      ) {
+        dispatch(transactInvalidateOptions());
       }
 
       const vaultHasBoost = selectIsVaultPreStakedOrBoosted(state, boost.vaultId);

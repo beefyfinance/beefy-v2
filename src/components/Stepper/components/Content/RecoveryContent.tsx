@@ -10,8 +10,12 @@ import {
 import { isWalletActionError } from '../../../../features/data/actions/wallet/wallet-action.ts';
 import { TransactMode } from '../../../../features/data/reducers/wallet/transact-types.ts';
 import { TransactStatus } from '../../../../features/data/reducers/wallet/transact-types.ts';
-import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance.ts';
+import {
+  selectSpendsWholeSharedBalance,
+  selectUserBalanceOfToken,
+} from '../../../../features/data/selectors/balance.ts';
 import { selectChainById } from '../../../../features/data/selectors/chains.ts';
+import { selectIsBalanceAvailableForChainUser } from '../../../../features/data/selectors/data-loader/balance.ts';
 import {
   selectIsStepperStepping,
   selectStepperBridgeStatus,
@@ -29,6 +33,7 @@ import {
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectWalletAddressIfKnown,
 } from '../../../../features/data/selectors/wallet.ts';
 import { useAppDispatch, useAppSelector } from '../../../../features/data/store/hooks.ts';
 import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
@@ -70,7 +75,12 @@ export const RecoveryContent = memo(function RecoveryContent() {
       selectUserBalanceOfToken(state, destNativeToken.chainId, destNativeToken.address)
     : undefined
   );
-  const hasNoGas = destNativeBalance !== undefined && destNativeBalance.isZero();
+  const walletAddress = useAppSelector(selectWalletAddressIfKnown);
+  const destBalanceKnown = useAppSelector(state =>
+    destChainId && walletAddress ?
+      selectIsBalanceAvailableForChainUser(state, destChainId, walletAddress)
+    : false
+  );
 
   // Resolve USDC token on dest chain for formatting
   const destCctpConfig = destChainId ? CCTP_CONFIG.chains[destChainId] : undefined;
@@ -85,11 +95,26 @@ export const RecoveryContent = memo(function RecoveryContent() {
   const isAbandoned =
     bridgeStatus?.lifecycleState === 'abandoned' && (rawRefund == null || rawRefund === '0');
   const hasRefundAmount = rawRefund != null && destUsdcToken != null;
-  const formattedAmount = useMemo(() => {
-    if (!hasRefundAmount) return '';
-    const shifted = new BigNumber(rawRefund).shiftedBy(-destUsdcToken.decimals);
-    return formatTokenDisplayCondensed(shifted, destUsdcToken.decimals);
-  }, [hasRefundAmount, rawRefund, destUsdcToken]);
+  const refundAmount = useMemo(
+    () =>
+      hasRefundAmount ? new BigNumber(rawRefund).shiftedBy(-destUsdcToken.decimals) : undefined,
+    [hasRefundAmount, rawRefund, destUsdcToken]
+  );
+  const formattedAmount =
+    refundAmount && destUsdcToken ?
+      formatTokenDisplayCondensed(refundAmount, destUsdcToken.decimals)
+    : '';
+
+  // arc: the refund is also the gas, so finalising the whole of it would leave nothing to pay with
+  const refundLeavesNoGas = useAppSelector(state =>
+    destChainId && refundAmount ?
+      selectSpendsWholeSharedBalance(state, destChainId, refundAmount, walletAddress)
+    : false
+  );
+  const hasNoGas =
+    destBalanceKnown &&
+    destNativeBalance !== undefined &&
+    (destNativeBalance.isZero() || refundLeavesNoGas);
 
   const hasValidQuote =
     opId != null && recoveryQuoteOpId === opId && recoveryQuoteStatus === TransactStatus.Fulfilled;
@@ -160,7 +185,7 @@ export const RecoveryContent = memo(function RecoveryContent() {
         variant="recovery"
         fullWidth={true}
         borderless={true}
-        disabled={isTxInProgress || isExecuting}
+        disabled={isTxInProgress || isExecuting || hasNoGas}
         onClick={handleFinalise}
       >
         {t('Transact-Finalise', { type: finaliseNoun })}

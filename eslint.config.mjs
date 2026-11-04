@@ -8,6 +8,48 @@ import globals from 'globals';
 import noBarrelFiles from 'eslint-plugin-no-barrel-files';
 import imports from 'eslint-plugin-import';
 
+/** files allowed to import *.test-helper.* */
+const testFiles = ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', '**/*.test-helper.{ts,tsx}'];
+
+const restrictedImportPaths = [
+  {
+    name: 'lodash',
+    message: 'Use lodash-es instead',
+  },
+  {
+    name: 'react',
+    importNames: ['default'],
+    message: 'Use named imports only for React',
+  },
+  {
+    name: 'bignumber.js',
+    allowImportNames: ['default'],
+    message: 'There is only a default export for bignumber.js now',
+  },
+  {
+    name: '@floating-ui/react-dom',
+    message: 'Use @floating-ui/react instead',
+  },
+  {
+    name: 'react-redux',
+    importNames: ['connect'],
+    message: 'Use useAppSelector hook, not connect',
+  },
+];
+
+const restrictedImportPatterns = [
+  {
+    group: ['lodash/*'],
+    message: 'Use lodash-es instead',
+  },
+];
+
+const testHelperImportPattern = {
+  group: ['**/*.test-helper', '**/*.test-helper.ts', '**/*.test-helper.tsx'],
+  message:
+    'Test helpers are test-only: import them from a *.test.*, *.spec.* or *.test-helper.* file, or move the shared code into src proper',
+};
+
 export default tseslint.config(
   {
     ignores: [
@@ -74,37 +116,8 @@ export default tseslint.config(
       'no-restricted-imports': [
         'error',
         {
-          paths: [
-            {
-              name: 'lodash',
-              message: 'Use lodash-es instead',
-            },
-            {
-              name: 'react',
-              importNames: ['default'],
-              message: 'Use named imports only for React',
-            },
-            {
-              name: 'bignumber.js',
-              allowImportNames: ['default'],
-              message: 'There is only a default export for bignumber.js now',
-            },
-            {
-              name: '@floating-ui/react-dom',
-              message: 'Use @floating-ui/react instead',
-            },
-            {
-              name: 'react-redux',
-              importNames: ['connect'],
-              message: 'Use useAppSelector hook, not connect',
-            },
-          ],
-          patterns: [
-            {
-              group: ['lodash/*'],
-              message: 'Use lodash-es instead',
-            },
-          ],
+          paths: restrictedImportPaths,
+          patterns: [...restrictedImportPatterns, testHelperImportPattern],
         },
       ],
       'no-mixed-operators': 'off',
@@ -143,6 +156,19 @@ export default tseslint.config(
       // 'react-x/react-in-jsx-scope': 'off',
       // 'react-x/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
+    },
+  },
+  {
+    // tests and test helpers are the only files allowed to import *.test-helper.*
+    files: testFiles,
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: restrictedImportPaths,
+          patterns: restrictedImportPatterns,
+        },
+      ],
     },
   }
 );

@@ -83,6 +83,7 @@ export type FetchBalanceParams = {
   chainId: ChainEntity['id'];
   tokens?: TokenEntity[];
   vaults?: VaultEntity[];
+  boosts?: BoostPromoEntity[];
 };
 
 export const fetchBalanceAction = createAppAsyncThunk<
@@ -90,7 +91,7 @@ export const fetchBalanceAction = createAppAsyncThunk<
   FetchBalanceParams
 >(
   'balance/fetchBalanceAction',
-  async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
+  async ({ chainId, tokens: requestedTokens = [], vaults = [], boosts = [] }, { getState }) => {
     const state = getState();
     const walletAddress = selectWalletAddress(state);
     if (!walletAddress) {
@@ -101,7 +102,6 @@ export const fetchBalanceAction = createAppAsyncThunk<
 
     const tokens = requestedTokens;
     const govVaults: VaultGov[] = [];
-    const boosts: BoostPromoEntity[] = [];
     const erc4626Vaults: VaultErc4626[] = [];
 
     if (vaults.length) {

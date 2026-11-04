@@ -7,6 +7,7 @@ import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
 import { selectChainById } from '../../selectors/chains.ts';
@@ -27,7 +28,8 @@ import {
 export const zapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -128,6 +130,7 @@ export const zapExecuteOrder = (
         tokens: selectZapTokensToRefresh(state, vault, order),
         clearInput: false,
         ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
+        boostId,
       }
     );
   });

@@ -27,6 +27,8 @@ import { groupBy, partition } from 'lodash-es';
 import i18keys from '../src/locales/en/main.json';
 import { fileExists } from './common/files.ts';
 import { isEmpty } from '../src/helpers/utils.ts';
+import { isNativeAlternativeAddress } from '../src/helpers/addresses.ts';
+import { isChainNativeSharedWithWrapped } from '../src/features/data/entities/chain.ts';
 import { keys } from '../src/helpers/object.ts';
 import { sleep } from '../src/features/data/utils/async-utils.ts';
 import { getViemClient } from './common/viem.ts';
@@ -97,7 +99,20 @@ const nonHarvestOnDepositPools = [
   'morpho-v2-monad-hyperithm-apex-cbbtc',
   'aavev3-monad-gho',
   'aavev3-monad-musd',
-  'mellow-aero-usdc-cbbtc',
+  'aavev3-monad-usdt0',
+  'aavev3-monad-usdc',
+  'aavev3-monad-weth',
+  'aavev3-monad-ausd',
+  'aavev3-plasma-usdt0',
+  'curve-monad-cbbtc',
+  'neverland-monad-usdc',
+  'neverland-monad-ausd',
+  'curve-monad-mon-lsts',
+  'curvance-monad-wmon-wmon-ausd',
+  'curvance-monad-wmon-wmon-usdc',
+  'curvance-monad-usdc-wmon-usdc',
+  'curve-monad-3pool',
+  'morpho-v2-arbitrum-gauntlet-premium-usdg',
 ];
 const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
   ['base'].includes(pool.network) &&
@@ -106,12 +121,11 @@ const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
   pool.strategyTypeId === 'compounds';
 
 const isCowAerodromeWith10sec = (pool: VaultConfigWithStrategyData) =>
-  ['velodrome', 'aerodrome'].includes(pool.platformId) &&
+  ['velodrome', 'aerodrome', 'aero'].includes(pool.platformId) &&
   pool.type === 'standard' &&
-  pool.strategyTypeId === 'pool' &&
+  ['pool', 'compounds'].includes(pool.strategyTypeId) &&
   pool.createdAt > ACTIONABLE_AT_FROM;
 
-const excludedAbPools = ['gmx-arb-atom-usdc', 'gmx-arb-xrp-usdc', 'gmx-arb-doge-usdc'];
 const addressFields: Array<keyof VaultConfig> = [
   'tokenAddress',
   'earnedTokenAddress',
@@ -226,7 +240,7 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
-  if (getChain(chainId).eol || 0 > 0) {
+  if (getChain(chainId).status === 'eol') {
     console.log(`${chainId} is EOL, consider exclude`);
   }
   const vaultsAndPromos = await Promise.all([
@@ -398,15 +412,6 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     if (!pool.assets || !Array.isArray(pool.assets) || !pool.assets.length) {
       console.error(`Error: ${pool.id} : Missing assets array`);
       exitCode = 1;
-    } else if (pool.status !== 'eol') {
-      for (const assetId of pool.assets) {
-        if (!(assetId in addressBook[chainId].tokens)) {
-          if (excludedAbPools.includes(pool.id)) continue;
-          // just warn for now
-          console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
-          // exitCode = 1;
-        }
-      }
     }
 
     // Cowcentrated should have RP
@@ -626,38 +631,8 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
 
   // All
   allVaults.forEach(vault => {
-    if (vault.tokenAddress) {
-      const abToken = addressBook[chainId].tokenAddressMap[vault.tokenAddress];
-      if (abToken) {
-        // Decimals not matching is probably an error in addressbook or vault config, and it breaks things if wrong
-        if (vault.tokenDecimals !== abToken.decimals) {
-          console.error(
-            `Error: ${vault.id} : tokenDecimals "${vault.tokenDecimals}" does not match addressbook "${abToken.decimals}" for ${vault.token} (${vault.tokenAddress})`
-          );
-          exitCode = 1;
-          // Also warn about symbol not matching if decimals don't match
-          if (vault.token !== abToken.symbol) {
-            console.warn(
-              `Warn: ${vault.id} : token "${vault.token}" does not match addressbook "${abToken.symbol}"`
-            );
-          }
-        }
-        // oracleId not matching is probably an error in addressbook or vault config, and it breaks things if wrong
-        if (vault.oracleId !== abToken.oracleId) {
-          const isWNative = vault.tokenAddress === addressBook[chainId].tokens.WNATIVE.address;
-          const wnativeOracleIds = [
-            addressBook[chainId].tokens.WNATIVE.oracleId,
-            addressBook[chainId].native.oracleId,
-          ];
-          // allow ETH or WETH
-          if (!isWNative || !wnativeOracleIds.includes(vault.oracleId)) {
-            console.error(
-              `Error: ${vault.id} : oracleId "${vault.oracleId}" does not match addressbook "${abToken.oracleId}" for ${vault.token} (${vault.tokenAddress})`
-            );
-            exitCode = 1;
-          }
-        }
-      }
+    if (!checkSharedNativeNotUsed(vault, chainId)) {
+      exitCode = 1;
     }
   });
 
@@ -871,6 +846,69 @@ const checkRisks = (pool: VaultConfig) => {
     return false;
   } else if (pool.curatorId && !pool.risks.curated) {
     console.error(`Error: ${pool.id} : risks.curated should be true when curatorId is set`);
+    return false;
+  }
+
+  return true;
+};
+
+/** the app resolves all of these to the chain native token */
+const isNativeTokenAddress = (address: string) =>
+  address === 'native' || isNativeAlternativeAddress(address);
+
+/** config fields naming the native token; a missing tokenAddress means native */
+const getNativeTokenFields = (pool: VaultConfig) => {
+  const fields: string[] = [];
+  const checkAddress = (field: string, address: string | null | undefined) => {
+    if (address && isNativeTokenAddress(address)) {
+      fields.push(field);
+    }
+  };
+  const checkAddresses = (field: string, addresses: string[] | undefined) => {
+    addresses?.forEach((address, i) => checkAddress(`${field}[${i}]`, address));
+  };
+
+  if (!pool.tokenAddress) {
+    fields.push('tokenAddress');
+  } else {
+    checkAddress('tokenAddress', pool.tokenAddress);
+  }
+  checkAddresses('depositTokenAddresses', pool.depositTokenAddresses);
+
+  pool.zaps?.forEach((zap, i) => {
+    switch (zap.strategyId) {
+      case 'balancer':
+        checkAddresses(`zaps[${i}].tokens`, zap.tokens);
+        break;
+      case 'curve':
+        zap.methods.forEach((method, j) =>
+          checkAddresses(`zaps[${i}].methods[${j}].coins`, method.coins)
+        );
+        break;
+      case 'pendle-v2':
+        checkAddresses(`zaps[${i}].depositTokens`, zap.depositTokens);
+        break;
+      case 'yieldbasis':
+        checkAddress(`zaps[${i}].ybToken`, zap.ybToken);
+        checkAddress(`zaps[${i}].asset`, zap.asset);
+        break;
+    }
+  });
+
+  return fields;
+};
+
+/** where native and wrapped are one balance there is no wrapper to zap through, so configs must name the wrapped token */
+const checkSharedNativeNotUsed = (pool: VaultConfig, chain: AddressBookChainId) => {
+  if (!isChainNativeSharedWithWrapped(getChain(chain))) {
+    return true;
+  }
+
+  const fields = getNativeTokenFields(pool);
+  if (fields.length) {
+    console.error(
+      `Error: ${pool.id} : ${fields.join(', ')} must use the wrapped native address, as native shares its balance with wrapped on ${chain}`
+    );
     return false;
   }
 

@@ -7,7 +7,7 @@ import { fetchBridgeConfig } from '../actions/bridge.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllMinters } from '../actions/minters.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
-import { initPromos } from '../actions/promos.ts';
+import { initBoostReceiptTokens, initPromos } from '../actions/promos.ts';
 import type { FetchAddressBookPayload } from '../actions/tokens.ts';
 import {
   fetchAddressBookAction,
@@ -18,9 +18,9 @@ import { fetchAllVaults } from '../actions/vaults.ts';
 import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
 import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
-import type { ChainEntity } from '../entities/chain.ts';
+import { type ChainEntity, isChainNativeSharedWithWrapped } from '../entities/chain.ts';
 import type { TokenEntity, TokenErc20, TokenNative } from '../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import { isTokenErc20, isTokenNative, NATIVE_TOKEN_ID } from '../entities/token.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
@@ -62,10 +62,11 @@ export const tokensSlice = createSlice({
         const existingNative = chainState.byAddress['native'];
 
         const token: TokenNative = {
-          id: chainConf.native.symbol,
+          // wnative keeps the symbol as its id where the two are one balance (arc, metis, celo)
+          id: isChainNativeSharedWithWrapped(chainConf) ? NATIVE_TOKEN_ID : chainConf.native.symbol,
           chainId: chainId,
           oracleId: chainConf.native.oracleId,
-          decimals: 18,
+          decimals: chainConf.native.decimals,
           address: 'native',
           symbol: chainConf.native.symbol,
           type: 'native',
@@ -98,6 +99,12 @@ export const tokensSlice = createSlice({
             addPromoRewardTokenToState(sliceState, promo.chainId, reward);
           }
         }
+      }
+    });
+
+    builder.addCase(initBoostReceiptTokens.fulfilled, (sliceState, action) => {
+      for (const token of action.payload.tokens) {
+        addTokenToStateIfNotExists(sliceState, token);
       }
     });
 
@@ -230,10 +237,10 @@ function addPriceToState(
   oracleId: string,
   price: number | undefined | null
 ) {
-  // when the api fails to fetch the token price, we say 1 token = $1
+  // when the api fails to fetch the token price, treat it as unknown (0)
   if (price === null || price === undefined) {
     console.warn(`API returned an empty price for oracle ${oracleId}`);
-    price = 1.0;
+    price = 0;
   }
 
   if (sliceState.prices.byOracleId[oracleId] === undefined) {

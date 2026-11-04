@@ -1,5 +1,131 @@
 [
   {
+    "id": "yb-eth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "staked-g(yb-WETH)",
+    "tokenAddress": "0xd829456FD63Ada7DE0657714A3A7A26DE403E3D8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "yb",
+    "earnContractAddress": "0xBe2D808C30E45b445cAd2aA147b2c6BA7c56A5d7",
+    "earnedToken": "mooYieldBasisWETH",
+    "earnedTokenAddress": "0xBe2D808C30E45b445cAd2aA147b2c6BA7c56A5d7",
+    "oracle": "lps",
+    "oracleId": "yb-eth",
+    "status": "active",
+    "createdAt": 1793600650,
+    "platformId": "yb",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "yieldbasis",
+    "addLiquidityUrl": "https://yieldbasis.com/earn/0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+    "removeLiquidityUrl": "https://yieldbasis.com/earn/0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "yieldbasis",
+        "ybToken": "0x2B9c9f3BdcEb5d8E36a4704F08a78Fca53343cEa",
+        "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      }
+    ]
+  },
+  {
+    "id": "stakedao-evausdt-evausdc",
+    "name": "evaUSDT/evaUSDC",
+    "type": "standard",
+    "token": "evaUSDMAIN",
+    "tokenAddress": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC4fA3d52Ac82B00c45020dFabFCe6826A76942e4",
+    "earnedToken": "mooStakeDao-evaUSDT-evaUSDC",
+    "earnedTokenAddress": "0xC4fA3d52Ac82B00c45020dFabFCe6826A76942e4",
+    "oracle": "lps",
+    "oracleId": "curve-evausdt-evausdc",
+    "status": "active",
+    "createdAt": 1792386596,
+    "platformId": "stakedao",
+    "assets": ["evaUSDT", "evaUSDC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-794/deposit",
+    "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-794/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x3C0965582dB7A0F660D491aA6174B9438f911c21",
+            "coins": [
+              "0x501eBf66d76A96D4FB26ccead42957653e16B8B8",
+              "0x741bD193B6b40f8703d2e116FD1965421f290F58"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "morpho-v2-ethereum-armitage-pendle-ecosystem-high-yield-usdc",
+    "name": "USDC (Armitage, Pendle Ecosystem High Yield V2)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xAA5e4EEdfEC704c0F4c63A35Cf34b4Ec62c737Cc",
+    "earnedToken": "mooMorphoV2EthereumArmitagePendleEcosystemHighYieldUSDC",
+    "earnedTokenAddress": "0xAA5e4EEdfEC704c0F4c63A35Cf34b4Ec62c737Cc",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1792056810,
+    "platformId": "morpho",
+    "curatorId": "armitage",
+    "assets": ["USDC"],
+    "migrationIds": ["morpho"],
+    "risks": {
+      "complex": false,
+      "curated": true,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "single",
+    "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xcf609F8327E68b42AF54F9D529b9f65d68038435/armitage-pendle-ecosystem-high-yield-usdc",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "yb-cbbtc",
     "name": "cbBTC",
     "type": "standard",
@@ -1598,8 +1724,10 @@
     "earnedTokenAddress": "0xC28f78fEDCf9e1C9A83aF8BFfeEd010C5253F437",
     "oracle": "lps",
     "oracleId": "curve-mseth-oeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1778822024,
+    "retireReason": "rewards",
+    "retiredAt": 1790969311,
     "platformId": "convex",
     "assets": ["msETH", "OETH"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -2262,8 +2390,10 @@
     "earnedTokenAddress": "0x61DfA236e0C30aaE123Ce152a89927DaBe5ebB93",
     "oracle": "lps",
     "oracleId": "curve-ousd-pmusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1773141624,
+    "retireReason": "rewards",
+    "retiredAt": 1790970516,
     "platformId": "stakedao",
     "assets": ["OUSD", "pmUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -2532,8 +2662,10 @@
     "earnedTokenAddress": "0x2096F8db3dbFD6076F38C61a0aaE82D8c4a47DfB",
     "oracle": "lps",
     "oracleId": "curve-ousd-musd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1770892109,
+    "retireReason": "rewards",
+    "retiredAt": 1790970445,
     "platformId": "stakedao",
     "assets": ["OUSD", "MUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -4077,8 +4209,10 @@
     "earnedTokenAddress": "0x5159B51CD1B72d3C6aD900B9C394E6B285017C42",
     "oracle": "lps",
     "oracleId": "curve-scrvusd-usdaf",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1758789884,
+    "retireReason": "rewards",
+    "retiredAt": 1790969311,
     "platformId": "convex",
     "assets": ["scrvUSD", "USDaf"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
@@ -6028,6 +6162,7 @@
     "curatorId": "steakhouse",
     "assets": ["wstETH"],
     "migrationIds": ["morpho"],
+    "replacementVaultId": "curve-eth+-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -6347,40 +6482,6 @@
         ]
       }
     ]
-  },
-  {
-    "id": "tokemak-autoeth",
-    "name": "autoETH",
-    "type": "standard",
-    "token": "autoETH",
-    "tokenAddress": "0x0A2b94F6871c1D7A32Fe58E1ab5e6deA2f114E56",
-    "tokenDecimals": 18,
-    "tokenProviderId": "tokemak",
-    "earnContractAddress": "0xd491c10AAe197C4AAe802cDF70b7Bc518574B743",
-    "earnedToken": "mooTokemakEthautoETH",
-    "earnedTokenAddress": "0xd491c10AAe197C4AAe802cDF70b7Bc518574B743",
-    "oracle": "lps",
-    "oracleId": "tokemak-autoeth",
-    "status": "eol",
-    "createdAt": 1729874877,
-    "retireReason": "rewards",
-    "retiredAt": 1752239317,
-    "platformId": "tokemak",
-    "assets": ["autoETH"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": true,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.tokemak.xyz/autopool?id=0x0A2b94F6871c1D7A32Fe58E1ab5e6deA2f114E56",
-    "network": "ethereum"
   },
   {
     "id": "tokemak-baleth",
@@ -7463,12 +7564,15 @@
     "earnedTokenAddress": "0x1817CFfc44c78d5aED61420bF48Cc273E504B7BE",
     "oracle": "lps",
     "oracleId": "curve-eusd-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1719559473,
     "updatedAt": 1723705959,
+    "retireReason": "rewards",
+    "retiredAt": 1790969311,
     "platformId": "convex",
     "assets": ["eUSD", "USDC"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "replacementVaultId": "morpho-steakhouse-usdc",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

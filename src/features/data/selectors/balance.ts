@@ -5,10 +5,6 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { getUnixNow } from '../../../helpers/date.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
-import {
-  isVaultDestWithdrawOption,
-  isVaultSourceDepositOption,
-} from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
@@ -19,6 +15,7 @@ import {
   isSingleGovVault,
   isStandardVault,
   isVaultActive,
+  isVaultAeroUpgradeSoon,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -44,10 +41,12 @@ import {
 import { selectIsConfigAvailable } from './data-loader/config.ts';
 import { hasLoaderFulfilledOnce } from './data-loader-helpers.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
+import { selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
+  selectTokenPriceLookup,
 } from './tokens.ts';
 import {
   selectAllCowcentratedVaults,
@@ -100,9 +99,40 @@ export const selectUserDepositedVaultIdsForAsset = createSelector(
     arrayOrStaticEmpty(vaultIds.filter(vaultId => vaultsById[vaultId]?.assetIds.includes(asset)))
 );
 
-export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
+export const selectUserHasDepositInAeroUpgradeSoonVault = createSelector(
+  selectUserDepositedVaultIds,
+  (state: BeefyState, _walletAddress?: string) => state.entities.vaults.byId,
+  (vaultIds, vaultsById) =>
+    vaultIds.some(vaultId => {
+      const vault = vaultsById[vaultId];
+      return !!vault && isVaultAeroUpgradeSoon(vault);
+    })
+);
+
+export const selectHasUserDepositInVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
+};
+
+/** native and wnative are one entry where they share a balance (arc), kept under the wnative address */
+const selectBalanceStorageAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenAddress: TokenEntity['address']
+): string => {
+  if (tokenAddress === 'native' && selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    // not selectChainWrappedNativeToken: balances can be read before the addressbook loads
+    const chainTokens = state.entities.tokens.byChainId[chainId];
+    const wnativeAddress = chainTokens?.wnative && chainTokens.byId[chainTokens.wnative];
+    if (wnativeAddress) {
+      return wnativeAddress;
+    }
+  }
+  return tokenAddress.toLowerCase();
 };
 
 export const selectUserBalanceOfToken = (
@@ -113,9 +143,28 @@ export const selectUserBalanceOfToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return (
-    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]
-      ?.balance || BIG_ZERO
+    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[
+      selectBalanceStorageAddress(state, chainId, tokenAddress)
+    ]?.balance || BIG_ZERO
   );
+};
+
+/**
+ * Where native and its erc20 view are one balance (arc), spending all of an amount held in it
+ * leaves nothing to pay gas with. False while the balance is unknown: the not-enough-balance
+ * gate covers that.
+ */
+export const selectSpendsWholeSharedBalance = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  amount: BigNumber,
+  walletAddress?: string
+): boolean => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return false;
+  }
+  const balance = selectUserBalanceOfToken(state, chainId, 'native', walletAddress);
+  return balance.gt(BIG_ZERO) && amount.gte(balance);
 };
 
 /**
@@ -171,10 +220,7 @@ export const selectUserVaultBalanceInDepositTokenInBoosts = createSelector(
     selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectVaultSharesToDepositTokenData(state, vaultId),
-  (shares, shareData) =>
-    shareData.shareToken ?
-      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
-    : shares
+  sharesToDepositToken
 );
 
 /**
@@ -265,6 +311,15 @@ export const selectUserVaultBalanceInShareTokenPendingWithdrawal = createSelecto
   shares => bigNumberOrStaticZero(shares)
 );
 
+function sharesToDepositToken(
+  shares: BigNumber,
+  shareData: ReturnType<typeof selectVaultSharesToDepositTokenData>
+): BigNumber {
+  return shareData.shareToken ?
+      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
+    : shares;
+}
+
 export const selectVaultSharesToDepositTokenData = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
     selectVaultById(state, vaultId),
@@ -353,13 +408,14 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createSelect
  */
 export const selectUserHasBalanceToMigrate = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
 ): boolean => {
   const migration = selectVaultReplacementMigration(state, vaultId);
   if (!migration) {
     return false;
   }
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return false;
   }
@@ -661,6 +717,14 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+export const selectBoostUserBalanceInDepositToken = createSelector(
+  (state: BeefyState, boostId: BoostPromoEntity['id'], maybeWalletAddress?: string) =>
+    selectBoostUserBalanceInToken(state, boostId, maybeWalletAddress),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, selectBoostById(state, boostId).vaultId),
+  sharesToDepositToken
+);
+
 const NO_REWARDS: BoostReward[] = [];
 export const selectBoostUserRewardsInToken = (
   state: BeefyState,
@@ -669,6 +733,23 @@ export const selectBoostUserRewardsInToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
+};
+
+const MIN_CLAIM_USD = 0.05;
+
+/**
+ * Whether rewards are worth a claim tx batched ahead of a zap. The dust floor stops a re-confirm or
+ * retry right after claiming from asking for a second claim; unpriced rewards always count.
+ */
+export const selectRewardsWorthClaiming = (
+  state: BeefyState,
+  rewards: ReadonlyArray<{ token: Pick<TokenEntity, 'chainId' | 'oracleId'>; amount: BigNumber }>
+) => {
+  const priceOf = selectTokenPriceLookup(state);
+  return rewards.some(({ token, amount }) => {
+    const price = priceOf(token.chainId, token.oracleId);
+    return amount.gt(BIG_ZERO) && (price.lte(BIG_ZERO) || amount.times(price).gte(MIN_CLAIM_USD));
+  });
 };
 
 /**
@@ -718,11 +799,11 @@ export const selectGovVaultPendingRewards = createCachedSelector(
 export const selectGovVaultPendingRewardsWithPrice = createCachedSelector(
   selectGovVaultPendingRewards,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (rewards, prices) => {
+    selectTokenPriceLookup(state),
+  (rewards, priceLookup) => {
     return rewards.map(reward => ({
       ...reward,
-      price: prices[reward.token.oracleId] || undefined,
+      price: priceLookup(reward.token.chainId, reward.token.oracleId),
     }));
   }
 )(
@@ -940,30 +1021,9 @@ export const selectPastBoostIdsWithUserBalance = (
   return arrayOrStaticEmpty(boostIds);
 };
 
-export const selectDepositOptionTokensBalanceByChainId = (
+/** tokens with the same key read the same stored balance, so sums must count them once */
+export const selectBalanceKeyForToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  walletAddress: string
-): BigNumber => {
-  const selectionIds = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionIds) return BIG_ZERO;
-
-  return selectionIds.reduce((acc, selectionId) => {
-    const selection = state.ui.transact.selections.bySelectionId[selectionId];
-    if (!selection) return acc;
-    if (isVaultSourceSelection(state, selectionId)) return acc;
-    return selection.tokens.reduce((sum, token) => {
-      const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
-      const price = selectTokenPriceByAddress(state, token.chainId, token.address);
-      return sum.plus(balance.multipliedBy(price));
-    }, acc);
-  }, BIG_ZERO);
-};
-
-function isVaultSourceSelection(state: BeefyState, selectionId: string): boolean {
-  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
-  if (!optionIds?.length) return false;
-  const option = state.ui.transact.options.byOptionId[optionIds[0]];
-  if (!option) return false;
-  return isVaultSourceDepositOption(option) || isVaultDestWithdrawOption(option);
-}
+  address: string
+): string => `${chainId}:${selectBalanceStorageAddress(state, chainId, address)}`;

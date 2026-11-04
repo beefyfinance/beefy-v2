@@ -3,6 +3,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { PlatformEntity } from '../../entities/platform.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type {
   AmmEntitySolidly,
@@ -101,6 +102,8 @@ type BaseOption = {
   async?: boolean;
   feeable?: boolean;
   feeCampaign?: OptionFeeCampaign;
+  /** set on the boosted counterpart of an option: the route also stakes into this boost */
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type OptionFeeCampaign = {
@@ -220,6 +223,14 @@ export type SingleDepositOption = ZapBaseDepositOption & {
 
 export type SingleWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'single';
+};
+
+export type VaultIdentityDepositOption = ZapBaseDepositOption & {
+  strategyId: 'vault-identity';
+};
+
+export type VaultIdentityWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'vault-identity';
 };
 
 export type CurveDepositOption = ZapBaseDepositOption & {
@@ -386,6 +397,7 @@ export type VaultComposerWithdrawOption = ZapBaseWithdrawOption & {
 
 export type RewardPoolToVaultDepositOption = ZapBaseDepositOption & {
   strategyId: 'reward-pool-to-vault';
+  srcVaultId: VaultEntity['id'];
 };
 
 export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {
@@ -505,7 +517,8 @@ export type DepositOption =
   | PendleV2DepositOption
   | YieldBasisDepositOption
   | CrossChainDepositOption
-  | VaultToVaultSingleTokenDepositOption;
+  | VaultToVaultSingleTokenDepositOption
+  | VaultIdentityDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -526,7 +539,8 @@ export type WithdrawOption =
   | PendleV2WithdrawOption
   | YieldBasisWithdrawOption
   | CrossChainWithdrawOption
-  | VaultToVaultSingleTokenWithdrawOption;
+  | VaultToVaultSingleTokenWithdrawOption
+  | VaultIdentityWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -566,6 +580,12 @@ export function isCrossChainVaultDstWithdrawOption(
   option: TransactOption
 ): option is CrossChainVaultDstWithdrawOption {
   return isCrossChainWithdrawOption(option) && option.destHandlerKind === 'vault';
+}
+
+export function isRewardPoolToVaultDepositOption(
+  option: TransactOption
+): option is RewardPoolToVaultDepositOption {
+  return option.strategyId === 'reward-pool-to-vault' && option.mode === TransactMode.Deposit;
 }
 
 export function isVaultToVaultSingleTokenDepositOption(
@@ -687,11 +707,14 @@ export type ZapQuoteStepUnused = {
 export type ZapQuoteStepStake = {
   type: 'stake';
   inputs: TokenAmount[];
+  boostId?: BoostPromoEntity['id'];
 };
 
 export type ZapQuoteStepUnstake = {
   type: 'unstake';
   outputs: TokenAmount[];
+  boostId?: BoostPromoEntity['id'];
+  govVaultId?: VaultEntity['id'];
 };
 
 export type ZapQuoteStepBridge = {
@@ -864,6 +887,8 @@ export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote?: QuoteResponse;
 };
 
+export type VaultIdentityDepositQuote = BaseZapQuote<VaultIdentityDepositOption>;
+
 export type UniswapLikePoolDepositQuote<T extends UniswapLikeDepositOption<AmmEntityUniswapLike>> =
   BaseZapQuote<T> & {
     quote: {
@@ -949,7 +974,8 @@ export type ZapDepositQuote =
   | PendleV2DepositQuote
   | YieldBasisDepositQuote
   | CrossChainDepositQuote
-  | VaultToVaultSingleTokenDepositQuote;
+  | VaultToVaultSingleTokenDepositQuote
+  | VaultIdentityDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -976,6 +1002,8 @@ export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawO
 };
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
+
+export type VaultIdentityWithdrawQuote = BaseZapQuote<VaultIdentityWithdrawOption>;
 
 export type UniswapLikeBreakWithdrawQuote<
   T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
@@ -1094,7 +1122,8 @@ export type ZapWithdrawQuote =
   | PendleV2WithdrawQuote
   | YieldBasisWithdrawQuote
   | CrossChainWithdrawQuote
-  | VaultToVaultSingleTokenWithdrawQuote;
+  | VaultToVaultSingleTokenWithdrawQuote
+  | VaultIdentityWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

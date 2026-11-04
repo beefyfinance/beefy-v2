@@ -3,11 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
 import { explorerAddressUrl } from '../../../../../helpers/url.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/entities/vault.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
-import { selectErc4626VaultById } from '../../../../data/selectors/vaults.ts';
+import {
+  selectErc4626VaultById,
+  selectVaultShouldShowInterest,
+} from '../../../../data/selectors/vaults.ts';
 import { CardTitle } from '../../Card/CardTitle.tsx';
 import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
 import { Erc4626Description } from '../Description/Erc4626Description.tsx';
@@ -23,7 +26,8 @@ const Erc4626Explainer = memo(function Erc4626Explainer({ vaultId }: Erc4626Expl
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
-  const showApy = apys && shouldVaultShowInterest(vault);
+  const shouldShowInterest = useAppSelector(state => selectVaultShouldShowInterest(state, vaultId));
+  const showApy = apys && shouldShowInterest;
 
   const links = useMemo(() => {
     const urls: {

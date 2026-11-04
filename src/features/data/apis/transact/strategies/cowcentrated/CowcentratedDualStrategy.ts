@@ -24,7 +24,7 @@ import { selectChainById } from '../../../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
 import type { BeefyState, BeefyThunk } from '../../../../store/types.ts';
-import { BeefyCLMPool, clmSupportsActionableAt } from '../../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, getClmActionableCheck } from '../../../beefy/beefy-clm-pool.ts';
 import { slipAllBy, slipBy } from '../../helpers/amounts.ts';
 import { Balances } from '../../helpers/Balances.ts';
 import {
@@ -158,7 +158,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       strategy,
       chain,
       this.vaultType.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
 
     const rebalance = await clmPool.getDualInputRebalanceData(inputs[0].amount, inputs[1].amount);
@@ -222,23 +222,14 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     // Preview CLM deposit
-    const {
-      isCalm,
-      liquidity,
-      used0,
-      used1,
-      unused0,
-      unused1,
-      position0,
-      position1,
-      actionableAt,
-    } = await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+    const { isCalm, liquidity, used0, used1, unused0, unused1, position0, position1, actionable } =
+      await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
 
     if (liquidity.lte(BIG_ZERO)) {
       throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
     }
 
-    assertCowcentratedActionable('deposit', isCalm, actionableAt);
+    assertCowcentratedActionable('deposit', isCalm, actionable);
 
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],
@@ -306,7 +297,7 @@ class CowcentratedDualStrategyImpl implements IComposableStrategy<StrategyId> {
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.vaultType.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
     const slippage = selectTransactSlippage(state);
     const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };

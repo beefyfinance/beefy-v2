@@ -9,6 +9,7 @@ import {
   type CrossChainChainOption,
   type CrossChainTokenOption,
   isCrossChainOption,
+  isRewardPoolToVaultDepositOption,
   isVaultDestWithdrawOption,
   isVaultSourceDepositOption,
   isZapOption,
@@ -35,22 +36,32 @@ import { bigNumberEqual } from '../utils/selector-equality.ts';
 import {
   selectAddressHasVaultPendingWithdrawal,
   selectBoostUserRewardsInToken,
-  selectDepositOptionTokensBalanceByChainId,
+  selectBalanceKeyForToken,
   selectPastBoostIdsWithUserBalance,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenWithToken,
   selectUserVaultBalanceInShareToken,
   selectUserVaultBalanceInShareTokenIncludingDisplaced,
   selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInShareToken,
+  selectBoostUserBalanceInToken,
+  selectVaultSharesToDepositTokenData,
 } from './balance.ts';
-import { selectAllVaultBoostIds, selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import {
+  selectAllVaultBoostIds,
+  selectPreStakeOrActiveBoostIds,
+  selectZapStakeableBoostOrUndefined,
+  selectZapUnstakeableBoostOrUndefined,
+} from './boosts.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
 } from './rewards.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectIsStepperStepping, selectStepperStepContent } from './stepper.ts';
+import { StepContent } from '../reducers/wallet/stepper-types.ts';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
@@ -90,6 +101,63 @@ export function selectVaultRefIdForSelection(
   return undefined;
 }
 
+function selectInputVaultIdForSelection(
+  state: BeefyState,
+  selectionId: string
+): VaultEntity['id'] | undefined {
+  for (const optionId of state.ui.transact.options.bySelectionId[selectionId] ?? []) {
+    const option = state.ui.transact.options.byOptionId[optionId];
+    if (option && isRewardPoolToVaultDepositOption(option)) {
+      return option.srcVaultId;
+    }
+  }
+  return undefined;
+}
+
+type TokenWalletBalance = {
+  balance: BigNumber;
+  balanceValue: BigNumber;
+  decimals: number;
+};
+
+function selectSelectionTokenBalances(
+  state: BeefyState,
+  selection: TransactSelection,
+  walletAddress: string | undefined
+): TokenWalletBalance[] {
+  const inputVaultId = selectInputVaultIdForSelection(state, selection.id);
+  if (inputVaultId) {
+    const { token, amount } = selectUserVaultBalanceInDepositTokenWithToken(
+      state,
+      inputVaultId,
+      walletAddress
+    );
+    return [
+      {
+        balance: amount,
+        balanceValue: amount.multipliedBy(
+          selectTokenPriceByAddress(state, token.chainId, token.address)
+        ),
+        decimals: token.decimals,
+      },
+    ];
+  }
+  return selection.tokens.map(token => {
+    const balance = selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress);
+    return {
+      balance,
+      balanceValue: balance.multipliedBy(
+        selectTokenPriceByAddress(state, token.chainId, token.address)
+      ),
+      decimals: token.decimals,
+    };
+  });
+}
+
+function sumBalanceValues(balances: TokenWalletBalance[]): BigNumber {
+  return balances.reduce((sum, { balanceValue }) => sum.plus(balanceValue), BIG_ZERO);
+}
+
 export const selectTransactDepositFromVaultId = (
   state: BeefyState
 ): VaultEntity['id'] | undefined => {
@@ -114,6 +182,9 @@ export const selectTransactInputMaxes = (state: BeefyState) => state.ui.transact
 
 export const selectTransactInputIndexAmount = (state: BeefyState, index: number) =>
   state.ui.transact.inputAmounts[index] || BIG_ZERO;
+
+export const selectTransactInputIndexEnteredAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.inputEnteredAmounts[index];
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
@@ -195,28 +266,27 @@ export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
-  const vaultId = selectTransactVaultId(state);
   const isVaultSourceWithdraw = selectTransactIsActiveSelectionVaultSourceWithdraw(state);
   // Vault-source withdraw (cross-chain or same-chain v2v) dispatches in share-math.
   // Composer-path withdraws still dispatch in deposit-token math.
   const userBalance =
     isVaultSourceWithdraw ?
-      selectUserVaultBalanceInShareToken(state, vaultId)
-    : selectUserVaultBalanceInDepositToken(state, vaultId);
+      selectTransactWithdrawAvailableInShareToken(state)
+    : selectTransactWithdrawAvailableWithToken(state).amount;
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
 };
 
 export const selectTransactNumTokens = (state: BeefyState) =>
-  state.ui.transact.selections.allSelectionIds.length;
+  selectTransactVisibleSelectionIds(state).length;
 
 const selectTransactWithdrawSelectionsForChain = (
   state: BeefyState,
   chainId: ChainEntity['id']
 ) => {
-  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionsForChain) {
+  const selectionsForChain = selectTransactVisibleSelectionIdsForChain(state, chainId);
+  if (!selectionsForChain.length) {
     return EMPTY_ARRAY;
   }
 
@@ -336,8 +406,8 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   vaultId: VaultEntity['id']
 ) => {
   const walletAddress = selectWalletAddressIfKnown(state);
-  const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
-  if (!selectionsForChain) {
+  const selectionsForChain = selectTransactVisibleSelectionIdsForChain(state, chainId);
+  if (!selectionsForChain.length) {
     return EMPTY_ARRAY;
   }
   const vault = selectVaultById(state, vaultId);
@@ -380,20 +450,10 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       };
     }
 
-    const balances = tokens.map(token =>
-      selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
-    );
-    const prices = tokens.map(token =>
-      selectTokenPriceByAddress(state, token.chainId, token.address)
-    );
-    const balanceValueTotal = balances.reduce(
-      (acc, balance, index) => acc.plus(balance.multipliedBy(prices[index])),
-      BIG_ZERO
-    );
-
+    const tokenBalances = selectSelectionTokenBalances(state, option, walletAddress);
     const base: SelectionRow = {
       ...option,
-      balanceValue: balanceValueTotal,
+      balanceValue: sumBalanceValues(tokenBalances),
       balance: undefined,
       decimals: 0,
       tag: undefined,
@@ -403,8 +463,8 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       return {
         ...base,
         ...extractTagFromLpSymbol(tokens, vault),
-        balance: balances[0],
-        decimals: tokens[0].decimals,
+        balance: tokenBalances[0].balance,
+        decimals: tokenBalances[0].decimals,
       };
     }
 
@@ -455,7 +515,8 @@ export const selectTransactDepositFromVaultEntries = (
   const bySelectionId = state.ui.transact.selections.bySelectionId;
   const entries: DepositFromVaultEntry[] = [];
 
-  for (const selection of Object.values(bySelectionId)) {
+  for (const selectionId of selectTransactVisibleSelectionIds(state)) {
+    const selection = bySelectionId[selectionId];
     const vaultId = selectVaultRefIdForSelection(state, selection.id);
     if (!vaultId) continue;
     const balanceUsd =
@@ -482,7 +543,8 @@ const hasDepositFromVaultEntry = (state: BeefyState): boolean => {
   const walletAddress = selectWalletAddressIfKnown(state);
   if (!walletAddress) return false;
 
-  for (const selection of Object.values(state.ui.transact.selections.bySelectionId)) {
+  for (const selectionId of selectTransactVisibleSelectionIds(state)) {
+    const selection = state.ui.transact.selections.bySelectionId[selectionId];
     const vaultId = selectVaultRefIdForSelection(state, selection.id);
     if (!vaultId) continue;
     const balanceUsd =
@@ -503,17 +565,131 @@ export const selectTransactIsDepositFromVault = (state: BeefyState): boolean =>
   state.ui.transact.depositSource === DepositSource.Vault &&
   selectTransactUserHasOtherDepositedVaults(state);
 
+export const selectTransactDepositInputVaultId = (
+  state: BeefyState
+): VaultEntity['id'] | undefined => {
+  if (state.ui.transact.mode !== TransactMode.Deposit) return undefined;
+  if (selectTransactIsDepositFromVault(state)) {
+    return selectTransactDepositFromVaultId(state);
+  }
+  const selectionId = state.ui.transact.selectedSelectionId;
+  return selectionId ? selectInputVaultIdForSelection(state, selectionId) : undefined;
+};
+
 export const selectTransactOptionIdsForSelectionId = createSelector(
   (_state: BeefyState, selectionId: string) => selectionId,
   (state: BeefyState) => state.ui.transact.options.bySelectionId,
   (selectionId, bySelectionId) => bySelectionId[selectionId]
 );
 
+// ---------------------------------------------------------------------------
+// Boost selectors
+// ---------------------------------------------------------------------------
+
+export const selectTransactWithBoostChoice = (state: BeefyState) => state.ui.transact.withBoost;
+
+// deposit: boost by default; withdraw: unstake by default only when the wallet holds no shares
+const selectTransactWithBoostDefault = (state: BeefyState) => {
+  if (state.ui.transact.mode !== TransactMode.Withdraw) {
+    return true;
+  }
+  const vaultId = selectTransactVaultIdOrUndefined(state);
+  return !!vaultId && selectUserVaultBalanceInShareToken(state, vaultId).isZero();
+};
+
+export const selectTransactWithBoost = (state: BeefyState) =>
+  selectTransactWithBoostChoice(state) ?? selectTransactWithBoostDefault(state);
+
+// the vault's one boost a route can stake into (deposit) or unstake from (withdraw), if any fetched option does
+export const selectTransactLiveBoostId = createSelector(
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  (state: BeefyState) => {
+    const vaultId = selectTransactVaultIdOrUndefined(state);
+    if (!vaultId) {
+      return undefined;
+    }
+    const boost =
+      state.ui.transact.mode === TransactMode.Withdraw ?
+        selectZapUnstakeableBoostOrUndefined(state, vaultId)
+      : selectZapStakeableBoostOrUndefined(state, vaultId);
+    return boost?.id;
+  },
+  (byOptionId, liveBoostId) =>
+    liveBoostId && Object.values(byOptionId).some(option => option.boostId === liveBoostId) ?
+      liveBoostId
+    : undefined
+);
+
+export const selectTransactBoostAvailable = (state: BeefyState) =>
+  selectTransactLiveBoostId(state) !== undefined;
+
+export const selectTransactBoostInEffect = (state: BeefyState) =>
+  selectTransactWithBoost(state) && selectTransactBoostAvailable(state);
+
+// a toggle re-quotes, which would race a running tx or wipe the completed route still shown after success
+export const selectTransactIsLocked = (state: BeefyState) =>
+  selectTransactExecuting(state) ||
+  selectIsStepperStepping(state) ||
+  selectStepperStepContent(state) === StepContent.SuccessTx ||
+  selectTransactSuccessClosed(state);
+
+// what a withdraw can spend: the boost's staked shares when unstaking, else the wallet's
+export const selectTransactWithdrawAvailableInShareToken = (state: BeefyState): BigNumber => {
+  const vaultId = selectTransactVaultId(state);
+  const boostId = selectTransactBoostInEffect(state) ? selectTransactLiveBoostId(state) : undefined;
+  return boostId ?
+      selectBoostUserBalanceInToken(state, boostId)
+    : selectUserVaultBalanceInShareToken(state, vaultId);
+};
+
+export const selectTransactWithdrawAvailableWithToken = createSelector(
+  selectTransactWithdrawAvailableInShareToken,
+  (state: BeefyState) => selectVaultSharesToDepositTokenData(state, selectTransactVaultId(state)),
+  (shares, { shareToken, depositToken, ppfs }): TokenAmount => ({
+    token: depositToken,
+    amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
+  })
+);
+
+/** the selection's options for the current checkbox state: the boosted counterparts, or the plain ones */
 export const selectTransactOptionsForSelectionId = createSelector(
   (state: BeefyState, selectionId: string) =>
     selectTransactOptionIdsForSelectionId(state, selectionId),
   (state: BeefyState) => state.ui.transact.options.byOptionId,
-  (optionIds, byOptionId) => optionIds.map(id => byOptionId[id])
+  selectTransactBoostInEffect,
+  (optionIds, byOptionId, withBoost) =>
+    optionIds.map(id => byOptionId[id]).filter(option => !!option.boostId === withBoost)
+);
+
+// selections with no route for the current boost choice are hidden from the picker
+const hasRouteForChoice =
+  (
+    optionIdsBySelectionId: Record<string, string[]>,
+    byOptionId: Record<string, TransactOption>,
+    withBoost: boolean
+  ) =>
+  (selectionId: string) =>
+    (optionIdsBySelectionId[selectionId] ?? []).some(id => !!byOptionId[id]?.boostId === withBoost);
+
+export const selectTransactVisibleSelectionIds = createSelector(
+  (state: BeefyState) => state.ui.transact.selections.allSelectionIds,
+  (state: BeefyState) => state.ui.transact.options.bySelectionId,
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  selectTransactBoostInEffect,
+  (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
+    selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))
+);
+
+export const selectTransactVisibleSelectionIdsForChain = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.ui.transact.selections.byChainId[chainId],
+  (state: BeefyState) => state.ui.transact.options.bySelectionId,
+  (state: BeefyState) => state.ui.transact.options.byOptionId,
+  selectTransactBoostInEffect,
+  (selectionIds, optionIdsBySelectionId, byOptionId, withBoost) =>
+    selectionIds ?
+      selectionIds.filter(hasRouteForChoice(optionIdsBySelectionId, byOptionId, withBoost))
+    : EMPTY_ARRAY
 );
 
 export type SelectedZapFee = {
@@ -555,11 +731,7 @@ export const selectTransactSelectedZapFee = (state: BeefyState): SelectedZapFee 
     return { option: quote.option, fee: quote.fee };
   }
 
-  const optionIds = state.ui.transact.options.bySelectionId[selectionId];
-  if (!optionIds) {
-    return undefined;
-  }
-  const option = optionIds.map(id => state.ui.transact.options.byOptionId[id]).find(isZapOption);
+  const option = selectTransactOptionsForSelectionId(state, selectionId).find(isZapOption);
   if (!option) {
     return undefined;
   }
@@ -672,6 +844,28 @@ export function crossChainChainsEqual(
   return arrayEqualWith(a, b, crossChainChainOptionEqual);
 }
 
+const selectDepositOptionTokensBalanceByChainId = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  walletAddress: string
+): BigNumber => {
+  const selectionIds = selectTransactVisibleSelectionIdsForChain(state, chainId);
+
+  const counted = new Set<string>();
+  return selectionIds.reduce((acc, selectionId) => {
+    const selection = state.ui.transact.selections.bySelectionId[selectionId];
+    if (!selection) return acc;
+    if (selectVaultRefIdForSelection(state, selectionId)) return acc;
+    const tokenBalances = selectSelectionTokenBalances(state, selection, walletAddress);
+    return selection.tokens.reduce((sum, token, index) => {
+      const key = selectBalanceKeyForToken(state, token.chainId, token.address);
+      if (counted.has(key)) return sum;
+      counted.add(key);
+      return sum.plus(tokenBalances[index].balanceValue);
+    }, acc);
+  }, BIG_ZERO);
+};
+
 /**
  * Returns the list of chains available for cross-chain deposit, sorted as:
  * 1. Chains with balance before chains without
@@ -695,30 +889,24 @@ export const selectCrossChainSortedChains = (
         selectDepositOptionTokensBalanceByChainId(state, chainId, walletAddress)
       : BIG_ZERO;
 
-    const selectionIds = state.ui.transact.selections.byChainId[chainId];
+    const selectionIds = selectTransactVisibleSelectionIdsForChain(state, chainId);
     const seenAddresses = new Set<string>();
     const tokenOptions: CrossChainTokenOption[] = [];
-    if (selectionIds) {
+    if (selectionIds.length) {
       for (const selectionId of selectionIds) {
         const selection = state.ui.transact.selections.bySelectionId[selectionId];
         if (!selection) continue;
         if (selectVaultRefIdForSelection(state, selectionId)) continue;
-        for (const token of selection.tokens) {
-          const key = `${token.chainId}:${token.address.toLowerCase()}`;
+        const tokenBalances =
+          walletAddress ? selectSelectionTokenBalances(state, selection, walletAddress) : undefined;
+        for (const [index, token] of selection.tokens.entries()) {
+          const key = selectBalanceKeyForToken(state, token.chainId, token.address);
           if (seenAddresses.has(key)) continue;
           seenAddresses.add(key);
-          let tokenBalanceUsd = BIG_ZERO;
-          if (walletAddress) {
-            const balance = selectUserBalanceOfToken(
-              state,
-              token.chainId,
-              token.address,
-              walletAddress
-            );
-            const price = selectTokenPriceByAddress(state, token.chainId, token.address);
-            tokenBalanceUsd = balance.multipliedBy(price);
-          }
-          tokenOptions.push({ token, balanceUsd: tokenBalanceUsd });
+          tokenOptions.push({
+            token,
+            balanceUsd: tokenBalances?.[index].balanceValue ?? BIG_ZERO,
+          });
         }
       }
     }
@@ -864,6 +1052,9 @@ export const selectTransactShouldShowWithdrawNotification = (
 // ---------------------------------------------------------------------------
 // Cross-chain operation selectors
 // ---------------------------------------------------------------------------
+
+export const selectCrossChainOpById = (state: BeefyState, opId: string) =>
+  state.ui.transact.crossChain.pendingOps[opId];
 
 export const selectCrossChainPendingOps = createSelector(
   (state: BeefyState) => state.ui.transact.crossChain,

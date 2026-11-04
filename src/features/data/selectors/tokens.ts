@@ -4,14 +4,16 @@ import { fromUnixTime, sub } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { areSameSingleAssets, type SingleAsset } from '../../../helpers/singleAssetSrc.ts';
 import {
   getDataApiBucket,
   getDataApiBucketsLongerThan,
 } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
-import type { TokenEntity } from '../entities/token.ts';
-import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import type { SharedBalanceWnative, TokenEntity } from '../entities/token.ts';
+import { isTokenErc20, isTokenNative, sharedPrecisionDecimals } from '../entities/token.ts';
+import { chainHasFeature } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
@@ -21,7 +23,7 @@ import {
   valueOrThrow,
 } from '../utils/selector-utils.ts';
 import { toSearchWords } from '../utils/vault-search.ts';
-import { selectAllChainIds } from './chains.ts';
+import { selectAllChainIds, selectIsChainNativeSharedWithWrapped } from './chains.ts';
 import { selectHistoricalPriceBucketDispatchedRecently } from './historical.ts';
 import { selectIsPricesAvailable } from './data-loader/prices.ts';
 import {
@@ -179,6 +181,36 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
   return token;
 };
 
+/** wnative where native and wnative are one balance (arc, metis, celo), otherwise undefined */
+export const selectSharedBalanceWrappedToken = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+): SharedBalanceWnative | undefined =>
+  selectIsChainNativeSharedWithWrapped(state, chainId) ?
+    (selectChainWrappedNativeToken(state, chainId) as SharedBalanceWnative)
+  : undefined;
+
+/** as selectSharedBalanceWrappedToken, but the balance api runs before the addressbook loads */
+export const selectSharedBalanceWrappedTokenIfLoaded = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+): SharedBalanceWnative | undefined => {
+  if (!selectIsChainNativeSharedWithWrapped(state, chainId)) {
+    return undefined;
+  }
+  const chainTokens = state.entities.tokens.byChainId[chainId];
+  const address = chainTokens?.wnative ? chainTokens.byId[chainTokens.wnative] : undefined;
+  const token = address ? chainTokens?.byAddress[address] : undefined;
+  return token && isTokenErc20(token) ? (token as SharedBalanceWnative) : undefined;
+};
+
+/** arc's native USDC is spent through its 6 decimal erc20 view, so finer input is only dust */
+export const selectTokenInputDecimals = (state: BeefyState, token: TokenEntity): number => {
+  return isTokenNative(token) ?
+      sharedPrecisionDecimals(token, selectSharedBalanceWrappedToken(state, token.chainId))
+    : token.decimals;
+};
+
 export function isTokenStable(token: TokenEntity): boolean {
   return token.tags.includes('STABLECOIN');
 }
@@ -213,14 +245,30 @@ export const selectIsTokenStableByAddress = (
   return !!token && isTokenStable(token);
 };
 
-export const selectTokenPriceByAddress = createSelector(
-  selectTokenByAddressOrUndefined,
+export type TokenPriceLookup = (
+  chainId: ChainEntity['id'],
+  oracleId: TokenEntity['oracleId']
+) => BigNumber;
+
+/** price is 0 when unknown, or the chain has the price feature disabled */
+export const selectTokenPriceLookup = createSelector(
+  (state: BeefyState) => state.entities.chains.byId,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
-  (token, pricesByOracleId) => {
-    return (token && pricesByOracleId[token.oracleId]) || BIG_ZERO;
-  }
+  (chainsById, pricesByOracleId): TokenPriceLookup =>
+    (chainId, oracleId) =>
+      (chainHasFeature(chainsById[chainId], 'price') && pricesByOracleId[oracleId]) || BIG_ZERO
 );
 
+export const selectTokenPriceByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: TokenEntity['address']
+): BigNumber => {
+  const token = selectTokenByAddressOrUndefined(state, chainId, address);
+  return token ? selectTokenPriceLookup(state)(chainId, token.oracleId) : BIG_ZERO;
+};
+
+/** @dev ignores the chain price feature, prefer selectTokenPriceByAddress */
 export const selectTokenPriceByTokenOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId']
@@ -285,9 +333,8 @@ export const selectHasBreakdownDataByOracleId = (
   }
 
   // Must have prices of tokens in state
-  return (
-    tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token!.oracleId]) === -1
-  );
+  const priceLookup = selectTokenPriceLookup(state);
+  return tokens.every(token => !priceLookup(token!.chainId, token!.oracleId).isZero());
 };
 
 export const selectHasBreakdownDataForVault = (state: BeefyState, vault: VaultEntity) => {
@@ -510,19 +557,34 @@ export const selectVaultTokenNameWords = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultIcons = createCachedSelector(
+export const selectVaultTokenImageAssets = createCachedSelector(
   selectVaultById,
   (state: BeefyState) => state.entities.tokens.byChainId,
-  (vault, tokensByChainId) => {
-    if (vault.icons?.length) {
-      return vault.icons;
-    }
-
-    return vault.assetIds.map(assetId =>
-      resolveAssetSymbol(tokensByChainId, vault.chainId, assetId)
-    );
+  ({ chainId, assetIds }, tokensByChainId): SingleAsset[] =>
+    assetIds.map(assetId => {
+      const token = resolveAssetToken(tokensByChainId, chainId, assetId);
+      return token ?
+          { id: token.id, symbol: token.symbol, chainId }
+        : { id: assetId, symbol: assetId, chainId };
+    }),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: areSameSingleAssets,
+    },
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+const selectVaultIconImageAssets = createCachedSelector(
+  selectVaultById,
+  ({ chainId, icons }): SingleAsset[] | undefined =>
+    icons?.length ? icons.map(icon => ({ symbol: icon, chainId })) : undefined
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultImageAssets = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): SingleAsset[] =>
+  selectVaultIconImageAssets(state, vaultId) ?? selectVaultTokenImageAssets(state, vaultId);
 
 export const selectCurrentCowcentratedRangesByOracleId = (
   state: BeefyState,
@@ -558,7 +620,7 @@ const selectCowcentratedLikeVaultDepositTokenPrice = (
   index: 0 | 1
 ) => {
   const token = selectCowcentratedLikeVaultDepositTokens(state, vaultId)[index];
-  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ZERO;
+  return selectTokenPriceByAddress(state, token.chainId, token.address);
 };
 
 export const selectCowcentratedLikeVaultDepositTokensWithPrices = createSelector(

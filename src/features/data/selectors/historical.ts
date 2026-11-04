@@ -7,7 +7,8 @@ import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { BeefyState } from '../store/types.ts';
 
-import { selectVaultShouldShowInterest } from './vaults.ts';
+import { selectDepositTokenByVaultId } from './tokens.ts';
+import { selectVaultShouldShowInterest, selectVaultShouldShowPrice } from './vaults.ts';
 
 const unavailableBuckets = fromKeys(allDataApiBuckets, false);
 const neverDispatchedBuckets = fromKeys(allDataApiBuckets, 0);
@@ -17,12 +18,8 @@ export function selectHistoricalRangesStatus(state: BeefyState, vaultId: VaultEn
 }
 
 export function selectHistoricalHasAnyChart(state: BeefyState, vaultId: VaultEntity['id']) {
-  return (
-    selectHistoricalHasApyChart(state, vaultId) ||
-    selectHistoricalHasTvlChart(state, vaultId) ||
-    selectHistoricalHasPriceChart(state, vaultId) ||
-    selectHistoricalHasCowcentratedRanges(state, vaultId)
-  );
+  const { oracleId } = selectDepositTokenByVaultId(state, vaultId);
+  return selectHistoricalAvailableCharts(state, vaultId, oracleId).length > 0;
 }
 
 export function selectHistoricalHasApyChart(state: BeefyState, vaultId: VaultEntity['id']) {
@@ -57,9 +54,10 @@ export const selectHistoricalAvailableCharts = createSelector(
   selectHistoricalHasApyChart,
   selectHistoricalHasTvlChart,
   selectVaultShouldShowInterest,
+  selectVaultShouldShowPrice,
   (state: BeefyState, vaultId: VaultEntity['id'], _oracleId: TokenEntity['oracleId']) =>
     selectHistoricalHasCowcentratedRanges(state, vaultId),
-  (hasPriceChart, hasApyChart, hasTvlChart, showApy, hasCowcentratedRanges) => {
+  (hasPriceChart, hasApyChart, hasTvlChart, showApy, showPrice, hasCowcentratedRanges) => {
     const availableCharts: ChartStat[] = [];
     if (hasCowcentratedRanges) {
       availableCharts.push('clm');
@@ -67,10 +65,10 @@ export const selectHistoricalAvailableCharts = createSelector(
     if (hasApyChart && showApy) {
       availableCharts.push('apy');
     }
-    if (hasTvlChart) {
+    if (hasTvlChart && showPrice) {
       availableCharts.push('tvl');
     }
-    if (hasPriceChart) {
+    if (hasPriceChart && showPrice) {
       availableCharts.push('price');
     }
 

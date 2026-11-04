@@ -2,12 +2,12 @@ import { css, type CssStyles } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { TokensImageWithChain } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { formatLargeUsdAtPrice } from '../../../../../../helpers/format.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import {
@@ -42,9 +42,6 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
   const tokenPrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, tokenAddress)
   );
-  const valueInUsd = useMemo(() => {
-    return amount.multipliedBy(tokenPrice);
-  }, [amount, tokenPrice]);
 
   return (
     <TokenAmountIconComponent
@@ -53,7 +50,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
       variant={variant}
       reverse={reverse}
       amount={<TokenAmount amount={amount} decimals={token.decimals} css={amountTextStyle} />}
-      value={formatLargeUsd(valueInUsd)}
+      value={formatLargeUsdAtPrice(amount, tokenPrice)}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
         <TokensImageWithChain tokens={[token]} chainId={token.chainId} size={tokenImageSize} />

@@ -60,6 +60,7 @@ import {
   selectTransactSelectedSelectionId,
   selectTransactSlippage,
   selectTransactVaultId,
+  selectTransactWithBoostChoice,
 } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
@@ -91,6 +92,7 @@ export const TransactQuote = memo(function TransactQuote({
   const status = useAppSelector(selectTransactQuoteStatus);
   const preflightOk = useAppSelector(selectTransactCrossChainPreflight);
   const slippage = useAppSelector(selectTransactSlippage);
+  const withBoost = useAppSelector(selectTransactWithBoostChoice);
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -131,6 +133,7 @@ export const TransactQuote = memo(function TransactQuote({
     selection,
     inputAmounts,
     inputMaxes,
+    withBoost,
     preflightOk,
     debouncedFetchQuotes,
   ]);
@@ -336,7 +339,8 @@ const CardDivider = styled('hr', {
     height: '1px',
     background: 'background.border',
     border: 'none',
-    margin: '0',
+    // divider owns the spacing around it, so card content needs no vertical padding
+    margin: '4px 0',
   },
 });
 

@@ -64,7 +64,7 @@ const ChartsContainer = styled('div', {
     width: '100%',
     padding: '16px',
     backgroundColor: 'background.content',
-    borderRadius: '8px',
+    borderRadius: '12px',
     display: 'grid',
     mdOnly: {
       height: '120px',

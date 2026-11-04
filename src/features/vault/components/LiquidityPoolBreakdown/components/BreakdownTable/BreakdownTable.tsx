@@ -23,7 +23,7 @@ export const BreakdownTable = memo(function BreakdownTable({
 }: BreakdownTableProps) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { chainId, assets, token } = breakdown;
+  const { assets, token } = breakdown;
   const valueField = `${mode}Value` as const;
   const amountField = `${mode}Amount` as const;
 
@@ -37,13 +37,7 @@ export const BreakdownTable = memo(function BreakdownTable({
       {assets.map(asset => (
         <div key={asset.address} className={classes.row}>
           <div className={css(styles.cell, styles.asset)}>
-            <AssetsImage
-              size={32}
-              css={styles.icon}
-              chainId={chainId}
-              assetSymbols={[asset.symbol]}
-            />{' '}
-            {asset.symbol}
+            <AssetsImage size={32} css={styles.icon} assets={[asset]} /> {asset.symbol}
           </div>
           <div className={classes.cell}>
             <TokenAmount
@@ -57,13 +51,7 @@ export const BreakdownTable = memo(function BreakdownTable({
       ))}
       <div className={css(styles.row, styles.footer)}>
         <div className={css(styles.cell, styles.asset)}>
-          <AssetsImage
-            size={32}
-            css={styles.icon}
-            chainId={chainId}
-            assetSymbols={assets.map(asset => asset.symbol)}
-          />{' '}
-          LP
+          <AssetsImage size={32} css={styles.icon} assets={assets} /> LP
         </div>
         <div className={classes.cell}>
           <TokenAmount

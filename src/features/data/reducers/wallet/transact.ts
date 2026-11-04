@@ -21,6 +21,7 @@ import {
   transactSetInputAmount,
   transactSetSelectedChainId,
   transactSetSlippage,
+  transactSetWithBoost,
   transactSwitchDepositSource,
   transactSwitchMode,
   transactSwitchStep,
@@ -99,11 +100,13 @@ const initialTransactState: TransactState = {
   swapSlippage: 0.01, // 1% default
   inputAmounts: [BIG_ZERO],
   inputMaxes: [false],
+  inputEnteredAmounts: [],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   depositSource: DepositSource.Wallet,
   selections: initialTransactTokens,
   forceSelection: false,
+  withBoost: undefined,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
@@ -125,13 +128,41 @@ const transactSlice = createSlice({
       .addCase(transactSwitchMode, (sliceState, action) => {
         sliceState.mode = action.payload;
         sliceState.step = TransactStep.Form;
+        sliceState.withBoost = undefined;
         sliceState.inputAmounts = [BIG_ZERO];
         sliceState.inputMaxes = [false];
+        sliceState.inputEnteredAmounts = [];
         sliceState.depositSource = DepositSource.Wallet;
         resetQuotes(sliceState);
       })
       .addCase(transactSwitchStep, (sliceState, action) => {
         sliceState.step = action.payload;
+      })
+      .addCase(transactSetWithBoost, (sliceState, action) => {
+        if (sliceState.withBoost === action.payload) {
+          return;
+        }
+        sliceState.withBoost = action.payload;
+        resetQuotes(sliceState);
+        // keep the token if it has a route for the new choice, else jump to the first that does
+        const hasRoute = (selectionId: string | undefined) =>
+          !!selectionId &&
+          (sliceState.options.bySelectionId[selectionId] ?? []).some(
+            id => !!sliceState.options.byOptionId[id]?.boostId === action.payload
+          );
+        const keepsToken = hasRoute(sliceState.selectedSelectionId);
+        if (!keepsToken) {
+          const selectionId = sliceState.selections.allSelectionIds.find(hasRoute);
+          if (selectionId) {
+            sliceState.selectedSelectionId = selectionId;
+            sliceState.selectedChainId =
+              sliceState.selections.bySelectionId[selectionId]?.tokens[0]?.chainId;
+          }
+        }
+        // a withdraw's available balance comes from the other share source now: a kept MAX would withdraw all of it
+        if (!keepsToken || sliceState.mode === TransactMode.Withdraw) {
+          clearInputs(sliceState);
+        }
       })
       .addCase(transactSwitchDepositSource, (sliceState, action) => {
         sliceState.depositSource = action.payload;
@@ -156,12 +187,20 @@ const transactSlice = createSlice({
         }
       })
       .addCase(transactSetInputAmount, (sliceState, action) => {
-        const { index, amount, max } = action.payload;
+        const { index, amount, max, enteredAmount } = action.payload;
         if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
           sliceState.inputAmounts[index] = amount;
         }
         if (!sliceState.inputMaxes[index] || sliceState.inputMaxes[index] !== max) {
           sliceState.inputMaxes[index] = max;
+        }
+        const currentEntered = sliceState.inputEnteredAmounts[index];
+        const enteredUnchanged =
+          currentEntered && enteredAmount ?
+            currentEntered.isEqualTo(enteredAmount)
+          : currentEntered === enteredAmount;
+        if (!enteredUnchanged) {
+          sliceState.inputEnteredAmounts[index] = enteredAmount;
         }
       })
       .addCase(transactClearInput, sliceState => {
@@ -383,6 +422,7 @@ function clearInputs(sliceState: Draft<TransactState>) {
     sliceState.inputAmounts = [BIG_ZERO];
     sliceState.inputMaxes = [false];
   }
+  sliceState.inputEnteredAmounts = [];
 }
 
 function resetForm(sliceState: Draft<TransactState>) {
@@ -390,7 +430,9 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedSelectionId = undefined;
   sliceState.inputAmounts = [BIG_ZERO];
   sliceState.inputMaxes = [false];
+  sliceState.inputEnteredAmounts = [];
   sliceState.forceSelection = false;
+  sliceState.withBoost = undefined;
   sliceState.successClosed = false;
   sliceState.depositSource = DepositSource.Wallet;
 

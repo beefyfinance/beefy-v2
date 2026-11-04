@@ -9,6 +9,7 @@ import {
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
 } from '../actions/wallet/wallet-action.ts';
+import { toDepositTokenIfVaultShare } from '../apis/transact/helpers/quotes.ts';
 import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { isTokenErc20, isTokenNative } from '../entities/token.ts';
@@ -23,15 +24,17 @@ import {
 } from '../reducers/wallet/wallet-action-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isDefined } from '../utils/array-utils.ts';
+import type { CrossChainRecoveryParams } from '../reducers/wallet/transact-types.ts';
 import { selectBoostById } from './boosts.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectTokenByAddressOrUndefined,
 } from './tokens.ts';
-import { isStandardVault, isErc4626Vault } from '../entities/vault.ts';
+import { isStandardVault, isErc4626Vault, type VaultEntity } from '../entities/vault.ts';
 import { selectTokenByAddress } from './tokens.ts';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults.ts';
+import { selectZapByChainId } from './zap.ts';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 const NO_TOKEN_AMOUNTS = EMPTY_ARRAY;
@@ -65,6 +68,24 @@ export const selectStepperCurrentStepData = (state: BeefyState): Step => {
 
 export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
+};
+
+/** Claims batched ahead of a zap have no row in the zap route */
+export const selectStepperLeadingClaimStepCount = (state: BeefyState) => {
+  const items = state.ui.stepperState.items;
+  const firstNonClaim = items.findIndex(
+    item => item.step !== 'claim-gov' && item.step !== 'boost-claim'
+  );
+  return firstNonClaim === -1 ? items.length : firstNonClaim;
+};
+
+/** a boosted withdraw claims in its own step before the zap; the zap only runs if that succeeded */
+export const selectStepperHasBoostClaim = (state: BeefyState) => {
+  return state.ui.stepperState.items.some(item => item.step === 'boost-claim');
+};
+
+export const selectStepperHasPoolClaim = (state: BeefyState) => {
+  return state.ui.stepperState.items.some(item => item.step === 'claim-gov');
 };
 
 export const selectStepperStepContent = (state: BeefyState) => {
@@ -303,7 +324,8 @@ const parseTokenReturnedEvents = weakMapMemoize((logs: ReceiptLogs) =>
   parseEventLogs({ abi: tokenReturnedAbi, logs, eventName: 'TokenReturned' })
 );
 
-export function selectZapReturned(state: BeefyState): TokenAmount[] {
+/** Router outputs with a non-trivial amount, either the zap's expected tokens or the rest (dust) */
+function selectZapRouterOutputs(state: BeefyState, expected: boolean): TokenAmount[] {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return NO_TOKEN_AMOUNTS;
   }
@@ -316,7 +338,7 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
 
   const tokenReturnedEvents = parseTokenReturnedEvents(receipt.logs);
 
-  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.contractAddress) {
+  if (!vaultId || !receipt || !tokenReturnedEvents) {
     return NO_TOKEN_AMOUNTS;
   }
 
@@ -329,14 +351,22 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
   );
 
   const vault = selectVaultById(state, vaultId);
-  const zapAddress = receipt.contractAddress.toLowerCase();
+  // the router emits TokenReturned for every order output; the config knows it, and receipt.to
+  // would be the wallet's own contract for a Safe or smart account
+  const zap = selectZapByChainId(state, vault.chainId);
+  if (!zap) {
+    return NO_TOKEN_AMOUNTS;
+  }
+  const zapAddress = zap.router.toLowerCase();
   const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {
     return NO_TOKEN_AMOUNTS;
   }
 
-  const minAmount = new BigNumber('0.00000001');
+  // dust below this is noise; expected outputs are never too small to report, and CLM shares are
+  // tiny enough to fall under it (0.002 ETH into a CLM vault mints ~4e-12 shares)
+  const minDustAmount = new BigNumber('0.00000001');
   const native = selectChainNativeToken(state, vault.chainId);
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
@@ -351,10 +381,27 @@ export function selectZapReturned(state: BeefyState): TokenAmount[] {
       };
     })
     .filter((t): t is TokenAmount => !!t.token)
-    .filter(t => !expectedTokensAddresses.has(t.token.address.toLowerCase()))
-    .filter(t => t.amount.gte(minAmount));
+    .filter(t => expectedTokensAddresses.has(t.token.address.toLowerCase()) === expected)
+    .filter(t => (expected ? t.amount.gt(BIG_ZERO) : t.amount.gte(minDustAmount)));
 
   return arrayOrStaticEmpty(tokenAmounts);
+}
+
+export function selectZapReturned(state: BeefyState): TokenAmount[] {
+  return selectZapRouterOutputs(state, false);
+}
+
+/** What a same-chain zap sent to the user; shares of `sharesVaultId` are shown as its deposit token */
+export function selectZapReceived(
+  state: BeefyState,
+  sharesVaultId: VaultEntity['id'] | undefined
+): TokenAmount[] {
+  const received = selectZapRouterOutputs(state, true);
+  if (!sharesVaultId || !received.length) {
+    return received;
+  }
+
+  return received.map(item => toDepositTokenIfVaultShare(state, sharesVaultId, item));
 }
 
 function selectDstTokensReturned(
@@ -384,11 +431,17 @@ function selectReceivedAddresses(
     vaultId: string;
     destChainId: ChainEntity['id'];
     expectedOutput: TokenAmount;
+    recovery: CrossChainRecoveryParams;
   }
 ): Set<string> {
   if (op.direction === 'deposit') {
     const vault = selectVaultById(state, op.vaultId);
-    return new Set([vault.contractAddress.toLowerCase(), vault.depositTokenAddress.toLowerCase()]);
+    const boostId = op.recovery.destHandlerKind === 'vault' ? op.recovery.boostId : undefined;
+    return new Set([
+      vault.contractAddress.toLowerCase(),
+      vault.depositTokenAddress.toLowerCase(),
+      ...(boostId ? [selectBoostById(state, boostId).contractAddress.toLowerCase()] : []),
+    ]);
   }
   if (isTokenNative(op.expectedOutput.token)) {
     const wnative = selectChainWrappedNativeToken(state, op.destChainId);

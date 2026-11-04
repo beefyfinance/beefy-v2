@@ -19,6 +19,13 @@ const tickSpacingAbi = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'fee',
+    outputs: [{ internalType: 'uint24', name: '', type: 'uint24' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ] as const satisfies Abi;
 
 // Which platforms **only** send fee rewards to the reward pool
@@ -74,11 +81,15 @@ async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
     poolContract.read.tickSpacing(),
   ]);
 
-  const tokens = {
-    token0,
-    token1,
-    tickSpacing: Number(tickSpacing),
-  };
+  let feeTier = '1';
+  try {
+    const fee = await poolContract.read.fee();
+    feeTier = (Number(fee) / 10000).toString();
+  } catch {
+    console.log("Pool has no fee(), set '1'");
+  }
+
+  const tokens = { token0, token1, feeTier, tickSpacing: Number(tickSpacing) };
 
   const provider =
     params.mooToken.startsWith('cowAerodrome') ? 'aerodrome'
@@ -245,7 +256,7 @@ async function generateVault() {
     strategyTypeId: vault.strategyTypeId,
     network: chain,
     type: 'cowcentrated' as const,
-    feeTier: '1',
+    feeTier: vault.feeTier,
     tickSpacing: vault.tickSpacing,
     zaps: [
       {

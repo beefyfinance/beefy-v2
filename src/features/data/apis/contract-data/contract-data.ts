@@ -1,11 +1,12 @@
 import BigNumber from 'bignumber.js';
 import { addDays } from 'date-fns';
-import { chunk, pick, sortBy } from 'lodash-es';
+import { chunk, sortBy } from 'lodash-es';
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { isFiniteNumber } from '../../../../helpers/number.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
+import { pickContractRewardToken } from '../../entities/token.ts';
 import type {
   VaultCowcentrated,
   VaultErc4626,
@@ -262,7 +263,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       }
 
       rewards.push({
-        token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+        token: pickContractRewardToken(rewardToken),
         rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10))!,
         index,
@@ -316,7 +317,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       totalSupply: fromWei(result.totalSupply, depositToken.decimals),
       rewards: [
         {
-          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          token: pickContractRewardToken(earnedToken),
           rewardRate: fromWei(result.rewardRate, earnedToken.decimals),
           periodFinish,
           isPreStake: result.isPreStake,
@@ -355,7 +356,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       }
 
       rewards.push({
-        token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+        token: pickContractRewardToken(rewardToken),
         rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10)),
         isPreStake: false,
@@ -373,7 +374,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
         if (featureFlag_simulateLiveBoost(boost.id)) {
           rewards.push({
-            token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+            token: pickContractRewardToken(earnedToken),
             rewardRate: new BigNumber('0.5'),
             periodFinish: addDays(new Date(), 7),
             isPreStake: false,
@@ -381,7 +382,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
           });
         } else {
           rewards.push({
-            token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+            token: pickContractRewardToken(earnedToken),
             rewardRate: BIG_ZERO,
             periodFinish: undefined,
             isPreStake: false,

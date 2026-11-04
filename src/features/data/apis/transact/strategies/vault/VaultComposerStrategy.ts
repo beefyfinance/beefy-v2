@@ -1,6 +1,6 @@
 import { uniqBy } from 'lodash-es';
 import type { Namespace, TFunction } from 'react-i18next';
-import { toWeiString } from '../../../../../../helpers/big-number.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
 import {
@@ -15,6 +15,7 @@ import { slipBy } from '../../helpers/amounts.ts';
 import { onlyOneInput } from '../../helpers/options.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { pickTokens } from '../../helpers/tokens.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import type {
   CowcentratedVaultDepositOption,
@@ -406,7 +407,13 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   ): Promise<VaultComposerZapWithdrawQuote> {
     const { underlyingOption } = option;
     const input = onlyOneInput(inputs);
-    const { zap } = this.helpers;
+    const { zap, getState } = this.helpers;
+    const { sharesToWithdrawWei } = getVaultWithdrawnFromState(input, this.vaultType, getState());
+    const shareAllowance = {
+      token: this.shareToken,
+      amount: fromWei(sharesToWithdrawWei, this.shareToken.decimals),
+      spenderAddress: zap.manager,
+    };
 
     const vaultComposerWithdrawQuote = await this.vaultType.fetchWithdrawQuote(
       [
@@ -461,13 +468,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           underlyingQuote.returned,
           this.helpers.getState()
         ),
-        allowances: [
-          {
-            token: this.shareToken,
-            amount: input.amount,
-            spenderAddress: zap.manager,
-          },
-        ],
+        allowances: [shareAllowance],
         underlyingQuote,
       };
     }
@@ -494,13 +495,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       vaultType: 'standard',
       strategyId: 'vault-composer',
       subStrategy: 'strategy',
-      allowances: [
-        {
-          amount: inputs[0].amount,
-          spenderAddress: zap.manager,
-          token: this.shareToken,
-        },
-      ],
+      allowances: [shareAllowance],
       priceImpact: calculatePriceImpact(
         inputs,
         underlyingQuote.outputs,

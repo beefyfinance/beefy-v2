@@ -29,7 +29,7 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    padding: '4px 0',
+    padding: '0',
     margin: '0',
     background: 'transparent',
     border: 'none',
@@ -59,15 +59,13 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '2px',
-    // breathing room below the last row so it isn't tight against the divider (matches the toggle's spacing above)
-    paddingBottom: '4px',
+    // separates the rows from the toggle label, matching the spacing around dividers
+    paddingTop: '4px',
   }),
   totalRow: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // top only — the card's own 8px bottom padding provides the space below, matching the top
-    paddingTop: '4px',
   }),
   totalText: css.raw({
     textStyle: 'body.medium',
@@ -96,7 +94,6 @@ export const styles = {
     flex: '1',
     minWidth: '0',
     gap: '8px',
-    padding: '4px 0',
   }),
   clmPositionCellDivider: css.raw({
     width: '1px',

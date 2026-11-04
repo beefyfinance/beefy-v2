@@ -1,5 +1,5 @@
 import { orderBy, sortBy } from 'lodash-es';
-import { shouldVaultShowInterest, type VaultEntity } from '../entities/vault.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type { TotalApy } from '../reducers/apy-types.ts';
 import { type FilterValues, isRelevanceSortActive } from '../reducers/filtered-vaults-types.ts';
 import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
@@ -14,6 +14,7 @@ import {
   selectAllVisibleVaultIds,
   selectVaultById,
   selectVaultIsPinned,
+  selectVaultShouldShowInterest,
 } from '../selectors/vaults.ts';
 import type { BeefyState } from '../store/types.ts';
 import { filtersDependOnData } from '../utils/filter-values.ts';
@@ -193,7 +194,7 @@ function applyApySort(
   return orderBy(
     vaults,
     vault => {
-      if (!shouldVaultShowInterest(vault)) {
+      if (!selectVaultShouldShowInterest(state, vault.id)) {
         return 0;
       }
 

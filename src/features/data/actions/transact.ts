@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { groupBy, uniqBy } from 'lodash-es';
 import { BIG_ZERO, compareBigNumber } from '../../../helpers/big-number.ts';
 import { uniqueTokens } from '../../../helpers/tokens.ts';
@@ -28,7 +28,7 @@ import {
   TransactStatus,
   type TransactStep,
 } from '../reducers/wallet/transact-types.ts';
-import { selectTokenByAddress } from '../selectors/tokens.ts';
+import { selectTokenByAddress, selectTokenInputDecimals } from '../selectors/tokens.ts';
 import {
   selectTokenAmountsTotalValue,
   selectTransactInputAmounts,
@@ -40,12 +40,13 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
+  selectTransactBoostInEffect,
   selectTransactSelectionById,
   selectTransactVaultId,
 } from '../selectors/transact.ts';
 import { selectVaultById, selectVaultReplacementMigration } from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
-import type { BeefyState } from '../store/types.ts';
+import type { BeefyState, BeefyThunk } from '../store/types.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchAllowanceAction } from './allowance.ts';
 import { fetchBalanceAction } from './balance.ts';
@@ -63,6 +64,7 @@ export const transactInit = createAction<TransactInitArgs>('transact/init');
 export const transactInitReady = createAction<TransactInitReadyArgs>('transact/init/ready');
 export const transactSwitchMode = createAction<TransactMode>('transact/switchMode');
 export const transactSwitchStep = createAction<TransactStep>('transact/switchStep');
+export const transactSetWithBoost = createAction<boolean>('transact/setWithBoost');
 export const transactSelectSelection = createAction<{
   selectionId: string;
   resetInput: boolean;
@@ -71,7 +73,29 @@ export const transactSetInputAmount = createAction<{
   index: number;
   amount: BigNumber;
   max: boolean;
+  /** what the user entered, when the input shows it in a different unit than `amount` */
+  enteredAmount?: BigNumber;
 }>('transact/setInputAmount');
+
+/** sets a deposit amount at the precision the token can carry (arc native: its 6 decimal erc20 view) */
+export function transactSetTokenInputAmount(args: {
+  index: number;
+  token: TokenEntity;
+  amount: BigNumber;
+  max: boolean;
+}): BeefyThunk {
+  return (dispatch, getState) => {
+    const { token, amount, ...rest } = args;
+    const decimals = selectTokenInputDecimals(getState(), token);
+    dispatch(
+      transactSetInputAmount({
+        ...rest,
+        amount: amount.decimalPlaces(decimals, BigNumber.ROUND_FLOOR),
+      })
+    );
+  };
+}
+
 export const transactClearInput = createAction('transact/clearInput');
 export const transactClearQuotes = createAction('transact/clearQuotes');
 export const transactInvalidateOptions = createAction('transact/invalidateOptions');
@@ -365,6 +389,7 @@ export const transactFetchQuotesIfNeeded = createAppAsyncThunk(
         // vaultId never matches selectionId/inputs already capture any real change
         (!isVaultSourceDepositOption(option) && option.vaultId !== vaultId) ||
         option.selectionId !== selectionId ||
+        !!option.boostId !== selectTransactBoostInEffect(state) ||
         !matchingInputs;
     }
 

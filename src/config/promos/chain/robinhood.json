@@ -1,5 +1,47 @@
 [
   {
+    "id": "moo_alandale-cow-robinhood-weth-shop-vault",
+    "title": "Alandale",
+    "vaultId": "alandale-cow-robinhood-weth-shop-vault",
+    "assets": ["SHOPrh", "WETH"],
+    "tokenAddress": "0xEBe70034de92614ebe06Cde98C12257f9397dC0e",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdC955E855148bE11621a74A5B4588846558215d1",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  },
+  {
+    "id": "moo_alandale-cow-robinhood-usdg-net-vault",
+    "title": "Alandale",
+    "vaultId": "alandale-cow-robinhood-usdg-net-vault",
+    "assets": ["NET", "USDG"],
+    "tokenAddress": "0x857b3971E8038a8f8E2C0Da797145447eFbf6b86",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3bB573076462ab4E3De4542cFDAa4f36F0Ce082d",
+    "campaign": "alandale",
+    "partners": ["alandale"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xD1e861CC5Eee7eA88649206b74504D78CCD7AEeA",
+        "symbol": "LUTE",
+        "decimals": 18,
+        "oracleId": "LUTE"
+      }
+    ]
+  },
+  {
     "id": "moo_alandale-cow-robinhood-weth-usdg-vault",
     "title": "Alandale",
     "vaultId": "alandale-cow-robinhood-weth-usdg-vault",
