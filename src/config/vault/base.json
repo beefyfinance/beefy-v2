@@ -41812,15 +41812,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "aero-cow-weth-superoethb",
@@ -41897,15 +41889,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "aero-cow-bitcoin-weth-rp",
