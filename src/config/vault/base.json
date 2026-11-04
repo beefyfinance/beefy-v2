@@ -1,5 +1,77 @@
 [
   {
+    "id": "aero-v2-base-usdc-alusdb",
+    "name": "alUSDb-USDC sLP V2",
+    "type": "standard",
+    "token": "alUSDb-USDC sLP V2",
+    "tokenAddress": "0xA5e16dC9A5cae37563116D9407D8C73927675674",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x4901ECEA958801D5eE809EBf3747fC15f421339A",
+    "earnedToken": "mooAeroV2BasealUSDb-USDC",
+    "earnedTokenAddress": "0x4901ECEA958801D5eE809EBf3747fC15f421339A",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-usdc-alusdb",
+    "status": "active",
+    "createdAt": 1793806480,
+    "platformId": "aero",
+    "assets": ["alUSDb", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-veil",
+    "name": "VEIL-WETH vLP V2",
+    "type": "standard",
+    "token": "VEIL-WETH vLP V2",
+    "tokenAddress": "0x0B09f2f7b096016B797943807558Fa38119EDC8C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x16193Af35A998301ff94578450A0786DF6b97847",
+    "earnedToken": "mooAeroV2BaseVEIL-WETH",
+    "earnedTokenAddress": "0x16193Af35A998301ff94578450A0786DF6b97847",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-veil",
+    "status": "active",
+    "createdAt": 1793806376,
+    "platformId": "aero",
+    "assets": ["VEIL", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-usdc-skhyc-vault",
     "name": "SKHYc-USDC",
     "type": "standard",

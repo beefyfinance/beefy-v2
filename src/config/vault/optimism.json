@@ -1,5 +1,77 @@
 [
   {
+    "id": "aero-v2-optimism-weth-moobifi",
+    "name": "mooBIFI-WETH vLP V2",
+    "type": "standard",
+    "token": "mooBIFI-WETH vLP V2",
+    "tokenAddress": "0xC71B571aA9F06BFA096c24e9Df5C45fC4fAB4151",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x8295a719839BA94cA1143862FA32203f936e886d",
+    "earnedToken": "mooAeroV2OPmooBIFI-WETH",
+    "earnedTokenAddress": "0x8295a719839BA94cA1143862FA32203f936e886d",
+    "oracle": "lps",
+    "oracleId": "aero-v2-optimism-weth-moobifi",
+    "status": "active",
+    "createdAt": 1793806646,
+    "platformId": "aero",
+    "assets": ["mooBIFI", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-optimism-aleth-weth",
+    "name": "alETH-WETH sLP V2",
+    "type": "standard",
+    "token": "alETH-WETH sLP V2",
+    "tokenAddress": "0x98BeB54c7F46514C9045D9d2B9221F52611dDfED",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xb0a3A285bB82de411b436028d9f0fe8ED5d12a9e",
+    "earnedToken": "mooAeroV2OPalETH-WETH",
+    "earnedTokenAddress": "0xb0a3A285bB82de411b436028d9f0fe8ED5d12a9e",
+    "oracle": "lps",
+    "oracleId": "aero-v2-optimism-aleth-weth",
+    "status": "active",
+    "createdAt": 1793806918,
+    "platformId": "aero",
+    "assets": ["alETH", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-optimism-usdc-weth-vault",
     "name": "WETH-USDC",
     "type": "standard",
