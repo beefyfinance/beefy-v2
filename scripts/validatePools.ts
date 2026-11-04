@@ -113,6 +113,10 @@ const nonHarvestOnDepositPools = [
   'curvance-monad-usdc-wmon-usdc',
   'curve-monad-3pool',
   'morpho-v2-arbitrum-gauntlet-premium-usdg',
+  'aero-v2-base-usdc-alusdb',
+  'aero-v2-base-weth-veil',
+  'aero-v2-optimism-weth-moobifi',
+  'aero-v2-optimism-aleth-weth',
 ];
 const isCowPancakeWithHodOff = (pool: VaultConfigWithStrategyData) =>
   ['base'].includes(pool.network) &&
