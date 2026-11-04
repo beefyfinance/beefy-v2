@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aero-v2-optimism-weth-moobifi",
     "status": "active",
-    "createdAt": 1793806646,
+    "createdAt": 1793806919,
     "platformId": "aero",
     "assets": ["mooBIFI", "WETH"],
     "risks": {
