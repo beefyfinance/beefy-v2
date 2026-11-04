@@ -27,13 +27,7 @@
       "synthAsset": true
     },
     "strategyTypeId": "lp",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aero-v2"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "aero-v2-base-weth-veil",
@@ -63,13 +57,7 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aero-v2"
-      }
-    ]
+    "network": "base"
   },
   {
     "id": "aero-cow-base-usdc-skhyc-vault",
@@ -41812,7 +41800,15 @@
       "synthAsset": false
     },
     "strategyTypeId": "pool",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
   },
   {
     "id": "aero-cow-weth-superoethb",
@@ -41889,7 +41885,15 @@
       "synthAsset": false
     },
     "strategyTypeId": "pool",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
   },
   {
     "id": "aero-cow-bitcoin-weth-rp",
