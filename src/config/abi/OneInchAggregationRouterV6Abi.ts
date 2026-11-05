@@ -178,4 +178,38 @@ export const OneInchAggregationRouterV6Abi = [
     ],
     outputs: [{ name: 'returnAmount', type: 'uint256' }],
   },
+  // Clipper RFQ: pays out exactly the signed `outputAmount`
+  {
+    type: 'function',
+    name: 'clipperSwap',
+    stateMutability: 'payable',
+    inputs: [
+      { name: 'clipperExchange', type: 'address' },
+      { name: 'srcToken', type: 'uint256' },
+      { name: 'dstToken', type: 'address' },
+      { name: 'inputAmount', type: 'uint256' },
+      { name: 'outputAmount', type: 'uint256' },
+      { name: 'goodUntil', type: 'uint256' },
+      { name: 'r', type: 'bytes32' },
+      { name: 'vs', type: 'bytes32' },
+    ],
+    outputs: [{ name: 'returnAmount', type: 'uint256' }],
+  },
+  {
+    type: 'function',
+    name: 'clipperSwapTo',
+    stateMutability: 'payable',
+    inputs: [
+      { name: 'clipperExchange', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'srcToken', type: 'uint256' },
+      { name: 'dstToken', type: 'address' },
+      { name: 'inputAmount', type: 'uint256' },
+      { name: 'outputAmount', type: 'uint256' },
+      { name: 'goodUntil', type: 'uint256' },
+      { name: 'r', type: 'bytes32' },
+      { name: 'vs', type: 'bytes32' },
+    ],
+    outputs: [{ name: 'returnAmount', type: 'uint256' }],
+  },
 ] as const satisfies Abi;

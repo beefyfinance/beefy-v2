@@ -145,12 +145,17 @@ export class OneInchSwapProvider implements ISwapProvider {
   }
 }
 
-/** 1inch answers with `swap` or, for single-pool routes, one of the `unoswap` variants */
+/** 1inch answers with `swap`, an `unoswap` variant (single-pool routes) or a Clipper RFQ swap */
 function decodeMinReturn(data: Hex): bigint {
   const { functionName, args } = decodeFunctionData({ abi: OneInchAggregationRouterV6Abi, data });
   if (functionName === 'swap') {
     return args[1].minReturnAmount;
   }
   const fn = OneInchAggregationRouterV6Abi.find(item => item.name === functionName)!;
-  return args[fn.inputs.findIndex(input => input.name === 'minReturn')];
+  const argName = fn.name.startsWith('clipper') ? 'outputAmount' : 'minReturn';
+  const value = args[fn.inputs.findIndex(input => input.name === argName)];
+  if (typeof value !== 'bigint') {
+    throw new Error(`one-inch ${functionName}: no ${argName} in calldata`);
+  }
+  return value;
 }
