@@ -96,6 +96,7 @@ async function main() {
     },
     strategyTypeId: 'lp',
     network: chain,
+    zaps: [{ strategyId: 'solidly', ammId: `${chain}-aero-v2` }],
   };
   await saveJson(path, [vault, ...vaults], 'prettier');
   console.log(

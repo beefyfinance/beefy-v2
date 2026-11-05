@@ -112,6 +112,10 @@ export class UniswapV2Pool implements IUniswapLikePool {
     };
   }
 
+  supportsPoolSwap(): boolean {
+    return true;
+  }
+
   async updateAllData() {
     //This consists of 2 updates
     // 1- update pairData

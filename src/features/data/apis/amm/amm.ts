@@ -26,6 +26,7 @@ import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool
 import { TokanSolidlyPool } from './solidly/TokanSolidlyPool.ts';
 import { DefiveUniswapV2Pool } from './uniswap-v2/DefiveUniswapV2Pool.ts';
 import { BlackholeSolidlyPool } from './solidly/BlackholeSolidlyPool.ts';
+import { AeroV2SolidlyPool } from './solidly/AeroV2SolidlyPool.ts';
 
 const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -63,6 +64,8 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'sonic-shadow': SpiritSwapV2SolidlyPool,
   'avax-blackhole': BlackholeSolidlyPool,
   'robinhood-up33': VelodromeV2SolidlyPool,
+  'base-aero-v2': AeroV2SolidlyPool,
+  'optimism-aero-v2': AeroV2SolidlyPool,
 };
 
 export async function getUniswapLikePool(
@@ -85,12 +88,21 @@ export async function getUniswapLikePool(
   amm: AmmEntityUniswapLike,
   chain: ChainEntity
 ): Promise<IUniswapLikePool> {
+  return await initUniswapLikePool(createUniswapLikePool(lpAddress, amm, chain));
+}
+
+/** Constructs the pool without fetching any on-chain data */
+export function createUniswapLikePool(
+  lpAddress: string,
+  amm: AmmEntityUniswapLike,
+  chain: ChainEntity
+): IUniswapLikePool {
   if (isUniswapV2Amm(amm)) {
     const Constructor: typeof UniswapV2Pool = mapUniswapV2[amm.id] || UniswapV2Pool;
-    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
+    return new Constructor(lpAddress, amm, chain);
   } else if (isSolidlyAmm(amm)) {
     const Constructor: typeof SolidlyPool = mapSolidly[amm.id] || SolidlyPool;
-    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
+    return new Constructor(lpAddress, amm, chain);
   } else {
     throw new Error(`Unknown AMM type`);
   }

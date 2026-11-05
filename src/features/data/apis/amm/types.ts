@@ -39,6 +39,9 @@ export type SwapFeeParams = {
 };
 
 export interface IUniswapLikePool extends IPool {
+  /** false when the pool cannot build swap steps, so no swap-through-pool options are offered */
+  supportsPoolSwap(): boolean;
+
   getOptimalSwapAmount(fullAmountIn: BigNumber, tokenIn: string): BigNumber;
 
   swap(amountIn: BigNumber, tokenIn: string, updateReserves?: boolean): SwapResult;

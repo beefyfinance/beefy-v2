@@ -114,6 +114,10 @@ export class SolidlyPool implements IUniswapLikePool {
     };
   }
 
+  supportsPoolSwap(): boolean {
+    return true;
+  }
+
   async updateAllData() {
     // For solidly pools we just update pair data on the base pool.
     await this.updatePairData();
