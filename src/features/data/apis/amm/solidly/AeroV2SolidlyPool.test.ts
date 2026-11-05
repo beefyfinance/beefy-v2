@@ -179,7 +179,7 @@ describe('AeroV2SolidlyPool remove liquidity step', () => {
 describe('AeroV2SolidlyPool pool swaps', () => {
   it('reports no pool swap support and refuses to quote or build one', async () => {
     const pool = new TestPool();
-    expect(pool.supportsPoolSwap()).toBe(false);
+    expect(AeroV2SolidlyPool.supportsPoolSwap).toBe(false);
     expect(() => pool.getOptimalSwapAmount()).toThrow(/not support swapping/);
     expect(() => pool.swap(new BigNumber(1), baseWeth.address)).toThrow(/not support swapping/);
     await expect(pool.getZapSwap()).rejects.toThrow(/not support swapping/);

@@ -102,6 +102,7 @@ function encodeExecute(command: Hex, input: Hex, deadline: number): Hex {
  * Liquidity is added/removed through the Metarouter; swaps through the pool are not supported yet.
  */
 export class AeroV2SolidlyPool extends SolidlyPool {
+  static override readonly supportsPoolSwap = false;
   protected pairData: AeroV2PairData | undefined = undefined;
 
   protected async updatePairData() {
@@ -139,10 +140,6 @@ export class AeroV2SolidlyPool extends SolidlyPool {
     if (type === POOL_TYPE_STABLE) return true;
     if (type === POOL_TYPE_VOLATILE) return false;
     throw new Error(`Unknown Aero V2 pool type ${poolType}`);
-  }
-
-  supportsPoolSwap(): boolean {
-    return false;
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

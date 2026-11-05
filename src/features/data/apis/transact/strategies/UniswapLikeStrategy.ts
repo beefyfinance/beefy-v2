@@ -31,7 +31,7 @@ import {
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { selectAmmById } from '../../../selectors/zap.ts';
 import type { BeefyState, BeefyThunk } from '../../../store/types.ts';
-import { createUniswapLikePool, getUniswapLikePool } from '../../amm/amm.ts';
+import { getUniswapLikePool, poolSupportsSwap } from '../../amm/amm.ts';
 import type { IUniswapLikePool } from '../../amm/types.ts';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
 import { Balances } from '../helpers/Balances.ts';
@@ -187,7 +187,7 @@ export abstract class UniswapLikeStrategy<
   protected async canRouteAcrossLp(token: TokenEntity): Promise<boolean> {
     const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
     // a pool token is only trivially routable when it can be half-swapped in the pool itself
-    if (this.supportsPoolSwap() && tokensWithNativeWrapped.some(t => isTokenEqual(t, token))) {
+    if (poolSupportsSwap(this.amm) && tokensWithNativeWrapped.some(t => isTokenEqual(t, token))) {
       return true;
     }
     if (isTokenEqual(token, this.vaultType.depositToken)) return false;
@@ -215,20 +215,11 @@ export abstract class UniswapLikeStrategy<
     );
   }
 
-  protected supportsPoolSwap(): boolean {
-    const chain = selectChainById(this.helpers.getState(), this.vault.chainId);
-    return createUniswapLikePool(
-      this.vaultType.depositToken.address,
-      this.amm,
-      chain
-    ).supportsPoolSwap();
-  }
-
   async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {
     // what tokens can we can zap via pool with
     const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens =
-      this.supportsPoolSwap() ?
+      poolSupportsSwap(this.amm) ?
         tokensWithNativeWrapped.map(token => ({
           token,
           swap: 'pool' as const,
@@ -893,7 +884,7 @@ export abstract class UniswapLikeStrategy<
     // what tokens can we directly zap with
     const tokensWithNativeWrapped = this.poolOptionTokens();
     const poolTokens =
-      this.supportsPoolSwap() ?
+      poolSupportsSwap(this.amm) ?
         tokensWithNativeWrapped.map(token => ({
           token,
           swap: 'pool' as const,

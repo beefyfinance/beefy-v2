@@ -88,21 +88,23 @@ export async function getUniswapLikePool(
   amm: AmmEntityUniswapLike,
   chain: ChainEntity
 ): Promise<IUniswapLikePool> {
-  return await initUniswapLikePool(createUniswapLikePool(lpAddress, amm, chain));
-}
-
-/** Constructs the pool without fetching any on-chain data */
-export function createUniswapLikePool(
-  lpAddress: string,
-  amm: AmmEntityUniswapLike,
-  chain: ChainEntity
-): IUniswapLikePool {
   if (isUniswapV2Amm(amm)) {
     const Constructor: typeof UniswapV2Pool = mapUniswapV2[amm.id] || UniswapV2Pool;
-    return new Constructor(lpAddress, amm, chain);
+    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
   } else if (isSolidlyAmm(amm)) {
     const Constructor: typeof SolidlyPool = mapSolidly[amm.id] || SolidlyPool;
-    return new Constructor(lpAddress, amm, chain);
+    return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
+  } else {
+    throw new Error(`Unknown AMM type`);
+  }
+}
+
+/** Whether the pool class for this AMM can build swap-through-pool steps */
+export function poolSupportsSwap(amm: AmmEntityUniswapLike): boolean {
+  if (isUniswapV2Amm(amm)) {
+    return (mapUniswapV2[amm.id] || UniswapV2Pool).supportsPoolSwap;
+  } else if (isSolidlyAmm(amm)) {
+    return (mapSolidly[amm.id] || SolidlyPool).supportsPoolSwap;
   } else {
     throw new Error(`Unknown AMM type`);
   }

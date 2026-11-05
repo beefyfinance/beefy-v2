@@ -26,19 +26,19 @@ import { UniswapV2StrategyImpl } from './uniswap-v2/UniswapV2Strategy.ts';
 const wnativeProvider = new WNativeSwapProvider();
 const swapAggregator = new SwapAggregator([new WNativeSwapProvider()]);
 
-const { pool } = vi.hoisted(() => ({
+const { pool, poolSupportsSwap } = vi.hoisted(() => ({
   pool: {
     getOptimalSwapAmount: vi.fn(),
     getAddLiquidityRatio: vi.fn(),
     swap: vi.fn(),
     addLiquidity: vi.fn(),
-    supportsPoolSwap: vi.fn(),
   },
+  poolSupportsSwap: vi.fn(),
 }));
 
 vi.mock('../../amm/amm.ts', () => ({
   getUniswapLikePool: vi.fn(async () => pool),
-  createUniswapLikePool: vi.fn(() => pool),
+  poolSupportsSwap,
 }));
 
 const arcLp = erc20Token(
@@ -104,7 +104,7 @@ function makeStrategy(chainId: 'arc' | 'base', assetIds: [string, string], lp: T
 }
 
 beforeEach(() => {
-  pool.supportsPoolSwap.mockReset().mockReturnValue(true);
+  poolSupportsSwap.mockReset().mockReturnValue(true);
   pool.getOptimalSwapAmount
     .mockReset()
     .mockImplementation((amountIn: BigNumber) => amountIn.idiv(2));
@@ -375,7 +375,7 @@ describe('UniswapLikeStrategy option lists where the pool cannot swap', () => {
   });
 
   it('offers only aggregator routes when the pool does not support swaps', async () => {
-    pool.supportsPoolSwap.mockReturnValue(false);
+    poolSupportsSwap.mockReturnValue(false);
     const { strategy } = makeStrategyWithAggregator();
 
     const deposit = await strategy.fetchDepositOptions();
@@ -389,7 +389,7 @@ describe('UniswapLikeStrategy option lists where the pool cannot swap', () => {
   });
 
   it('still ranks pool tokens first when only aggregator routes are offered', async () => {
-    pool.supportsPoolSwap.mockReturnValue(false);
+    poolSupportsSwap.mockReturnValue(false);
     const { strategy } = makeStrategyWithAggregator();
 
     const deposit = await strategy.fetchDepositOptions();
@@ -416,7 +416,7 @@ describe('UniswapLikeStrategy route eligibility for pool tokens', () => {
   });
 
   it('rejects a pool token when the pool cannot swap and the aggregator cannot reach the other side', async () => {
-    pool.supportsPoolSwap.mockReturnValue(false);
+    poolSupportsSwap.mockReturnValue(false);
     const { strategy } = makeStrategyWithPairCheck(false);
 
     expect(await strategy.canAcceptTokenAsDeposit(baseWeth)).toBe(false);
@@ -424,7 +424,7 @@ describe('UniswapLikeStrategy route eligibility for pool tokens', () => {
   });
 
   it('accepts a pool token when the pool cannot swap but the aggregator can reach the other side', async () => {
-    pool.supportsPoolSwap.mockReturnValue(false);
+    poolSupportsSwap.mockReturnValue(false);
     const { strategy } = makeStrategyWithPairCheck(true);
 
     expect(await strategy.canAcceptTokenAsDeposit(baseWeth)).toBe(true);

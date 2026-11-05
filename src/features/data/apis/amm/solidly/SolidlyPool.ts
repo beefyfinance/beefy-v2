@@ -79,6 +79,8 @@ export type LiquidityAmounts = {
 };
 
 export class SolidlyPool implements IUniswapLikePool {
+  /** false when the pool class cannot build swap steps, so no swap-through-pool options are offered */
+  static readonly supportsPoolSwap: boolean = true;
   public readonly type = 'solidly';
 
   protected pairData: PairData | undefined = undefined;
@@ -112,10 +114,6 @@ export class SolidlyPool implements IUniswapLikePool {
       decimals1: new BigNumber(decimal1.toString(10)).e!,
       stable: stable,
     };
-  }
-
-  supportsPoolSwap(): boolean {
-    return true;
   }
 
   async updateAllData() {
