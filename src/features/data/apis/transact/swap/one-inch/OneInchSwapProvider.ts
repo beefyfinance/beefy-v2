@@ -88,11 +88,10 @@ export class OneInchSwapProvider implements ISwapProvider {
       : {}),
     });
 
-    const { args } = decodeFunctionData({
-      abi: OneInchAggregationRouterV6Abi,
-      data: swap.tx.data as Hex,
-    });
-    const toAmountMin = fromWei(args[1].minReturnAmount, quote.toToken.decimals);
+    const toAmountMin = fromWei(
+      decodeMinReturn(swap.tx.data as Hex).toString(10),
+      quote.toToken.decimals
+    );
     if (toAmountMin.lt(minReturn)) {
       throw new Error(
         `one-inch swap minimum ${toAmountMin.toString(10)} is below the requested ${minReturn.toString(10)}`
@@ -144,4 +143,14 @@ export class OneInchSwapProvider implements ISwapProvider {
   async getSupportedChains(state: BeefyState): Promise<ChainEntity['id'][]> {
     return selectAllChainIds(state).filter(chainId => !!this.getConfigForChain(chainId, state));
   }
+}
+
+/** 1inch answers with `swap` or, for single-pool routes, one of the `unoswap` variants */
+function decodeMinReturn(data: Hex): bigint {
+  const { functionName, args } = decodeFunctionData({ abi: OneInchAggregationRouterV6Abi, data });
+  if (functionName === 'swap') {
+    return args[1].minReturnAmount;
+  }
+  const fn = OneInchAggregationRouterV6Abi.find(item => item.name === functionName)!;
+  return args[fn.inputs.findIndex(input => input.name === 'minReturn')];
 }
