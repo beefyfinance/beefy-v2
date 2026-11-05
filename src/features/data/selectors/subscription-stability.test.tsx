@@ -1,8 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { memo, type ReactNode } from 'react';
-
 import { useSelector } from 'react-redux';
-
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { BoostUnstakeSuccessContent } from '../../../components/Stepper/components/Content/Success/BoostUnstakeSuccessContent.tsx';
 import { ZapSuccessContent } from '../../../components/Stepper/components/Content/Success/ZapSuccessContent.tsx';
@@ -12,7 +10,6 @@ import { ApyTooltipContent } from '../../../components/VaultStats/ApyTooltipCont
 import { TvlShareTooltip } from '../../../components/VaultStats/VaultTvlStat.tsx';
 import { RewardsTooltipContent } from '../../../components/RewardsTooltip/RewardsTooltip.tsx';
 import { VaultDepositedTooltip } from '../../../components/VaultDepositedTooltip/VaultDepositedTooltip.tsx';
-
 import { Transaction } from '../../dashboard/components/UserVaults/components/VaultTransactions/components/Transaction/Transaction.tsx';
 import { Vault as DashboardVaultRow } from '../../dashboard/components/UserVaults/components/Vault/Vault.tsx';
 import { Vault as HomeVaultRow } from '../../home/components/Vault/Vault.tsx';
@@ -24,11 +21,8 @@ import { FormStepFooter } from '../../vault/components/Actions/Transact/FormStep
 import { DepositTokenSelectList } from '../../vault/components/Actions/Transact/TokenSelectList/DepositTokenSelectList.tsx';
 import { WithdrawTokenSelectList } from '../../vault/components/Actions/Transact/TokenSelectList/WithdrawTokenSelectList.tsx';
 import { MaybeZapFees } from '../../vault/components/Actions/Transact/VaultFees/ZapFees.tsx';
-
 import type { TransactOption } from '../apis/transact/transact-types.ts';
-
 import type { Step } from '../reducers/wallet/stepper-types.ts';
-
 import { TransactMode, TransactStatus, TransactStep } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectApyVaultUIData } from './apy.ts';
