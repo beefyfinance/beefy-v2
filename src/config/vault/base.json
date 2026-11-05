@@ -27,7 +27,13 @@
       "synthAsset": true
     },
     "strategyTypeId": "lp",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
   },
   {
     "id": "aero-v2-base-weth-veil",
@@ -57,7 +63,13 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "network": "base"
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
   },
   {
     "id": "aero-cow-base-usdc-skhyc-vault",

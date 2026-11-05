@@ -27,7 +27,13 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
   },
   {
     "id": "aero-v2-optimism-aleth-weth",
@@ -57,7 +63,13 @@
       "synthAsset": true
     },
     "strategyTypeId": "lp",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
   },
   {
     "id": "aero-cow-optimism-usdc-weth-vault",
