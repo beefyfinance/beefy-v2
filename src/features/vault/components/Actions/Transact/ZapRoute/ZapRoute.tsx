@@ -1,4 +1,5 @@
 import { css, type CssStyles } from '@repo/styles/css';
+import type BigNumber from 'bignumber.js';
 import type { ComponentType, ReactNode } from 'react';
 import { Fragment, memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCollapse } from '../../../../../../components/Collapsable/hooks.ts';
@@ -6,12 +7,17 @@ import { Trans, useTranslation } from 'react-i18next';
 import { ChainIcon } from '../../../../../../components/ChainIcon/ChainIcon.tsx';
 import { SpinLoader } from '../../../../../../components/SpinLoader/SpinLoader.tsx';
 import { ListJoin } from '../../../../../../components/ListJoin.tsx';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import {
+  TokenAmount as TokenAmountDisplay,
+  TokenAmountFromEntity,
+} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { ExplorerAddressLink } from '../../../../../../components/Tenderly/Links/ExplorerAddressLink.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatPercent } from '../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import { transactSwitchStep } from '../../../../../data/actions/transact.ts';
+import { selectZapClaimRewards } from '../../../../../data/actions/wallet/transact.ts';
+import type { ContractRewardToken } from '../../../../../data/entities/token.ts';
 import {
   type AllowanceTokenAmount,
   isCowcentratedDepositQuote,
@@ -38,7 +44,6 @@ import {
   selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
-  selectStepperLeadingClaimStepCount,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
@@ -213,6 +218,47 @@ const ApprovalStep = memo(function ApprovalStep({ allowance, number, status }: A
       </div>
       <div className={css(styles.stepContent)}>
         <ApprovalStepContent allowance={allowance} />
+      </div>
+    </div>
+  );
+});
+
+type ClaimReward = { token: ContractRewardToken; amount: BigNumber };
+
+type ClaimStepProps = {
+  rewards: ReadonlyArray<ClaimReward>;
+  number: number;
+  status: StepStatusState;
+};
+const ClaimStep = memo(function ClaimStep({ rewards, number, status }: ClaimStepProps) {
+  const { t } = useTranslation();
+  const tokenAmounts = useMemo(
+    () =>
+      rewards
+        .filter(reward => reward.amount.gt(BIG_ZERO))
+        .map(({ token, amount }) => (
+          <Fragment key={`${token.chainId}-${token.address}`}>
+            <TokenAmountDisplay amount={amount} decimals={token.decimals} /> {token.symbol}
+          </Fragment>
+        )),
+    [rewards]
+  );
+  const chainId = rewards[0]?.token.chainId;
+
+  return (
+    <div className={css(styles.stepRow)}>
+      <div className={css(styles.stepStatusWrapper)}>
+        <StepStatusIndicator status={status} number={number} />
+      </div>
+      <div className={css(styles.stepContent)}>
+        <Trans
+          t={t}
+          i18nKey="Transact-Route-Step-Claim"
+          components={{
+            tokenAmounts: <ListJoin items={tokenAmounts} />,
+            chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
+          }}
+        />
       </div>
     </div>
   );
@@ -482,18 +528,16 @@ const StepContentComponents: StepContentMap = {
   fee: StepContentFee,
 };
 
+/** `prefixCount` rows (claim + approvals) each map to their own stepper step, ahead of the zap */
 function useStepStatuses(
   totalStepsCount: number,
-  approvalCount: number,
+  prefixCount: number,
   quoteSteps: ZapQuoteStep[],
   bridgeStepAbsoluteIndex: number
 ): StepStatusState[] {
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
-  const stepperStepIndex = useAppSelector(selectStepperCurrentStep);
-  const leadingClaimStepCount = useAppSelector(selectStepperLeadingClaimStepCount);
-  // index into the route rows, which start after any batched claim
-  const currentStepIndex = stepperStepIndex - leadingClaimStepCount;
+  const currentStepIndex = useAppSelector(selectStepperCurrentStep);
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
   const successClosed = useAppSelector(selectTransactSuccessClosed);
@@ -540,7 +584,7 @@ function useStepStatuses(
       const bridgeIdx = quoteSteps.findIndex(s => s.type === 'bridge');
       return Array.from({ length: totalStepsCount }, (_, i) => {
         if (bridgeIdx >= 0) {
-          const absoluteBridgeIdx = approvalCount + bridgeIdx;
+          const absoluteBridgeIdx = prefixCount + bridgeIdx;
           if (i < absoluteBridgeIdx) return 'finished';
           if (i === absoluteBridgeIdx) return 'inProgress';
           return 'notStarted';
@@ -549,7 +593,7 @@ function useStepStatuses(
       }) as StepStatusState[];
     }
 
-    if (currentStepIndex < approvalCount) {
+    if (currentStepIndex < prefixCount) {
       return Array.from({ length: totalStepsCount }, (_, i) => {
         if (i < currentStepIndex) return 'finished';
         if (i === currentStepIndex) return 'inProgress';
@@ -558,8 +602,8 @@ function useStepStatuses(
     }
 
     return Array.from({ length: totalStepsCount }, (_, i) => {
-      if (i < approvalCount) return 'finished';
-      if (i === approvalCount) return 'inProgress';
+      if (i < prefixCount) return 'finished';
+      if (i === prefixCount) return 'inProgress';
       return 'notStarted';
     }) as StepStatusState[];
   }, [
@@ -567,7 +611,7 @@ function useStepStatuses(
     stepperContent,
     currentStepIndex,
     totalStepsCount,
-    approvalCount,
+    prefixCount,
     quoteSteps,
     bridgeStepAbsoluteIndex,
     isRecoveryExecution,
@@ -644,6 +688,17 @@ export const ZapRoute = memo(function ZapRoute({
   const pendingAllowances =
     stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
+  // frozen like the approvals: the row must outlive the claim confirming and zeroing the rewards
+  const claimRewardsLive = useAppSelector(state => selectZapClaimRewards(state, quote));
+  const claimSnapshotRef = useRef(claimRewardsLive);
+  useEffect(() => {
+    if (!stepperModal && !isRecovery) {
+      claimSnapshotRef.current = claimRewardsLive;
+    }
+  }, [stepperModal, isRecovery, claimRewardsLive]);
+  const claimRewards = stepperModal || isRecovery ? claimSnapshotRef.current : claimRewardsLive;
+  const claimCount = claimRewards ? 1 : 0;
+
   const recoveryQuoteMatchesOp = !recoveryOp || recoveryQuoteOpId === recoveryOp.id;
   const sharedChainIds = useAppSelector(selectChainIdsNativeSharedWithWrapped);
 
@@ -651,7 +706,7 @@ export const ZapRoute = memo(function ZapRoute({
     const displaySteps = quote.steps.filter(s => isDisplayedStep(s, sharedChainIds));
     const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
-      pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
+      claimCount + pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
@@ -669,14 +724,15 @@ export const ZapRoute = memo(function ZapRoute({
     recoveryQuote,
     recoveryQuoteMatchesOp,
     pendingAllowances.length,
+    claimCount,
     sharedChainIds,
   ]);
 
-  const approvalCount = pendingAllowances.length;
-  const totalSteps = approvalCount + effectiveSteps.length;
+  const prefixCount = claimCount + pendingAllowances.length;
+  const totalSteps = prefixCount + effectiveSteps.length;
   const stepStatuses = useStepStatuses(
     totalSteps,
-    approvalCount,
+    prefixCount,
     effectiveSteps,
     bridgeStepAbsoluteIndex
   );
@@ -723,20 +779,23 @@ export const ZapRoute = memo(function ZapRoute({
         {showContent ?
           <div className={css(styles.routeContent)}>
             <div className={css(styles.steps)}>
+              {claimRewards ?
+                <ClaimStep rewards={claimRewards} number={1} status={stepStatuses[0]} />
+              : null}
               {pendingAllowances.map((allowance, i) => (
                 <ApprovalStep
                   allowance={allowance}
                   key={`approval-${allowance.token.address}`}
-                  number={i + 1}
-                  status={stepStatuses[i]}
+                  number={claimCount + i + 1}
+                  status={stepStatuses[claimCount + i]}
                 />
               ))}
               {effectiveSteps.map((step, i) => (
                 <Step
                   step={step}
                   key={i}
-                  number={approvalCount + i + 1}
-                  status={stepStatuses[approvalCount + i]}
+                  number={prefixCount + i + 1}
+                  status={stepStatuses[prefixCount + i]}
                 />
               ))}
             </div>
