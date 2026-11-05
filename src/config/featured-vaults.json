@@ -1,6 +1,6 @@
 {
-  "uniswap-cow-arc-usdc-cool-rp": true,
-  "uniswap-cow-arc-usdc-tolly-rp": true,
-  "uniswap-cow-bsc-btw-usdt-rp": true,
-  "pancake-cow-bsc-siren-wbnb-rp": true
+  "uniswap-cow-robinhood-usdg-amd-rp": true,
+  "aero-cow-base-usdc-nvdac-vault": true,
+  "uniswap-cow-robinhood-cost-usdg-rp": true,
+  "aero-cow-base-sndkc-usdc-vault": true
 }
