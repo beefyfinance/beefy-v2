@@ -27,6 +27,8 @@
       "synthAsset": true
     },
     "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xA5e16dC9A5cae37563116D9407D8C73927675674",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xA5e16dC9A5cae37563116D9407D8C73927675674/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -63,6 +65,8 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x0B09f2f7b096016B797943807558Fa38119EDC8C",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x0B09f2f7b096016B797943807558Fa38119EDC8C/withdraw",
     "network": "base",
     "zaps": [
       {
@@ -8778,12 +8782,13 @@
     "earnedTokenAddress": "0xfCa983Ea00D87DE9BB7eAF5561cC1ec4050Ad1ba",
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-alusdb",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1790270361,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "aerodrome",
     "assets": ["USDC", "alUSDb"],
+    "replacementVaultId": "aero-v2-base-usdc-alusdb",
     "migrationIds": [],
     "risks": {
       "complex": false,
@@ -32997,12 +33002,13 @@
     "earnedTokenAddress": "0x25069D69a2be06330C879EB4bf4db5E6C543C4c4",
     "oracle": "lps",
     "oracleId": "aerodrome-weth-veil",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1738191753,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "aerodrome",
     "assets": ["VEIL", "WETH"],
+    "replacementVaultId": "aero-v2-base-weth-veil",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

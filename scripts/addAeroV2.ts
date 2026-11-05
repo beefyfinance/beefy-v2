@@ -21,7 +21,7 @@ async function main() {
     throw new Error('Usage: npm run add:aerov2 <chain> <strategy-or-vault-address>');
   }
   const chain = addressBookToAppId(chainArg);
-  getChain(chain);
+  const { chainId } = getChain(chain);
   const address = getAddress(addressArg);
   const path = `./src/config/vault/${chain}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
@@ -95,6 +95,8 @@ async function main() {
       synthAsset: false,
     },
     strategyTypeId: 'lp',
+    addLiquidityUrl: `https://app.aero.xyz/deposit/${chainId}-${want}`,
+    removeLiquidityUrl: `https://app.aero.xyz/deposits/${chainId}-${want}/withdraw`,
     network: chain,
     zaps: [{ strategyId: 'solidly', ammId: `${chain}-aero-v2` }],
   };
