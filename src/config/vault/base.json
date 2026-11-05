@@ -72,6 +72,302 @@
     ]
   },
   {
+    "id": "aavev4-base-spcxc",
+    "name": "SPCXc",
+    "type": "standard",
+    "token": "SPCXc",
+    "tokenAddress": "0xb2000000000000000000007b9fcbd005511aCBd5",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0x1a18dF0ba57241905cBb44491B6B9d8f35AdE894",
+    "earnedToken": "mooAaveV4BaseSPCXc",
+    "earnedTokenAddress": "0x1a18dF0ba57241905cBb44491B6B9d8f35AdE894",
+    "oracle": "tokens",
+    "oracleId": "SPCXc",
+    "status": "active",
+    "createdAt": 1793733617,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["SPCXc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/SPCXc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-aaplc",
+    "name": "AAPLc",
+    "type": "standard",
+    "token": "AAPLc",
+    "tokenAddress": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0x195ddfB2Af8110E7B187D63e7D427B3A19600030",
+    "earnedToken": "mooAaveV4BaseAAPLc",
+    "earnedTokenAddress": "0x195ddfB2Af8110E7B187D63e7D427B3A19600030",
+    "oracle": "tokens",
+    "oracleId": "AAPLc",
+    "status": "active",
+    "createdAt": 1793728119,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["AAPLc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/AAPLc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-amznc",
+    "name": "AMZNc",
+    "type": "standard",
+    "token": "AMZNc",
+    "tokenAddress": "0xb200000000000000000000d9192b6B456483C2E8",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0xb8973207d201Cda6dC9dBc6e69F9FF106a6EB24C",
+    "earnedToken": "mooAaveV4BaseAMZNc",
+    "earnedTokenAddress": "0xb8973207d201Cda6dC9dBc6e69F9FF106a6EB24C",
+    "oracle": "tokens",
+    "oracleId": "AMZNc",
+    "status": "active",
+    "createdAt": 1793728279,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["AMZNc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/AMZNc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-googlc",
+    "name": "GOOGLc",
+    "type": "standard",
+    "token": "GOOGLc",
+    "tokenAddress": "0xb2000000000000000000002D0BA3164cc74f58B7",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0xE0D6DEC9f62B5D2Df1C237fd02D2F12Dd7679d20",
+    "earnedToken": "mooAaveV4BaseGOOGLc",
+    "earnedTokenAddress": "0xE0D6DEC9f62B5D2Df1C237fd02D2F12Dd7679d20",
+    "oracle": "tokens",
+    "oracleId": "GOOGLc",
+    "status": "active",
+    "createdAt": 1793728295,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["GOOGLc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/GOOGLc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-metac",
+    "name": "METAc",
+    "type": "standard",
+    "token": "METAc",
+    "tokenAddress": "0xb2000000000000000000008bC8786B856E61707C",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0x5425a7Da878775D6925cE3e6C8D5D0DA230680d2",
+    "earnedToken": "mooAaveV4BaseMETAc",
+    "earnedTokenAddress": "0x5425a7Da878775D6925cE3e6C8D5D0DA230680d2",
+    "oracle": "tokens",
+    "oracleId": "METAc",
+    "status": "active",
+    "createdAt": 1793728311,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["METAc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/METAc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-msftc",
+    "name": "MSFTc",
+    "type": "standard",
+    "token": "MSFTc",
+    "tokenAddress": "0xB200000000000000000000Ab99cFa739E253872B",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0x30a15475038ecF8D36760EedC46b31A59797BE21",
+    "earnedToken": "mooAaveV4BaseMSFTc",
+    "earnedTokenAddress": "0x30a15475038ecF8D36760EedC46b31A59797BE21",
+    "oracle": "tokens",
+    "oracleId": "MSFTc",
+    "status": "active",
+    "createdAt": 1793728433,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["MSFTc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/MSFTc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-nvdac",
+    "name": "NVDAc",
+    "type": "standard",
+    "token": "NVDAc",
+    "tokenAddress": "0xb20000000000000000000078ee7ce2fE4908108C",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0x4f16763e2c65fcC1290556d5F677cA694E4141A6",
+    "earnedToken": "mooAaveV4BaseNVDAc",
+    "earnedTokenAddress": "0x4f16763e2c65fcC1290556d5F677cA694E4141A6",
+    "oracle": "tokens",
+    "oracleId": "NVDAc",
+    "status": "active",
+    "createdAt": 1793728449,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["NVDAc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/NVDAc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aavev4-base-tslac",
+    "name": "TSLAc",
+    "type": "standard",
+    "token": "TSLAc",
+    "tokenAddress": "0xb2000000000000000000001e800a7f5189430cD0",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0xd077f7eeC64dB8Bcfa428c89d370392d7C2582fd",
+    "earnedToken": "mooAaveV4BaseTSLAc",
+    "earnedTokenAddress": "0xd077f7eeC64dB8Bcfa428c89d370392d7C2582fd",
+    "oracle": "tokens",
+    "oracleId": "TSLAc",
+    "status": "active",
+    "createdAt": 1793728465,
+    "updatedAt": 1793923200,
+    "platformId": "aave-v4",
+    "assets": ["TSLAc"],
+    "migrationIds": [],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": true,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lendingNoBorrow",
+    "underlyingPlatformUrl": "https://pro.aave.com/explore/token/TSLAc?chain=8453",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-usdc-skhyc-vault",
     "name": "SKHYc-USDC",
     "type": "standard",
