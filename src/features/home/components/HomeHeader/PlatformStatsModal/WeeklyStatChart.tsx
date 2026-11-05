@@ -52,7 +52,10 @@ export const WeeklyStatChart = memo(function WeeklyStatChart({
   height,
   compact,
 }: WeeklyStatChartProps) {
-  const { min, max, avg } = useMemo(() => minMaxAverage(data, 'v', ['v'], ['v']), [data]);
+  const { min, max, avg } = useMemo(
+    () => minMaxAverage(data, 'v', ['v', 'ma'], ['v', 'ma']),
+    [data]
+  );
   // bars grow from zero; the area follows the range like the vault TVL chart
   const yAxis = useYAxis(series === 'area' ? min : 0, max, tickFormatterBuilder);
   const xAxis = useXAxis('1d_1Y', data.length, compact);
