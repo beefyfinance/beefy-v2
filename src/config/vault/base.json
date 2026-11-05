@@ -38341,7 +38341,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["orbiter"],
     "network": "base",
     "zaps": [
       {
@@ -38384,7 +38383,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["orbiter"],
     "network": "base",
     "zaps": [
       {
