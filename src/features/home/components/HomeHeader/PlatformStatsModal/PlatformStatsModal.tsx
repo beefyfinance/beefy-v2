@@ -73,14 +73,6 @@ export const PlatformStatsModal = memo(function PlatformStatsModal({
     [t]
   );
 
-  // each panel holds Close itself, so no card gap draws a divider above it
-  const mobileClose =
-    isMobile ?
-      <Button onClick={close} fullWidth={true} borderless={true}>
-        {t('Close')}
-      </Button>
-    : null;
-
   return (
     <StyledCard>
       <StyledCardHeader>
@@ -110,39 +102,46 @@ export const PlatformStatsModal = memo(function PlatformStatsModal({
           )
         }
       </StyledCardHeader>
-      <Tabs>
-        {PLATFORM_METRICS.map(m => (
-          <StatTab
-            key={m}
-            metric={m}
-            data={metrics[m]}
-            buybackUnit={buybackUnit}
-            selected={m === metric}
-            compact={isCompact}
-            onSelect={onMetricChange}
-          />
-        ))}
-      </Tabs>
-      {showChains ?
-        <ChainsPanel>
-          <Chains />
-          {mobileClose}
-        </ChainsPanel>
-      : <>
-          <ChartPanel>
-            <PlatformChart
-              metric={metric}
+      <Body>
+        <Tabs>
+          {PLATFORM_METRICS.map(m => (
+            <StatTab
+              key={m}
+              metric={m}
+              data={metrics[m]}
               buybackUnit={buybackUnit}
-              toggles={toggles}
-              compact={isMobile}
+              selected={m === metric}
+              compact={isCompact}
+              onSelect={onMetricChange}
             />
-          </ChartPanel>
-          <Footer>
-            <LineToggles toggles={toggles} onChange={setToggles} />
-            {mobileClose}
-          </Footer>
-        </>
-      }
+          ))}
+        </Tabs>
+        {showChains ?
+          <ChainsPanel>
+            <Chains />
+          </ChainsPanel>
+        : <>
+            <ChartPanel>
+              <PlatformChart
+                metric={metric}
+                buybackUnit={buybackUnit}
+                toggles={toggles}
+                compact={isMobile}
+              />
+            </ChartPanel>
+            <Footer>
+              <LineToggles toggles={toggles} onChange={setToggles} />
+            </Footer>
+          </>
+        }
+      </Body>
+      {isMobile ?
+        <MobileClose>
+          <Button onClick={close} fullWidth={true} borderless={true}>
+            {t('Close')}
+          </Button>
+        </MobileClose>
+      : null}
     </StyledCard>
   );
 });
@@ -249,6 +248,17 @@ const Title = styled(CardTitle, {
   },
 });
 
+const Body = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1px',
+    flex: '1 1 auto',
+    minHeight: 0,
+    overflowY: 'auto',
+  },
+});
+
 // two by two on the mobile sheet, where four across would squeeze the labels
 const Tabs = styled('div', {
   base: {
@@ -343,16 +353,14 @@ const TabTrend = styled('span', {
 // padding lives in the chart and the loader, like GraphWithControls, so both are the same height
 const ChartPanel = styled('div', { base: { backgroundColor: 'background.content' } });
 
-// holds Close on the mobile sheet, like the chart view's footer; only the list scrolls
 const ChainsPanel = styled('div', {
   base: {
     backgroundColor: 'background.content',
-    padding: '16px 20px 24px',
+    padding: '16px 20px 8px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
     flexGrow: 1,
-    minHeight: 0,
+    flexShrink: 0,
     sm: {
       flexGrow: 0,
       // chart panel + footer, so switching views keeps the card height
@@ -363,23 +371,29 @@ const ChainsPanel = styled('div', {
   },
 });
 
-// the vault charts' footer, holding Close on the mobile sheet
 const Footer = styled('div', {
   base: {
     ...graphControlStyles.footer,
     borderRadius: '0',
-    flexDirection: 'column',
-    alignItems: 'stretch',
+    alignItems: 'flex-start',
     flexGrow: 1,
-    // ScrollableDrawer's footer spacing, like the filters and menu sheets
     smDown: {
-      padding: '8px 20px 24px',
+      padding: '8px 20px',
     },
     sm: {
       borderRadius: '0px 0px 12px 12px',
-      flexDirection: 'row',
       alignItems: 'center',
       flexGrow: 0,
     },
+  },
+});
+
+const MobileClose = styled('div', {
+  base: {
+    backgroundColor: 'background.content',
+    flexShrink: 0,
+    padding: '8px 20px 24px',
+    // covers the card gap, so no divider shows above Close
+    marginTop: '-1px',
   },
 });
