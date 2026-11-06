@@ -16,6 +16,7 @@
     "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["mooBIFI", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -54,6 +55,7 @@
     "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["alETH", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
