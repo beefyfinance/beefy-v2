@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aero-v2-base-usdc-alusdb",
     "status": "active",
-    "createdAt": 1793806480,
+    "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["alUSDb", "USDC"],
     "risks": {
@@ -51,7 +51,7 @@
     "oracle": "lps",
     "oracleId": "aero-v2-base-weth-veil",
     "status": "active",
-    "createdAt": 1793806376,
+    "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["VEIL", "WETH"],
     "risks": {
