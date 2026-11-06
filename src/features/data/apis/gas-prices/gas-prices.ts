@@ -9,10 +9,11 @@ import {
   bigNumberToBigInt,
   compareBigNumber,
 } from '../../../../helpers/big-number.ts';
-import { sortWith } from '../../utils/array-utils.ts';
+import { itemAtPercentile, sortWith } from '../../utils/array-utils.ts';
 import {
   getBeefyFeeHistory,
   getBeefyGasPrice,
+  getBeefyMaxPriorityFeePerGas,
   rpcClientManager,
 } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
@@ -31,11 +32,7 @@ export type EIP1559GasPrice = {
 export type GasPricing = StandardGasPrice | EIP1559GasPrice;
 
 function clamp(value: BigNumber, min: BigNumber, max: BigNumber): BigNumber {
-  return (
-    value.isLessThan(min) ? min
-    : value.isGreaterThan(max) ? max
-    : value
-  );
+  return BigNumber.min(BigNumber.max(value, min), max);
 }
 
 function multiplyAndClamp(
@@ -132,20 +129,26 @@ export class EIP1559GasPricer implements IGasPricer {
     const feeHistory = await getBeefyFeeHistory(client, this.blockCount, 'latest', [
       this.percentile,
     ]);
-    const nextBlock = await client.getBlock({
-      blockTag: 'latest',
-    });
+    const baseFees = feeHistory.baseFeePerGas;
+    const latestBaseFee = baseFees.at(-2) ?? BIG_ZERO;
+    const nextBaseFee = baseFees.at(-1) ?? BIG_ZERO;
 
-    const sortedBaseFees = sortWith(feeHistory.baseFeePerGas, compareBigNumber);
+    const sortedBaseFees = sortWith(baseFees, compareBigNumber);
     const initialBaseFee = BigNumber.max(
       averageBigNumbers(sortedBaseFees),
-      new BigNumber((nextBlock.baseFeePerGas || 0n).toString(10))
+      latestBaseFee,
+      nextBaseFee
     );
     const sortedPriorityFees = sortWith(
       feeHistory.reward.map(reward => reward[0]),
       compareBigNumber
     );
-    const initialPriorityFee = averageBigNumbers(sortedPriorityFees);
+    const medianPriorityFee =
+      sortedPriorityFees.length ? itemAtPercentile(sortedPriorityFees, 0.5) : BIG_ZERO;
+    const initialPriorityFee =
+      medianPriorityFee.isZero() ?
+        await getBeefyMaxPriorityFeePerGas(client).catch(() => BIG_ZERO)
+      : medianPriorityFee;
 
     const baseFee = multiplyAndClamp(
       initialBaseFee,
