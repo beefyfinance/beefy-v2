@@ -472,6 +472,7 @@
     },
     "strategyTypeId": "single",
     "underlyingPlatformUrl": "https://app.morpho.org/ethereum/vault/0xe05faDf242331808f504661BEA65972594869826/clearstar-3jane-ecosystem-vault-usdc",
+    "pointStructureIds": ["3jane"],
     "network": "ethereum",
     "zaps": [
       {
@@ -545,7 +546,7 @@
     "createdAt": 1782299179,
     "platformId": "pendle",
     "assets": ["reUSDe"],
-    "pointStructureIds": ["re.xyz", "ethena"],
+    "pointStructureIds": ["re.xyz"],
     "migrationIds": [],
     "risks": {
       "complex": false,
@@ -586,7 +587,7 @@
     "platformId": "pendle",
     "assets": ["reUSDxyz"],
     "icons": ["reUSDxyz"],
-    "pointStructureIds": ["re.xyz", "ethena"],
+    "pointStructureIds": ["re.xyz"],
     "migrationIds": [],
     "risks": {
       "complex": false,
@@ -2782,7 +2783,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x42826337a249b3162d133F65D8f79b4A22E82f45/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x42826337a249b3162d133F65D8f79b4A22E82f45/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4332,7 +4332,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xEB5819B31A0378407F43aBa2F3E9d16b40aa5ec7/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xEB5819B31A0378407F43aBa2F3E9d16b40aa5ec7/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4375,7 +4374,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xEB5819B31A0378407F43aBa2F3E9d16b40aa5ec7/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xEB5819B31A0378407F43aBa2F3E9d16b40aa5ec7/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4687,7 +4685,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-485/deposit/",
     "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-485/withdraw",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4842,7 +4839,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xc65B7a0f8Fc97e1D548860d866f4304E039EF016/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xc65B7a0f8Fc97e1D548860d866f4304E039EF016/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4885,7 +4881,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xc65B7a0f8Fc97e1D548860d866f4304E039EF016/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xc65B7a0f8Fc97e1D548860d866f4304E039EF016/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -4998,7 +4993,6 @@
     },
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v3/0x6c5972311191097d002e804a9bf97c96c54059ed/add-liquidity",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum"
   },
   {
@@ -5414,7 +5408,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/deposit/",
     "removeLiquidityUrl": "https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-391/withdraw/",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -5668,7 +5661,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -5711,7 +5703,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x45F163E583D34b8E276445dd3Da9aE077D137d72/zap/out?chain=ethereum",
-    "pointStructureIds": ["falcon-miles"],
     "network": "ethereum",
     "zaps": [
       {
@@ -7849,7 +7840,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-169/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/ethereum/pools/factory-stable-ng-169/withdraw",
-    "pointStructureIds": ["ethena"],
     "network": "ethereum",
     "zaps": [
       {

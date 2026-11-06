@@ -896,5 +896,49 @@
     "output": {
       "vault": { "ids": ["aero-cow-base-zora-usdc-rp"] }
     }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-usdc-alusdb",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-usdc-alusdb"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-usdc-alusdb"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-veil",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-veil"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-veil"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-optimism-weth-moobifi",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["velodrome-v2-weth-moobifi"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-optimism-weth-moobifi"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-optimism-aleth-weth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["velodrome-v2-aleth-weth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-optimism-aleth-weth"] }
+    }
   }
 ]
