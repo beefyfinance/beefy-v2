@@ -14,6 +14,7 @@ import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
+import { getWalletConnectionApi } from '../../apis/instances.ts';
 
 export const migrateUnstake = (
   unstakeCall: (args: MigratorUnstakeProps) => Promise<Hash>,
@@ -30,6 +31,7 @@ export const migrateUnstake = (
     }
 
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -52,7 +54,9 @@ export const migrateUnstake = (
         tokens: selectVaultTokensToRefresh(state, vault),
         migrationId,
         vaultId: vault.id,
-      }
+      },
+      // a replayed unstake reverts, so wait until the wallet no longer treats it as pending
+      walletClient
     );
   });
 };
