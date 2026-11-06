@@ -71,6 +71,8 @@ export type MintFeeParams = {
 };
 
 export class UniswapV2Pool implements IUniswapLikePool {
+  /** false when the pool class cannot build swap steps, so no swap-through-pool options are offered */
+  static readonly supportsPoolSwap: boolean = true;
   public readonly type = 'uniswap-v2';
 
   protected pairData: PairData | undefined = undefined;

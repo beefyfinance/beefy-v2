@@ -19,6 +19,7 @@
     "creationdate": "vite-node ./scripts/getPoolCreationTimestamp.ts",
     "launchpool": "vite-node ./scripts/launchpool.ts",
     "vault": "vite-node ./scripts/addVault.ts",
+    "add:aerov2": "vite-node ./scripts/addAeroV2.ts",
     "clm": "vite-node ./scripts/addCLM.ts",
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
