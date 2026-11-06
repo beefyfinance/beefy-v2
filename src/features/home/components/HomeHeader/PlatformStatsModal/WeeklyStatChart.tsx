@@ -27,7 +27,6 @@ import {
 export type WeeklyStatChartProps = {
   data: TimePointWithMa[];
   series: 'bar' | 'area';
-  /** tooltip name of the value */
   label: string;
   maLabel: string;
   toggles: LineTogglesState;
@@ -40,7 +39,6 @@ export type WeeklyStatChartProps = {
 const formatTick = (t: number) => formatUtcChartDate(fromUnixTime(t));
 const formatTimestamp = (t: number) => formatUtcDate(fromUnixTime(t));
 
-/** One year of platform stats: weekly bars or a daily area, on the same axes/tooltip as the vault charts */
 export const WeeklyStatChart = memo(function WeeklyStatChart({
   data,
   series,
@@ -56,7 +54,6 @@ export const WeeklyStatChart = memo(function WeeklyStatChart({
     () => minMaxAverage(data, 'v', ['v', 'ma'], ['v', 'ma']),
     [data]
   );
-  // bars grow from zero; the area follows the range like the vault TVL chart
   const yAxis = useYAxis(series === 'area' ? min : 0, max, tickFormatterBuilder);
   const xAxis = useXAxis('1d_1Y', data.length, compact);
   const margin = useMemo(

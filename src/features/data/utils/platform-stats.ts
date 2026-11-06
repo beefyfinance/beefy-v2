@@ -30,7 +30,6 @@ export type TimePointWithMa = TimePoint & {
 
 const toStat = (value: string | null | undefined) => (value ? Number(value) : null);
 
-/** Weeks that have closed by `now`, oldest first */
 export function parseCompleteWeeks(rows: ApiRevenueStats, now: number): RevenueWeek[] {
   return rows
     .filter(row => row.t <= now - WEEK_SECONDS)
@@ -55,7 +54,6 @@ function weekValue(week: RevenueWeek, metric: WeeklyMetric, unit: BuybackUnit): 
   }
 }
 
-/** One metric's weekly points, oldest first, skipping weeks with no value */
 export function weekSeries(
   weeks: RevenueWeek[],
   metric: WeeklyMetric,

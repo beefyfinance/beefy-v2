@@ -14,9 +14,7 @@ export type BaseTooltipProps<TStat extends ChartStat> = RechartsTooltipProps<
 >;
 
 export type ExtraTooltipContentProps = {
-  /** name of the plotted value */
   label: string;
-  /** moving average window, e.g. "30 days" */
   maLabel: string;
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;

@@ -58,7 +58,6 @@ export const PlatformStatsModal = memo(function PlatformStatsModal({
   close,
 }: PlatformStatsModalProps) {
   const { t } = useTranslation();
-  // TVL opens on the chain list, as it does on prod today
   const [tvlView, setTvlView] = useState<TvlView>('chains');
   const [toggles, setToggles] = useState<LineTogglesState>(TOGGLES_OFF);
   const isMobile = useBreakpoint({ to: 'xs' });
@@ -209,7 +208,6 @@ const changeCss = css.raw({
 // the selected TabButton turns pointer events off; the tooltip still needs them
 const infoIconCss = css.raw({ flexShrink: 0, pointerEvents: 'auto' });
 
-// full-screen sheet below sm; the 1px gaps show background.body as dividers, even over the modal backdrop
 const StyledCard = styled(Card, {
   base: {
     height: '100dvh',
@@ -240,7 +238,6 @@ const StyledCardHeader = styled(CardHeader, {
   },
 });
 
-// grows so the switch and close sit right; min height keeps the row steady when the switch appears
 const Title = styled(CardTitle, {
   base: {
     flexGrow: 1,
@@ -259,7 +256,6 @@ const Body = styled('div', {
   },
 });
 
-// two by two on the mobile sheet, where four across would squeeze the labels
 const Tabs = styled('div', {
   base: {
     display: 'grid',
@@ -350,7 +346,6 @@ const TabTrend = styled('span', {
   },
 });
 
-// padding lives in the chart and the loader, like GraphWithControls, so both are the same height
 const ChartPanel = styled('div', { base: { backgroundColor: 'background.content' } });
 
 const ChainsPanel = styled('div', {

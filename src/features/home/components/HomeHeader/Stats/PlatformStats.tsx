@@ -177,7 +177,6 @@ const ValueStatContainer = styled('div', {
 const ChevronButton = styled('button', {
   base: {
     display: 'flex',
-    // centred on the value, also in the buyback row that aligns to the bottom
     alignSelf: 'center',
     padding: 0,
     color: 'text.dark',

@@ -1,6 +1,5 @@
 import { styled } from '@repo/styles/jsx';
 
-/** Padded chart box: tick text style, y ticks fade while hovering the chart */
 export const ChartBox = styled('div', {
   base: {
     padding: '16px 0px',

@@ -29,11 +29,8 @@ export const PLATFORM_METRICS = ['tvl', ...WEEKLY_METRICS] as const;
 export type PlatformMetric = (typeof PLATFORM_METRICS)[number];
 
 type MetricConfig = {
-  /** i18n key: stats bar, and popup tab from md */
   label: string;
-  /** i18n key: popup tab below md, and the chart tooltip */
   shortLabel: string;
-  /** i18n key of the (i) tooltip */
   tooltip?: string;
   trend: 'line' | 'bars';
 };
@@ -71,7 +68,6 @@ export type PlatformMetricData = {
 
 const TREND_WEEKS = 12;
 
-/** '-' when there's no value; a real 0 shows as such */
 export function formatMetricValue(
   metric: PlatformMetric,
   value: BigNumber.Value | undefined,
@@ -83,7 +79,6 @@ export function formatMetricValue(
     : formatLargeUsd(value);
 }
 
-/** Loads a TVL history bucket once chain config (needed to sum active chains) is in */
 export function useLoadTvlHistory(bucket: TvlHistoryBucket) {
   const dispatch = useAppDispatch();
   const isMonth = bucket === '1d_1M';
