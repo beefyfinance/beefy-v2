@@ -3,7 +3,6 @@
     "id": "kyber-ethereum",
     "type": "kyber",
     "chainId": "ethereum",
-    "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -11,7 +10,6 @@
     "id": "kyber-polygon",
     "type": "kyber",
     "chainId": "polygon",
-    "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -19,7 +17,6 @@
     "id": "kyber-bsc",
     "type": "kyber",
     "chainId": "bsc",
-    "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -27,7 +24,6 @@
     "id": "kyber-optimism",
     "type": "kyber",
     "chainId": "optimism",
-    "priorityTokens": ["MATIC", "WMATIC", "mooBIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -35,18 +31,6 @@
     "id": "kyber-arbitrum",
     "type": "kyber",
     "chainId": "arbitrum",
-    "priorityTokens": [
-      "ETH",
-      "ARB",
-      "WETH",
-      "USDC",
-      "arbUSDCe",
-      "USDT",
-      "DAI",
-      "MIM",
-      "WBTC",
-      "wstETH"
-    ],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -54,19 +38,6 @@
     "id": "kyber-avax",
     "type": "kyber",
     "chainId": "avax",
-    "priorityTokens": [
-      "AVAX",
-      "WAVAX",
-      "USDC",
-      "USDCe",
-      "USDT",
-      "USDTe",
-      "DAIe",
-      "MIM",
-      "MAI",
-      "WETHe",
-      "WBTCe"
-    ],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -74,7 +45,6 @@
     "id": "kyber-base",
     "type": "kyber",
     "chainId": "base",
-    "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "blockedTokens": [],
     "blockedVaults": [],
     "excludedSources": ["tessera"]
@@ -83,7 +53,6 @@
     "id": "kyber-linea",
     "type": "kyber",
     "chainId": "linea",
-    "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -91,7 +60,6 @@
     "id": "kyber-sonic",
     "type": "kyber",
     "chainId": "sonic",
-    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -99,7 +67,6 @@
     "id": "kyber-berachain",
     "type": "kyber",
     "chainId": "berachain",
-    "priorityTokens": ["BERA", "WBERA", "USDCe"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -107,15 +74,119 @@
     "id": "kyber-plasma",
     "type": "kyber",
     "chainId": "plasma",
-    "priorityTokens": ["XPL", "WXPL", "USDT0"],
     "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-plasma",
+    "type": "enso",
+    "chainId": "plasma",
+    "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-ethereum",
+    "type": "enso",
+    "chainId": "ethereum",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-base",
+    "type": "enso",
+    "chainId": "base",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": [],
+    "excludedSources": ["kyberswap", "1inch", "0x", "openocean", "paraswap"]
+  },
+  {
+    "id": "enso-arbitrum",
+    "type": "enso",
+    "chainId": "arbitrum",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-optimism",
+    "type": "enso",
+    "chainId": "optimism",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-polygon",
+    "type": "enso",
+    "chainId": "polygon",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-bsc",
+    "type": "enso",
+    "chainId": "bsc",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-avax",
+    "type": "enso",
+    "chainId": "avax",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-hyperevm",
+    "type": "enso",
+    "chainId": "hyperevm",
+    "routerAddress": "0xF75584eF6673aD213a685a1B58Cc0330B8eA22Cf",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-megaeth",
+    "type": "enso",
+    "chainId": "megaeth",
+    "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-monad",
+    "type": "enso",
+    "chainId": "monad",
+    "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "enso-robinhood",
+    "type": "enso",
+    "chainId": "robinhood",
+    "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
+    "blockedTokens": [],
+    "blockedVaults": [],
+    "quoteTimeoutMs": 4000
+  },
+  {
+    "id": "enso-arc",
+    "type": "enso",
+    "chainId": "arc",
+    "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
+    "blockedTokens": ["NATIVE"],
     "blockedVaults": []
   },
   {
     "id": "kyber-monad",
     "type": "kyber",
     "chainId": "monad",
-    "priorityTokens": ["MON", "WMON", "USDC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -123,7 +194,6 @@
     "id": "liquid-swap-hyperevm",
     "type": "liquid-swap",
     "chainId": "hyperevm",
-    "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -131,7 +201,6 @@
     "id": "kyber-hyperevm",
     "type": "kyber",
     "chainId": "hyperevm",
-    "priorityTokens": ["HYPE", "WHYPE", "feUSD", "USDT0", "LIQD"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -139,7 +208,6 @@
     "id": "kyber-megaeth",
     "type": "kyber",
     "chainId": "megaeth",
-    "priorityTokens": ["USDm", "WETH", "USDT0", "cUSD"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -147,7 +215,6 @@
     "id": "one-inch-ethereum",
     "type": "one-inch",
     "chainId": "ethereum",
-    "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -155,7 +222,6 @@
     "id": "one-inch-bsc",
     "type": "one-inch",
     "chainId": "bsc",
-    "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -163,7 +229,6 @@
     "id": "one-inch-polygon",
     "type": "one-inch",
     "chainId": "polygon",
-    "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -171,20 +236,6 @@
     "id": "one-inch-optimism",
     "type": "one-inch",
     "chainId": "optimism",
-    "priorityTokens": [
-      "ETH",
-      "WETH",
-      "mooBIFI",
-      "OP",
-      "opUSDCe",
-      "USDT",
-      "DAI",
-      "MAI",
-      "sUSD",
-      "sETH",
-      "WBTC",
-      "wstETH"
-    ],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -192,18 +243,6 @@
     "id": "one-inch-arbitrum",
     "type": "one-inch",
     "chainId": "arbitrum",
-    "priorityTokens": [
-      "ETH",
-      "ARB",
-      "WETH",
-      "USDC",
-      "arbUSDCe",
-      "USDT",
-      "DAI",
-      "MIM",
-      "WBTC",
-      "wstETH"
-    ],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -211,7 +250,6 @@
     "id": "one-inch-gnosis",
     "type": "one-inch",
     "chainId": "gnosis",
-    "priorityTokens": [],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -219,19 +257,6 @@
     "id": "one-inch-avax",
     "type": "one-inch",
     "chainId": "avax",
-    "priorityTokens": [
-      "AVAX",
-      "WAVAX",
-      "USDC",
-      "USDCe",
-      "USDT",
-      "USDTe",
-      "DAIe",
-      "MIM",
-      "MAI",
-      "WETHe",
-      "WBTCe"
-    ],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -239,7 +264,6 @@
     "id": "one-inch-zksync",
     "type": "one-inch",
     "chainId": "zksync",
-    "priorityTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -247,7 +271,6 @@
     "id": "one-inch-base",
     "type": "one-inch",
     "chainId": "base",
-    "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "blockedTokens": [],
     "blockedVaults": [],
     "excludedSources": ["BASE_TESSERASWAP"]
@@ -256,7 +279,6 @@
     "id": "one-inch-linea",
     "type": "one-inch",
     "chainId": "linea",
-    "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -264,7 +286,6 @@
     "id": "one-inch-sonic",
     "type": "one-inch",
     "chainId": "sonic",
-    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -272,7 +293,6 @@
     "id": "kyber-robinhood",
     "type": "kyber",
     "chainId": "robinhood",
-    "priorityTokens": ["ETH", "WETH", "USDG"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -280,7 +300,6 @@
     "id": "one-inch-monad",
     "type": "one-inch",
     "chainId": "monad",
-    "priorityTokens": ["ETH", "WETH", "USDC", "USDT0", "MON", "cbBTC", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -288,7 +307,6 @@
     "id": "one-inch-hyperevm",
     "type": "one-inch",
     "chainId": "hyperevm",
-    "priorityTokens": ["WHYPE", "HYPE", "USDC", "USDT0", "UBTC", "kHYPE"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -296,7 +314,6 @@
     "id": "kyber-arc",
     "type": "kyber",
     "chainId": "arc",
-    "priorityTokens": ["USDC"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -304,7 +321,6 @@
     "id": "one-inch-arc",
     "type": "one-inch",
     "chainId": "arc",
-    "priorityTokens": ["USDC"],
     "blockedTokens": [],
     "blockedVaults": []
   }
