@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-icp-weth",
     "status": "active",
-    "createdAt": 1793905413,
+    "createdAt": 1793979197,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["ICP", "WETH"],
@@ -134,7 +134,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-up-cbbtc",
     "status": "active",
-    "createdAt": 1793905412,
+    "createdAt": 1793979196,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["UP", "cbBTC"],
@@ -255,7 +255,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-weth-pendle",
     "status": "active",
-    "createdAt": 1793905411,
+    "createdAt": 1793979195,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["PENDLE", "WETH"],
@@ -376,7 +376,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-bnkr-weth",
     "status": "active",
-    "createdAt": 1793905410,
+    "createdAt": 1793979194,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["BNKR", "WETH"],
@@ -497,7 +497,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-weth-basecat",
     "status": "active",
-    "createdAt": 1793905409,
+    "createdAt": 1793979193,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["Basecat", "WETH"],
@@ -618,7 +618,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-usdc-diem",
     "status": "active",
-    "createdAt": 1793905408,
+    "createdAt": 1793979192,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["DIEM", "USDC"],
@@ -739,7 +739,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-vvv-diem",
     "status": "active",
-    "createdAt": 1793905407,
+    "createdAt": 1793979191,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["VVV", "DIEM"],
@@ -860,7 +860,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-weth-b3",
     "status": "active",
-    "createdAt": 1793905406,
+    "createdAt": 1793979190,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["B3", "WETH"],
@@ -981,7 +981,7 @@
     "oracle": "lps",
     "oracleId": "aero-cow-base-weth-ena",
     "status": "active",
-    "createdAt": 1793905405,
+    "createdAt": 1793979189,
     "platformId": "aero",
     "feeTier": "Dynamic",
     "assets": ["ENA", "WETH"],
@@ -1085,6 +1085,82 @@
     "zaps": [
       {
         "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-usdc-alusdb",
+    "name": "alUSDb-USDC sLP V2",
+    "type": "standard",
+    "token": "alUSDb-USDC sLP V2",
+    "tokenAddress": "0xA5e16dC9A5cae37563116D9407D8C73927675674",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x4901ECEA958801D5eE809EBf3747fC15f421339A",
+    "earnedToken": "mooAeroV2BasealUSDb-USDC",
+    "earnedTokenAddress": "0x4901ECEA958801D5eE809EBf3747fC15f421339A",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-usdc-alusdb",
+    "status": "active",
+    "createdAt": 1793966735,
+    "platformId": "aero",
+    "assets": ["alUSDb", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xA5e16dC9A5cae37563116D9407D8C73927675674",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xA5e16dC9A5cae37563116D9407D8C73927675674/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-veil",
+    "name": "VEIL-WETH vLP V2",
+    "type": "standard",
+    "token": "VEIL-WETH vLP V2",
+    "tokenAddress": "0x0B09f2f7b096016B797943807558Fa38119EDC8C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x16193Af35A998301ff94578450A0786DF6b97847",
+    "earnedToken": "mooAeroV2BaseVEIL-WETH",
+    "earnedTokenAddress": "0x16193Af35A998301ff94578450A0786DF6b97847",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-veil",
+    "status": "active",
+    "createdAt": 1793966735,
+    "platformId": "aero",
+    "assets": ["VEIL", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x0B09f2f7b096016B797943807558Fa38119EDC8C",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x0B09f2f7b096016B797943807558Fa38119EDC8C/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
       }
     ]
   },
@@ -9795,12 +9871,13 @@
     "earnedTokenAddress": "0xfCa983Ea00D87DE9BB7eAF5561cC1ec4050Ad1ba",
     "oracle": "lps",
     "oracleId": "aerodrome-usdc-alusdb",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1790270361,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "aerodrome",
     "assets": ["USDC", "alUSDb"],
+    "replacementVaultId": "aero-v2-base-usdc-alusdb",
     "migrationIds": [],
     "risks": {
       "complex": false,
@@ -34023,12 +34100,13 @@
     "earnedTokenAddress": "0x25069D69a2be06330C879EB4bf4db5E6C543C4c4",
     "oracle": "lps",
     "oracleId": "aerodrome-weth-veil",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1738191753,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "aerodrome",
     "assets": ["VEIL", "WETH"],
+    "replacementVaultId": "aero-v2-base-weth-veil",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -39439,7 +39517,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["orbiter"],
     "network": "base",
     "zaps": [
       {
@@ -39482,7 +39559,6 @@
       "synthAsset": false
     },
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["orbiter"],
     "network": "base",
     "zaps": [
       {

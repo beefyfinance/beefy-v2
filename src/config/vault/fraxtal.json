@@ -512,7 +512,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-23/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-23/withdraw",
-    "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
       {
@@ -563,7 +562,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-24/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-24/withdraw",
-    "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
       {
@@ -750,7 +748,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-17/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-stable-ng-17/withdraw",
-    "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
       {
@@ -955,7 +952,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-1/deposit",
     "removeLiquidityUrl": "https://curve.finance/#/fraxtal/pools/factory-tricrypto-1/withdraw",
-    "pointStructureIds": ["fraxtal"],
     "network": "fraxtal",
     "zaps": [
       {
