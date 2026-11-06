@@ -91,16 +91,22 @@ function pendingClaimOf(quote: TransactQuote, state: BeefyState): PendingClaim |
  * Claims what a full exit would leave behind, in the same batch, to save the user a trip back.
  * Partial exits keep earning, so their rewards stay put.
  */
+/** Rewards `maybeClaimStep` will claim ahead of the zap, if any; also shown as a zap route row */
+export function selectZapClaimRewards(state: BeefyState, quote: TransactQuote) {
+  if (!quote.inputs.every(input => input.max)) {
+    return undefined;
+  }
+  const claim = pendingClaimOf(quote, state);
+  return claim && selectRewardsWorthClaiming(state, claim.rewards) ? claim.rewards : undefined;
+}
+
 function maybeClaimStep(
   quote: TransactQuote,
   state: BeefyState,
   t: TFunction<Namespace>
 ): Step | undefined {
-  if (!quote.inputs.every(input => input.max)) {
-    return undefined;
-  }
   const claim = pendingClaimOf(quote, state);
-  if (!claim || !selectRewardsWorthClaiming(state, claim.rewards)) {
+  if (!claim || !selectZapClaimRewards(state, quote)) {
     return undefined;
   }
 

@@ -1,10 +1,16 @@
 import BigNumber from 'bignumber.js';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { toWei } from '../../../../../helpers/big-number.ts';
-import type { VaultStandard, VaultWithPricePerFullShare } from '../../../entities/vault.ts';
+import {
+  isNonCowcentratedMultiGovVault,
+  type VaultGov,
+  type VaultStandard,
+  type VaultWithPricePerFullShare,
+} from '../../../entities/vault.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
+import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
@@ -50,6 +56,34 @@ export function getVaultWithdrawnFromState(
     sharesToWithdrawWei, // how many shares to withdraw
     withdrawnAmountWei, // how much of the deposit token will be withdrawn (before fee)
     withdrawnAmountAfterFeeWei, // how much of the deposit token will be withdrawn (after fee)
+    withdrawnToken,
+    shareToken,
+  };
+}
+
+/** gov pools mint their receipt 1:1 with the deposit token, so there is no ppfs */
+export function getGovVaultWithdrawnFromState(
+  userInput: InputTokenAmount,
+  vault: VaultGov,
+  state: BeefyState
+) {
+  if (!isNonCowcentratedMultiGovVault(vault)) {
+    throw new Error(`Gov vault ${vault.id} has no receipt token`);
+  }
+  const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+  const sharesToWithdrawWei =
+    userInput.max ?
+      toWei(selectUserBalanceOfToken(state, vault.chainId, shareToken.address), shareToken.decimals)
+    : toWei(userInput.amount, shareToken.decimals);
+  const withdrawFee = selectFeesByVaultId(state, vault.id)?.withdraw || 0;
+  const withdrawnAmountFeeWei = sharesToWithdrawWei
+    .multipliedBy(withdrawFee)
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+
+  return {
+    sharesToWithdrawWei,
+    withdrawnAmountAfterFeeWei: sharesToWithdrawWei.minus(withdrawnAmountFeeWei),
     withdrawnToken,
     shareToken,
   };
