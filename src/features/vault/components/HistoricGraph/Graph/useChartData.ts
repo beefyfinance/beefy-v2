@@ -11,7 +11,7 @@ import type { TokenEntity } from '../../../../data/entities/token.ts';
 import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectHistoricalBucketData } from '../../../../data/selectors/historical.ts';
 import type { AnyApiPoint, ChartData, ChartStat } from '../types.ts';
-import { getBucketParams } from '../utils.ts';
+import { getBucketParams } from '../../../../data/apis/beefy/beefy-data-api-helpers.ts';
 
 function isClmData(
   data: AnyApiPoint[] | undefined,
