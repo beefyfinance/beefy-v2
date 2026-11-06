@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aero-v2-optimism-weth-moobifi",
     "status": "active",
-    "createdAt": 1793806919,
+    "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["mooBIFI", "WETH"],
     "risks": {
@@ -27,6 +27,8 @@
       "synthAsset": false
     },
     "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/10-0xC71B571aA9F06BFA096c24e9Df5C45fC4fAB4151",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/10-0xC71B571aA9F06BFA096c24e9Df5C45fC4fAB4151/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -49,7 +51,7 @@
     "oracle": "lps",
     "oracleId": "aero-v2-optimism-aleth-weth",
     "status": "active",
-    "createdAt": 1793806918,
+    "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["alETH", "WETH"],
     "risks": {
@@ -63,6 +65,8 @@
       "synthAsset": true
     },
     "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/10-0x98BeB54c7F46514C9045D9d2B9221F52611dDfED",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/10-0x98BeB54c7F46514C9045D9d2B9221F52611dDfED/withdraw",
     "network": "optimism",
     "zaps": [
       {
@@ -10657,12 +10661,13 @@
     "earnedTokenAddress": "0x57d00d036485B5fEE6A58c8763Bdc358906E6D19",
     "oracle": "lps",
     "oracleId": "velodrome-v2-weth-moobifi",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1698188042,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "velodrome",
     "assets": ["mooBIFI", "WETH"],
+    "replacementVaultId": "aero-v2-optimism-weth-moobifi",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
@@ -12893,12 +12898,13 @@
     "earnedTokenAddress": "0x1A1F0Db1050D1cAD52eEB72371EbFD7716b53a2f",
     "oracle": "lps",
     "oracleId": "velodrome-v2-aleth-weth",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1688040372,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1793867261,
     "platformId": "velodrome",
     "assets": ["alETH", "WETH"],
+    "replacementVaultId": "aero-v2-optimism-aleth-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,
