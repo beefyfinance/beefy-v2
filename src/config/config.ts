@@ -378,9 +378,10 @@ const chainConfigInputs = {
     chainId: 4663,
     rpc: [
       'https://rpc.mainnet.chain.robinhood.com',
-      'https://rpc.ordofi.network',
       'https://robinhood-rpc.publicnode.com',
       'https://rpc-robinhood.blockmachine.io',
+      'https://robinhood.daybreak-rpc.network',
+      'https://rpc-robinhood.globalstake.io',
     ],
     explorerUrl: 'https://robin.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
