@@ -1,19 +1,22 @@
 import { memo, useCallback, useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/Button/Button.tsx';
-import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { formatLargeUsdAtPrice, formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../data/store/hooks.ts';
 import { migratorExecute, migratorLoad, migratorUpdate } from '../../../data/actions/migrator.ts';
-import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { isVaultActive, type VaultEntity } from '../../../data/entities/vault.ts';
 import {
   selectMigrationIdsByVaultId,
   selectMigrationVaultUserState,
   selectMigratorById,
 } from '../../../data/selectors/migration.ts';
+import { selectTokenPriceByAddress } from '../../../data/selectors/tokens.ts';
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
 import { ActionConnectSwitch } from '../Actions/Transact/CommonActions/CommonActions.tsx';
-import { styles } from './styles.ts';
+import { Card } from '../Card/Card.tsx';
+import { CardContent } from '../Card/CardContent.tsx';
+import { CardHeader } from '../Card/CardHeader.tsx';
+import { CardTitle } from '../Card/CardTitle.tsx';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
 import { styled } from '@repo/styles/jsx';
@@ -21,8 +24,6 @@ import {
   selectVaultById,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../data/selectors/vaults.ts';
-
-const useStyles = legacyMakeStyles(styles);
 
 interface MigrationProps {
   vaultId: VaultEntity['id'];
@@ -34,8 +35,9 @@ export const Migration = memo(function Migration({ vaultId }: MigrationProps) {
   const strategyAddress = useAppSelector(state =>
     selectVaultStrategyAddressOrUndefined(state, vaultId)
   );
+  const isActive = useAppSelector(state => isVaultActive(selectVaultById(state, vaultId)));
 
-  if (!walletAddress || !migrationIds || !migrationIds.length || !strategyAddress) {
+  if (!isActive || !walletAddress || !migrationIds || !migrationIds.length || !strategyAddress) {
     return null;
   }
 
@@ -77,7 +79,6 @@ const WithMigrator = memo(function WithMigrator(props: MigratorProps) {
 });
 
 const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }: MigratorProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const userState = useAppSelector(state =>
@@ -86,7 +87,10 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
   const isBusy = useAppSelector(selectIsStepperStepping);
   const isExecuting = useAppSelector(selectTransactExecuting);
-  const { chainId } = useAppSelector(state => selectVaultById(state, vaultId));
+  const { chainId, depositTokenAddress } = useAppSelector(state => selectVaultById(state, vaultId));
+  const price = useAppSelector(state =>
+    selectTokenPriceByAddress(state, chainId, depositTokenAddress)
+  );
 
   useEffect(() => {
     const staleAfter = 60_000; // 1 minute
@@ -158,24 +162,25 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   const isUpdating = status === 'pending';
 
   return (
-    <div className={classes.container}>
-      <div className={classes.header}>
-        <img className={classes.icon} alt="" aria-hidden="true" src={icon} />
-        <div>
-          <div className={classes.subTitle}>{name}</div>
-          <div className={classes.title}>{t('Migration-Title')}</div>
-        </div>
-      </div>
-      <div className={classes.content}>
+    <Card>
+      <Header padding="none">
+        <Title>{t('Migration-Title', { migrator: name })}</Title>
+        <Icon alt="" aria-hidden="true" src={icon} />
+      </Header>
+      <Content>
         <div>
           <Trans
             t={t}
             i18nKey="Migration-Text"
-            components={{ Balance: <Balance updating={isUpdating} /> }}
+            components={{
+              Balance: <Balance updating={isUpdating} />,
+              Usd: <Balance updating={isUpdating} hidden={price.isZero()} />,
+            }}
             values={{
               balance: formatTokenDisplayCondensed(balance, 18),
               migrator: name,
               symbol: symbol || 'LP tokens',
+              usd: formatLargeUsdAtPrice(balance, price),
             }}
           />
         </div>
@@ -190,9 +195,48 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
             {t('Migration-Action')}
           </Button>
         </ActionConnectSwitch>
-      </div>
-    </div>
+      </Content>
+    </Card>
   );
+});
+
+// same height as the Deposit/Withdraw tab bar below it
+const Header = styled(CardHeader, {
+  base: {
+    flexWrap: 'nowrap',
+    paddingBlock: '16px',
+    paddingInline: '16px',
+    sm: {
+      paddingInline: '24px',
+    },
+  },
+});
+
+const Title = styled(CardTitle, {
+  base: {
+    textStyle: 'body.medium',
+  },
+});
+
+const Icon = styled('img', {
+  base: {
+    width: '24px',
+    height: '24px',
+    objectFit: 'contain',
+    flexShrink: 0,
+  },
+});
+
+// matches the deposit form's top padding below the tabs
+const Content = styled(CardContent, {
+  base: {
+    textStyle: 'body',
+    color: 'text.middle',
+    rowGap: '16px',
+    sm: {
+      paddingTop: '20px',
+    },
+  },
 });
 
 const Balance = styled('span', {
