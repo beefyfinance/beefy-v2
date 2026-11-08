@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/Button/Button.tsx';
 import { formatLargeUsdAtPrice, formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
@@ -44,7 +44,7 @@ export const Migration = memo(function Migration({ vaultId }: MigrationProps) {
   return migrationIds.map(migrationId => {
     return (
       <WithMigrator
-        key={migrationId}
+        key={`${vaultId}-${walletAddress}-${migrationId}`}
         vaultId={vaultId}
         migrationId={migrationId}
         walletAddress={walletAddress}
@@ -91,6 +91,12 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   const price = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, depositTokenAddress)
   );
+
+  // the unstake zeroes the balance, so hold the last one until the whole migration ends
+  const [shownState, setShownState] = useState(userState);
+  if (!isBusy && shownState !== userState) {
+    setShownState(userState);
+  }
 
   useEffect(() => {
     const staleAfter = 60_000; // 1 minute
@@ -147,9 +153,9 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
 
   if (
     migrator?.status !== 'fulfilled' ||
-    !userState ||
-    !userState.lastFulfilled ||
-    !userState.data.balance.gt(0)
+    !shownState ||
+    !shownState.lastFulfilled ||
+    !shownState.data.balance.gt(0)
   ) {
     return null;
   }
@@ -158,7 +164,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   const {
     status,
     data: { balance, symbol },
-  } = userState;
+  } = shownState;
   const isUpdating = status === 'pending';
 
   return (
