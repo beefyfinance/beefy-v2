@@ -23,8 +23,6 @@
           "aerodrome-cow-base-usdc-weth-v2-vault",
           "aerodrome-cow-base-weth-usdc-v2-rp",
           "aerodrome-cow-base-weth-usdc-v2-vault",
-          "aerodrome-weth-usdbc",
-          "aerodrome-weth-usdc",
           "aerodrome-cow-base-usdz-weth-v2-rp",
           "aerodrome-cow-base-usdz-weth-v2-vault",
           "aero-cow-usd+-weth-rp",
@@ -44,11 +42,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "aerodrome-cow-base-weth-aero-rp",
-          "aerodrome-cow-base-weth-aero-vault",
-          "aerodrome-weth-aero"
-        ]
+        "ids": ["aerodrome-cow-base-weth-aero-rp", "aerodrome-cow-base-weth-aero-vault"]
       }
     },
     "output": {
@@ -83,11 +77,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "aerodrome-cow-base-weth-vvv-v2-rp",
-          "aerodrome-cow-base-weth-vvv-v2-vault",
-          "aerodrome-weth-vvv"
-        ]
+        "ids": ["aerodrome-cow-base-weth-vvv-v2-rp", "aerodrome-cow-base-weth-vvv-v2-vault"]
       }
     },
     "output": {
@@ -586,12 +576,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "aerodrome-aero-usdbc",
-          "aerodrome-cow-base-usdc-aero-rp",
-          "aerodrome-cow-base-usdc-aero-vault",
-          "aerodrome-usdc-aero"
-        ]
+        "ids": ["aerodrome-cow-base-usdc-aero-rp", "aerodrome-cow-base-usdc-aero-vault"]
       }
     },
     "output": {
@@ -657,8 +642,7 @@
           "aerodrome-cow-base-virtual-weth-v2-vault",
           "aerodrome-cow-base-virtual-weth-v3-rp",
           "aerodrome-cow-base-virtual-weth-v3-vault",
-          "aerodrome-cow-base-virtual-weth-vault",
-          "aerodrome-virtual-weth"
+          "aerodrome-cow-base-virtual-weth-vault"
         ]
       }
     },
@@ -680,8 +664,7 @@
           "aerodrome-cow-base-cbbtc-weth-rp",
           "aerodrome-cow-base-cbbtc-weth-vault",
           "aerodrome-cow-base-weth-cbbtc-v2-rp",
-          "aerodrome-cow-base-weth-cbbtc-v2-vault",
-          "aerodrome-weth-cbbtc"
+          "aerodrome-cow-base-weth-cbbtc-v2-vault"
         ]
       }
     },
@@ -803,11 +786,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": [
-          "aerodrome-cow-base-weth-drv-vault",
-          "aerodrome-cow-base-weth-drv-rp",
-          "aerodrome-weth-drv"
-        ]
+        "ids": ["aerodrome-cow-base-weth-drv-vault", "aerodrome-cow-base-weth-drv-rp"]
       }
     },
     "output": {
@@ -850,7 +829,7 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": ["aero-cow-wsteth-weth-vault", "aero-cow-wsteth-weth-rp", "aerodrome-weth-wsteth"]
+        "ids": ["aero-cow-wsteth-weth-vault", "aero-cow-wsteth-weth-rp"]
       }
     },
     "output": {
@@ -939,6 +918,193 @@
     },
     "output": {
       "vault": { "ids": ["aero-v2-optimism-aleth-weth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-mseth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-mseth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-mseth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-msusd-usdc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-msusd-usdc"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-msusd-usdc"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-well",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-bwell"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-well"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-virtual-cbbtc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-virtual-cbbtc"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-virtual-cbbtc"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-edel",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-edel"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-edel"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-aero-usdc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-aero-usdbc", "aerodrome-usdc-aero"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-aero-usdc"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-usdc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-usdbc", "aerodrome-weth-usdc"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-usdc"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-wsteth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-wsteth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-wsteth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-cbbtc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-cbbtc"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-cbbtc"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-optimism-usdc-alusd",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["velodrome-v2-usdc-alusd-2"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-optimism-usdc-alusd"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-optimism-mseth-weth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["velodrome-v2-mseth-weth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-optimism-mseth-weth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-optimism-usdc-msusd",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["velodrome-v2-usdc-msusd", "velodrome-v2-usdce-msusd"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-optimism-usdc-msusd"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-vvv",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-vvv"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-vvv"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-aero-weth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-aero"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-aero-weth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-virtual-weth",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-virtual-weth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-virtual-weth"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-weth-drv",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-weth-drv"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-weth-drv"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-v2-base-jeur-eurc",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-jeur-eurc"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-v2-base-jeur-eurc"] }
     }
   }
 ]
