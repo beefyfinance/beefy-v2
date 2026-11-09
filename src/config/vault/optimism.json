@@ -1,5 +1,119 @@
 [
   {
+    "id": "aero-v2-optimism-usdc-alusd",
+    "name": "USDC-alUSD sLP V2",
+    "type": "standard",
+    "token": "USDC-alUSD sLP V2",
+    "tokenAddress": "0x891622f02575A3Ec011ffcB415ea37eBb956A7E5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x633FBc9B221D26593aE4076b47Ee2294261BF16A",
+    "earnedToken": "mooAeroV2OPUSDC-alUSD",
+    "earnedTokenAddress": "0x633FBc9B221D26593aE4076b47Ee2294261BF16A",
+    "oracle": "lps",
+    "oracleId": "aero-v2-optimism-usdc-alusd",
+    "status": "active",
+    "createdAt": 1794186444,
+    "platformId": "aero",
+    "assets": ["USDC", "alUSD"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/10-0x891622f02575A3Ec011ffcB415ea37eBb956A7E5",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/10-0x891622f02575A3Ec011ffcB415ea37eBb956A7E5/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-optimism-mseth-weth",
+    "name": "msETH-WETH sLP V2",
+    "type": "standard",
+    "token": "msETH-WETH sLP V2",
+    "tokenAddress": "0xB02cCECebBC7415F8A557112a51e42a22f0c4B33",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x00e2a54241F9121477B94c9Aeb24eB7EAd72a241",
+    "earnedToken": "mooAeroV2OPmsETH-WETH",
+    "earnedTokenAddress": "0x00e2a54241F9121477B94c9Aeb24eB7EAd72a241",
+    "oracle": "lps",
+    "oracleId": "aero-v2-optimism-mseth-weth",
+    "status": "active",
+    "createdAt": 1794186444,
+    "platformId": "aero",
+    "assets": ["msETH", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/10-0xB02cCECebBC7415F8A557112a51e42a22f0c4B33",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/10-0xB02cCECebBC7415F8A557112a51e42a22f0c4B33/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-optimism-usdc-msusd",
+    "name": "USDC-msUSD sLP V2",
+    "type": "standard",
+    "token": "USDC-msUSD sLP V2",
+    "tokenAddress": "0x12e078Cc562d5c422563e217c81324AAEfC3bC91",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x4737B8b92119dD96CD4655adC15506e590d53D67",
+    "earnedToken": "mooAeroV2OPUSDC-msUSD",
+    "earnedTokenAddress": "0x4737B8b92119dD96CD4655adC15506e590d53D67",
+    "oracle": "lps",
+    "oracleId": "aero-v2-optimism-usdc-msusd",
+    "status": "active",
+    "createdAt": 1794186444,
+    "platformId": "aero",
+    "assets": ["USDC", "msUSD"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/10-0x12e078Cc562d5c422563e217c81324AAEfC3bC91",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/10-0x12e078Cc562d5c422563e217c81324AAEfC3bC91/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-aero-v2"
+      }
+    ]
+  },
+  {
     "id": "aero-v2-optimism-weth-moobifi",
     "name": "mooBIFI-WETH vLP V2",
     "type": "standard",

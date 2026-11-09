@@ -1,5 +1,537 @@
 [
   {
+    "id": "aero-v2-base-weth-wsteth",
+    "name": "WETH-wstETH vLP V2",
+    "type": "standard",
+    "token": "WETH-wstETH vLP V2",
+    "tokenAddress": "0xfc071b43E8F3819BE0D55bcB715eFe293BE02a13",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xBc93f4ceF0cE9Cf0E1C145241a7f02584b6d7006",
+    "earnedToken": "mooAeroV2BaseWETH-wstETH",
+    "earnedTokenAddress": "0xBc93f4ceF0cE9Cf0E1C145241a7f02584b6d7006",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-wsteth",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["WETH", "wstETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xfc071b43E8F3819BE0D55bcB715eFe293BE02a13",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xfc071b43E8F3819BE0D55bcB715eFe293BE02a13/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-edel",
+    "name": "WETH-EDEL vLP V2",
+    "type": "standard",
+    "token": "WETH-EDEL vLP V2",
+    "tokenAddress": "0xb01Cc306BC018535aA0425efa0cF735008100A33",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xA9276A234e7279d1A17e912846BBBE7608Df71e4",
+    "earnedToken": "mooAeroV2BaseWETH-EDEL",
+    "earnedTokenAddress": "0xA9276A234e7279d1A17e912846BBBE7608Df71e4",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-edel",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["WETH", "EDEL"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xb01Cc306BC018535aA0425efa0cF735008100A33",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xb01Cc306BC018535aA0425efa0cF735008100A33/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-virtual-cbbtc",
+    "name": "VIRTUAL-cbBTC vLP V2",
+    "type": "standard",
+    "token": "VIRTUAL-cbBTC vLP V2",
+    "tokenAddress": "0x2429f6e9B7FB96a42C8b4c73C7126E3748C9866b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xf3BbC40d3a779483827a404339A08aA53104579C",
+    "earnedToken": "mooAeroV2BaseVIRTUAL-cbBTC",
+    "earnedTokenAddress": "0xf3BbC40d3a779483827a404339A08aA53104579C",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-virtual-cbbtc",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["VIRTUAL", "cbBTC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x2429f6e9B7FB96a42C8b4c73C7126E3748C9866b",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x2429f6e9B7FB96a42C8b4c73C7126E3748C9866b/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-drv",
+    "name": "WETH-DRV vLP V2",
+    "type": "standard",
+    "token": "WETH-DRV vLP V2",
+    "tokenAddress": "0x002Ae5AE3653A1E46387542c0f68c2dC2A687036",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x87d492b7F92a06c258e7f50802D1CB7F5da464d5",
+    "earnedToken": "mooAeroV2BaseWETH-DRV",
+    "earnedTokenAddress": "0x87d492b7F92a06c258e7f50802D1CB7F5da464d5",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-drv",
+    "status": "active",
+    "createdAt": 1794186468,
+    "platformId": "aero",
+    "assets": ["WETH", "DRV"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x002Ae5AE3653A1E46387542c0f68c2dC2A687036",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x002Ae5AE3653A1E46387542c0f68c2dC2A687036/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-cbbtc",
+    "name": "WETH-cbBTC vLP V2",
+    "type": "standard",
+    "token": "WETH-cbBTC vLP V2",
+    "tokenAddress": "0xceCd99D62556836F3Ec245775c3dE97aC25C286b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x211B88A509deD5af5aACFd3766AC244f5CC01090",
+    "earnedToken": "mooAeroV2BaseWETH-cbBTC",
+    "earnedTokenAddress": "0x211B88A509deD5af5aACFd3766AC244f5CC01090",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["WETH", "cbBTC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xceCd99D62556836F3Ec245775c3dE97aC25C286b",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xceCd99D62556836F3Ec245775c3dE97aC25C286b/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-virtual-weth",
+    "name": "VIRTUAL-WETH vLP V2",
+    "type": "standard",
+    "token": "VIRTUAL-WETH vLP V2",
+    "tokenAddress": "0x95e739b854299D184F1740EEe919b09335D2E173",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xC3EfDB885653D91b1B6DdC64d9cA4a191a48693C",
+    "earnedToken": "mooAeroV2BaseVIRTUAL-WETH",
+    "earnedTokenAddress": "0xC3EfDB885653D91b1B6DdC64d9cA4a191a48693C",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-virtual-weth",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x95e739b854299D184F1740EEe919b09335D2E173",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x95e739b854299D184F1740EEe919b09335D2E173/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-well",
+    "name": "WETH-WELL vLP V2",
+    "type": "standard",
+    "token": "WETH-WELL vLP V2",
+    "tokenAddress": "0xc3467Fbf371Ab0C0395C66af634c2921E6De0e60",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xAf6D992aAf268F89A97B403a0C88C3dE933472cb",
+    "earnedToken": "mooAeroV2BaseWETH-WELL",
+    "earnedTokenAddress": "0xAf6D992aAf268F89A97B403a0C88C3dE933472cb",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-well",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["WETH", "bWELL"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xc3467Fbf371Ab0C0395C66af634c2921E6De0e60",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xc3467Fbf371Ab0C0395C66af634c2921E6De0e60/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-aero-weth",
+    "name": "AERO-WETH vLP V2",
+    "type": "standard",
+    "token": "AERO-WETH vLP V2",
+    "tokenAddress": "0xC04Ba378E83ff61cDb542ee4dA88e1241cC54E60",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x52cf8503eb104630069CB872Ee1c8a93853941b5",
+    "earnedToken": "mooAeroV2BaseAERO-WETH",
+    "earnedTokenAddress": "0x52cf8503eb104630069CB872Ee1c8a93853941b5",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-aero-weth",
+    "status": "active",
+    "createdAt": 1794186466,
+    "platformId": "aero",
+    "assets": ["AEROv2", "WETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xC04Ba378E83ff61cDb542ee4dA88e1241cC54E60",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xC04Ba378E83ff61cDb542ee4dA88e1241cC54E60/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-usdc",
+    "name": "WETH-USDC vLP V2",
+    "type": "standard",
+    "token": "WETH-USDC vLP V2",
+    "tokenAddress": "0x800EB395B577B234C5065c8E0cCb0F3A1401B2c2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xAFb15b555bC1bF3015E5409b80b78FA7cf34C054",
+    "earnedToken": "mooAeroV2BaseWETH-USDC",
+    "earnedTokenAddress": "0xAFb15b555bC1bF3015E5409b80b78FA7cf34C054",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-usdc",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x800EB395B577B234C5065c8E0cCb0F3A1401B2c2",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x800EB395B577B234C5065c8E0cCb0F3A1401B2c2/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-vvv",
+    "name": "WETH-VVV vLP V2",
+    "type": "standard",
+    "token": "WETH-VVV vLP V2",
+    "tokenAddress": "0xcFC7dC24e9D302976f0B1EFB90a4D9B22b54b2A5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x63C77c1f9242c4f4808370aBB706c7ced739ed86",
+    "earnedToken": "mooAeroV2BaseWETH-VVV",
+    "earnedTokenAddress": "0x63C77c1f9242c4f4808370aBB706c7ced739ed86",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-vvv",
+    "status": "active",
+    "createdAt": 1794186469,
+    "platformId": "aero",
+    "assets": ["WETH", "VVV"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xcFC7dC24e9D302976f0B1EFB90a4D9B22b54b2A5",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xcFC7dC24e9D302976f0B1EFB90a4D9B22b54b2A5/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-aero-usdc",
+    "name": "AERO-USDC vLP V2",
+    "type": "standard",
+    "token": "AERO-USDC vLP V2",
+    "tokenAddress": "0xF634058dC94e6BF8e828E27621320C423bC8B18E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x11e5cF64C5cabbcC0DB970d7f0fb7D26523A218A",
+    "earnedToken": "mooAeroV2BaseAERO-USDC",
+    "earnedTokenAddress": "0x11e5cF64C5cabbcC0DB970d7f0fb7D26523A218A",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-aero-usdc",
+    "status": "active",
+    "createdAt": 1794186470,
+    "platformId": "aero",
+    "assets": ["AEROv2", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xF634058dC94e6BF8e828E27621320C423bC8B18E",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xF634058dC94e6BF8e828E27621320C423bC8B18E/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-jeur-eurc",
+    "name": "jEUR-EURC sLP V2",
+    "type": "standard",
+    "token": "jEUR-EURC sLP V2",
+    "tokenAddress": "0x64F492b7a8ac4b27E35D8E6C3C21e6b31ac69a27",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xc123f486a9259D6b29E240605b9f1Bb15a824aaf",
+    "earnedToken": "mooAeroV2BasejEUR-EURC",
+    "earnedTokenAddress": "0xc123f486a9259D6b29E240605b9f1Bb15a824aaf",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-jeur-eurc",
+    "status": "active",
+    "createdAt": 1794186464,
+    "platformId": "aero",
+    "assets": ["jEUR", "EURC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x64F492b7a8ac4b27E35D8E6C3C21e6b31ac69a27",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x64F492b7a8ac4b27E35D8E6C3C21e6b31ac69a27/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-weth-mseth",
+    "name": "WETH-msETH sLP V2",
+    "type": "standard",
+    "token": "WETH-msETH sLP V2",
+    "tokenAddress": "0x45ADCE4be5f602273c6E883a4C94133309aF1D09",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xED04898ab678F9eb3B5A345b01Faf30E1B01530B",
+    "earnedToken": "mooAeroV2BaseWETH-msETH",
+    "earnedTokenAddress": "0xED04898ab678F9eb3B5A345b01Faf30E1B01530B",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-weth-mseth",
+    "status": "active",
+    "createdAt": 1794186465,
+    "platformId": "aero",
+    "assets": ["WETH", "msETH"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0x45ADCE4be5f602273c6E883a4C94133309aF1D09",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0x45ADCE4be5f602273c6E883a4C94133309aF1D09/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
+    "id": "aero-v2-base-msusd-usdc",
+    "name": "msUSD-USDC sLP V2",
+    "type": "standard",
+    "token": "msUSD-USDC sLP V2",
+    "tokenAddress": "0xdD2A5DAc93e62c27Fe0A3236d22FCEa29E19c62C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xfCE3E74be1FEB248766D0349f863ba5FF8Ee7F93",
+    "earnedToken": "mooAeroV2BasemsUSD-USDC",
+    "earnedTokenAddress": "0xfCE3E74be1FEB248766D0349f863ba5FF8Ee7F93",
+    "oracle": "lps",
+    "oracleId": "aero-v2-base-msusd-usdc",
+    "status": "active",
+    "createdAt": 1794186465,
+    "platformId": "aero",
+    "assets": ["msUSD", "USDC"],
+    "risks": {
+      "complex": false,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.aero.xyz/deposit/8453-0xdD2A5DAc93e62c27Fe0A3236d22FCEa29E19c62C",
+    "removeLiquidityUrl": "https://app.aero.xyz/deposits/8453-0xdD2A5DAc93e62c27Fe0A3236d22FCEa29E19c62C/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aero-v2"
+      }
+    ]
+  },
+  {
     "id": "aero-v2-base-usdc-alusdb",
     "name": "alUSDb-USDC sLP V2",
     "type": "standard",
