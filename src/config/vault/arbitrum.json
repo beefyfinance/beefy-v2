@@ -17595,58 +17595,6 @@
     ]
   },
   {
-    "id": "curve-arb-eusd-crvusd",
-    "name": "eUSD/crvUSD",
-    "type": "standard",
-    "token": "eUSDcrvUSD",
-    "tokenAddress": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x6dB43DC0E5150586D80292C2c0888D5db43261DC",
-    "earnedToken": "mooCurveEUSD-crvUSD",
-    "earnedTokenAddress": "0x6dB43DC0E5150586D80292C2c0888D5db43261DC",
-    "oracle": "lps",
-    "oracleId": "curve-arb-eusd-crvusd",
-    "status": "eol",
-    "createdAt": 1717141161,
-    "retireReason": "rewards",
-    "retiredAt": 1729892801,
-    "platformId": "curve",
-    "assets": ["eUSD", "crvUSD"],
-    "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-61/deposit",
-    "removeLiquidityUrl": "https://curve.finance/#/arbitrum/pools/factory-stable-ng-61/withdraw",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
-            "coins": [
-              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
-              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "curve-arb-eth+-eth",
     "name": "ETH+/WETH",
     "type": "standard",
