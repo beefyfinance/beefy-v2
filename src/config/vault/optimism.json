@@ -16,6 +16,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["USDC", "alUSD"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -54,6 +55,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["msETH", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -92,6 +94,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["USDC", "msUSD"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
