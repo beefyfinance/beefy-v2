@@ -807,6 +807,17 @@
     }
   },
   {
+    "id": "migrate-to-aero-cow-base-aero-wsteth-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": { "ids": ["aerodrome-aero-wsteth"] }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-aero-wsteth-vault"] }
+    }
+  },
+  {
     "id": "migrate-to-aero-cow-base-weth-kta-vault",
     "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
     "bps": 0,
