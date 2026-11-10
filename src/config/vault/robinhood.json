@@ -59,7 +59,7 @@
     "platformId": "beefy",
     "feeTier": "0.3",
     "tickSpacing": 60,
-    "assets": ["AVGO", "USDG"],
+    "assets": ["AVGOrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
