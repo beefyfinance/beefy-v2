@@ -1,5 +1,84 @@
 [
   {
+    "id": "uniswap-cow-robinhood-avgo-usdg-rp",
+    "name": "AVGO-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodAVGO-USDG",
+    "tokenAddress": "0xE9b28194eE8B1C9d53bD6FB3B8c25890D9DB0aa1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2dfEe911320aA2e9D7111116704a5fDD3E22d9eC",
+    "earnedToken": "rCowUniswapRobinhoodAVGO-USDG",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-avgo-usdg",
+    "status": "active",
+    "createdAt": 1794293841,
+    "platformId": "uniswap",
+    "assets": ["AVGOrh", "USDG"],
+    "icons": ["AVGO", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-avgo-usdg",
+    "name": "AVGO-USDG",
+    "type": "cowcentrated",
+    "token": "AVGO-USDG uniswap",
+    "tokenAddress": "0x5B7C404f1d7d77F9f3885aB13d7764F8a173028c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x156E175DD063a8cE274C50654eF40e0032b3fbcF",
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+    ],
+    "earnContractAddress": "0xE9b28194eE8B1C9d53bD6FB3B8c25890D9DB0aa1",
+    "earnedToken": "cowUniswapRobinhoodAVGO-USDG",
+    "earnedTokenAddress": "0xE9b28194eE8B1C9d53bD6FB3B8c25890D9DB0aa1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-avgo-usdg",
+    "status": "active",
+    "createdAt": 1794293841,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["AVGOrh", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-robinhood-usdg-weth-vault",
     "name": "USDG-WETH",
     "token": "USDG-WETH",
