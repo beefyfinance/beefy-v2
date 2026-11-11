@@ -18,7 +18,10 @@ import { CardContent } from '../Card/CardContent.tsx';
 import { CardHeader } from '../Card/CardHeader.tsx';
 import { CardTitle } from '../Card/CardTitle.tsx';
 import { selectTransactExecuting } from '../../../data/selectors/transact.ts';
-import { selectIsStepperStepping } from '../../../data/selectors/stepper.ts';
+import {
+  selectIsMigrationStepping,
+  selectIsStepperStepping,
+} from '../../../data/selectors/stepper.ts';
 import { styled } from '@repo/styles/jsx';
 import {
   selectVaultById,
@@ -86,6 +89,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
   );
   const migrator = useAppSelector(state => selectMigratorById(state, migrationId));
   const isBusy = useAppSelector(selectIsStepperStepping);
+  const isMigrating = useAppSelector(state => selectIsMigrationStepping(state, vaultId));
   const isExecuting = useAppSelector(selectTransactExecuting);
   const { chainId, depositTokenAddress } = useAppSelector(state => selectVaultById(state, vaultId));
   const price = useAppSelector(state =>
@@ -94,7 +98,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
 
   // the unstake zeroes the balance, so hold the last one until the whole migration ends
   const [shownState, setShownState] = useState(userState);
-  if (!isBusy && shownState !== userState) {
+  if (!isMigrating && shownState !== userState) {
     setShownState(userState);
   }
 
@@ -169,7 +173,7 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
 
   return (
     <Card>
-      <Header padding="none">
+      <Header>
         <Title>{t('Migration-Title', { migrator: name })}</Title>
         <Icon alt="" aria-hidden="true" src={icon} />
       </Header>
@@ -210,10 +214,12 @@ const Migrator = memo(function Migrator({ vaultId, migrationId, walletAddress }:
 const Header = styled(CardHeader, {
   base: {
     flexWrap: 'nowrap',
-    paddingBlock: '16px',
-    paddingInline: '16px',
-    sm: {
-      paddingInline: '24px',
+  },
+  variants: {
+    padding: {
+      default: {
+        sm: { padding: '16px 24px' },
+      },
     },
   },
 });
