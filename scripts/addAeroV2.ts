@@ -84,6 +84,7 @@ async function main() {
     createdAt: Math.floor(Date.now() / 1000),
     platformId: 'aero',
     assets,
+    migrationIds: ['aero-v2'],
     risks: {
       complex: false,
       curated: false,
