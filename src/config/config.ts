@@ -48,8 +48,11 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
+      blocks: 220,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      // priority fees enabled as of September 24, 2026
+      priorityMinimum: '1',
     },
   },
   arc: {
@@ -70,10 +73,11 @@ const chainConfigInputs = {
     native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      baseMinimum: '20000000000',
-      priorityMinimum: '1000000000',
+      blocks: 120,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      baseMinimum: '20000000000', // 20 gwei
+      priorityMinimum: '1',
     },
   },
   avax: {
@@ -97,10 +101,10 @@ const chainConfigInputs = {
     native: { symbol: 'AVAX', oracleId: 'WAVAX', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   base: {
@@ -122,10 +126,10 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 300,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   bsc: {
@@ -159,8 +163,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0x073d1752efe671AAE0E609a8f61663e3660673d3',
     native: { symbol: 'BNB', oracleId: 'WBNB', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '3000000000',
+      type: 'eip1559',
+      blocks: 135,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '50000000',
     },
   },
   ethereum: {
@@ -188,10 +195,10 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 5,
+      percentile: 60,
+      baseSafetyMargin: 0.5,
+      priorityMinimum: '1',
     },
   },
   fraxtal: {
@@ -213,10 +220,10 @@ const chainConfigInputs = {
     native: { symbol: 'FRAX', oracleId: 'WFXS', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 30,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   hyperevm: {
@@ -237,7 +244,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xB859F08434E6055C33f204d766d6A95898D37abC',
     native: { symbol: 'HYPE', oracleId: 'WHYPE', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   megaeth: {
@@ -255,7 +266,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xb267dE0B043Ec5faCc5e554c7a3aB8F06a4A44D8',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   monad: {
@@ -278,7 +293,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
     native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 200,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   optimism: {
@@ -299,8 +318,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0x5e0388EFf1e18c13E5a2650879DdF1677893bDBc',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '1000000',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   plasma: {
@@ -318,10 +340,10 @@ const chainConfigInputs = {
     native: { symbol: 'XPL', oracleId: 'WXPL', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 60,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   polygon: {
@@ -344,10 +366,10 @@ const chainConfigInputs = {
     native: { symbol: 'POL', oracleId: 'WMATIC', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 40,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '25000000000',
     },
   },
   robinhood: {
@@ -356,9 +378,10 @@ const chainConfigInputs = {
     chainId: 4663,
     rpc: [
       'https://rpc.mainnet.chain.robinhood.com',
-      'https://rpc.ordofi.network',
       'https://robinhood-rpc.publicnode.com',
       'https://rpc-robinhood.blockmachine.io',
+      'https://robinhood.daybreak-rpc.network',
+      'https://rpc-robinhood.globalstake.io',
     ],
     explorerUrl: 'https://robin.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -366,8 +389,12 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
+      blocks: 580,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '0',
+      // priority fees not enabled on robinhood (yet)
+      priorityMaximum: '0',
     },
   },
   sonic: {
@@ -389,10 +416,10 @@ const chainConfigInputs = {
     native: { symbol: 'S', oracleId: 'WS', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 45,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
     brand: {
       icon: 'gradient',
@@ -439,10 +466,11 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 5,
-      percentile: 0.2,
+      blocks: 6,
+      percentile: 60,
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
+      priorityMinimum: '30000000', // 0.03 gwei
     },
   },
   gnosis: {
@@ -464,7 +492,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
     native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 12,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   zksync: {
@@ -485,7 +517,13 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0x6bD7b74BD4707b1effeFC199920Bc3bC1Cb7b11f',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 7,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '0',
+      // zkSync ignores priority fees
+      priorityMaximum: '0',
     },
   },
   berachain: {
@@ -508,7 +546,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
     native: { symbol: 'BERA', oracleId: 'WBERA', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   sei: {
@@ -526,8 +568,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
     native: { symbol: 'SEI', oracleId: 'WSEI', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '10000000', // 0.01 gwei
+      type: 'eip1559',
+      blocks: 125,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   lisk: {
@@ -547,10 +592,10 @@ const chainConfigInputs = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 30,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   metis: {
@@ -590,7 +635,11 @@ const chainConfigInputs = {
     appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
     native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   cronos: {
@@ -613,9 +662,10 @@ const chainConfigInputs = {
     native: { symbol: 'CRO', oracleId: 'WCRO', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      blocks: 140,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   saga: {
@@ -645,8 +695,8 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   mode: {
@@ -667,7 +717,7 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
@@ -693,7 +743,7 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
@@ -717,10 +767,10 @@ const chainConfigInputs = {
     native: { symbol: 'FTM', oracleId: 'WFTM', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 7,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   canto: {
@@ -778,7 +828,7 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
@@ -796,7 +846,7 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
@@ -856,8 +906,8 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   aurora: {
@@ -925,8 +975,8 @@ const chainConfigInputs = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   harmony: {

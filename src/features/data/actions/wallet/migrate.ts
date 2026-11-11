@@ -3,11 +3,10 @@ import { getAddress, type Hash } from 'viem';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
@@ -33,26 +32,24 @@ export const migrateUnstake = (
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
-    txWallet(dispatch);
-    const transaction = unstakeCall({
-      account: getAddress(address),
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: vault.contractAddress, amount, token: depositToken },
-      {
+      chainId: vault.chainId,
+      builder: () =>
+        unstakeCall({
+          account: getAddress(address),
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: { spender: vault.contractAddress, amount, token: depositToken },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         migrationId,
         vaultId: vault.id,
-      }
-    );
+      },
+    });
   });
 };

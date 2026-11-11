@@ -100,6 +100,8 @@ export interface DataLoaderState {
     zapConfigs: LoaderState;
     zapSwapAggregators: LoaderState;
     revenue: LoaderState;
+    tvlHistoryMonth: LoaderState;
+    tvlHistoryYear: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ByChainDataEntity;
