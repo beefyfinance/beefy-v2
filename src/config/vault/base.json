@@ -7618,7 +7618,7 @@
   },
   {
     "id": "aero-cow-base-usdc-weth-vault",
-    "name": "USDC-WETH",
+    "name": "WETH-USDC",
     "token": "USDC-WETH",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
@@ -7626,7 +7626,7 @@
     "oracleId": "aero-cow-base-usdc-weth",
     "status": "active",
     "platformId": "aero",
-    "assets": ["USDC", "WETH"],
+    "assets": ["WETH", "USDC"],
     "icons": ["USDC", "WETH"],
     "risks": {
       "complex": true,
@@ -8418,7 +8418,7 @@
   },
   {
     "id": "aero-cow-base-usdc-weth",
-    "name": "USDC-WETH",
+    "name": "WETH-USDC",
     "token": "USDC-WETH aerodrome",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
@@ -8426,7 +8426,7 @@
     "oracleId": "aero-cow-base-usdc-weth",
     "status": "active",
     "platformId": "beefy",
-    "assets": ["USDC", "WETH"],
+    "assets": ["WETH", "USDC"],
     "icons": ["USDC", "WETH"],
     "risks": {
       "complex": true,
@@ -9278,7 +9278,7 @@
   },
   {
     "id": "aero-cow-base-usdc-weth-rp",
-    "name": "USDC-WETH Reward Pool",
+    "name": "WETH-USDC Reward Pool",
     "token": "cowAerodromeBaseUSDC-WETH",
     "tokenDecimals": 18,
     "tokenProviderId": "aero",
@@ -9286,7 +9286,7 @@
     "oracleId": "aero-cow-base-usdc-weth",
     "status": "active",
     "platformId": "aero",
-    "assets": ["USDC", "WETH"],
+    "assets": ["WETH", "USDC"],
     "icons": ["USDC", "WETH"],
     "risks": {
       "complex": true,
