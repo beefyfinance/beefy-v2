@@ -4545,7 +4545,7 @@
   },
   {
     "id": "aero-cow-base-weth-wsteth-rp",
-    "name": "WETH-wstETH Reward Pool",
+    "name": "wstETH-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowAeroBaseWETH-wstETH",
@@ -4561,7 +4561,7 @@
     "status": "active",
     "createdAt": 1793550000,
     "platformId": "aero",
-    "assets": ["WETH", "wstETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -5995,7 +5995,7 @@
   },
   {
     "id": "aero-cow-base-weth-wsteth",
-    "name": "WETH-wstETH",
+    "name": "wstETH-WETH",
     "type": "cowcentrated",
     "token": "WETH-wstETH aero",
     "tokenAddress": "0x7f5964d8130D4F0c2ed9e7A4d6516bDdC218ce95",
@@ -6015,7 +6015,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 1,
-    "assets": ["WETH", "wstETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
