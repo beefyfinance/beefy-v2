@@ -4,7 +4,7 @@ import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
-import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { BIG_ZERO, type BigNumberish, toBigNumber } from '../../helpers/big-number.ts';
 import { formatDateTime } from '../../helpers/date.ts';
 import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../features/data/store/hooks.ts';
@@ -78,7 +78,6 @@ const WithChange = memo(function WithChange({
   const { t } = useTranslation();
   const diff = price.minus(previousPrice);
   const diffAbs = diff.abs();
-  const percentChange = diffAbs.div(previousPrice);
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
   const tooltipContent = t(
@@ -99,18 +98,40 @@ const WithChange = memo(function WithChange({
       className={css(styles.priceWithChange, styles.tooltipTrigger, cssProp)}
     >
       <div>{formatUsd(price, price.gte(0.01) ? 2 : 4)}</div>
-      <div
-        className={css(styles.change, isPositive && styles.positive, isNegative && styles.negative)}
-      >
-        <div>
-          {isPositive ?
-            '+'
-          : isNegative ?
-            '-'
-          : ''}
-          {formatLargePercent(percentChange, 2)}
-        </div>
-      </div>
+      <PercentChange value={diff.div(previousPrice)} />
     </DivWithTooltip>
+  );
+});
+
+type PercentChangeProps = {
+  /** relative change, e.g. 0.25 for +25% */
+  value: BigNumberish;
+  css?: CssStyles;
+};
+
+export const PercentChange = memo(function PercentChange({
+  value,
+  css: cssProp,
+}: PercentChangeProps) {
+  const change = toBigNumber(value);
+  const isPositive = change.gt(BIG_ZERO);
+  const isNegative = change.lt(BIG_ZERO);
+
+  return (
+    <span
+      className={css(
+        styles.change,
+        isPositive && styles.positive,
+        isNegative && styles.negative,
+        cssProp
+      )}
+    >
+      {isPositive ?
+        '+'
+      : isNegative ?
+        '-'
+      : ''}
+      {formatLargePercent(change.abs(), 2)}
+    </span>
   );
 });

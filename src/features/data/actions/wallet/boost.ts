@@ -19,11 +19,10 @@ import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { stepperStartWithSteps } from './stepper.ts';
 import { approve } from './approval.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 
 export const claimBoost = (boostId: BoostPromoEntity['id']) => {
@@ -47,32 +46,31 @@ export const claimBoost = (boostId: BoostPromoEntity['id']) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.getReward({
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.getReward({
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: {
         type: 'boost',
         boostId: boost.id,
         amount: BIG_ZERO,
         token: mooToken,
         walletAddress: address,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         boostId: boost.id,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -104,39 +102,37 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction =
-      boostAmount.gt(0) ?
-        contract.write.exit({
-          account: address as Address,
-          ...gasPrices,
-          chain: publicClient.chain,
-        })
-      : contract.write.getReward({
-          account: address as Address,
-          ...gasPrices,
-          chain: publicClient.chain,
-        });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        boostAmount.gt(0) ?
+          contract.write.exit({
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          })
+        : contract.write.getReward({
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          }),
+      additionalData: {
         type: 'boost',
         boostId: boost.id,
         amount: boostAmount,
         token: mooToken,
         walletAddress: address,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: boost.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         boostId: boost.id,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -196,26 +192,31 @@ export const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) =
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
-      {
+      chainId: boost.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.stake([bigNumberToBigInt(rawAmount)], {
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: {
+        type: 'boost',
+        boostId: boost.id,
+        amount,
+        token: mooToken,
+        walletAddress: address,
+      },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         boostId: boost.id,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -273,25 +274,30 @@ export const unstakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber)
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
-      {
+      chainId: boost.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: {
+        type: 'boost',
+        boostId: boost.id,
+        amount,
+        token: mooToken,
+        walletAddress: address,
+      },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         boostId: boost.id,
-      }
-    );
+      },
+    });
   });
 };
