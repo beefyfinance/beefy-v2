@@ -1,11 +1,10 @@
 import type { VaultEntity, VaultStandard } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
@@ -48,45 +47,43 @@ export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => 
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = (() => {
-      if (isNativeToken) {
-        return contract.write.depositBNB({
-          value: bigNumberToBigInt(rawAmount),
-          ...gasPrices,
-          account: address as Address,
-          chain: publicClient.chain,
-        });
-      } else {
-        if (max) {
-          return contract.write.depositAll({
-            account: address as Address,
+    sendTransaction({
+      dispatch,
+      chainId: vault.chainId,
+      walletClient: viemClient,
+      builder: () => {
+        if (isNativeToken) {
+          return contract.write.depositBNB({
+            value: bigNumberToBigInt(rawAmount),
             ...gasPrices,
+            account: address as Address,
             chain: publicClient.chain,
           });
         } else {
-          return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
-            account: address as Address,
-            ...gasPrices,
-            chain: publicClient.chain,
-          });
+          if (max) {
+            return contract.write.depositAll({
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          } else {
+            return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          }
         }
-      }
-    })();
-
-    bindTransactionEvents(
-      dispatch,
-      transaction,
-      publicClient,
-      { spender: contractAddr, amount, token: depositToken },
-      {
+      },
+      additionalData: { spender: contractAddr, amount, token: depositToken },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -122,51 +119,49 @@ export const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boo
     const contract = fetchWalletContract(vault.contractAddress, StandardVaultAbi, walletClient);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = (() => {
-      if (isNativeToken) {
-        if (max) {
-          return contract.write.withdrawAllBNB({
-            account: address as Address,
-            ...gasPrices,
-            chain: publicClient.chain,
-          });
-        } else {
-          return contract.write.withdrawBNB([bigNumberToBigInt(sharesToWithdrawWei)], {
-            account: address as Address,
-            ...gasPrices,
-            chain: publicClient.chain,
-          });
-        }
-      } else {
-        if (max) {
-          return contract.write.withdrawAll({
-            account: address as Address,
-            ...gasPrices,
-            chain: publicClient.chain,
-          });
-        } else {
-          return contract.write.withdraw([bigNumberToBigInt(sharesToWithdrawWei)], {
-            account: address as Address,
-            ...gasPrices,
-            chain: publicClient.chain,
-          });
-        }
-      }
-    })();
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () => {
+        if (isNativeToken) {
+          if (max) {
+            return contract.write.withdrawAllBNB({
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          } else {
+            return contract.write.withdrawBNB([bigNumberToBigInt(sharesToWithdrawWei)], {
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          }
+        } else {
+          if (max) {
+            return contract.write.withdrawAll({
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          } else {
+            return contract.write.withdraw([bigNumberToBigInt(sharesToWithdrawWei)], {
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            });
+          }
+        }
+      },
+      additionalData: { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
+      refreshOnSuccess: {
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };

@@ -1,10 +1,9 @@
 import type { VaultGov } from '../../entities/vault.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import {
@@ -42,27 +41,26 @@ export const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: contractAddr, amount, token: inputToken },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.stake([bigNumberToBigInt(rawAmount)], {
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: { spender: contractAddr, amount, token: inputToken },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 export const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
@@ -85,27 +83,26 @@ export const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: contractAddr, amount, token: depositToken },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: { spender: contractAddr, amount, token: depositToken },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 export const claimGovVault = (vault: VaultGov, { clearInput = true } = {}) => {
@@ -136,27 +133,26 @@ export const claimGovVault = (vault: VaultGov, { clearInput = true } = {}) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.getReward({
-      account: address as Address,
-      ...gasPrices,
-      chain: publicClient.chain,
-    });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: contractAddr, amount, token },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.getReward({
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        }),
+      additionalData: { spender: contractAddr, amount, token },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
         clearInput,
-      }
-    );
+      },
+    });
   });
 };
 export const exitGovVault = (vault: VaultGov) => {
@@ -185,33 +181,31 @@ export const exitGovVault = (vault: VaultGov) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction =
-      balanceAmount.gt(0) ?
-        contract.write.exit({
-          account: address as Address,
-          ...gasPrices,
-          chain: publicClient.chain,
-        })
-      : contract.write.getReward({
-          account: address as Address,
-          ...gasPrices,
-          chain: publicClient.chain,
-        });
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: contractAddr, amount: balanceAmount, token },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        balanceAmount.gt(0) ?
+          contract.write.exit({
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          })
+        : contract.write.getReward({
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          }),
+      additionalData: { spender: contractAddr, amount: balanceAmount, token },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: selectVaultTokensToRefresh(state, vault),
         govVaultId: vault.id,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
