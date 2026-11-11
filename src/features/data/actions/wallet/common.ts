@@ -1,14 +1,7 @@
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
-import {
-  BaseError,
-  type Chain,
-  type Client,
-  type Hash,
-  type PublicClient,
-  type TransactionReceipt,
-} from 'viem';
-import { getTransaction, waitForTransactionReceipt } from 'viem/actions';
+import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
+import { waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
@@ -43,7 +36,6 @@ import { migratorUpdate } from '../migrator.ts';
 import { reloadReserves } from '../minters.ts';
 import { transactClearInput } from '../transact.ts';
 import { stepperSetStepContent, stepperUpdate } from './stepper.ts';
-import { sleep, withTimeoutSignal } from '../../utils/async-utils.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../tokens.ts';
 import { fetchUserMerklRewardsAction } from '../user-rewards/merkl-user-rewards.ts';
 import {
@@ -228,31 +220,12 @@ export function captureWalletErrors<T extends BeefyThunk>(func: T): BeefyThunk {
   };
 }
 
-// Rabby reports its own still-pending txs without a blockNumber and replays them when simulating the next tx
-export async function waitForWalletToSeeMined(
-  walletClient: Client,
-  hash: Hash,
-  timeoutMs: number = 15_000
-) {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    const tx = await withTimeoutSignal(2_000, () => getTransaction(walletClient, { hash })).catch(
-      () => undefined
-    );
-    if (tx?.blockNumber) {
-      return;
-    }
-    await sleep(1_000);
-  }
-}
-
 export function bindTransactionEvents(
   dispatch: BeefyDispatchFn,
   transactionHashPromise: Promise<Hash>,
   client: PublicClient,
   additionalData: TxAdditionalData,
-  refreshOnSuccess?: TxRefreshOnSuccess,
-  walletClient?: Client
+  refreshOnSuccess?: TxRefreshOnSuccess
 ) {
   const context: TxContext = { additionalData, refreshOnSuccess };
 
@@ -260,12 +233,9 @@ export function bindTransactionEvents(
     .then(hash => {
       txSubmitted(dispatch, context, hash);
       waitForTransactionReceipt(client, { hash })
-        .then(async receipt => {
+        .then(receipt => {
           const success = receipt.status === 'success';
           if (success) {
-            if (walletClient) {
-              await waitForWalletToSeeMined(walletClient, hash);
-            }
             txMined(dispatch, context, receipt);
           } else {
             txError(
