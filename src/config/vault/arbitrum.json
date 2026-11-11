@@ -19311,48 +19311,6 @@
     ]
   },
   {
-    "id": "equilibria-arb-seth",
-    "name": "WETH 26Dec24",
-    "type": "standard",
-    "token": "sETH-26Dec24",
-    "tokenAddress": "0xACcd9A7cb5518326BeD715f90bD32CDf2fEc2D14",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0x9fb46F03853d0F068E91e67751fce367023Efd83",
-    "earnedToken": "mooEqb-sETH_26DEC24",
-    "earnedTokenAddress": "0x9fb46F03853d0F068E91e67751fce367023Efd83",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-seth",
-    "status": "eol",
-    "createdAt": 1708929193,
-    "retireReason": "rewards",
-    "retiredAt": 1735568417,
-    "platformId": "equilibria",
-    "assets": ["ETH"],
-    "migrationIds": ["magpie"],
-    "risks": {
-      "updatedAt": 1765557014,
-      "complex": false,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": false,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pendle",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xaccd9a7cb5518326bed715f90bd32cdf2fec2d14/zap/out?chain=arbitrum",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "pendle-v2",
-        "depositTokens": ["0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"]
-      }
-    ]
-  },
-  {
     "id": "equilibria-arb-rseth",
     "name": "rsETH 25Apr24",
     "type": "standard",
