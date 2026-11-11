@@ -1,5 +1,5 @@
 import type { ChainEntity } from '../../entities/chain.ts';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import { captureWalletErrors, sendTransaction, txStart } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import {
   fetchUserMerklRewardsAction,
@@ -63,27 +63,26 @@ export const claimMerkl = (chainId: ChainEntity['id']) => {
     );
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.claim(
-      [
-        users as Address[],
-        tokens,
-        amounts.map(amount => BigInt(amount)),
-        proofs.map(proof => proof as Address[]),
-      ],
-      {
-        account: address as Address,
-        ...gasPrices,
-        chain: publicClient.chain,
-      }
-    );
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
-      {
+      chainId,
+      walletClient,
+      builder: () =>
+        contract.write.claim(
+          [
+            users as Address[],
+            tokens,
+            amounts.map(amount => BigInt(amount)),
+            proofs.map(proof => proof as Address[]),
+          ],
+          {
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          }
+        ),
+      additionalData: { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: chainId,
         spenderAddress: distributorAddress, // TODO fix so these are not required
@@ -91,8 +90,8 @@ export const claimMerkl = (chainId: ChainEntity['id']) => {
           .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
           .filter(isDefined),
         rewards: true,
-      }
-    );
+      },
+    });
   });
 };
 export const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id']) => {
@@ -172,17 +171,15 @@ export const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity
       }
     };
 
-    txWallet(dispatch);
-    const transaction = makeTransaction();
-
     const spenderAddress = first(unclaimedRewards)!.claimContractAddress;
     const tokens = unclaimedRewards.map(r => r.claim.token);
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
-      {
+      chainId,
+      walletClient,
+      builder: makeTransaction,
+      additionalData: { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: chainId,
         spenderAddress, // TODO fix so these are not required
@@ -190,7 +187,7 @@ export const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity
           .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
           .filter(isDefined),
         rewards: true,
-      }
-    );
+      },
+    });
   });
 };

@@ -18,11 +18,10 @@ import { selectZapByChainId } from '../../selectors/zap.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 
 export const zapExecuteOrder = (
@@ -108,22 +107,20 @@ export const zapExecuteOrder = (
       value: nativeInput ? nativeInput.amount : undefined,
     };
 
-    txWallet(dispatch);
     console.debug('executeOrder', { order: castedOrder, steps: castedSteps, options });
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
         expectedTokens,
         vaultId: vault.id,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.manager,
@@ -131,8 +128,8 @@ export const zapExecuteOrder = (
         clearInput: false,
         ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
         boostId,
-      }
-    );
+      },
+    });
   });
 };
 

@@ -16,6 +16,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["alUSD", "USDC"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -54,6 +55,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["msETH", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -92,6 +94,7 @@
     "createdAt": 1794186444,
     "platformId": "aero",
     "assets": ["msUSD", "USDC"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -130,6 +133,7 @@
     "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["mooBIFI", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -168,6 +172,7 @@
     "createdAt": 1793966735,
     "platformId": "aero",
     "assets": ["alETH", "WETH"],
+    "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
       "curated": false,
