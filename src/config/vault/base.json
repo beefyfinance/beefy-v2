@@ -1566,7 +1566,7 @@
   },
   {
     "id": "aero-v2-base-weth-wsteth",
-    "name": "WETH-wstETH vLP V2",
+    "name": "wstETH-WETH vLP V2",
     "type": "standard",
     "token": "WETH-wstETH vLP V2",
     "tokenAddress": "0xfc071b43E8F3819BE0D55bcB715eFe293BE02a13",
@@ -1580,7 +1580,7 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["WETH", "wstETH"],
+    "assets": ["wstETH", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -1604,7 +1604,7 @@
   },
   {
     "id": "aero-v2-base-weth-edel",
-    "name": "WETH-EDEL vLP V2",
+    "name": "EDEL-WETH vLP V2",
     "type": "standard",
     "token": "WETH-EDEL vLP V2",
     "tokenAddress": "0xb01Cc306BC018535aA0425efa0cF735008100A33",
@@ -1618,7 +1618,7 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["WETH", "EDEL"],
+    "assets": ["EDEL", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -1680,7 +1680,7 @@
   },
   {
     "id": "aero-v2-base-weth-drv",
-    "name": "WETH-DRV vLP V2",
+    "name": "DRV-WETH vLP V2",
     "type": "standard",
     "token": "WETH-DRV vLP V2",
     "tokenAddress": "0x002Ae5AE3653A1E46387542c0f68c2dC2A687036",
@@ -1694,7 +1694,7 @@
     "status": "active",
     "createdAt": 1794186468,
     "platformId": "aero",
-    "assets": ["WETH", "DRV"],
+    "assets": ["DRV", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -1718,7 +1718,7 @@
   },
   {
     "id": "aero-v2-base-weth-cbbtc",
-    "name": "WETH-cbBTC vLP V2",
+    "name": "cbBTC-WETH vLP V2",
     "type": "standard",
     "token": "WETH-cbBTC vLP V2",
     "tokenAddress": "0xceCd99D62556836F3Ec245775c3dE97aC25C286b",
@@ -1732,7 +1732,7 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["WETH", "cbBTC"],
+    "assets": ["cbBTC", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -1794,7 +1794,7 @@
   },
   {
     "id": "aero-v2-base-weth-well",
-    "name": "WETH-WELL vLP V2",
+    "name": "WELL-WETH vLP V2",
     "type": "standard",
     "token": "WETH-WELL vLP V2",
     "tokenAddress": "0xc3467Fbf371Ab0C0395C66af634c2921E6De0e60",
@@ -1808,7 +1808,7 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["WETH", "bWELL"],
+    "assets": ["bWELL", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -1908,7 +1908,7 @@
   },
   {
     "id": "aero-v2-base-weth-vvv",
-    "name": "WETH-VVV vLP V2",
+    "name": "VVV-WETH vLP V2",
     "type": "standard",
     "token": "WETH-VVV vLP V2",
     "tokenAddress": "0xcFC7dC24e9D302976f0B1EFB90a4D9B22b54b2A5",
@@ -1922,7 +1922,7 @@
     "status": "active",
     "createdAt": 1794186469,
     "platformId": "aero",
-    "assets": ["WETH", "VVV"],
+    "assets": ["VVV", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
@@ -2022,7 +2022,7 @@
   },
   {
     "id": "aero-v2-base-weth-mseth",
-    "name": "WETH-msETH sLP V2",
+    "name": "msETH-WETH sLP V2",
     "type": "standard",
     "token": "WETH-msETH sLP V2",
     "tokenAddress": "0x45ADCE4be5f602273c6E883a4C94133309aF1D09",
@@ -2036,7 +2036,7 @@
     "status": "active",
     "createdAt": 1794186465,
     "platformId": "aero",
-    "assets": ["WETH", "msETH"],
+    "assets": ["msETH", "WETH"],
     "risks": {
       "complex": false,
       "curated": false,
