@@ -76,44 +76,6 @@
     ]
   },
   {
-    "id": "aero-cow-base-usdc-cbmega-vault",
-    "name": "cbMEGA-USDC",
-    "type": "standard",
-    "token": "cbMEGA-USDC",
-    "tokenAddress": "0xA6b02Cc80B6D7c6A20598B16D59179b0DE8E89Dd",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aero",
-    "earnContractAddress": "0x22cd4E90F2c4D4d00dd522a6660815fe30EA7cc7",
-    "earnedToken": "mooCowAeroBasecbMEGA-USDC",
-    "earnedTokenAddress": "0x22cd4E90F2c4D4d00dd522a6660815fe30EA7cc7",
-    "oracle": "lps",
-    "oracleId": "aero-cow-base-usdc-cbmega",
-    "status": "active",
-    "createdAt": 1794400001,
-    "platformId": "aero",
-    "assets": ["USDC", "cbMEGA"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aero-cow-base-tbtc-cbbtc-rp",
     "name": "tBTC-cbBTC Reward Pool",
     "type": "gov",
@@ -179,46 +141,6 @@
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
-    "id": "aero-cow-base-usdc-cbmega-rp",
-    "name": "cbMEGA-USDC Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowAeroBasecbMEGA-USDC",
-    "tokenAddress": "0xA6b02Cc80B6D7c6A20598B16D59179b0DE8E89Dd",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aero",
-    "earnContractAddress": "0xcF0C688bABE971D82160Bb2E36850e915Db08F21",
-    "earnedToken": "rCowAeroBasecbMEGA-USDC",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddresses": [],
-    "oracle": "lps",
-    "oracleId": "aero-cow-base-usdc-cbmega",
-    "status": "active",
-    "createdAt": 1794400000,
-    "platformId": "aero",
-    "assets": ["USDC", "cbMEGA"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
@@ -304,47 +226,6 @@
       "notBattleTested": false,
       "notCorrelated": true,
       "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "compounds",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "cowcentrated"
-      }
-    ]
-  },
-  {
-    "id": "aero-cow-base-usdc-cbmega",
-    "name": "cbMEGA-USDC",
-    "type": "cowcentrated",
-    "token": "cbMEGA-USDC aero",
-    "tokenAddress": "0xd247a43038B1a18AeEbB33294Bc0d0B71A7fbc66",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aero",
-    "depositTokenAddresses": [
-      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "0xcb111E6A2a3bde90856D299d61341ac302167D23"
-    ],
-    "earnContractAddress": "0xA6b02Cc80B6D7c6A20598B16D59179b0DE8E89Dd",
-    "earnedToken": "cowAeroBasecbMEGA-USDC",
-    "earnedTokenAddress": "0xA6b02Cc80B6D7c6A20598B16D59179b0DE8E89Dd",
-    "oracle": "lps",
-    "oracleId": "aero-cow-base-usdc-cbmega",
-    "status": "active",
-    "createdAt": 1794400000,
-    "platformId": "beefy",
-    "feeTier": "0.3",
-    "tickSpacing": 50,
-    "assets": ["USDC", "cbMEGA"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": true,
       "notVerified": false,
       "synthAsset": false
     },
