@@ -8,6 +8,7 @@ import {
   selectTvlBreakdownByVaultId,
   tvlBreakdownEqual,
 } from '../../features/data/selectors/tvl.ts';
+import { selectChainHasFeature } from '../../features/data/selectors/chains.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import type { BeefyState } from '../../features/data/store/types.ts';
 import { formatLargeUsd, formatPercent } from '../../helpers/format.ts';
@@ -57,6 +58,16 @@ const LOADING_TVL_STAT: VaultTvlStatResult = {
   tvlBreakdown: undefined,
 };
 
+const NO_PRICE_TVL_STAT: VaultTvlStatResult = {
+  label: 'VaultStat-TVL',
+  value: '-',
+  subValue: null,
+  blur: false,
+  loading: false,
+  expectSubValue: false,
+  tvlBreakdown: undefined,
+};
+
 // tvlBreakdown must stay data: a JSX tooltip cannot compare equal, so every action re-renders
 const selectVaultTvlStat = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlStatResult => {
   const vault = selectVaultById(state, vaultId);
@@ -65,6 +76,10 @@ const selectVaultTvlStat = (state: BeefyState, vaultId: VaultEntity['id']): Vaul
 
   if (!isLoaded) {
     return LOADING_TVL_STAT;
+  }
+
+  if (!selectChainHasFeature(state, vault.chainId, 'price')) {
+    return NO_PRICE_TVL_STAT;
   }
 
   const breakdown = selectTvlBreakdownByVaultId(state, vaultId);

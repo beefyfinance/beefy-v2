@@ -6,7 +6,6 @@ import { useAppSelector } from '../../../../data/store/hooks.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
-  shouldVaultShowInterest,
   type VaultCowcentratedLike,
 } from '../../../../data/entities/vault.ts';
 import { selectVaultTotalApy } from '../../../../data/selectors/apy.ts';
@@ -14,6 +13,7 @@ import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selecto
 import { selectChainById } from '../../../../data/selectors/chains.ts';
 import {
   selectCowcentratedLikeVaultById,
+  selectVaultShouldShowInterest,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../data/selectors/vaults.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../../../../data/utils/vault-utils.ts';
@@ -34,6 +34,7 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vaultId));
+  const shouldShowInterest = useAppSelector(state => selectVaultShouldShowInterest(state, vaultId));
   const strategyAddress = useAppSelector(state =>
     selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedIds.clm)
   );
@@ -41,7 +42,7 @@ const CowcentratedExplainer = memo(function CowcentratedExplainer({
     selectVaultStrategyAddressOrUndefined(state, vaultId)
   );
 
-  const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
+  const showApy = apys && apys.totalApy > 0 && shouldShowInterest;
 
   const links = useMemo(() => {
     const urls = [

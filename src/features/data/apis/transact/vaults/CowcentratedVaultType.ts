@@ -22,7 +22,7 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import type { BeefyStateFn } from '../../../store/types.ts';
-import { BeefyCLMPool, clmSupportsActionableAt } from '../../beefy/beefy-clm-pool.ts';
+import { BeefyCLMPool, getClmActionableCheck } from '../../beefy/beefy-clm-pool.ts';
 import { slipAllBy } from '../helpers/amounts.ts';
 import {
   createOptionId,
@@ -120,26 +120,17 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
 
-    const {
-      isCalm,
-      liquidity,
-      used0,
-      used1,
-      unused0,
-      unused1,
-      position1,
-      position0,
-      actionableAt,
-    } = await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
+    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0, actionable } =
+      await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
 
     if (liquidity.lte(BIG_ZERO)) {
       throw new QuoteCowcentratedNoSingleSideError(inputs);
     }
 
-    assertCowcentratedActionable('deposit', isCalm, actionableAt);
+    assertCowcentratedActionable('deposit', isCalm, actionable);
 
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.depositTokens[i],
@@ -241,11 +232,11 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
-    const { amount0, amount1, isCalm, actionableAt } = await clmPool.previewWithdraw(input.amount);
+    const { amount0, amount1, isCalm, actionable } = await clmPool.previewWithdraw(input.amount);
 
-    assertCowcentratedActionable('withdraw', isCalm, actionableAt);
+    assertCowcentratedActionable('withdraw', isCalm, actionable);
 
     const outputs: TokenAmount[] = [
       {
@@ -305,7 +296,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
 
     const { liquidity } = await clmPool.previewDeposit(
@@ -351,7 +342,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens,
-      clmSupportsActionableAt(this.vault)
+      getClmActionableCheck(this.vault)
     );
     const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
 

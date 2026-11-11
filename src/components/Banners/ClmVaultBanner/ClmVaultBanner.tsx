@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   isCowcentratedGovVault,
+  isVaultAeroUpgradeSoon,
   type VaultEntity,
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
@@ -44,6 +45,10 @@ const ClmVaultBannerImpl = memo<ClmVaultBannerImplProps>(function ClmVaultBanner
     }),
     [vaultId]
   );
+
+  if (isDeposited && isVaultAeroUpgradeSoon(pool)) {
+    return null;
+  }
 
   return (
     <DismissibleBanner

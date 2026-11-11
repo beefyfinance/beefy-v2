@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { AeroUpgradeBannerHome } from '../../../../components/Banners/AeroUpgradeBanner/AeroUpgradeBanner.tsx';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner/BusdBannerHome.tsx';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner.tsx';
 import { styled } from '@repo/styles/jsx';
@@ -8,6 +9,7 @@ export const Banners = memo(function Banners() {
     <BannerList>
       <UnstakedClmBanner />
       <BusdBannerHome />
+      <AeroUpgradeBannerHome />
     </BannerList>
   );
 });

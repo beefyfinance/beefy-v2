@@ -1,4 +1,10 @@
-import { createPublicClient, type PublicClient, type Client, type BlockTag } from 'viem';
+import {
+  createPublicClient,
+  hexToBigInt,
+  type PublicClient,
+  type Client,
+  type BlockTag,
+} from 'viem';
 import type { ChainEntity, ChainId } from '../../entities/chain.ts';
 import { makeCustomFallbackTransport } from '../viem/transports/transports.ts';
 import { buildViemChain } from '../viem/chains.ts';
@@ -22,6 +28,11 @@ type BeefyFeeHistory = {
 export const getBeefyGasPrice = async (client: Client) => {
   const gasPrice = await getGasPrice(client);
   return new BigNumber(gasPrice.toString(10));
+};
+
+export const getBeefyMaxPriorityFeePerGas = async (client: PublicClient) => {
+  const fee = await client.request({ method: 'eth_maxPriorityFeePerGas' });
+  return new BigNumber(hexToBigInt(fee).toString(10));
 };
 
 export const getBeefyFeeHistory = async (
@@ -56,7 +67,7 @@ class RpcClientManager {
 
   // Create new viem clients using the provided chain config and RPC URLs.
   private createClients(chain: ChainEntity | ChainConfig, rpcUrls: string[]): RpcClients {
-    const retries = chain.eol ? 1 : 3;
+    const retries = chain.status === 'active' ? 3 : 1;
     // Create a viem client with a fallback transport for single calls.
     const singleCallClient = createPublicClient({
       chain: buildViemChain(chain),

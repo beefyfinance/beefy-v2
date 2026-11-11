@@ -38,6 +38,7 @@ import {
   selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
+  selectStepperLeadingClaimStepCount,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
@@ -301,7 +302,7 @@ const StepContentStake = memo(function StepContentStake({
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Stake"
+      i18nKey={step.boostId ? 'Transact-Route-Step-StakeBoost' : 'Transact-Route-Step-Stake'}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -321,7 +322,7 @@ const StepContentUnstake = memo(function StepContentUnstake({
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Unstake"
+      i18nKey={step.boostId ? 'Transact-Route-Step-UnstakeBoost' : 'Transact-Route-Step-Unstake'}
       components={{
         tokenAmounts: <ListJoin items={tokenAmounts} />,
         chain: chainId ? <ChainTag chainId={chainId} /> : <></>,
@@ -489,7 +490,10 @@ function useStepStatuses(
 ): StepStatusState[] {
   const isStepping = useAppSelector(selectIsStepperStepping);
   const stepperContent = useAppSelector(selectStepperStepContent);
-  const currentStepIndex = useAppSelector(selectStepperCurrentStep);
+  const stepperStepIndex = useAppSelector(selectStepperCurrentStep);
+  const leadingClaimStepCount = useAppSelector(selectStepperLeadingClaimStepCount);
+  // index into the route rows, which start after any batched claim
+  const currentStepIndex = stepperStepIndex - leadingClaimStepCount;
   const isRecoveryExecution = useAppSelector(selectIsStepperRecoveryExecution);
   const recoveryOp = useAppSelector(selectRecoveryOpForCurrentVault);
   const successClosed = useAppSelector(selectTransactSuccessClosed);

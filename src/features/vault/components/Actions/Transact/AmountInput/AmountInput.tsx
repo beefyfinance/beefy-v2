@@ -79,6 +79,7 @@ export const AmountInput = memo(function AmountInput({
   const inputUsdValue = useMemo(() => {
     return price ? price.times(value) : BIG_ZERO;
   }, [price, value]);
+  const hasPrice = !!price && !price.isZero();
 
   const setValue = useCallback(
     (newValue: BigNumber, isMax: boolean) => {
@@ -186,7 +187,7 @@ export const AmountInput = memo(function AmountInput({
       {startAdornment && <div className={classes.startAdornment}>{startAdornment}</div>}
       <div className={classes.inputContent}>
         <input
-          className={css(styles.input, Boolean(price) && styles.inputWithPrice)}
+          className={css(styles.input, hasPrice && styles.inputWithPrice)}
           value={input}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -194,7 +195,7 @@ export const AmountInput = memo(function AmountInput({
           inputMode="decimal"
           disabled={disabled}
         />
-        {price && value.gt(0) && (
+        {hasPrice && value.gt(0) && (
           <div className={classes.price}>{formatLargeUsd(inputUsdValue)}</div>
         )}
       </div>

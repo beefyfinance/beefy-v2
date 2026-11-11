@@ -68,12 +68,12 @@ export const stepperSlice = createSlice({
         sliceState.isRecoveryExecution = action.payload;
       })
       .addCase(fetchCCTPDstTokensReturned.fulfilled, (sliceState, action) => {
-        if (sliceState.bridgeStatus) {
+        if (sliceState.bridgeStatus?.srcTxHash === action.meta.arg.srcTxHash) {
           sliceState.bridgeStatus.dstTokensReturned = action.payload;
         }
       })
       .addCase(fetchCrossChainSrcTokensReturned.fulfilled, (sliceState, action) => {
-        if (sliceState.bridgeStatus) {
+        if (sliceState.bridgeStatus?.srcTxHash === action.meta.arg.srcTxHash) {
           sliceState.bridgeStatus.srcTokensReturned = action.payload;
         }
       });

@@ -3,23 +3,36 @@ import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { getTransactApi } from '../../apis/instances.ts';
+import { toDepositTokenIfVaultShare } from '../../apis/transact/helpers/quotes.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
 import {
   isCrossChainOption,
   isDepositOption,
   isDepositQuote,
+  isRewardPoolToVaultDepositOption,
+  isVaultToVaultSingleTokenOption,
   isWithdrawOption,
   isWithdrawQuote,
   type QuoteOutputTokenAmountChange,
+  type TransactOption,
   type TransactQuote,
+  isZapQuote,
+  isZapQuoteStepUnstake,
 } from '../../apis/transact/transact-types.ts';
-import { isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
+import { type ContractRewardToken, isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
-import type { Step } from '../../reducers/wallet/stepper-types.ts';
+import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import {
+  selectBoostUserRewardsInToken,
+  selectGovVaultPendingRewards,
+  selectRewardsWorthClaiming,
+} from '../../selectors/balance.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
-import type { BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import { selectGovVaultById } from '../../selectors/vaults.ts';
+import { selectWalletAddress } from '../../selectors/wallet.ts';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
   transactConfirmPending,
@@ -28,6 +41,7 @@ import {
   transactSetExecuting,
 } from '../transact.ts';
 import { approve } from './approval.ts';
+import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
 import { stepperReset, stepperStartWithSteps } from './stepper.ts';
@@ -38,6 +52,65 @@ type PrefetchedRequote = {
 };
 
 const REQUOTE_MAX_AGE_MS = 30_000;
+
+type PendingClaim = {
+  step: 'boost-claim' | 'claim-gov';
+  rewards: ReadonlyArray<{ token: ContractRewardToken; amount: BigNumber }>;
+  action: BeefyThunk;
+};
+
+/** Rewards a zap leaves behind: they accrue to the user's address, so the router can't claim them */
+function pendingClaimOf(quote: TransactQuote, state: BeefyState): PendingClaim | undefined {
+  const unstake =
+    isZapQuote(quote) ?
+      quote.steps.filter(isZapQuoteStepUnstake).find(step => step.boostId || step.govVaultId)
+    : undefined;
+
+  if (unstake?.boostId) {
+    return {
+      step: 'boost-claim',
+      rewards: selectBoostUserRewardsInToken(state, unstake.boostId),
+      action: claimBoost(unstake.boostId),
+    };
+  }
+
+  if (unstake?.govVaultId) {
+    const pool = selectGovVaultById(state, unstake.govVaultId);
+    return {
+      step: 'claim-gov',
+      rewards: selectGovVaultPendingRewards(state, pool.id, selectWalletAddress(state)),
+      // keep the quote alive for the zap step that follows
+      action: claimGovVault(pool, { clearInput: false }),
+    };
+  }
+
+  return undefined;
+}
+
+/**
+ * Claims what a full exit would leave behind, in the same batch, to save the user a trip back.
+ * Partial exits keep earning, so their rewards stay put.
+ */
+function maybeClaimStep(
+  quote: TransactQuote,
+  state: BeefyState,
+  t: TFunction<Namespace>
+): Step | undefined {
+  if (!quote.inputs.every(input => input.max)) {
+    return undefined;
+  }
+  const claim = pendingClaimOf(quote, state);
+  if (!claim || !selectRewardsWorthClaiming(state, claim.rewards)) {
+    return undefined;
+  }
+
+  return {
+    step: claim.step,
+    message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+    action: claim.action,
+    pending: false,
+  };
+}
 
 export async function getTransactSteps(
   quote: TransactQuote,
@@ -56,6 +129,11 @@ export async function getTransactSteps(
   if (isCrossChainOption(quote.option)) {
     const sourceChain = selectChainById(state, quote.option.sourceChainId);
     prefetchGasPrice(sourceChain);
+  }
+
+  const claimStep = maybeClaimStep(quote, state, t);
+  if (claimStep) {
+    steps.push(claimStep);
   }
 
   const api = await getTransactApi();
@@ -112,9 +190,49 @@ export async function getTransactSteps(
     throw new Error(`Invalid quote`);
   }
 
-  steps.push(wrapStepConfirmQuote(originalStep, quote, prefetchedRequote));
+  steps.push(
+    wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
+  );
 
   return steps;
+}
+
+/** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
+function vaultToVaultOf(option: TransactOption) {
+  if (isVaultToVaultSingleTokenOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.destVaultId };
+  }
+  if (isRewardPoolToVaultDepositOption(option)) {
+    return { srcVaultId: option.srcVaultId, destVaultId: option.vaultId };
+  }
+  return undefined;
+}
+
+/** Cross-chain zaps describe themselves via their pending op instead. Exported for tests. */
+export function withZapDetails(step: Step, quote: TransactQuote, state: BeefyState): Step {
+  if ((step.step !== 'zap-in' && step.step !== 'zap-out') || isCrossChainOption(quote.option)) {
+    return step;
+  }
+
+  const { option } = quote;
+  const inputs = quote.inputs.filter(input => input.amount.gt(BIG_ZERO));
+  const outputTokens = quote.outputs
+    .filter(output => output.amount.gt(BIG_ZERO))
+    .map(output => output.token);
+
+  const vaultToVault = vaultToVaultOf(option);
+  // some routes quote the source vault's shares (v2v, and the gov composer's rCLM), which is
+  // neither what the user typed nor what the rest of the app calls that position
+  const sourceVaultId = vaultToVault ? vaultToVault.srcVaultId : option.vaultId;
+  const sent = inputs.map(input => toDepositTokenIfVaultShare(state, sourceVaultId, input));
+  const zapDetails: ZapStepDetails = {
+    inputs: sent,
+    outputTokens,
+    ...(vaultToVault && { vaultToVault }),
+    ...(option.boostId && { boostId: option.boostId }),
+  };
+
+  return { ...step, extraInfo: { ...step.extraInfo, zapDetails } };
 }
 
 /**

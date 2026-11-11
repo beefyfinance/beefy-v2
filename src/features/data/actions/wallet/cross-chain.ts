@@ -13,6 +13,7 @@ import { isSerializableError } from '../../apis/transact/strategies/error.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { isTokenErc20, type TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
@@ -45,11 +46,10 @@ import { fetchCCTPDstTokensReturned } from '../cctp.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
 import { transactSetExecuting } from '../transact.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { approve } from './approval.ts';
 import {
@@ -117,7 +117,8 @@ export const crossChainZapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
   expectedTokens: TokenEntity[],
-  metadata: CrossChainExecuteMetadata
+  metadata: CrossChainExecuteMetadata,
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -227,30 +228,29 @@ export const crossChainZapExecuteOrder = (
       })
     );
 
-    txWallet(dispatch);
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
-    bindTransactionEvents(
+    const { hashPromise: transaction } = sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: sourceChainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
         expectedTokens,
         vaultId: vault.id,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: sourceChainId,
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
         clearInput: false,
-      }
-    );
+        boostId,
+      },
+    });
 
-    // Track cross-chain op lifecycle alongside bindTransactionEvents
+    // Track cross-chain op lifecycle alongside sendTransaction
     bindCrossChainOpTracking(dispatch, transaction, publicClient, metadata.opId);
   });
 };
@@ -264,7 +264,8 @@ export const crossChainRecoveryExecuteOrder = (
   destChainId: ChainEntity['id'],
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -351,19 +352,17 @@ export const crossChainRecoveryExecuteOrder = (
 
     dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-pending' }));
 
-    txWallet(dispatch);
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
     const refreshTokens = uniqBy(
       [...selectVaultTokensToRefresh(state, vault), ...expectedTokens],
       'id'
     );
 
-    bindTransactionEvents(
+    const { hashPromise: transaction } = sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: destChainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
@@ -371,14 +370,15 @@ export const crossChainRecoveryExecuteOrder = (
         vaultId: vault.id,
         recovery: true,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: destChainId,
         spenderAddress: zap.manager,
         tokens: refreshTokens,
         clearInput: false,
-      }
-    );
+        boostId,
+      },
+    });
 
     // Track recovery outcome
     transaction
@@ -393,7 +393,13 @@ export const crossChainRecoveryExecuteOrder = (
                   destTxHash: hash,
                 })
               );
-              dispatch(fetchCCTPDstTokensReturned({ destChainId, dstTxHash: hash }));
+              dispatch(
+                fetchCCTPDstTokensReturned({
+                  destChainId,
+                  dstTxHash: hash,
+                  srcTxHash: state.ui.transact.crossChain.pendingOps[opId].sourceTxHash,
+                })
+              );
             } else {
               dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-failed' }));
               dispatch(crossChainMarkRecoveryQuoteStale());
@@ -643,6 +649,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
           ...existingBridgeStatus,
           opId,
           srcChainId: op.sourceChainId,
+          srcTxHash: op.sourceTxHash,
           destChainId: op.destChainId,
           vaultId: op.vaultId,
         })

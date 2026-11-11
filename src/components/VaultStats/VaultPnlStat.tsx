@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
 import { selectUserHasCurrentDepositTimelineByVaultId } from '../../features/data/selectors/analytics.ts';
+import { selectVaultShouldShowPrice } from '../../features/data/selectors/vaults.ts';
 import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
 import { useAppSelector } from '../../features/data/store/hooks.ts';
 import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent.tsx';
@@ -29,7 +30,8 @@ export const VaultPnlStat = memo(function ({
   const hasCurrentDeposit = useAppSelector(state =>
     selectUserHasCurrentDepositTimelineByVaultId(state, vaultId, walletAddress)
   );
-  const hasValue = isLoaded && hasCurrentDeposit;
+  const showPrice = useAppSelector(state => selectVaultShouldShowPrice(state, vaultId));
+  const hasValue = isLoaded && hasCurrentDeposit && showPrice;
 
   let value = '-';
   let subValue: string | null = null;

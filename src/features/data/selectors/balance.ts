@@ -15,6 +15,7 @@ import {
   isSingleGovVault,
   isStandardVault,
   isVaultActive,
+  isVaultAeroUpgradeSoon,
   isVaultWithReceipt,
   type VaultEntity,
   type VaultGov,
@@ -45,6 +46,7 @@ import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
   selectTokensByChainId,
+  selectTokenPriceLookup,
 } from './tokens.ts';
 import {
   selectAllCowcentratedVaults,
@@ -97,8 +99,22 @@ export const selectUserDepositedVaultIdsForAsset = createSelector(
     arrayOrStaticEmpty(vaultIds.filter(vaultId => vaultsById[vaultId]?.assetIds.includes(asset)))
 );
 
-export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
+export const selectUserHasDepositInAeroUpgradeSoonVault = createSelector(
+  selectUserDepositedVaultIds,
+  (state: BeefyState, _walletAddress?: string) => state.entities.vaults.byId,
+  (vaultIds, vaultsById) =>
+    vaultIds.some(vaultId => {
+      const vault = vaultsById[vaultId];
+      return !!vault && isVaultAeroUpgradeSoon(vault);
+    })
+);
+
+export const selectHasUserDepositInVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
@@ -204,10 +220,7 @@ export const selectUserVaultBalanceInDepositTokenInBoosts = createSelector(
     selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectVaultSharesToDepositTokenData(state, vaultId),
-  (shares, shareData) =>
-    shareData.shareToken ?
-      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
-    : shares
+  sharesToDepositToken
 );
 
 /**
@@ -298,6 +311,15 @@ export const selectUserVaultBalanceInShareTokenPendingWithdrawal = createSelecto
   shares => bigNumberOrStaticZero(shares)
 );
 
+function sharesToDepositToken(
+  shares: BigNumber,
+  shareData: ReturnType<typeof selectVaultSharesToDepositTokenData>
+): BigNumber {
+  return shareData.shareToken ?
+      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
+    : shares;
+}
+
 export const selectVaultSharesToDepositTokenData = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
     selectVaultById(state, vaultId),
@@ -386,13 +408,14 @@ export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createSelect
  */
 export const selectUserHasBalanceToMigrate = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
 ): boolean => {
   const migration = selectVaultReplacementMigration(state, vaultId);
   if (!migration) {
     return false;
   }
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return false;
   }
@@ -694,6 +717,14 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+export const selectBoostUserBalanceInDepositToken = createSelector(
+  (state: BeefyState, boostId: BoostPromoEntity['id'], maybeWalletAddress?: string) =>
+    selectBoostUserBalanceInToken(state, boostId, maybeWalletAddress),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, selectBoostById(state, boostId).vaultId),
+  sharesToDepositToken
+);
+
 const NO_REWARDS: BoostReward[] = [];
 export const selectBoostUserRewardsInToken = (
   state: BeefyState,
@@ -702,6 +733,23 @@ export const selectBoostUserRewardsInToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
+};
+
+const MIN_CLAIM_USD = 0.05;
+
+/**
+ * Whether rewards are worth a claim tx batched ahead of a zap. The dust floor stops a re-confirm or
+ * retry right after claiming from asking for a second claim; unpriced rewards always count.
+ */
+export const selectRewardsWorthClaiming = (
+  state: BeefyState,
+  rewards: ReadonlyArray<{ token: Pick<TokenEntity, 'chainId' | 'oracleId'>; amount: BigNumber }>
+) => {
+  const priceOf = selectTokenPriceLookup(state);
+  return rewards.some(({ token, amount }) => {
+    const price = priceOf(token.chainId, token.oracleId);
+    return amount.gt(BIG_ZERO) && (price.lte(BIG_ZERO) || amount.times(price).gte(MIN_CLAIM_USD));
+  });
 };
 
 /**
@@ -751,11 +799,11 @@ export const selectGovVaultPendingRewards = createCachedSelector(
 export const selectGovVaultPendingRewardsWithPrice = createCachedSelector(
   selectGovVaultPendingRewards,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.prices.byOracleId,
-  (rewards, prices) => {
+    selectTokenPriceLookup(state),
+  (rewards, priceLookup) => {
     return rewards.map(reward => ({
       ...reward,
-      price: prices[reward.token.oracleId] || undefined,
+      price: priceLookup(reward.token.chainId, reward.token.oracleId),
     }));
   }
 )(

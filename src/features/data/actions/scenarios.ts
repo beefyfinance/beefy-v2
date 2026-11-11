@@ -19,7 +19,7 @@ import { fetchPartnersConfig } from './partners.ts';
 import { fetchPlatforms } from './platforms.ts';
 import { initPoints } from './points.ts';
 import { fetchAllPricesAction } from './prices.ts';
-import { initPromos } from './promos.ts';
+import { initBoostReceiptTokens, initPromos } from './promos.ts';
 import { fetchOffChainCampaignsAction } from './rewards.ts';
 import { fetchAllAddressBookAction } from './tokens.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults.ts';
@@ -31,7 +31,6 @@ import {
   fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
-import { fetchWeeklyRevenueStats } from './revenue.ts';
 
 declare const window: {
   __manual_poll?: () => unknown;
@@ -84,8 +83,6 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
     dispatch(fetchVaultsLastHarvests());
 
-    dispatch(fetchWeeklyRevenueStats());
-
     dispatch(fetchOffChainCampaignsAction());
 
     dispatch(fetchAvgApyAction());
@@ -120,6 +117,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
   // fees post-processing copies CLM fees to CLM Pools, which needs vaults loaded
   dispatch(fetchFees());
   await promosPromise;
+  // boost receipts need both vaults (share token) and promos
+  dispatch(initBoostReceiptTokens());
   await addressBookPromise;
 
   // then, we work by chain

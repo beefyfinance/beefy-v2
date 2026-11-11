@@ -52,7 +52,9 @@ function makeState(
   const selectionId = `standard-${CHAIN}-${input.address}`;
   return {
     entities: {
-      chains: { byId: { [CHAIN]: { id: CHAIN, name: 'Base' } } },
+      chains: {
+        byId: { [CHAIN]: { id: CHAIN, name: 'Base', features: { price: true, apy: true } } },
+      },
       tokens: {
         byChainId: {
           [CHAIN]: {

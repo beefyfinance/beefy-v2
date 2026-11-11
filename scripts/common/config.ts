@@ -11,7 +11,7 @@ import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
 
 /** Harmony->One to match addressbook */
 const chainConfigs = Object.entries(config)
-  .filter(([_, chainConfig]) => !('disabled' in chainConfig) || !chainConfig.disabled)
+  .filter(([_, chainConfig]) => chainConfig.status !== 'disabled')
   .reduce(
     (acc, [id, chainConfig]) => {
       acc[appToAddressBookId(id)] = {

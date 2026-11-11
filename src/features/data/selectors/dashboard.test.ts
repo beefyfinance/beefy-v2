@@ -83,7 +83,13 @@ function breakdownOf(...tokens: TokenEntity[]): TokenLpBreakdown {
 function makeState(vaults: VaultEntity[], breakdowns: Record<string, TokenLpBreakdown> = {}) {
   return {
     entities: {
-      chains: { allIds: [CHAIN, OTHER_CHAIN] },
+      chains: {
+        allIds: [CHAIN, OTHER_CHAIN],
+        byId: {
+          [CHAIN]: { id: CHAIN, features: { price: true, apy: true } },
+          [OTHER_CHAIN]: { id: OTHER_CHAIN, features: { price: true, apy: true } },
+        },
+      },
       vaults: { byId: Object.fromEntries(vaults.map(v => [v.id, v])) },
       tokens: {
         byChainId: {

@@ -7,6 +7,7 @@ import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../../apis/transact/zap/types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import { isGovVault, type VaultEntity } from '../../entities/vault.ts';
 import { selectChainById } from '../../selectors/chains.ts';
@@ -17,17 +18,17 @@ import { selectZapByChainId } from '../../selectors/zap.ts';
 import type { BeefyState } from '../../store/types.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 
 export const zapExecuteOrder = (
   vaultId: VaultEntity['id'],
   params: UserlessZapRequest,
-  expectedTokens: TokenEntity[]
+  expectedTokens: TokenEntity[],
+  boostId?: BoostPromoEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -106,30 +107,29 @@ export const zapExecuteOrder = (
       value: nativeInput ? nativeInput.amount : undefined,
     };
 
-    txWallet(dispatch);
     console.debug('executeOrder', { order: castedOrder, steps: castedSteps, options });
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
         expectedTokens,
         vaultId: vault.id,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
         clearInput: false,
         ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
-      }
-    );
+        boostId,
+      },
+    });
   });
 };
 

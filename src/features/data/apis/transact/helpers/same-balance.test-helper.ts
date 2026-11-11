@@ -101,6 +101,8 @@ export function chainTokens(native: TokenNative, wnative: TokenErc20, ...others:
   };
 }
 
+const ALL_FEATURES = { price: true, apy: true };
+
 /** chains and tokens for arc, metis (both one balance) and base (not) */
 export function makeState(extra: Record<string, unknown> = {}): BeefyState {
   return {
@@ -111,12 +113,14 @@ export function makeState(extra: Record<string, unknown> = {}): BeefyState {
           arc: {
             id: 'arc',
             native: { symbol: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
+            features: ALL_FEATURES,
           },
           metis: {
             id: 'metis',
             native: { symbol: 'METIS', decimals: 18, balanceSharedWithWrapped: true },
+            features: ALL_FEATURES,
           },
-          base: { id: 'base', native: { symbol: 'ETH', decimals: 18 } },
+          base: { id: 'base', native: { symbol: 'ETH', decimals: 18 }, features: ALL_FEATURES },
         },
       },
       zaps: { tokens: { byChainId: {} } },

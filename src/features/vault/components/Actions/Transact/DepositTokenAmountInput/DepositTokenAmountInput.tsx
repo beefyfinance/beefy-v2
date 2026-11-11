@@ -7,7 +7,7 @@ import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import {
   selectTokenInputDecimals,
-  selectTokenPriceByTokenOracleId,
+  selectTokenPriceByAddress,
 } from '../../../../../data/selectors/tokens.ts';
 import {
   selectTransactDepositInputVaultId,
@@ -46,7 +46,9 @@ const StandardDepositTokenAmountInput = memo(function StandardDepositTokenAmount
     selectUserBalanceOfToken(state, token.chainId, token.address)
   );
   const value = useAppSelector(state => selectTransactInputIndexAmount(state, index));
-  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
+  const price = useAppSelector(state =>
+    selectTokenPriceByAddress(state, token.chainId, token.address)
+  );
   const inputDecimals = useAppSelector(state => selectTokenInputDecimals(state, token));
 
   const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(

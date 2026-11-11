@@ -2,7 +2,10 @@ import type BigNumber from 'bignumber.js';
 import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
 import { selectVaultSharesToDepositTokenData } from '../../../selectors/balance.ts';
+import { selectChainHasFeature } from '../../../selectors/chains.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
+import { selectBoostByContractAddressOrUndefined } from '../../../selectors/boosts.ts';
+import { selectVaultByIdOrUndefined } from '../../../selectors/vaults.ts';
 import type { BeefyState } from '../../../store/types.ts';
 import { mooAmountToOracleAmount } from '../../../utils/ppfs.ts';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
@@ -53,7 +56,7 @@ export function quoteHasTransformation(quote: TransactQuote): boolean {
   );
 }
 
-/** Convert a v2v source share amount to the deposit-token TokenAmount via ppfs (pass-through for vaults without a receipt token). */
+/** Converts a vault share amount to the deposit token, via ppfs where the vault has one, otherwise 1:1. */
 export function convertVaultShareToDepositTokenAmount(
   state: BeefyState,
   srcVaultId: VaultEntity['id'],
@@ -66,6 +69,26 @@ export function convertVaultShareToDepositTokenAmount(
     token: depositToken,
     amount: mooAmountToOracleAmount(shareToken, depositToken, ppfs, shareAmount),
   };
+}
+
+export function toDepositTokenIfVaultShare(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  tokenAmount: TokenAmount
+): TokenAmount {
+  const vault = selectVaultByIdOrUndefined(state, vaultId);
+  if (!vault) {
+    return tokenAmount;
+  }
+  const address = tokenAmount.token.address;
+  // a v2 boost receipt is 1:1 with the vault's shares
+  const isShare =
+    address.toLowerCase() === vault.contractAddress.toLowerCase() ||
+    selectBoostByContractAddressOrUndefined(state, vault.chainId, address)?.vaultId === vaultId;
+  if (!isShare) {
+    return tokenAmount;
+  }
+  return convertVaultShareToDepositTokenAmount(state, vaultId, tokenAmount.amount);
 }
 
 /**
@@ -96,6 +119,14 @@ export function calculatePriceImpact(
   state: BeefyState,
   knownFeesUsd: BigNumber = BIG_ZERO // bridge fees that don't reflect price movement due to poor swapping/routing
 ): number {
+  if (
+    [...inputs, ...outputs, ...returned].some(
+      ({ token }) => !selectChainHasFeature(state, token.chainId, 'price')
+    )
+  ) {
+    return 0;
+  }
+
   const inputAmount = inputs.length > 0 ? totalValueOfTokenAmounts(inputs, state) : BIG_ZERO;
   const outputAmount = outputs.length > 0 ? totalValueOfTokenAmounts(outputs, state) : BIG_ZERO;
   const returnedAmount = returned.length > 0 ? totalValueOfTokenAmounts(returned, state) : BIG_ZERO;

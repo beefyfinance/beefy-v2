@@ -53,6 +53,7 @@ import {
   selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenPriceByAddress,
+  selectTokenPriceLookup,
 } from './tokens.ts';
 import {
   selectUserMerklRewardsForVault,
@@ -62,6 +63,7 @@ import {
   selectCowcentratedLikeVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
+  selectVaultShouldShowPrice,
 } from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 import {
@@ -394,8 +396,8 @@ const selectClmPnlOffChainRewards = createCachedSelector(
 
 const selectTokenAndPriceSlices = createSelector(
   (state: BeefyState) => state.entities.tokens.byChainId,
-  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
-  (byChainId, byOracleId) => ({ byChainId, byOracleId })
+  (state: BeefyState) => selectTokenPriceLookup(state),
+  (byChainId, priceLookup) => ({ byChainId, priceLookup })
 );
 
 const selectClmPnlInner = createCachedSelector(
@@ -445,7 +447,7 @@ const selectClmPnlInner = createCachedSelector(
       token1: liveToken1Price,
     } = livePrices;
     const { merkl: merklRewards, stella: stellaSwapRewards } = offChainRewardsData;
-    const { byChainId: tokensByChainId, byOracleId: pricesByOracleId } = slices;
+    const { byChainId: tokensByChainId, priceLookup } = slices;
 
     // === Now (Live, on-chain)
     const liveTotalSupply = new BigNumber(liveBreakdown.totalSupply);
@@ -565,7 +567,9 @@ const selectClmPnlInner = createCachedSelector(
         tokensByChainId[reward.token.chainId]?.byAddress[reward.token.address.toLowerCase()];
       const token = rewardTokenEntity ?? reward.token;
       const tokenPrice =
-        (rewardTokenEntity && pricesByOracleId[rewardTokenEntity.oracleId]) || BIG_ZERO;
+        rewardTokenEntity ?
+          priceLookup(rewardTokenEntity.chainId, rewardTokenEntity.oracleId)
+        : BIG_ZERO;
       if (claimedAmount.gt(BIG_ZERO)) {
         claimed.push({
           token,
@@ -781,7 +785,9 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
     selectVaultById(state, vaultId),
-  (userVaults, isLoaded, timeline, vault) => {
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
+    selectVaultShouldShowPrice(state, vaultId),
+  (userVaults, isLoaded, timeline, vault, showPrice) => {
     // show clm data for 1 month after vault is retired
     const statusCondition =
       isCowcentratedLikeVault(vault) ?
@@ -790,6 +796,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
       : vault.status === 'active';
 
     return (
+      showPrice &&
       isLoaded &&
       userVaults.includes(vault.id) &&
       !!timeline &&

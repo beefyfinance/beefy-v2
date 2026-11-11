@@ -285,6 +285,15 @@ export function formatLargeUsd(
   return `${prefix}${formatLargeNumber(value.absoluteValue(), largeOptions)}`;
 }
 
+/** amount at price as large usd, or the placeholder when the price is unknown (0) */
+export function formatLargeUsdAtPrice(
+  amount: BigNumberish,
+  price: BigNumber,
+  missingPlaceholder: string = '-'
+): string {
+  return price.isZero() ? missingPlaceholder : formatLargeUsd(toBigNumber(amount).times(price));
+}
+
 export type FormattedTotalApy<T = string> = {
   [K in keyof TotalApy]: TotalApy[K] extends T ? TotalApy[K] : T;
 };

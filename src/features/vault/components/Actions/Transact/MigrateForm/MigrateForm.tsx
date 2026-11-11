@@ -30,7 +30,7 @@ const MigrateForm = memo(function MigrateForm({ oldVaultId, newVaultId }: Migrat
     <>
       <Container>
         <Section>
-          <MigrateNotice oldVaultId={oldVaultId} />
+          <MigrateNotice oldVaultId={oldVaultId} newVaultId={newVaultId} />
         </Section>
 
         <Section background="light">

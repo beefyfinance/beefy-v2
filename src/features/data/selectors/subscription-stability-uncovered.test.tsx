@@ -1,10 +1,7 @@
 import { memo, Suspense } from 'react';
-
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { GovVaultRewards } from '../../../components/GovVaultRewards/GovVaultRewards.tsx';
 import { VaultTvl } from '../../../components/VaultTvl/VaultTvl.tsx';
-
 import { ChainExposureLoader } from '../../dashboard/components/ChainExposure/ChainExposure.tsx';
 import { PlatformExposureLoader } from '../../dashboard/components/PlatformExposure/PlatformExposure.tsx';
 import { StablesExposure } from '../../dashboard/components/StablesExposure/StablesExposure.tsx';
@@ -12,22 +9,18 @@ import { TokenExposureLoader } from '../../dashboard/components/TokenExposure/To
 import { DepositSummary } from '../../dashboard/components/DepositSummary.tsx';
 import { useSortedDashboardVaults } from '../../dashboard/components/UserVaults/hook.ts';
 import { PortfolioStats } from '../../home/components/HomeHeader/Stats/PortfolioStats.tsx';
+import { PlatformStats } from '../../home/components/HomeHeader/Stats/PlatformStats.tsx';
 import { PastBoosts } from '../../vault/components/Actions/Boosts/PastBoosts.tsx';
 import { MerklRewards } from '../../vault/components/Actions/Transact/ClaimForm/Merkl/MerklRewards.tsx';
 import { StellaSwapRewards } from '../../vault/components/Actions/Transact/ClaimForm/StellaSwap/StellaSwapRewards.tsx';
 import { FormStepFooter } from '../../vault/components/Actions/Transact/FormStepFooter/FormStepFooter.tsx';
 import { useCalculatedBreakdown } from '../../vault/components/LiquidityPoolBreakdown/hooks.ts';
 import { ShareButton } from '../../vault/components/ShareButton/ShareButton.tsx';
-
 import type { TokenLpBreakdown } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import { selectPastBoostIdsWithUserBalance } from './balance.ts';
 import { selectLpBreakdownForVaultId } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
-
-// a tree that renders its empty path passes vacuously, so every case asserts the fixture data
-// reached the DOM
-
 import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
 import {
   buildFixture,
@@ -121,10 +114,12 @@ describe('the trees the sibling file does not reach', () => {
       <>
         <DepositSummary address={FIXTURE_WALLET} />
         <PortfolioStats />
+        <PlatformStats />
       </>,
       fixture.state
     );
     expect(result.subscriptions).toBeGreaterThan(3);
+    expect(result.html).toContain('Weekly Revenue');
     expect(describeUnstable(result)).toEqual([]);
   });
 

@@ -1,6 +1,11 @@
+import BigNumber from 'bignumber.js';
 import { describe, expect, it } from 'vitest';
 import type { BeefyState } from '../store/types.ts';
-import { selectVaultImageAssets, selectVaultTokenImageAssets } from './tokens.ts';
+import {
+  selectTokenPriceLookup,
+  selectVaultImageAssets,
+  selectVaultTokenImageAssets,
+} from './tokens.ts';
 
 type FixtureToken = { id: string; symbol: string };
 
@@ -100,5 +105,35 @@ describe('vault image asset reference stability', () => {
     const first = selectAll(state);
     const moreTokens = makeState({ ...tokensByAddress, '0xweth': { id: 'WETH', symbol: 'WETH' } });
     selectAll(moreTokens).forEach((assets, index) => expect(assets).toBe(first[index]));
+  });
+});
+
+describe('selectTokenPriceLookup', () => {
+  const state = {
+    entities: {
+      chains: {
+        byId: {
+          base: { id: 'base', features: { price: true, apy: true } },
+          fantom: { id: 'fantom', features: { price: false, apy: false } },
+        },
+      },
+      tokens: { prices: { byOracleId: { WETH: new BigNumber(2000) } } },
+    },
+  } as unknown as BeefyState;
+
+  it('returns the price on a chain with prices enabled', () => {
+    expect(selectTokenPriceLookup(state)('base', 'WETH').toNumber()).toBe(2000);
+  });
+
+  it('returns 0 for a shared oracle on a chain with prices disabled', () => {
+    expect(selectTokenPriceLookup(state)('fantom', 'WETH').toNumber()).toBe(0);
+  });
+
+  it('returns 0 for a chain not in state', () => {
+    expect(selectTokenPriceLookup(state)('heco', 'WETH').toNumber()).toBe(0);
+  });
+
+  it('returns 0 for an unknown oracle', () => {
+    expect(selectTokenPriceLookup(state)('base', 'MISSING').toNumber()).toBe(0);
   });
 });

@@ -40,6 +40,7 @@ import {
   selectTransactSelectedChainId,
   selectTransactSelectedQuoteOrUndefined,
   selectTransactSelectedSelectionId,
+  selectTransactBoostInEffect,
   selectTransactSelectionById,
   selectTransactVaultId,
 } from '../selectors/transact.ts';
@@ -63,6 +64,7 @@ export const transactInit = createAction<TransactInitArgs>('transact/init');
 export const transactInitReady = createAction<TransactInitReadyArgs>('transact/init/ready');
 export const transactSwitchMode = createAction<TransactMode>('transact/switchMode');
 export const transactSwitchStep = createAction<TransactStep>('transact/switchStep');
+export const transactSetWithBoost = createAction<boolean>('transact/setWithBoost');
 export const transactSelectSelection = createAction<{
   selectionId: string;
   resetInput: boolean;
@@ -387,6 +389,7 @@ export const transactFetchQuotesIfNeeded = createAppAsyncThunk(
         // vaultId never matches selectionId/inputs already capture any real change
         (!isVaultSourceDepositOption(option) && option.vaultId !== vaultId) ||
         option.selectionId !== selectionId ||
+        !!option.boostId !== selectTransactBoostInEffect(state) ||
         !matchingInputs;
     }
 

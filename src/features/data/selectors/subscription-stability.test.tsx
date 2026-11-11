@@ -1,7 +1,6 @@
+import BigNumber from 'bignumber.js';
 import { memo, type ReactNode } from 'react';
-
 import { useSelector } from 'react-redux';
-
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { BoostUnstakeSuccessContent } from '../../../components/Stepper/components/Content/Success/BoostUnstakeSuccessContent.tsx';
 import { ZapSuccessContent } from '../../../components/Stepper/components/Content/Success/ZapSuccessContent.tsx';
@@ -11,7 +10,6 @@ import { ApyTooltipContent } from '../../../components/VaultStats/ApyTooltipCont
 import { TvlShareTooltip } from '../../../components/VaultStats/VaultTvlStat.tsx';
 import { RewardsTooltipContent } from '../../../components/RewardsTooltip/RewardsTooltip.tsx';
 import { VaultDepositedTooltip } from '../../../components/VaultDepositedTooltip/VaultDepositedTooltip.tsx';
-
 import { Transaction } from '../../dashboard/components/UserVaults/components/VaultTransactions/components/Transaction/Transaction.tsx';
 import { Vault as DashboardVaultRow } from '../../dashboard/components/UserVaults/components/Vault/Vault.tsx';
 import { Vault as HomeVaultRow } from '../../home/components/Vault/Vault.tsx';
@@ -23,11 +21,8 @@ import { FormStepFooter } from '../../vault/components/Actions/Transact/FormStep
 import { DepositTokenSelectList } from '../../vault/components/Actions/Transact/TokenSelectList/DepositTokenSelectList.tsx';
 import { WithdrawTokenSelectList } from '../../vault/components/Actions/Transact/TokenSelectList/WithdrawTokenSelectList.tsx';
 import { MaybeZapFees } from '../../vault/components/Actions/Transact/VaultFees/ZapFees.tsx';
-
 import type { TransactOption } from '../apis/transact/transact-types.ts';
-
 import type { Step } from '../reducers/wallet/stepper-types.ts';
-
 import { TransactMode, TransactStatus, TransactStep } from '../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { selectApyVaultUIData } from './apy.ts';
@@ -45,6 +40,7 @@ import {
   FIXTURE_WALLET_KEY,
   renderTree,
   withBoostUnstakeSuccess,
+  withZapRouterSuccess,
   withZapSuccess,
   type BreakpointMatchesValue,
 } from './subscription-stability.test-helper.tsx';
@@ -425,6 +421,81 @@ describe('no subscription in a high-fanout tree is unstable', () => {
     expect(zap.subscriptions).toBeGreaterThan(5);
     expect(zap.html).toContain('successfully zapped');
     expect(describeUnstable(zap)).toEqual([]);
+
+    const vaultId = fixture.vaultIds[0];
+    const vault = fixture.state.entities.vaults.byId[vaultId]!;
+    const chainTokens = fixture.state.entities.tokens.byChainId[FIXTURE_CHAIN]!;
+    const shareToken = chainTokens.byAddress[vault.contractAddress.toLowerCase()];
+    const otherToken = Object.values(chainTokens.byAddress).find(
+      token => !!token && token.type === 'erc20' && token !== fixture.rewardToken
+    )!;
+    const inputs = [{ token: fixture.rewardToken, amount: new BigNumber(5) }];
+
+    const deposit = renderTree(
+      <ZapSuccessContent
+        step={{
+          ...FIXTURE_STEP,
+          extraInfo: { vaultId, zapDetails: { inputs, outputTokens: [] } },
+        }}
+      />,
+      withZapRouterSuccess(fixture.state, vaultId, [shareToken])
+    );
+    const depositText = deposit.html.replaceAll('<!-- -->', '');
+    expect(depositText).toContain(`You deposited 5 ${fixture.rewardToken.symbol} into`);
+    // the router returned 2 shares, which the screen reports as the position they are worth
+    const depositToken = chainTokens.byAddress[vault.depositTokenAddress.toLowerCase()];
+    const position = vault.assetType === 'single' ? depositToken.symbol : 'LP';
+    expect(depositText).toContain(`2 ${position} was added to your position`);
+    expect(describeUnstable(deposit)).toEqual([]);
+
+    // break-LP style withdraw: two tokens come back
+    const outputTokens = [fixture.rewardToken, otherToken];
+    const withdraw = renderTree(
+      <ZapSuccessContent
+        step={{
+          ...FIXTURE_STEP,
+          step: 'zap-out',
+          extraInfo: { vaultId, zapDetails: { inputs, outputTokens } },
+        }}
+      />,
+      withZapRouterSuccess(fixture.state, vaultId, outputTokens)
+    );
+    const withdrawText = withdraw.html.replaceAll('<!-- -->', '');
+    expect(withdrawText).toContain(`to ${fixture.rewardToken.symbol} and ${otherToken.symbol}.`);
+    expect(withdrawText).toContain(
+      `2 ${fixture.rewardToken.symbol} and 2 ${otherToken.symbol} were sent to your wallet.`
+    );
+    expect(describeUnstable(withdraw)).toEqual([]);
+
+    // a vault -> CLM pool conversion names both sides, and the pool's rCLM reads as the position
+    const poolVaultId = fixture.vaultIds.find(
+      id => fixture.state.entities.vaults.byId[id]?.type === 'gov'
+    )!;
+    const poolVault = fixture.state.entities.vaults.byId[poolVaultId]!;
+    const poolShareToken = chainTokens.byAddress[poolVault.contractAddress.toLowerCase()];
+    const conversion = renderTree(
+      <ZapSuccessContent
+        step={{
+          ...FIXTURE_STEP,
+          extraInfo: {
+            vaultId,
+            zapDetails: {
+              inputs,
+              outputTokens: [],
+              vaultToVault: { srcVaultId: vaultId, destVaultId: poolVaultId },
+            },
+          },
+        }}
+      />,
+      withZapRouterSuccess(fixture.state, poolVaultId, [poolShareToken])
+    );
+    const conversionText = conversion.html.replaceAll('<!-- -->', '');
+    expect(conversionText).toContain(
+      `from ${vault.names.singleMeta} into ${poolVault.names.singleMeta}`
+    );
+    // the pool returned 2 rCLM, which reads as the CLM position it is worth
+    expect(conversionText).toContain('2 LP was added to your position');
+    expect(describeUnstable(conversion)).toEqual([]);
 
     const boost = renderTree(
       <BoostUnstakeSuccessContent step={FIXTURE_STEP} />,

@@ -1,7 +1,35 @@
-import type { ChainConfig } from '../features/data/apis/config-types.ts';
+import { mapValues } from 'lodash-es';
+import type { ChainConfig, ChainFeature, ChainStatus } from '../features/data/apis/config-types.ts';
 
-export const config = {
+type ChainConfigInput = Omit<ChainConfig, 'id' | 'status' | 'retiredAt' | 'features'> & {
+  /** each defaults to `featureDefaultsByStatus[status]` */
+  features?: { [F in ChainFeature]?: boolean };
+} & (
+    | { status: 'active'; retiredAt?: never }
+    | { status: Exclude<ChainStatus, 'active'>; retiredAt: number }
+  );
+
+const featureDefaultsByStatus = {
+  active: { price: true, apy: true },
+  eol: { price: true, apy: false },
+  disabled: { price: false, apy: false },
+} as const satisfies Record<ChainStatus, ChainConfig['features']>;
+
+function resolveChainConfig({ features, ...input }: ChainConfigInput): Omit<ChainConfig, 'id'> {
+  const featureDefaults = featureDefaultsByStatus[input.status];
+  return {
+    ...input,
+    retiredAt: input.retiredAt,
+    features: {
+      price: features?.price ?? featureDefaults.price,
+      apy: features?.apy ?? featureDefaults.apy,
+    },
+  };
+}
+
+const chainConfigInputs = {
   arbitrum: {
+    status: 'active',
     name: 'Arbitrum',
     chainId: 42161,
     rpc: [
@@ -20,11 +48,15 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
+      blocks: 220,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      // priority fees enabled as of September 24, 2026
+      priorityMinimum: '1',
     },
   },
   arc: {
+    status: 'active',
     new: true,
     name: 'Arc',
     chainId: 5042,
@@ -41,13 +73,15 @@ export const config = {
     native: { symbol: 'USDC', oracleId: 'USDC', decimals: 18, balanceSharedWithWrapped: true },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      baseMinimum: '20000000000',
-      priorityMinimum: '1000000000',
+      blocks: 120,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      baseMinimum: '20000000000', // 20 gwei
+      priorityMinimum: '1',
     },
   },
   avax: {
+    status: 'active',
     name: 'Avalanche',
     chainId: 43114,
     rpc: [
@@ -61,19 +95,20 @@ export const config = {
       'https://43114.rpc.thirdweb.com',
       'https://spectrum-01.simplystaking.xyz/avalanche-mn-rpc/ext/bc/C/rpc',
     ],
-    explorerUrl: 'https://cchain.explorer.avax.network',
+    explorerUrl: 'https://snowscan.xyz',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe60D2cf5140b7D7703D26aD5f581F865a7b51BeF',
     native: { symbol: 'AVAX', oracleId: 'WAVAX', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   base: {
+    status: 'active',
     name: 'Base',
     chainId: 8453,
     rpc: [
@@ -91,13 +126,14 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 300,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   bsc: {
+    status: 'active',
     name: 'BNB Chain',
     chainId: 56,
     rpc: [
@@ -127,11 +163,15 @@ export const config = {
     appMulticallContractAddress: '0x073d1752efe671AAE0E609a8f61663e3660673d3',
     native: { symbol: 'BNB', oracleId: 'WBNB', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '3000000000',
+      type: 'eip1559',
+      blocks: 135,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '50000000',
     },
   },
   ethereum: {
+    status: 'active',
     name: 'Ethereum',
     chainId: 1,
     rpc: [
@@ -155,13 +195,14 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 5,
+      percentile: 60,
+      baseSafetyMargin: 0.5,
+      priorityMinimum: '1',
     },
   },
   fraxtal: {
+    status: 'active',
     name: 'Fraxtal',
     chainId: 252,
     rpc: [
@@ -174,18 +215,19 @@ export const config = {
       'https://252.rpc.thirdweb.com',
     ],
     explorerUrl: 'https://fraxscan.com',
-    multicall3Address: '0x0955479C61B37074d689319fCaA84ffE1E9e8CF5',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xB1bFc21bEE2b2DDA4728481dbF52eDC3b9F5Fb79',
     native: { symbol: 'FRAX', oracleId: 'WFXS', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 30,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   hyperevm: {
+    status: 'active',
     name: 'HyperEVM',
     chainId: 999,
     rpc: [
@@ -202,10 +244,15 @@ export const config = {
     appMulticallContractAddress: '0xB859F08434E6055C33f204d766d6A95898D37abC',
     native: { symbol: 'HYPE', oracleId: 'WHYPE', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   megaeth: {
+    status: 'active',
     name: 'MegaETH',
     chainId: 4326,
     rpc: [
@@ -219,10 +266,15 @@ export const config = {
     appMulticallContractAddress: '0xb267dE0B043Ec5faCc5e554c7a3aB8F06a4A44D8',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 60,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   monad: {
+    status: 'active',
     name: 'Monad',
     chainId: 143,
     rpc: [
@@ -241,10 +293,15 @@ export const config = {
     appMulticallContractAddress: '0xDD10a7949e48dCf5df301DC84268eaaC7F7d3f3D',
     native: { symbol: 'MON', oracleId: 'WMON', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 200,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   optimism: {
+    status: 'active',
     name: 'OP Mainnet',
     chainId: 10,
     rpc: [
@@ -261,11 +318,15 @@ export const config = {
     appMulticallContractAddress: '0x5e0388EFf1e18c13E5a2650879DdF1677893bDBc',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '1000000',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   plasma: {
+    status: 'active',
     name: 'Plasma',
     chainId: 9745,
     rpc: [
@@ -273,19 +334,20 @@ export const config = {
       'https://rpc.swiftnodes.io/rpc/plasma',
       'https://9745.rpc.thirdweb.com',
     ],
-    explorerUrl: 'https://plasmascan.to/',
+    explorerUrl: 'https://plasmascan.to',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x25B6B1a6e7948a983f8e0999FFB4E68Bc7385520',
     native: { symbol: 'XPL', oracleId: 'WXPL', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 60,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   polygon: {
+    status: 'active',
     name: 'Polygon PoS',
     chainId: 137,
     rpc: [
@@ -304,20 +366,22 @@ export const config = {
     native: { symbol: 'POL', oracleId: 'WMATIC', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 40,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '25000000000',
     },
   },
   robinhood: {
+    status: 'active',
     name: 'Robinhood',
     chainId: 4663,
     rpc: [
       'https://rpc.mainnet.chain.robinhood.com',
-      'https://rpc.ordofi.network',
       'https://robinhood-rpc.publicnode.com',
       'https://rpc-robinhood.blockmachine.io',
+      'https://robinhood.daybreak-rpc.network',
+      'https://rpc-robinhood.globalstake.io',
     ],
     explorerUrl: 'https://robin.etherscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -325,12 +389,17 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
+      blocks: 580,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '0',
+      // priority fees not enabled on robinhood (yet)
+      priorityMaximum: '0',
     },
   },
   sonic: {
-    eol: 1790951681,
+    status: 'eol',
+    retiredAt: 1790951681,
     name: 'Sonic',
     chainId: 146,
     rpc: [
@@ -347,10 +416,10 @@ export const config = {
     native: { symbol: 'S', oracleId: 'WS', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 45,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
     brand: {
       icon: 'gradient',
@@ -358,7 +427,9 @@ export const config = {
     },
   },
   rootstock: {
-    eol: 1789666812,
+    status: 'eol',
+    retiredAt: 1789666812,
+    features: { price: false },
     name: 'Rootstock',
     chainId: 30,
     rpc: [
@@ -377,7 +448,8 @@ export const config = {
     },
   },
   linea: {
-    eol: 1787210390,
+    status: 'eol',
+    retiredAt: 1787210390,
     name: 'Linea',
     chainId: 59144,
     rpc: [
@@ -394,14 +466,16 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 5,
-      percentile: 0.2,
+      blocks: 6,
+      percentile: 60,
       baseMinimum: '7',
       baseSafetyMargin: 0.2,
+      priorityMinimum: '30000000', // 0.03 gwei
     },
   },
   gnosis: {
-    eol: 1787210389,
+    status: 'eol',
+    retiredAt: 1787210389,
     name: 'Gnosis',
     chainId: 100,
     rpc: [
@@ -418,11 +492,16 @@ export const config = {
     appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
     native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 12,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   zksync: {
-    eol: 1787210388,
+    status: 'eol',
+    retiredAt: 1787210388,
     name: 'zkSync',
     chainId: 324,
     rpc: [
@@ -438,11 +517,18 @@ export const config = {
     appMulticallContractAddress: '0x6bD7b74BD4707b1effeFC199920Bc3bC1Cb7b11f',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 7,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '0',
+      // zkSync ignores priority fees
+      priorityMaximum: '0',
     },
   },
   berachain: {
-    eol: 1783962082,
+    status: 'eol',
+    retiredAt: 1783962082,
     name: 'Berachain',
     chainId: 80094,
     rpc: [
@@ -460,11 +546,16 @@ export const config = {
     appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
     native: { symbol: 'BERA', oracleId: 'WBERA', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   sei: {
-    eol: 1782156397,
+    status: 'eol',
+    retiredAt: 1782156397,
     name: 'Sei',
     chainId: 1329,
     rpc: [
@@ -472,17 +563,21 @@ export const config = {
       'https://sei-evm-rpc.stakeme.pro',
       'https://1329.rpc.thirdweb.com',
     ],
-    explorerUrl: 'https://seitrace.com',
+    explorerUrl: 'https://seiscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
     native: { symbol: 'SEI', oracleId: 'WSEI', decimals: 18 },
     gas: {
-      type: 'standard',
-      minimum: '10000000', // 0.01 gwei
+      type: 'eip1559',
+      blocks: 125,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   lisk: {
-    eol: 1782156394,
+    status: 'eol',
+    retiredAt: 1782156394,
     name: 'Lisk',
     chainId: 1135,
     rpc: [
@@ -497,16 +592,17 @@ export const config = {
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
+      blocks: 30,
+      percentile: 60,
       baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      priorityMinimum: '1',
     },
   },
   metis: {
+    status: 'eol',
+    retiredAt: 1776098525,
     name: 'Metis',
     chainId: 1088,
-    eol: 1776098525,
     rpc: [
       'https://andromeda.metis.io/?owner=1088',
       'https://metis-rpc.publicnode.com',
@@ -523,8 +619,9 @@ export const config = {
     },
   },
   mantle: {
+    status: 'eol',
+    retiredAt: 1776098525,
     name: 'Mantle',
-    eol: 1776098525,
     chainId: 5000,
     rpc: [
       'https://rpc.mantle.xyz',
@@ -538,13 +635,19 @@ export const config = {
     appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
     native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 30,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   cronos: {
+    status: 'eol',
+    retiredAt: 1764838421,
+    features: { price: false },
     name: 'Cronos',
     chainId: 25,
-    eol: 1764838421,
     rpc: [
       'https://evm.cronos.org',
       'https://rpc.vvs.finance',
@@ -559,15 +662,17 @@ export const config = {
     native: { symbol: 'CRO', oracleId: 'WCRO', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      blocks: 140,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   saga: {
+    status: 'disabled',
+    retiredAt: 1764838421,
     name: 'Saga',
     chainId: 5464,
-    eol: 1764838421,
     rpc: ['https://sagaevm.jsonrpc.sagarpc.io', 'https://5464.rpc.thirdweb.com'],
     explorerUrl: 'https://sagaevm-5464-1.sagaexplorer.io',
     multicall3Address: '0x864DDc9B50B9A0dF676d826c9B9EDe9F8913a160', // TODO ?
@@ -578,9 +683,10 @@ export const config = {
     },
   },
   moonbeam: {
+    status: 'disabled',
+    retiredAt: 1756396225,
     name: 'Moonbeam',
     chainId: 1284,
-    eol: 1756396225,
     rpc: ['https://moonbeam.api.onfinality.io/public', 'https://moonbeam.api.pocket.network'],
     explorerUrl: 'https://moonscan.io',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -589,14 +695,15 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   mode: {
+    status: 'disabled',
+    retiredAt: 1754382440,
     name: 'Mode',
     chainId: 34443,
-    eol: 1754382440,
     rpc: [
       'https://mainnet.mode.network',
       'https://mode-mainnet.rpc.sentio.xyz',
@@ -610,15 +717,16 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
   scroll: {
+    status: 'disabled',
+    retiredAt: 1753131600,
     name: 'Scroll',
     chainId: 534352,
-    eol: 1753131600,
     rpc: [
       'https://rpc.scroll.io',
       'https://scroll-rpc.publicnode.com',
@@ -635,14 +743,16 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
   fantom: {
+    status: 'eol',
+    retiredAt: 1736182577,
+    features: { price: false },
     name: 'Fantom',
-    eol: 1736182577,
     chainId: 250,
     rpc: [
       'https://rpcapi.fantom.network',
@@ -657,17 +767,17 @@ export const config = {
     native: { symbol: 'FTM', oracleId: 'WFTM', decimals: 18 },
     gas: {
       type: 'eip1559',
-      blocks: 100,
-      percentile: 0.6,
-      priorityMinimum: '1000000000',
-      baseSafetyMargin: 0.1,
+      blocks: 7,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '1',
     },
   },
   canto: {
+    status: 'disabled',
+    retiredAt: 1734101117,
     name: 'Canto',
     chainId: 7700,
-    eol: 1734101117,
-    disabled: true,
     rpc: [],
     explorerUrl: 'https://tuber.build',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -678,9 +788,10 @@ export const config = {
     },
   },
   kava: {
+    status: 'disabled',
+    retiredAt: 1734101117,
     name: 'Kava',
     chainId: 2222,
-    eol: 1734101117,
     rpc: [
       'https://kava-evm-rpc.publicnode.com',
       'https://evm.kava-rpc.com',
@@ -698,9 +809,10 @@ export const config = {
     },
   },
   manta: {
+    status: 'disabled',
+    retiredAt: 1734101117,
     name: 'Manta',
     chainId: 169,
-    eol: 1734101117,
     rpc: [
       'https://manta-pacific-mainnet.rpc.sentio.xyz',
       'https://manta-pacific-gascap.calderachain.xyz/http',
@@ -716,16 +828,16 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
   real: {
+    status: 'disabled', // no rpcs available
+    retiredAt: 1731964599,
     name: 'Re.al',
     chainId: 111188,
-    eol: 1731964599,
-    disabled: true, // no rpcs available
     rpc: [],
     explorerUrl: 'https://explorer.re.al',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -734,14 +846,15 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.7,
+      percentile: 60,
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
   },
   zkevm: {
+    status: 'disabled',
+    retiredAt: 1729771090,
     name: 'Polygon zkEVM',
-    eol: 1729771090,
     chainId: 1101,
     rpc: [
       'https://zkevm-rpc.com',
@@ -758,8 +871,9 @@ export const config = {
     },
   },
   fuse: {
+    status: 'disabled',
+    retiredAt: 1722901359,
     name: 'Fuse',
-    eol: 1722901359,
     chainId: 122,
     rpc: [
       'https://fuse.liquify.com',
@@ -776,9 +890,10 @@ export const config = {
     },
   },
   moonriver: {
+    status: 'disabled',
+    retiredAt: 1715594061,
     name: 'Moonriver',
     chainId: 1285,
-    eol: 1715594061,
     rpc: [
       'https://moonriver.api.onfinality.io/public',
       'https://moonriver.drpc.org',
@@ -791,14 +906,15 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   aurora: {
+    status: 'disabled',
+    retiredAt: 1691085875,
     name: 'Aurora',
     chainId: 1313161554,
-    eol: 1691085875,
     rpc: ['https://mainnet.aurora.dev', 'https://aurora.drpc.org'],
     explorerUrl: 'https://aurorascan.dev',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -809,9 +925,10 @@ export const config = {
     },
   },
   emerald: {
+    status: 'disabled',
+    retiredAt: 1691085875,
     name: 'Emerald',
     chainId: 42262,
-    eol: 1691085875,
     rpc: [
       'https://emerald.oasis.io',
       'https://emerald.oasis.dev',
@@ -826,9 +943,10 @@ export const config = {
     },
   },
   celo: {
+    status: 'disabled',
+    retiredAt: 1691085875,
     name: 'Celo',
     chainId: 42220,
-    eol: 1691085875,
     rpc: [
       'https://forno.celo.org',
       'https://rpc.ankr.com/celo',
@@ -845,9 +963,9 @@ export const config = {
     },
   },
   heco: {
+    status: 'disabled',
+    retiredAt: 1681913494,
     name: 'HECO',
-    eol: 1681913494,
-    disabled: true,
     chainId: 128,
     rpc: [],
     explorerUrl: 'https://hecoinfo.com',
@@ -857,14 +975,14 @@ export const config = {
     gas: {
       type: 'eip1559',
       blocks: 100,
-      percentile: 0.6,
-      baseSafetyMargin: 0.1,
+      percentile: 60,
+      baseSafetyMargin: 0.2,
     },
   },
   harmony: {
+    status: 'disabled',
+    retiredAt: 1681913494,
     name: 'Harmony',
-    eol: 1681913494,
-    disabled: true,
     chainId: 1666600000,
     rpc: [
       'https://api.harmony.one',
@@ -880,4 +998,6 @@ export const config = {
       type: 'standard',
     },
   },
-} satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
+} satisfies Record<ChainConfig['id'], ChainConfigInput>;
+
+export const config = mapValues(chainConfigInputs, input => resolveChainConfig(input));

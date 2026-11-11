@@ -150,7 +150,7 @@ export interface EIP1559GasConfig {
   type: 'eip1559';
   /** how many past blocks should we look at when calculating fee */
   blocks: number;
-  /** what percentage of those blocks should we aim to be included in (0-1) */
+  /** eth_feeHistory reward percentile (0-100) sampled from each block */
   percentile: number;
   /** add this % on top of base gas price from RPC (0-1) */
   baseSafetyMargin?: number;
@@ -162,7 +162,7 @@ export interface EIP1559GasConfig {
   prioritySafetyMargin?: number;
   /** set priority gas price to at least this (wei) */
   priorityMinimum?: string;
-  /** set priority gas price to at most this (wei) */
+  /** set priority gas price to at most this (wei), even if below priorityMinimum */
   priorityMaximum?: string;
 }
 
@@ -220,11 +220,17 @@ type ChainId =
   | 'robinhood'
   | 'arc';
 
+export type ChainStatus = 'active' | 'eol' | 'disabled';
+
+export type ChainFeature = 'price' | 'apy';
+
 export type ChainConfig = {
   id: ChainId;
   name: string;
-  eol?: number;
-  disabled?: boolean;
+  status: ChainStatus;
+  /** unix timestamp, set when status is not active */
+  retiredAt: number | undefined;
+  features: Record<ChainFeature, boolean>;
   chainId: number;
   rpc: string[];
   explorerUrl: string;

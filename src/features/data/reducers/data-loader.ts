@@ -66,6 +66,7 @@ import type {
   LoaderStateRejected,
 } from './data-loader-types.ts';
 import { fetchWeeklyRevenueStats } from '../actions/revenue.ts';
+import { fetchTvlHistoryMonth, fetchTvlHistoryYear } from '../actions/tvl-history.ts';
 import { getNotifications } from './data-loader-notifications.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
@@ -150,6 +151,8 @@ export const initialDataLoaderState: DataLoaderState = {
     zapConfigs: dataLoaderStateInit,
     zapSwapAggregators: dataLoaderStateInit,
     revenue: dataLoaderStateInit,
+    tvlHistoryMonth: dataLoaderStateInit,
+    tvlHistoryYear: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -238,7 +241,7 @@ function addGlobalAsyncThunkActions<TPayload, TArg>(
   builder.addCase(action.fulfilled, (sliceState, action) => {
     if (fetchChainConfigs.fulfilled.match(action)) {
       sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
-        .filter(c => c.eol)
+        .filter(c => c.status !== 'active')
         .map(c => c.id);
     }
     setGlobalFulfilled(sliceState, stateKey, action.meta.requestId);
@@ -624,6 +627,8 @@ export const dataLoaderSlice = createSlice({
       'currentCowcentratedRanges'
     );
     addGlobalAsyncThunkActions(builder, fetchWeeklyRevenueStats, 'revenue');
+    addGlobalAsyncThunkActions(builder, fetchTvlHistoryMonth, 'tvlHistoryMonth');
+    addGlobalAsyncThunkActions(builder, fetchTvlHistoryYear, 'tvlHistoryYear');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);

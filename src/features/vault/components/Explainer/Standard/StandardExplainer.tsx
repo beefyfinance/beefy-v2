@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
 import { explorerAddressUrl } from '../../../../../helpers/url.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
-import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/entities/vault.ts';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../../data/selectors/chains.ts';
 import {
   selectStandardVaultById,
+  selectVaultShouldShowInterest,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../data/selectors/vaults.ts';
 import { CardTitle } from '../../Card/CardTitle.tsx';
@@ -32,7 +33,8 @@ const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardE
   );
 
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
-  const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
+  const shouldShowInterest = useAppSelector(state => selectVaultShouldShowInterest(state, vaultId));
+  const showApy = apys && apys.totalApy > 0 && shouldShowInterest;
   const showLendingOracle = !!vault.lendingOracle;
 
   const links = useMemo(() => {
@@ -80,7 +82,8 @@ const StandardExplainerDetails = memo(function StandardExplainerDetails({
 }: StandardExplainerProps) {
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
-  const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
+  const shouldShowInterest = useAppSelector(state => selectVaultShouldShowInterest(state, vaultId));
+  const showApy = apys && apys.totalApy > 0 && shouldShowInterest;
   const showLendingOracle = !!vault.lendingOracle;
 
   if (!showApy && showLendingOracle) {
