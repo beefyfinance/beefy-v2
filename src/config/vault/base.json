@@ -7627,7 +7627,7 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["WETH", "USDC"],
-    "icons": ["USDC", "WETH"],
+    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -8427,7 +8427,7 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["WETH", "USDC"],
-    "icons": ["USDC", "WETH"],
+    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -9287,7 +9287,7 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["WETH", "USDC"],
-    "icons": ["USDC", "WETH"],
+    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
