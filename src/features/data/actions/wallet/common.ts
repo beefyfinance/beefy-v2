@@ -1,9 +1,11 @@
 import type { Address } from 'viem';
 import { uniqBy } from 'lodash-es';
-import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
-import { waitForTransactionReceipt } from 'viem/actions';
+import { BaseError, type Chain, type Client, type Hash, type TransactionReceipt } from 'viem';
+import { getChainId, getTransaction, waitForTransactionReceipt } from 'viem/actions';
 import { errorToString } from '../../../../helpers/format.ts';
 import type { GasPricing } from '../../apis/gas-prices/gas-prices.ts';
+import { getWalletConnectionApi } from '../../apis/instances.ts';
+import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { MinterEntity } from '../../entities/minter.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
@@ -31,6 +33,7 @@ import {
 } from '../../selectors/tokens.ts';
 import type { BeefyDispatchFn, BeefyState, BeefyThunk } from '../../store/types.ts';
 import { isDefined } from '../../utils/array-utils.ts';
+import { sleep } from '../../utils/async-utils.ts';
 import { FriendlyError } from '../../utils/error-utils.ts';
 import { migratorUpdate } from '../migrator.ts';
 import { reloadReserves } from '../minters.ts';
@@ -220,22 +223,79 @@ export function captureWalletErrors<T extends BeefyThunk>(func: T): BeefyThunk {
   };
 }
 
-export function bindTransactionEvents(
-  dispatch: BeefyDispatchFn,
-  transactionHashPromise: Promise<Hash>,
-  client: PublicClient,
-  additionalData: TxAdditionalData,
-  refreshOnSuccess?: TxRefreshOnSuccess
+/**
+ * Some wallets (e.g. Rabby) keep treating a mined tx as pending until their own tracker catches up,
+ * and replay it when simulating the next tx, so a follow-up step can fail simulation if sent too early.
+ */
+export async function waitForWalletToSeeMined(
+  walletClient: Client,
+  chainId: number,
+  hash: Hash,
+  timeoutMs: number = 15_000
 ) {
-  const context: TxContext = { additionalData, refreshOnSuccess };
+  let timedOut = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
 
-  transactionHashPromise
+  const poll = async () => {
+    while (!timedOut) {
+      if ((await getChainId(walletClient)) !== chainId) {
+        return;
+      }
+      const tx = await getTransaction(walletClient, { hash });
+      if (tx.blockNumber !== null) {
+        return;
+      }
+      await sleep(1_000);
+    }
+  };
+
+  const timeout = new Promise<void>(resolve => {
+    timer = setTimeout(() => {
+      timedOut = true;
+      resolve();
+    }, timeoutMs);
+  });
+
+  try {
+    await Promise.race([poll(), timeout]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+type BindTransactionEventsParams = {
+  dispatch: BeefyDispatchFn;
+  chainId: ChainEntity['id'];
+  hashPromise: Promise<Hash>;
+  additionalData: TxAdditionalData;
+  refreshOnSuccess?: TxRefreshOnSuccess;
+  walletClient?: Client;
+};
+
+function bindTransactionEvents({
+  dispatch,
+  chainId,
+  hashPromise,
+  additionalData,
+  refreshOnSuccess,
+  walletClient,
+}: BindTransactionEventsParams) {
+  const context: TxContext = { additionalData, refreshOnSuccess };
+  const publicClient = rpcClientManager.getBatchClient(chainId);
+  const waitForWallet = async (hash: Hash) => {
+    const client =
+      walletClient ?? (await (await getWalletConnectionApi()).getConnectedViemClient());
+    await waitForWalletToSeeMined(client, publicClient.chain!.id, hash);
+  };
+
+  hashPromise
     .then(hash => {
       txSubmitted(dispatch, context, hash);
-      waitForTransactionReceipt(client, { hash })
-        .then(receipt => {
+      waitForTransactionReceipt(publicClient, { hash })
+        .then(async receipt => {
           const success = receipt.status === 'success';
           if (success) {
+            await waitForWallet(hash).catch(() => undefined);
             txMined(dispatch, context, receipt);
           } else {
             txError(
@@ -258,15 +318,15 @@ export function bindTransactionEvents(
     });
 }
 
-export function sendTransaction(
-  dispatch: BeefyDispatchFn,
-  builder: () => Promise<Hash>,
-  client: PublicClient,
-  additionalData: TxAdditionalData,
-  refreshOnSuccess?: TxRefreshOnSuccess
-) {
-  txWallet(dispatch);
-  bindTransactionEvents(dispatch, builder(), client, additionalData, refreshOnSuccess);
+type SendTransactionParams = Omit<BindTransactionEventsParams, 'hashPromise'> & {
+  builder: () => Promise<Hash>;
+};
+
+export function sendTransaction({ builder, ...params }: SendTransactionParams) {
+  txWallet(params.dispatch);
+  const hashPromise = builder();
+  bindTransactionEvents({ ...params, hashPromise });
+  return { hashPromise };
 }
 
 export function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {

@@ -19,11 +19,13 @@
     "creationdate": "vite-node ./scripts/getPoolCreationTimestamp.ts",
     "launchpool": "vite-node ./scripts/launchpool.ts",
     "vault": "vite-node ./scripts/addVault.ts",
+    "add:aerov2": "vite-node ./scripts/addAeroV2.ts",
     "clm": "vite-node ./scripts/addCLM.ts",
     "pause": "vite-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "vite-node ./scripts/setVaultUrls.ts",
     "vaultConfigDiff": "vite-node ./scripts/vaultConfigDiff.ts",
     "setVaultStatus": "vite-node ./scripts/setVaultStatus.ts",
+    "removeEmptyVaults": "vite-node ./scripts/removeEmptyVaults.ts",
     "retireChain": "vite-node ./scripts/retireChain.ts",
     "setVaultRisks": "vite-node ./scripts/setVaultRisks.ts",
     "addClmRewardPools": "vite-node ./scripts/addClmRewardPools.ts",
@@ -53,7 +55,7 @@
     "packages:update": "node ./scripts/updatePackages.js"
   },
   "dependencies": {
-    "@beefyfinance/blockchain-addressbook": "^0.62.20",
+    "@beefyfinance/blockchain-addressbook": "^0.62.25",
     "@coinbase/wallet-sdk": "^4.3.7",
     "@deficonnect/web3-connector": "^2.0.3",
     "@floating-ui/react": "^0.27.16",

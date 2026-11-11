@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Hash, PublicClient } from 'viem';
+import type { Client, Hash } from 'viem';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MessageListResponse } from '../apis/cctp/cctp-api-types.ts';
 import type { RecoveryQuote } from '../apis/transact/transact-types.ts';
@@ -43,7 +43,7 @@ import { stepperSlice } from '../reducers/wallet/stepper.ts';
 import { transactReducer } from '../reducers/wallet/transact.ts';
 import { walletActionsReducer } from '../reducers/wallet/wallet-action.ts';
 import { transactSetSuccessClosed } from './transact.ts';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './wallet/common.ts';
+import { captureWalletErrors, sendTransaction, txStart } from './wallet/common.ts';
 import {
   crossChainFetchRecoveryQuote,
   crossChainOpInitiated,
@@ -130,13 +130,13 @@ function crossChainStep(op: PendingCrossChainOp): Step {
     action: captureWalletErrors(async dispatch => {
       txStart(dispatch);
       dispatch(crossChainOpInitiated(op));
-      txWallet(dispatch);
-      bindTransactionEvents(
+      sendTransaction({
         dispatch,
-        Promise.resolve(op.sourceTxHash as Hash),
-        {} as PublicClient,
-        zapData
-      );
+        chainId: 'base',
+        walletClient: {} as Client,
+        builder: () => Promise.resolve(op.sourceTxHash as Hash),
+        additionalData: zapData,
+      });
     }),
   };
 }
@@ -149,8 +149,13 @@ const sameChainStep: Step = {
   extraInfo: { zap: true },
   action: captureWalletErrors(async dispatch => {
     txStart(dispatch);
-    txWallet(dispatch);
-    bindTransactionEvents(dispatch, new Promise<Hash>(() => {}), {} as PublicClient, zapData);
+    sendTransaction({
+      dispatch,
+      chainId: 'base',
+      walletClient: {} as Client,
+      builder: () => new Promise<Hash>(() => {}),
+      additionalData: zapData,
+    });
   }),
 };
 

@@ -57,6 +57,16 @@ export const selectIsStepperStepping = (state: BeefyState) => {
   );
 };
 
+export const selectIsMigrationStepping = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return (
+    selectIsStepperStepping(state) &&
+    state.ui.stepperState.stepContent !== StepContent.ErrorTx &&
+    state.ui.stepperState.items.some(
+      item => item.step === 'migration' && item.extraInfo?.vaultId === vaultId
+    )
+  );
+};
+
 export const selectStepperCurrentStep = (state: BeefyState) => {
   return state.ui.stepperState.currentStep;
 };
