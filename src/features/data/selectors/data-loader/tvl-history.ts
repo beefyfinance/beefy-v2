@@ -1,21 +1,28 @@
 import {
-  DEFAULT_DISPATCHED_RECENT_SECONDS,
   createGlobalDataSelector,
-  hasLoaderSettledOnce,
-  shouldLoaderLoadOnce,
+  hasLoaderFulfilledOnce,
+  isLoaderIdle,
+  isLoaderRejected,
 } from '../data-loader-helpers.ts';
 
-export const selectShouldLoadTvlHistoryMonth = createGlobalDataSelector(
+export const selectIsTvlHistoryMonthIdle = createGlobalDataSelector(
   'tvlHistoryMonth',
-  shouldLoaderLoadOnce,
-  DEFAULT_DISPATCHED_RECENT_SECONDS
+  isLoaderIdle
 );
-export const selectShouldLoadTvlHistoryYear = createGlobalDataSelector(
-  'tvlHistoryYear',
-  shouldLoaderLoadOnce,
-  DEFAULT_DISPATCHED_RECENT_SECONDS
+export const selectIsTvlHistoryYearIdle = createGlobalDataSelector('tvlHistoryYear', isLoaderIdle);
+export const selectHasTvlHistoryMonthFulfilled = createGlobalDataSelector(
+  'tvlHistoryMonth',
+  hasLoaderFulfilledOnce
 );
-export const selectIsTvlHistoryYearSettled = createGlobalDataSelector(
+export const selectHasTvlHistoryYearFulfilled = createGlobalDataSelector(
   'tvlHistoryYear',
-  hasLoaderSettledOnce
+  hasLoaderFulfilledOnce
+);
+export const selectIsTvlHistoryMonthRejected = createGlobalDataSelector(
+  'tvlHistoryMonth',
+  isLoaderRejected
+);
+export const selectIsTvlHistoryYearRejected = createGlobalDataSelector(
+  'tvlHistoryYear',
+  isLoaderRejected
 );

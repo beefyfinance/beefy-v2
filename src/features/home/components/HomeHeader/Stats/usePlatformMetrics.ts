@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import type BigNumber from 'bignumber.js';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../data/store/hooks.ts';
@@ -9,16 +9,22 @@ import {
 } from '../../../../data/actions/tvl-history.ts';
 import { selectIsChainConfigAvailable } from '../../../../data/selectors/data-loader/config.ts';
 import {
-  selectShouldLoadTvlHistoryMonth,
-  selectShouldLoadTvlHistoryYear,
+  selectHasTvlHistoryMonthFulfilled,
+  selectHasTvlHistoryYearFulfilled,
+  selectIsTvlHistoryMonthIdle,
+  selectIsTvlHistoryMonthRejected,
+  selectIsTvlHistoryYearIdle,
+  selectIsTvlHistoryYearRejected,
 } from '../../../../data/selectors/data-loader/tvl-history.ts';
 import { selectIsRevenueSettled } from '../../../../data/selectors/data-loader/revenue.ts';
 import { selectRevenueWeeks } from '../../../../data/selectors/revenue.ts';
 import { selectTotalTvl } from '../../../../data/selectors/tvl.ts';
 import { selectTvlHistory } from '../../../../data/selectors/tvl-history.ts';
+import type { GlobalDataSelectorFn } from '../../../../data/selectors/data-loader-helpers.ts';
 import {
   type BuybackUnit,
   changeOverPeriod,
+  type TimePointWithMa,
   WEEK_SECONDS,
   type WeeklyMetric,
   WEEKLY_METRICS,
@@ -79,27 +85,75 @@ export function formatMetricValue(
     : formatLargeUsd(value);
 }
 
-export function useLoadTvlHistory(bucket: TvlHistoryBucket) {
-  const dispatch = useAppDispatch();
-  const isMonth = bucket === '1d_1M';
-  const shouldLoad = useAppSelector(
-    isMonth ? selectShouldLoadTvlHistoryMonth : selectShouldLoadTvlHistoryYear
-  );
-  const chainsLoaded = useAppSelector(selectIsChainConfigAvailable);
+type LoaderSelectors = {
+  selectIdle: GlobalDataSelectorFn;
+  selectFulfilled: GlobalDataSelectorFn;
+  selectRejected: GlobalDataSelectorFn;
+};
+
+type LoadStatus = {
+  loading: boolean;
+  error: boolean;
+  willRetry: boolean;
+};
+
+const RETRY_AFTER_MS = 15_000;
+
+function useLoadOnceWithRetry(
+  load: () => unknown,
+  { selectIdle, selectFulfilled, selectRejected }: LoaderSelectors,
+  enabled: boolean = true
+): LoadStatus {
+  const idle = useAppSelector(selectIdle);
+  const fulfilled = useAppSelector(selectFulfilled);
+  const rejected = useAppSelector(selectRejected);
 
   useEffect(() => {
-    if (shouldLoad && chainsLoaded) {
-      dispatch(isMonth ? fetchTvlHistoryMonth() : fetchTvlHistoryYear());
+    if (!enabled || fulfilled) return;
+    if (idle) {
+      load();
+    } else if (rejected) {
+      const handle = setTimeout(load, RETRY_AFTER_MS);
+      return () => clearTimeout(handle);
     }
-  }, [dispatch, isMonth, shouldLoad, chainsLoaded]);
+  }, [load, enabled, idle, fulfilled, rejected]);
+
+  const error = !fulfilled && rejected;
+  return { loading: !fulfilled && !rejected, error, willRetry: error };
+}
+
+const TVL_HISTORY_LOADERS = {
+  '1d_1M': {
+    fetch: fetchTvlHistoryMonth,
+    selectIdle: selectIsTvlHistoryMonthIdle,
+    selectFulfilled: selectHasTvlHistoryMonthFulfilled,
+    selectRejected: selectIsTvlHistoryMonthRejected,
+  },
+  '1d_1Y': {
+    fetch: fetchTvlHistoryYear,
+    selectIdle: selectIsTvlHistoryYearIdle,
+    selectFulfilled: selectHasTvlHistoryYearFulfilled,
+    selectRejected: selectIsTvlHistoryYearRejected,
+  },
+} as const satisfies Record<TvlHistoryBucket, LoaderSelectors & { fetch: unknown }>;
+
+export function useTvlHistory(bucket: TvlHistoryBucket): LoadStatus & {
+  data: TimePointWithMa[];
+} {
+  const dispatch = useAppDispatch();
+  const loader = TVL_HISTORY_LOADERS[bucket];
+  const chainsLoaded = useAppSelector(selectIsChainConfigAvailable);
+  const data = useAppSelector(state => selectTvlHistory(state, bucket));
+  const load = useCallback(() => dispatch(loader.fetch()), [dispatch, loader]);
+  const status = useLoadOnceWithRetry(load, loader, chainsLoaded);
+  return { data, ...status };
 }
 
 export function usePlatformMetrics(
   buybackUnit: BuybackUnit
 ): Record<PlatformMetric, PlatformMetricData> {
-  useLoadTvlHistory('1d_1M');
+  const { data: tvlMonth } = useTvlHistory('1d_1M');
   const totalTvl = useAppSelector(selectTotalTvl);
-  const tvlMonth = useAppSelector(state => selectTvlHistory(state, '1d_1M'));
   const weeks = useAppSelector(selectRevenueWeeks);
   const revenueSettled = useAppSelector(selectIsRevenueSettled);
 

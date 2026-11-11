@@ -100,7 +100,11 @@ const MetricStat = memo(function MetricStat({
       }
       onClick={handleClick}
       loading={data.loading}
-      trend={<Sparkline values={data.trend} variant={METRIC_CONFIG[metric].trend} />}
+      trend={
+        data.trend.length > 1 ?
+          <Sparkline values={data.trend} variant={METRIC_CONFIG[metric].trend} />
+        : undefined
+      }
     />
   );
 });

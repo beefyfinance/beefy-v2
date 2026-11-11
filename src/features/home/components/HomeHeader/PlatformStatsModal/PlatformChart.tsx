@@ -11,8 +11,6 @@ import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { getBucketParams } from '../../../../data/apis/beefy/beefy-data-api-helpers.ts';
 import { selectIsRevenueSettled } from '../../../../data/selectors/data-loader/revenue.ts';
 import { selectRevenueWeeks } from '../../../../data/selectors/revenue.ts';
-import { selectTvlHistory } from '../../../../data/selectors/tvl-history.ts';
-import { selectIsTvlHistoryYearSettled } from '../../../../data/selectors/data-loader/tvl-history.ts';
 import {
   type BuybackUnit,
   type TimePointWithMa,
@@ -26,7 +24,7 @@ import {
   formatMetricValue,
   METRIC_CONFIG,
   type PlatformMetric,
-  useLoadTvlHistory,
+  useTvlHistory,
 } from '../Stats/usePlatformMetrics.ts';
 import type { WeeklyStatChartProps } from './WeeklyStatChart.tsx';
 
@@ -70,16 +68,14 @@ type ChartProps = {
 
 const TvlChart = memo(function TvlChart({ toggles, compact, height }: ChartProps) {
   const { t } = useTranslation();
-  useLoadTvlHistory('1d_1Y');
-  const points = useAppSelector(state => selectTvlHistory(state, '1d_1Y'));
-  const settled = useAppSelector(selectIsTvlHistoryYearSettled);
+  const { data: points, loading, error, willRetry } = useTvlHistory('1d_1Y');
   const maLabel = useMemo(() => {
     const { maPeriods, maUnit } = getBucketParams('1d_1Y');
     return `${maPeriods} ${t(maUnit)}`;
   }, [t]);
 
   return (
-    <ChartState loading={!settled} data={points} height={height}>
+    <ChartState loading={loading} error={error} willRetry={willRetry} data={points} height={height}>
       <LazyChart
         data={points}
         series="area"
@@ -139,14 +135,24 @@ const WeeklyChart = memo(function WeeklyChart({
 
 type ChartStateProps = {
   loading: boolean;
+  error?: boolean;
+  willRetry?: boolean;
   data: TimePointWithMa[];
   height: number;
   children: ReactNode;
 };
 
 /** An all-zero series counts as no data */
-const ChartState = memo(function ChartState({ loading, data, height, children }: ChartStateProps) {
+const ChartState = memo(function ChartState({
+  loading,
+  error = false,
+  willRetry = false,
+  data,
+  height,
+  children,
+}: ChartStateProps) {
   if (loading) return <GraphLoader imgHeight={height} />;
+  if (error) return <GraphNoData reason={willRetry ? 'error-retry' : 'error'} />;
   if (!data.some(p => p.v > 0)) return <GraphNoData reason="error" />;
   return children;
 });

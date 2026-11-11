@@ -3,6 +3,8 @@ import { getBucketParams } from '../apis/beefy/beefy-data-api-helpers.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
+import type { LoaderState } from '../reducers/data-loader-types.ts';
+import { hasLoaderFulfilledOnce, isLoaderPending } from '../selectors/data-loader-helpers.ts';
 import { sumChainTvl, type TimePointWithMa, withMovingAverage } from '../utils/platform-stats.ts';
 
 export type TvlHistoryBucket = Extract<ApiTimeBucket, '1d_1M' | '1d_1Y'>;
@@ -25,12 +27,23 @@ async function fetchTvlHistory(
   };
 }
 
+const notPendingOrFulfilled = (loader: LoaderState | undefined) =>
+  !isLoaderPending(loader) && !hasLoaderFulfilledOnce(loader);
+
 export const fetchTvlHistoryMonth = createAppAsyncThunk<TvlHistoryPayload>(
   'tvlHistory/fetchMonth',
-  async (_, { getState }) => fetchTvlHistory('1d_1M', getState().entities.chains.byId)
+  async (_, { getState }) => fetchTvlHistory('1d_1M', getState().entities.chains.byId),
+  {
+    condition: (_, { getState }) =>
+      notPendingOrFulfilled(getState().ui.dataLoader.global.tvlHistoryMonth),
+  }
 );
 
 export const fetchTvlHistoryYear = createAppAsyncThunk<TvlHistoryPayload>(
   'tvlHistory/fetchYear',
-  async (_, { getState }) => fetchTvlHistory('1d_1Y', getState().entities.chains.byId)
+  async (_, { getState }) => fetchTvlHistory('1d_1Y', getState().entities.chains.byId),
+  {
+    condition: (_, { getState }) =>
+      notPendingOrFulfilled(getState().ui.dataLoader.global.tvlHistoryYear),
+  }
 );
