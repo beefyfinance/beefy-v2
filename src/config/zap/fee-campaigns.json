@@ -1,16 +1,5 @@
 [
   {
-    "id": "pcs-base-free-zap",
-    "description": "No zap fee on deposits into PCS Base campaign.",
-    "featured": true,
-    "bps": 0,
-    "output": {
-      "vault": {
-        "ids": ["pancakeswap-cow-base-sol-cbbtc-vault", "pancakeswap-cow-base-sol-jitosol-vault"]
-      }
-    }
-  },
-  {
     "id": "migrate-to-aero-cow-base-usdc-weth-vault",
     "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
     "bps": 0,
