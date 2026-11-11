@@ -7,10 +7,7 @@ import {
   makeUnderlyingTickFormatter,
   makeUsdTickFormatter,
 } from '../../../../../helpers/graph/graph.ts';
-import { useAppSelector } from '../../../../data/store/hooks.ts';
 import { getBucketParams } from '../../../../data/apis/beefy/beefy-data-api-helpers.ts';
-import { selectIsRevenueSettled } from '../../../../data/selectors/data-loader/revenue.ts';
-import { selectRevenueWeeks } from '../../../../data/selectors/revenue.ts';
 import {
   type BuybackUnit,
   type TimePointWithMa,
@@ -24,6 +21,7 @@ import {
   formatMetricValue,
   METRIC_CONFIG,
   type PlatformMetric,
+  useRevenueWeeks,
   useTvlHistory,
 } from '../Stats/usePlatformMetrics.ts';
 import type { WeeklyStatChartProps } from './WeeklyStatChart.tsx';
@@ -104,8 +102,7 @@ const WeeklyChart = memo(function WeeklyChart({
   height,
 }: WeeklyChartProps) {
   const { t } = useTranslation();
-  const weeks = useAppSelector(selectRevenueWeeks);
-  const settled = useAppSelector(selectIsRevenueSettled);
+  const { data: weeks, loading, error, willRetry } = useRevenueWeeks();
   const data = useMemo(
     () => withMovingAverage(weekSeries(weeks, metric, buybackUnit), MA_WEEKS),
     [weeks, metric, buybackUnit]
@@ -117,7 +114,7 @@ const WeeklyChart = memo(function WeeklyChart({
   );
 
   return (
-    <ChartState loading={!settled} data={data} height={height}>
+    <ChartState loading={loading} error={error} willRetry={willRetry} data={data} height={height}>
       <LazyChart
         data={data}
         series="bar"
@@ -135,8 +132,8 @@ const WeeklyChart = memo(function WeeklyChart({
 
 type ChartStateProps = {
   loading: boolean;
-  error?: boolean;
-  willRetry?: boolean;
+  error: boolean;
+  willRetry: boolean;
   data: TimePointWithMa[];
   height: number;
   children: ReactNode;
@@ -145,8 +142,8 @@ type ChartStateProps = {
 /** An all-zero series counts as no data */
 const ChartState = memo(function ChartState({
   loading,
-  error = false,
-  willRetry = false,
+  error,
+  willRetry,
   data,
   height,
   children,

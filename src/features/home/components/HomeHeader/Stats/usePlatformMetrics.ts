@@ -16,7 +16,12 @@ import {
   selectIsTvlHistoryYearIdle,
   selectIsTvlHistoryYearRejected,
 } from '../../../../data/selectors/data-loader/tvl-history.ts';
-import { selectIsRevenueSettled } from '../../../../data/selectors/data-loader/revenue.ts';
+import {
+  selectHasRevenueFulfilled,
+  selectIsRevenueIdle,
+  selectIsRevenueRejected,
+} from '../../../../data/selectors/data-loader/revenue.ts';
+import { fetchWeeklyRevenueStats } from '../../../../data/actions/revenue.ts';
 import { selectRevenueWeeks } from '../../../../data/selectors/revenue.ts';
 import { selectTotalTvl } from '../../../../data/selectors/tvl.ts';
 import { selectTvlHistory } from '../../../../data/selectors/tvl-history.ts';
@@ -24,6 +29,7 @@ import type { GlobalDataSelectorFn } from '../../../../data/selectors/data-loade
 import {
   type BuybackUnit,
   changeOverPeriod,
+  type RevenueWeek,
   type TimePointWithMa,
   WEEK_SECONDS,
   type WeeklyMetric,
@@ -149,13 +155,26 @@ export function useTvlHistory(bucket: TvlHistoryBucket): LoadStatus & {
   return { data, ...status };
 }
 
+const REVENUE_LOADER: LoaderSelectors = {
+  selectIdle: selectIsRevenueIdle,
+  selectFulfilled: selectHasRevenueFulfilled,
+  selectRejected: selectIsRevenueRejected,
+};
+
+export function useRevenueWeeks(): LoadStatus & { data: RevenueWeek[] } {
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectRevenueWeeks);
+  const load = useCallback(() => dispatch(fetchWeeklyRevenueStats()), [dispatch]);
+  const status = useLoadOnceWithRetry(load, REVENUE_LOADER);
+  return { data, ...status };
+}
+
 export function usePlatformMetrics(
   buybackUnit: BuybackUnit
 ): Record<PlatformMetric, PlatformMetricData> {
   const { data: tvlMonth } = useTvlHistory('1d_1M');
   const totalTvl = useAppSelector(selectTotalTvl);
-  const weeks = useAppSelector(selectRevenueWeeks);
-  const revenueSettled = useAppSelector(selectIsRevenueSettled);
+  const { data: weeks, loading: revenueLoading } = useRevenueWeeks();
 
   return useMemo(() => {
     const weekly = (metric: WeeklyMetric): PlatformMetricData => {
@@ -166,7 +185,7 @@ export function usePlatformMetrics(
         value: isLatest ? points.at(-1)?.v : undefined,
         change: isLatest ? changeOverPeriod(points, WEEK_SECONDS) : undefined,
         trend: points.slice(-TREND_WEEKS).map(p => p.v),
-        loading: !revenueSettled,
+        loading: revenueLoading,
       };
     };
 
@@ -181,5 +200,5 @@ export function usePlatformMetrics(
       revenue: weekly('revenue'),
       buyback: weekly('buyback'),
     };
-  }, [buybackUnit, revenueSettled, totalTvl, tvlMonth, weeks]);
+  }, [buybackUnit, revenueLoading, totalTvl, tvlMonth, weeks]);
 }
