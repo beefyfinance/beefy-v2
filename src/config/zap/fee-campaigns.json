@@ -825,6 +825,37 @@
     }
   },
   {
+    "id": "migrate-to-aero-cow-base-tbtc-cbbtc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aero-cow-tbtc-cbbtc-vault", "aero-cow-tbtc-cbbtc-rp", "aerodrome-tbtc-cbbtc"]
+      }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-tbtc-cbbtc-vault"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-cbbtc-cbdoge-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-cow-base-cbbtc-cbdoge-v2-vault",
+          "aerodrome-cow-base-cbbtc-cbdoge-v2-rp",
+          "aerodrome-cow-base-cbbtc-cbdoge-vault",
+          "aerodrome-cow-base-cbbtc-cbdoge-rp"
+        ]
+      }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-cbbtc-cbdoge-vault"] }
+    }
+  },
+  {
     "id": "migrate-to-aero-cow-base-weth-kta-vault",
     "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
     "bps": 0,
