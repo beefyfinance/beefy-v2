@@ -1,5 +1,243 @@
 [
   {
+    "id": "aero-cow-base-tbtc-cbbtc-vault",
+    "name": "tBTC-cbBTC",
+    "type": "standard",
+    "token": "tBTC-cbBTC",
+    "tokenAddress": "0xdd1913F0974ECDE00cCE6c269D8C17Dd5F8AF728",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x8135538034A1362a853C8E1b3dA920321e606f8E",
+    "earnedToken": "mooCowAeroBasetBTC-cbBTC",
+    "earnedTokenAddress": "0x8135538034A1362a853C8E1b3dA920321e606f8E",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1794400001,
+    "platformId": "aero",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-cbbtc-cbdoge-vault",
+    "name": "cbDOGE-cbBTC",
+    "type": "standard",
+    "token": "cbDOGE-cbBTC",
+    "tokenAddress": "0x881748102a40C70B04b9bADC4D9eFEB6077fe1bA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x489Bfee84D67752c11B6dE131362545e54F9C2Bc",
+    "earnedToken": "mooCowAeroBasecbDOGE-cbBTC",
+    "earnedTokenAddress": "0x489Bfee84D67752c11B6dE131362545e54F9C2Bc",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-cbbtc-cbdoge",
+    "status": "active",
+    "createdAt": 1794400001,
+    "platformId": "aero",
+    "assets": ["cbBTC", "cbDOGE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-tbtc-cbbtc-rp",
+    "name": "tBTC-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBasetBTC-cbBTC",
+    "tokenAddress": "0xdd1913F0974ECDE00cCE6c269D8C17Dd5F8AF728",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x8b08E5AB9204fACf9F6E034f886B5671CD614995",
+    "earnedToken": "rCowAeroBasetBTC-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-cbbtc-cbdoge-rp",
+    "name": "cbDOGE-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBasecbDOGE-cbBTC",
+    "tokenAddress": "0x881748102a40C70B04b9bADC4D9eFEB6077fe1bA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xc5FB2E604F7f51A5393b0b62CEAf4701cEA87E64",
+    "earnedToken": "rCowAeroBasecbDOGE-cbBTC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-cbbtc-cbdoge",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["cbBTC", "cbDOGE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-tbtc-cbbtc",
+    "name": "tBTC-cbBTC",
+    "type": "cowcentrated",
+    "token": "tBTC-cbBTC aero",
+    "tokenAddress": "0x72b070Ccc1675b466cbD04551e73282444fE8c80",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnContractAddress": "0xdd1913F0974ECDE00cCE6c269D8C17Dd5F8AF728",
+    "earnedToken": "cowAeroBasetBTC-cbBTC",
+    "earnedTokenAddress": "0xdd1913F0974ECDE00cCE6c269D8C17Dd5F8AF728",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 1,
+    "assets": ["tBTC", "cbBTC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": false,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-cbbtc-cbdoge",
+    "name": "cbDOGE-cbBTC",
+    "type": "cowcentrated",
+    "token": "cbDOGE-cbBTC aero",
+    "tokenAddress": "0xc9821a94042CCedA9FA74A42aD5F4E3F3D2F5eAC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "0xcbD06E5A2B0C65597161de254AA074E489dEb510"
+    ],
+    "earnContractAddress": "0x881748102a40C70B04b9bADC4D9eFEB6077fe1bA",
+    "earnedToken": "cowAeroBasecbDOGE-cbBTC",
+    "earnedTokenAddress": "0x881748102a40C70B04b9bADC4D9eFEB6077fe1bA",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-cbbtc-cbdoge",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "assets": ["cbBTC", "cbDOGE"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-moca-usdc-vault",
     "name": "MOCA-USDC",
     "type": "standard",
@@ -14594,7 +14832,7 @@
     "oracleId": "aerodrome-cow-base-cbbtc-cbdoge-v2",
     "status": "eol",
     "createdAt": 1778740767,
-    "retireReason": "AeroNoReplacement26",
+    "retireReason": "AeroLaunch26",
     "retiredAt": 1794233298,
     "platformId": "aerodrome",
     "assets": ["cbDOGE", "cbBTC"],
@@ -14636,7 +14874,7 @@
     "oracleId": "aerodrome-cow-base-cbbtc-cbdoge-v2",
     "status": "eol",
     "createdAt": 1778740767,
-    "retireReason": "AeroNoReplacement26",
+    "retireReason": "AeroLaunch26",
     "retiredAt": 1794233298,
     "platformId": "aerodrome",
     "assets": ["cbDOGE", "cbBTC"],
@@ -14680,12 +14918,13 @@
     "oracleId": "aerodrome-cow-base-cbbtc-cbdoge-v2",
     "status": "eol",
     "createdAt": 1778740767,
-    "retireReason": "AeroNoReplacement26",
+    "retireReason": "AeroLaunch26",
     "retiredAt": 1794233298,
     "platformId": "beefy",
     "feeTier": "0.05",
     "tickSpacing": 50,
     "assets": ["cbDOGE", "cbBTC"],
+    "replacementVaultId": "aero-cow-base-cbbtc-cbdoge",
     "risks": {
       "complex": true,
       "curated": false,
@@ -30637,6 +30876,7 @@
     "feeTier": "0.25",
     "tickSpacing": 100,
     "assets": ["cbDOGE", "cbBTC"],
+    "replacementVaultId": "aero-cow-base-cbbtc-cbdoge",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -43642,10 +43882,10 @@
     "earnedTokenAddress": "0xcdaf1dBD0cedb5eB2D3daCd2528F75DE6970ad97",
     "oracle": "lps",
     "oracleId": "aero-cow-tbtc-cbbtc",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1729165703,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1794468265,
     "platformId": "aerodrome",
     "assets": ["tBTC", "cbBTC"],
     "risks": {
@@ -43687,10 +43927,10 @@
     "earnedOracleIds": ["AERO"],
     "oracle": "lps",
     "oracleId": "aero-cow-tbtc-cbbtc",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1729165702,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1794468265,
     "platformId": "aerodrome",
     "assets": ["tBTC", "cbBTC"],
     "risks": {
@@ -43732,14 +43972,15 @@
     "earnedTokenAddress": "0x4aC69240bf5F4BeCc939c1Ea56A64e95943865AF",
     "oracle": "lps",
     "oracleId": "aero-cow-tbtc-cbbtc",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1729165702,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1794468265,
     "platformId": "beefy",
     "feeTier": "0.01",
     "tickSpacing": 1,
     "assets": ["tBTC", "cbBTC"],
+    "replacementVaultId": "aero-cow-base-tbtc-cbbtc",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
@@ -46625,12 +46866,13 @@
     "earnedTokenAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
     "oracle": "lps",
     "oracleId": "aerodrome-tbtc-cbbtc",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1727353780,
+    "retireReason": "AeroLaunch26",
+    "retiredAt": 1794468265,
     "platformId": "aerodrome",
     "assets": ["tBTC", "cbBTC"],
+    "replacementVaultId": "aero-cow-base-tbtc-cbbtc-vault",
     "risks": {
       "updatedAt": 1765557014,
       "complex": false,

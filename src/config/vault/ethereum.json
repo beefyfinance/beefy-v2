@@ -1,5 +1,481 @@
 [
   {
+    "id": "aero-cow-ethereum-bifi-weth-vault",
+    "name": "BIFI-WETH",
+    "type": "standard",
+    "token": "BIFI-WETH",
+    "tokenAddress": "0x25bE73F29B44A8Fbb498E2c181c57fd3489B0842",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x4ea0F6015a104f5c3Ce82960aCe94c6935020df0",
+    "earnedToken": "mooCowAeroEthereumBIFI-WETH",
+    "earnedTokenAddress": "0x4ea0F6015a104f5c3Ce82960aCe94c6935020df0",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-bifi-weth",
+    "status": "active",
+    "createdAt": 1794400002,
+    "platformId": "aero",
+    "assets": ["BIFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-usdc-weth-vault",
+    "name": "WETH-USDC",
+    "type": "standard",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xff51c10c324B6017C9435b5124Dc7fdc6A787739",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xC3ee1d1786f0097040BD53314D093e473de99B8D",
+    "earnedToken": "mooCowAeroEthereumWETH-USDC",
+    "earnedTokenAddress": "0xC3ee1d1786f0097040BD53314D093e473de99B8D",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-usdc-weth",
+    "status": "active",
+    "createdAt": 1794400002,
+    "platformId": "aero",
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-wbtc-usdt-vault",
+    "name": "WBTC-USDT",
+    "type": "standard",
+    "token": "WBTC-USDT",
+    "tokenAddress": "0x3994f78e21f07f018E2099acf6FBABc495ee5b91",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xC3648c5C80C26c5AF8496b2b26E701cD9693EE31",
+    "earnedToken": "mooCowAeroEthereumWBTC-USDT",
+    "earnedTokenAddress": "0xC3648c5C80C26c5AF8496b2b26E701cD9693EE31",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-wbtc-usdt",
+    "status": "active",
+    "createdAt": 1794400002,
+    "platformId": "aero",
+    "assets": ["WBTC", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-xaut-usdt-vault",
+    "name": "XAUt-USDT",
+    "type": "standard",
+    "token": "XAUt-USDT",
+    "tokenAddress": "0x5C5952487c2eE6D4643274Fe542f1EAfaF9733ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x700Ef44f325Ad363E1DB8EDA49265582D2DE99C7",
+    "earnedToken": "mooCowAeroEthereumXAUt-USDT",
+    "earnedTokenAddress": "0x700Ef44f325Ad363E1DB8EDA49265582D2DE99C7",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-xaut-usdt",
+    "status": "active",
+    "createdAt": 1794400002,
+    "platformId": "aero",
+    "assets": ["XAUt", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-bifi-weth-rp",
+    "name": "BIFI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroEthereumBIFI-WETH",
+    "tokenAddress": "0x25bE73F29B44A8Fbb498E2c181c57fd3489B0842",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xc4aF7ba9c847B05D857214408534A9419D512AbA",
+    "earnedToken": "rCowAeroEthereumBIFI-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-bifi-weth",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["BIFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-usdc-weth-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroEthereumWETH-USDC",
+    "tokenAddress": "0xff51c10c324B6017C9435b5124Dc7fdc6A787739",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x9DDBaFa6c63F3D20D8dfB37e697b82E39a3f8f9C",
+    "earnedToken": "rCowAeroEthereumWETH-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-usdc-weth",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-wbtc-usdt-rp",
+    "name": "WBTC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroEthereumWBTC-USDT",
+    "tokenAddress": "0x3994f78e21f07f018E2099acf6FBABc495ee5b91",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x074264f4e35F0473ab25dA44526c45dd3e28c64E",
+    "earnedToken": "rCowAeroEthereumWBTC-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-wbtc-usdt",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["WBTC", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-xaut-usdt-rp",
+    "name": "XAUt-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroEthereumXAUt-USDT",
+    "tokenAddress": "0x5C5952487c2eE6D4643274Fe542f1EAfaF9733ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x93938f2185ccbc117a2D02b00E1cf31F82e6E93a",
+    "earnedToken": "rCowAeroEthereumXAUt-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-xaut-usdt",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "aero",
+    "assets": ["XAUt", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-bifi-weth",
+    "name": "BIFI-WETH",
+    "type": "cowcentrated",
+    "token": "BIFI-WETH aero",
+    "tokenAddress": "0xff35aa95669b5668AC6727FdcFc0D5582cdd78D1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "earnContractAddress": "0x25bE73F29B44A8Fbb498E2c181c57fd3489B0842",
+    "earnedToken": "cowAeroEthereumBIFI-WETH",
+    "earnedTokenAddress": "0x25bE73F29B44A8Fbb498E2c181c57fd3489B0842",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-bifi-weth",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "assets": ["BIFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-usdc-weth",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC aero",
+    "tokenAddress": "0xd661623947EF2Ead12D577b47021C167d163B0c5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    ],
+    "earnContractAddress": "0xff51c10c324B6017C9435b5124Dc7fdc6A787739",
+    "earnedToken": "cowAeroEthereumWETH-USDC",
+    "earnedTokenAddress": "0xff51c10c324B6017C9435b5124Dc7fdc6A787739",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-usdc-weth",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 50,
+    "assets": ["WETH", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-wbtc-usdt",
+    "name": "WBTC-USDT",
+    "type": "cowcentrated",
+    "token": "WBTC-USDT aero",
+    "tokenAddress": "0x941dDC62f8699f448e86C798e62520550616503D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+    ],
+    "earnContractAddress": "0x3994f78e21f07f018E2099acf6FBABc495ee5b91",
+    "earnedToken": "cowAeroEthereumWBTC-USDT",
+    "earnedTokenAddress": "0x3994f78e21f07f018E2099acf6FBABc495ee5b91",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-wbtc-usdt",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "assets": ["WBTC", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-ethereum-xaut-usdt",
+    "name": "XAUt-USDT",
+    "type": "cowcentrated",
+    "token": "XAUt-USDT aero",
+    "tokenAddress": "0xACE88ccC9F71C811ea38Ea93d707d036579166D4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+      "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+    ],
+    "earnContractAddress": "0x5C5952487c2eE6D4643274Fe542f1EAfaF9733ff",
+    "earnedToken": "cowAeroEthereumXAUt-USDT",
+    "earnedTokenAddress": "0x5C5952487c2eE6D4643274Fe542f1EAfaF9733ff",
+    "oracle": "lps",
+    "oracleId": "aero-cow-ethereum-xaut-usdt",
+    "status": "active",
+    "createdAt": 1794400000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "assets": ["XAUt", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "yb-eth",
     "name": "WETH",
     "type": "standard",

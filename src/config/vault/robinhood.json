@@ -1,5 +1,162 @@
 [
   {
+    "id": "uniswap-cow-robinhood-weth-spcx-rp",
+    "name": "SPCX-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodWETH-SPCX",
+    "tokenAddress": "0x5E43acdA9d9bAB4308dA3bA70Cd791F3d0adb989",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x1C573565075d9d01703DAca977A9D0E6cD349965",
+    "earnedToken": "rCowUniswapRobinhoodWETH-SPCX",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-spcx",
+    "status": "active",
+    "createdAt": 1794462759,
+    "platformId": "uniswap",
+    "assets": ["SPCXrh", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-weth-spcx",
+    "name": "WETH-SPCX",
+    "type": "cowcentrated",
+    "token": "WETH-SPCX uniswap",
+    "tokenAddress": "0xC3c9F0171490Ef0F4536fe493F3b0EbB5ee0CB5e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa"
+    ],
+    "earnContractAddress": "0x5E43acdA9d9bAB4308dA3bA70Cd791F3d0adb989",
+    "earnedToken": "cowUniswapRobinhoodWETH-SPCX",
+    "earnedTokenAddress": "0x5E43acdA9d9bAB4308dA3bA70Cd791F3d0adb989",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-weth-spcx",
+    "status": "active",
+    "createdAt": 1794462759,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["WETH", "SPCXrh"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-skhy-rp",
+    "name": "SKHY-USDG Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapRobinhoodUSDG-SKHY",
+    "tokenAddress": "0xfd0026Aa9ef90a7bC91686d5ec01f50Ad57418df",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x35b6aC271Ddc3Bacb609303Bb5F7f4B24Cb230Df",
+    "earnedToken": "rCowUniswapRobinhoodUSDG-SKHY",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-skhy",
+    "status": "active",
+    "createdAt": 1794462754,
+    "platformId": "uniswap",
+    "assets": ["SKHYrh", "USDG"],
+    "icons": ["SKHY", "USDG"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-robinhood-usdg-skhy",
+    "name": "USDG-SKHY",
+    "type": "cowcentrated",
+    "token": "USDG-SKHY uniswap",
+    "tokenAddress": "0x5F2a5025feb93a4C44DA4E3B37e4fD3Fb0ab5171",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "0x84CAb63bc87912E71ad199ff14A0bA45de68FeF8"
+    ],
+    "earnContractAddress": "0xfd0026Aa9ef90a7bC91686d5ec01f50Ad57418df",
+    "earnedToken": "cowUniswapRobinhoodUSDG-SKHY",
+    "earnedTokenAddress": "0xfd0026Aa9ef90a7bC91686d5ec01f50Ad57418df",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-robinhood-usdg-skhy",
+    "status": "active",
+    "createdAt": 1794462754,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 60,
+    "assets": ["USDG", "SKHYrh"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "robinhood",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-robinhood-weth-meta-rp",
     "name": "META-WETH Reward Pool",
     "type": "gov",
