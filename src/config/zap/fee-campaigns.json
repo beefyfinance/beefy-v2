@@ -856,6 +856,36 @@
     }
   },
   {
+    "id": "migrate-to-aero-cow-base-lcap-usdc-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": ["aerodrome-lcap-usdc", "aerodrome-lcap-eusd"]
+      }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-lcap-usdc-vault"] }
+    }
+  },
+  {
+    "id": "migrate-to-aero-cow-base-weth-lcap-vault",
+    "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
+    "bps": 0,
+    "input": {
+      "vault": {
+        "ids": [
+          "aerodrome-weth-lcap",
+          "aerodrome-cow-base-weth-lcap-vault",
+          "aerodrome-cow-base-weth-lcap-rp"
+        ]
+      }
+    },
+    "output": {
+      "vault": { "ids": ["aero-cow-base-weth-lcap-vault"] }
+    }
+  },
+  {
     "id": "migrate-to-aero-cow-base-weth-kta-vault",
     "description": "Fee-free migration zap from older Aerodrome/Velodrome products to the new Aero equivalents.",
     "bps": 0,
