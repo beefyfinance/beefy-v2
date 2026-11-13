@@ -81,15 +81,18 @@ export const zapsSlice = createSlice({
               `Ignoring duplicate aggregator type ${aggregator.type} for chain ${aggregator.chainId}`
             );
           }
+        }
 
-          // Priority Tokens
-          let tokensByChain = sliceState.tokens.byChainId[aggregator.chainId];
-          if (!tokensByChain) {
-            tokensByChain = sliceState.tokens.byChainId[aggregator.chainId] = { scoreById: {} };
-            for (const tokenId of aggregator.priorityTokens) {
-              tokensByChain.scoreById[tokenId] = (tokensByChain.scoreById[tokenId] || 0) + 1;
-            }
+        for (const [chainId, tokenIds] of entries(action.payload.priorityTokens)) {
+          if (!tokenIds) {
+            continue;
           }
+
+          const scoreById: Record<string, number> = {};
+          for (const tokenId of tokenIds) {
+            scoreById[tokenId] = 1;
+          }
+          sliceState.tokens.byChainId[chainId] = { scoreById };
         }
       })
       .addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
