@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { css, type CssStyles } from '@repo/styles/css';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,11 +31,16 @@ import {
 } from '../../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
+  selectAreClmFeeRangesLoaded,
+  selectCowcentratedSwapFee,
+  selectCowcentratedSwapFeeRange,
   selectCowcentratedVaultById,
+  selectIsClmSwapFeeDynamic,
   selectVaultById,
 } from '../../../../features/data/selectors/vaults.ts';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc.ts';
 import { getIcon } from '../../../../helpers/iconSrc.ts';
+import { formatPercentTrim } from '../../../../helpers/format.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow.ts';
 import { useAppSelector } from '../../../../features/data/store/hooks.ts';
@@ -132,6 +138,8 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   label,
   longLabel,
   fee,
+  feeRange,
+  isFeeDynamic,
   platformName,
   tickSpacing,
   hideLabel,
@@ -141,7 +149,9 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
 }: {
   label: string;
   longLabel: string;
-  fee: string;
+  fee: string | undefined;
+  feeRange: string | undefined;
+  isFeeDynamic: boolean;
   platformName: string;
   tickSpacing: number;
   hideLabel?: boolean;
@@ -150,10 +160,15 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   onlyIcon?: boolean;
 }) {
   const classes = useStyles();
-  const tooltipContent =
-    tickSpacing !== undefined ?
-      `${platformName} trading fee: ${fee}\nPool tick spacing: ${tickSpacing}`
-    : `${platformName} trading fee: ${fee}`;
+  const tooltipContent = [
+    fee !== undefined ?
+      `${platformName} trading fee: ${fee}${isFeeDynamic ? ' (dynamic)' : ''}`
+    : undefined,
+    feeRange !== undefined ? `Fee range: ${feeRange}` : undefined,
+    tickSpacing !== undefined ? `Pool tick spacing: ${tickSpacing}` : undefined,
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   return (
     <VaultTagWithTooltip
@@ -195,6 +210,29 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   );
 });
 
+function useClmSwapFee(clm: VaultCowcentrated) {
+  // until the bounds are known a dynamic fee would look fixed
+  const rangesLoaded = useAppSelector(state => selectAreClmFeeRangesLoaded(state, clm.chainId));
+  const swapFee = useAppSelector(state => selectCowcentratedSwapFee(state, clm.id));
+  const range = useAppSelector(state => selectCowcentratedSwapFeeRange(state, clm.id));
+  const isFeeDynamic = useAppSelector(state => selectIsClmSwapFeeDynamic(state, clm.id));
+  if (!rangesLoaded || swapFee === undefined) {
+    return { fee: undefined, feeRange: undefined, isFeeDynamic };
+  }
+  return {
+    // rounded so the 45s refresh doesn't jitter the last digits
+    fee:
+      isFeeDynamic ?
+        formatPercentTrim(new BigNumber(swapFee).precision(2, BigNumber.ROUND_HALF_UP), 6)
+      : formatPercentTrim(swapFee, 4),
+    feeRange:
+      isFeeDynamic && range ?
+        `${formatPercentTrim(range.min, 4)} – ${formatPercentTrim(range.max, 4)}`
+      : undefined,
+    isFeeDynamic,
+  };
+}
+
 const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   vault,
   hideFee,
@@ -220,13 +258,16 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
     depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
   );
 
+  const { fee, feeRange, isFeeDynamic } = useClmSwapFee(cowcentratedVault);
+
   const typeLabel = isPool ? 'Pool' : 'Vault';
 
-  const hasDynamicFee = cowcentratedVault?.feeTier === 'Dynamic';
   return (
     <BaseVaultClmTag
       label={`CLM ${typeLabel}`}
-      fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
+      fee={fee}
+      feeRange={feeRange}
+      isFeeDynamic={isFeeDynamic}
       longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
       platformName={provider?.name || 'LP'}
       tickSpacing={cowcentratedVault?.tickSpacing}
@@ -251,7 +292,7 @@ const VaultClmTag = memo(function VaultClmTag({
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
-  const hasDynamicFee = vault.feeTier === 'Dynamic';
+  const { fee, feeRange, isFeeDynamic } = useClmSwapFee(vault);
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
@@ -262,11 +303,13 @@ const VaultClmTag = memo(function VaultClmTag({
   return (
     <BaseVaultClmTag
       label={'CLM'}
-      fee={hasDynamicFee ? vault.feeTier : `${vault.feeTier}%`}
+      fee={fee}
+      feeRange={feeRange}
+      isFeeDynamic={isFeeDynamic}
       longLabel={'Cowcentrated Liquidity Manager'}
       platformName={provider?.name || 'LP'}
       tickSpacing={vault.tickSpacing}
-      hideFee={hideFee || hasDynamicFee}
+      hideFee={hideFee}
       hideLabel={hideLabel}
       css={cssProp}
       onlyIcon={onlyIcon}
