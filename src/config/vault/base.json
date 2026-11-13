@@ -23825,46 +23825,6 @@
     ]
   },
   {
-    "id": "aerodrome-cow-base-drb-weth-vault",
-    "name": "DRB-WETH",
-    "type": "standard",
-    "token": "DRB-WETH",
-    "tokenAddress": "0x07A10283C37E7dB050e0Cf4de7eA0f8B608bd095",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnContractAddress": "0x65F53b56faE42cbD034c4d9d480aC0848Cb5626c",
-    "earnedToken": "mooCowAerodromeDRB-WETH",
-    "earnedTokenAddress": "0x65F53b56faE42cbD034c4d9d480aC0848Cb5626c",
-    "oracle": "lps",
-    "oracleId": "aerodrome-cow-base-drb-weth",
-    "status": "eol",
-    "createdAt": 1769588829,
-    "retireReason": "AeroNoReplacement26",
-    "retiredAt": 1794332268,
-    "platformId": "aerodrome",
-    "assets": ["DRB", "WETH"],
-    "risks": {
-      "complex": true,
-      "curated": false,
-      "notAudited": false,
-      "notBattleTested": false,
-      "notCorrelated": true,
-      "notTimelocked": false,
-      "notVerified": false,
-      "synthAsset": false
-    },
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-cow-base-drb-weth-rp",
     "name": "DRB-WETH Reward Pool",
     "type": "gov",
