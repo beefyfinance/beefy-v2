@@ -55329,10 +55329,10 @@
     "earnedTokenAddress": "0xB614A6E6c21202De79DceB95AE2dd4817DD7e14b",
     "oracle": "lps",
     "oracleId": "aerodrome-weth-bsdeth",
-    "status": "paused",
-    "pausedAt": 1792623600,
-    "pauseReason": "AeroLaunch26",
+    "status": "eol",
     "createdAt": 1709343618,
+    "retireReason": "AeroNoReplacement26",
+    "retiredAt": 1794571009,
     "platformId": "aerodrome",
     "assets": ["WETH", "bsdETH"],
     "risks": {
