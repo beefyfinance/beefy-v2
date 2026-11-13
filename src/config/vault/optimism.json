@@ -1,7 +1,7 @@
 [
   {
     "id": "aero-v2-optimism-usdc-alusd",
-    "name": "USDC-alUSD sLP V2",
+    "name": "alUSD-USDC sLP V2",
     "type": "standard",
     "token": "USDC-alUSD sLP V2",
     "tokenAddress": "0x891622f02575A3Ec011ffcB415ea37eBb956A7E5",
@@ -15,7 +15,7 @@
     "status": "active",
     "createdAt": 1794186444,
     "platformId": "aero",
-    "assets": ["USDC", "alUSD"],
+    "assets": ["alUSD", "USDC"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -79,7 +79,7 @@
   },
   {
     "id": "aero-v2-optimism-usdc-msusd",
-    "name": "USDC-msUSD sLP V2",
+    "name": "msUSD-USDC sLP V2",
     "type": "standard",
     "token": "USDC-msUSD sLP V2",
     "tokenAddress": "0x12e078Cc562d5c422563e217c81324AAEfC3bC91",
@@ -93,7 +93,7 @@
     "status": "active",
     "createdAt": 1794186444,
     "platformId": "aero",
-    "assets": ["USDC", "msUSD"],
+    "assets": ["msUSD", "USDC"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
