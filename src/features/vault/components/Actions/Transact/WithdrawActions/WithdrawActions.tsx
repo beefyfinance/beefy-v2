@@ -6,12 +6,16 @@ import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Bu
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
-import { transactSteps } from '../../../../../data/actions/wallet/transact.ts';
+import {
+  selectZapClaimRewards,
+  transactSteps,
+} from '../../../../../data/actions/wallet/transact.ts';
 import { ActionRecovery } from '../CommonActions/ActionRecovery.tsx';
 import type {
   CrossChainWithdrawQuote,
   GovComposerZapWithdrawQuote,
   GovVaultWithdrawQuote,
+  SingleWithdrawQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
@@ -19,6 +23,7 @@ import {
   isCrossChainWithdrawQuote,
   isGovComposerWithdrawQuote,
   isGovVaultWithdrawQuote,
+  isSingleWithdrawQuote,
 } from '../../../../../data/apis/transact/transact-types.ts';
 import {
   isCowcentratedLikeVault,
@@ -114,6 +119,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
     quote &&
     (isGovVaultWithdrawQuote(quote) ||
       isGovComposerWithdrawQuote(quote) ||
+      isSingleWithdrawQuote(quote) ||
       isCrossChainWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
 
@@ -253,6 +259,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const isMaxAll = useMemo(() => {
     return quote.inputs.every(tokenAmount => tokenAmount.max === true);
   }, [quote]);
+  const willClaim = useAppSelector(state => selectZapClaimRewards(state, quote) !== undefined);
   const executionChainId = useMemo(() => getExecutionChainId(quote), [quote]);
 
   const effectiveDisabledByConfirm = isDisabledByConfirm && !confirmNeededWithChanges;
@@ -308,7 +315,13 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
               t('Transact-WithdrawInProgress')
             : confirmNeededWithChanges ?
               t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
-            : t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+            : t(
+                isMaxAll ?
+                  willClaim ? 'Transact-Claim-WithdrawAll'
+                  : 'Transact-WithdrawAll'
+                : 'Transact-Withdraw'
+              )
+            }
           </AnimatedButton>
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
@@ -321,7 +334,11 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 });
 
 type ActionClaimWithdrawProps = {
-  quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote | CrossChainWithdrawQuote;
+  quote:
+    | GovVaultWithdrawQuote
+    | GovComposerZapWithdrawQuote
+    | SingleWithdrawQuote
+    | CrossChainWithdrawQuote;
   vault: VaultGov;
 };
 const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
@@ -356,6 +373,8 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     effectiveDisabledByConfirm ||
     isDisabledByNotEnoughInput;
   const showClaim = !isCowcentratedLikeVault(vault);
+  // zap withdraws don't output rewards; a leading claim step collects them instead
+  const willClaim = useAppSelector(state => selectZapClaimRewards(state, quote) !== undefined);
 
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -407,7 +426,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
               t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
             : t(
                 isMaxAll ?
-                  quote.outputs.length > 1 && showClaim ?
+                  (quote.outputs.length > 1 && showClaim) || willClaim ?
                     'Transact-Claim-WithdrawAll'
                   : 'Transact-WithdrawAll'
                 : 'Transact-Withdraw'
