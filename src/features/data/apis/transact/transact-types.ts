@@ -1311,6 +1311,10 @@ export function isVaultUnderlyingCowcentratedWithdrawQuote(
   );
 }
 
+export function isSingleWithdrawQuote(quote: TransactQuote): quote is SingleWithdrawQuote {
+  return isWithdrawQuote(quote) && quote.strategyId === 'single';
+}
+
 export function isGovComposerWithdrawQuote(
   quote: TransactQuote
 ): quote is GovComposerZapWithdrawQuote {
