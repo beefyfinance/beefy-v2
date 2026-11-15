@@ -61,7 +61,7 @@ export function getVaultWithdrawnFromState(
   };
 }
 
-/** gov pools mint their receipt 1:1 with the deposit token, so there is no ppfs */
+/** gov pools mint their receipt 1:1 with the deposit token: no ppfs, no fee */
 export function getGovVaultWithdrawnFromState(
   userInput: InputTokenAmount,
   vault: VaultGov,
@@ -72,18 +72,14 @@ export function getGovVaultWithdrawnFromState(
   }
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const sharesToWithdrawWei =
+  const amountWei =
     userInput.max ?
       toWei(selectUserBalanceOfToken(state, vault.chainId, shareToken.address), shareToken.decimals)
     : toWei(userInput.amount, shareToken.decimals);
-  const withdrawFee = selectFeesByVaultId(state, vault.id)?.withdraw || 0;
-  const withdrawnAmountFeeWei = sharesToWithdrawWei
-    .multipliedBy(withdrawFee)
-    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
 
   return {
-    sharesToWithdrawWei,
-    withdrawnAmountAfterFeeWei: sharesToWithdrawWei.minus(withdrawnAmountFeeWei),
+    sharesToWithdrawWei: amountWei,
+    withdrawnAmountAfterFeeWei: amountWei,
     withdrawnToken,
     shareToken,
   };

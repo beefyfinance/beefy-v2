@@ -262,7 +262,7 @@ export class GovVaultType implements IGovVaultType {
     };
   }
 
-  /** only v2 pools (BeefyRewardPool) mint a receipt the zap router can hold */
+  /** only v2 pools (BeefyRewardPool) mint a receipt the zap router can hold, 1:1 and fee-free */
   protected getZappableVault(): VaultGovMulti {
     if (!isNonCowcentratedMultiGovVault(this.vault)) {
       throw new Error('Gov vault does not support zap.');
@@ -279,9 +279,7 @@ export class GovVaultType implements IGovVaultType {
 
     const state = this.getState();
     const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-    const outputs = [
-      { token: receiptToken, amount: input.amount.minus(this.calculateDepositFee(input, state)) },
-    ];
+    const outputs = [{ token: receiptToken, amount: input.amount }];
 
     return {
       inputs: request.inputs,
@@ -318,8 +316,7 @@ export class GovVaultType implements IGovVaultType {
     const requestedWei = toWei(input.amount, receiptToken.decimals);
     const sharesWei = input.max || requestedWei.gt(balanceWei) ? balanceWei : requestedWei;
     const shares = fromWei(sharesWei, receiptToken.decimals);
-    const fee = this.calculateWithdrawFee({ token: this.depositToken, amount: shares }, state);
-    const outputs = [{ token: this.depositToken, amount: shares.minus(fee) }];
+    const outputs = [{ token: this.depositToken, amount: shares }];
 
     return {
       inputs: [{ token: receiptToken, amount: shares, max: input.max }],
