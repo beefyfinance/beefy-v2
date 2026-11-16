@@ -1,4 +1,5 @@
 import type BigNumber from 'bignumber.js';
+import type { ClmFeeRange } from '../apis/clm-fees/clm-fees-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { NormalizedEntity } from '../utils/normalized-entity.ts';
@@ -84,5 +85,20 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 
   lastHarvestById: {
     [vaultId: VaultEntity['id']]: number;
+  };
+
+  clmFees: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: {
+        /** fraction, unset until read */
+        swapFee?: number;
+        /** unset if the pool has no known fee bounds */
+        range?: ClmFeeRange;
+      };
+    };
+    /** chains where every CLM pool has been probed for fee bounds */
+    rangesLoadedByChainId: {
+      [chainId in ChainEntity['id']]?: true;
+    };
   };
 };

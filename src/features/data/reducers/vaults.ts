@@ -3,6 +3,7 @@ import type { Draft } from 'immer';
 import { sortBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { fromKeysBy, pushOrSet } from '../../../helpers/object.ts';
+import { fetchClmFeesAction } from '../actions/clm-fees.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
@@ -43,6 +44,7 @@ export const initialVaultsState: VaultsState = {
   byChainId: {},
   contractData: { byVaultId: {} },
   lastHarvestById: {},
+  clmFees: { byVaultId: {}, rangesLoadedByChainId: {} },
 };
 
 export const vaultsSlice = createSlice({
@@ -63,6 +65,26 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.contractData);
+    });
+
+    builder.addCase(fetchClmFeesAction.fulfilled, (sliceState, action) => {
+      const { chainId, fees, rangesLoaded } = action.payload;
+      for (const { id, swapFee, range } of fees) {
+        const clmFee = (sliceState.clmFees.byVaultId[id] ??= {});
+        // keep the last known fee when a read fails
+        if (swapFee !== undefined && clmFee.swapFee !== swapFee) {
+          clmFee.swapFee = swapFee;
+        }
+        if (
+          range !== undefined &&
+          (clmFee.range?.min !== range.min || clmFee.range?.max !== range.max)
+        ) {
+          clmFee.range = range;
+        }
+      }
+      if (rangesLoaded) {
+        sliceState.clmFees.rangesLoadedByChainId[chainId] = true;
+      }
     });
 
     builder.addCase(fetchVaultsLastHarvests.fulfilled, (sliceState, action) => {

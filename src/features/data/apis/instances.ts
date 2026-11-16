@@ -104,6 +104,11 @@ export const getContractDataApi = createDependencyFactoryWithCacheByChain(
   () => import('./contract-data/contract-data.ts')
 );
 
+export const getClmFeesApi = createDependencyFactoryWithCacheByChain(
+  async (chain, { ClmFeesApi }) => new ClmFeesApi(chain),
+  () => import('./clm-fees/clm-fees.ts')
+);
+
 export const getBalanceApi = createDependencyFactoryWithCacheByChain(
   async (chain, { BalanceAPI }) => new BalanceAPI(chain),
   () => import('./balance/balance.ts')
