@@ -1,5 +1,83 @@
 [
   {
+    "id": "pancake-cow-bsc-aster-wbnb-rp",
+    "name": "ASTER-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscASTER-WBNB",
+    "tokenAddress": "0x954f7f9F1988d8387B57E898d7e742B9bC1CfE85",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xabe57167c76D56Caa3043Ef07c7c3bFBE9B13c98",
+    "earnedToken": "rCowPancakeBscASTER-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-aster-wbnb",
+    "status": "active",
+    "createdAt": 1794812368,
+    "platformId": "pancakeswap",
+    "assets": ["ASTER", "WBNB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-aster-wbnb",
+    "name": "ASTER-WBNB",
+    "type": "cowcentrated",
+    "token": "ASTER-WBNB pancakeswap",
+    "tokenAddress": "0xb040ea24a4Ef35a3ED400B0fF26D8B6F30DEEcaD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x000Ae314E2A2172a039B26378814C252734f556A",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x954f7f9F1988d8387B57E898d7e742B9bC1CfE85",
+    "earnedToken": "cowPancakeBscASTER-WBNB",
+    "earnedTokenAddress": "0x954f7f9F1988d8387B57E898d7e742B9bC1CfE85",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-aster-wbnb",
+    "status": "active",
+    "createdAt": 1794812368,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["ASTER", "WBNB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-wbnb-spcxb-rp",
     "name": "SPCXB-WBNB Reward Pool",
     "type": "gov",
