@@ -1,5 +1,126 @@
 [
   {
+    "id": "aero-cow-base-usdc-ttwoc-vault",
+    "name": "TTWOc-USDC",
+    "type": "standard",
+    "token": "TTWOc-USDC",
+    "tokenAddress": "0x76352b140C114FE69E004cf1a2fD07f9fbf094E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x3602fc35f1e754d5015b79fa71414ba5AF429FA6",
+    "earnedToken": "mooCowAeroBaseTTWOc-USDC",
+    "earnedTokenAddress": "0x3602fc35f1e754d5015b79fa71414ba5AF429FA6",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-ttwoc",
+    "status": "active",
+    "createdAt": 1794508573,
+    "platformId": "aero",
+    "feeTier": "Dynamic",
+    "assets": ["TTWOc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-ttwoc-rp",
+    "name": "TTWOc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseTTWOc-USDC",
+    "tokenAddress": "0x76352b140C114FE69E004cf1a2fD07f9fbf094E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xd253f51dD5998b5ac35bc471Ab885f0185af20D9",
+    "earnedToken": "rCowAeroBaseTTWOc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-ttwoc",
+    "status": "active",
+    "createdAt": 1794508563,
+    "platformId": "aero",
+    "feeTier": "Dynamic",
+    "assets": ["TTWOc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-ttwoc",
+    "name": "TTWOc-USDC",
+    "type": "cowcentrated",
+    "token": "TTWOc-USDC aero",
+    "tokenAddress": "0x18907cAE5a9c7b45F85c5d2e1F7508C27c134f83",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB200000000000000000000f720C26062Bc3067Da"
+    ],
+    "earnContractAddress": "0x76352b140C114FE69E004cf1a2fD07f9fbf094E7",
+    "earnedToken": "cowAeroBaseTTWOc-USDC",
+    "earnedTokenAddress": "0x76352b140C114FE69E004cf1a2fD07f9fbf094E7",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-ttwoc",
+    "status": "active",
+    "createdAt": 1794508563,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "assets": ["TTWOc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-weth-lcap-vault",
     "name": "LCAP-WETH",
     "type": "standard",
