@@ -48,11 +48,6 @@ export class EnsoSwapProvider implements ISwapProvider {
   }
 
   async fetchQuote(request: QuoteRequest, state: BeefyState): Promise<QuoteResponse> {
-    // enso can ignore aggregators/standards but has no rfq flag, and aggregator legs may still fill via rfq
-    if (request.options?.excludeRfq) {
-      throw new Error('enso cannot exclude RFQ sources');
-    }
-
     const chain = selectChainById(state, request.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
