@@ -1,4 +1,12 @@
-import { decodeAbiParameters, decodeFunctionData, type Hex } from 'viem';
+import {
+  type Address,
+  decodeAbiParameters,
+  type DecodeFunctionDataReturnType,
+  decodeFunctionData,
+  encodeAbiParameters,
+  encodeFunctionData,
+  type Hex,
+} from 'viem';
 import { EnsoRouterAbi } from '../../../../../../config/abi/EnsoRouterAbi.ts';
 import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
@@ -30,6 +38,8 @@ const TOKEN_TYPE_NATIVE = 0;
 const TOKEN_TYPE_ERC20 = 1;
 
 const DEFAULT_QUOTE_TIMEOUT_MS = 2500;
+
+type RouteSingleArgs = DecodeFunctionDataReturnType<typeof EnsoRouterAbi, 'routeSingle'>['args'];
 
 export class EnsoSwapProvider implements ISwapProvider {
   getId(): string {
@@ -100,7 +110,7 @@ export class EnsoSwapProvider implements ISwapProvider {
       : {}),
     });
 
-    this.validateSwapTx(swap.tx, config, quote.fromToken, amountIn);
+    const route = this.validateSwapTx(swap.tx, config, quote.fromToken, amountIn);
 
     const toAmountMin = fromWei(swap.minAmountOut, quote.toToken.decimals);
     if (toAmountMin.lt(minAmountOut)) {
@@ -127,7 +137,7 @@ export class EnsoSwapProvider implements ISwapProvider {
       tx: {
         fromAddress,
         toAddress: swap.tx.to,
-        data: swap.tx.data,
+        data: this.encodeSafeRoute(route, quote.toToken, swap.minAmountOut, fromAddress),
         value: swap.tx.value,
         inputPosition: -1, // unsafe: the amount is repeated throughout the calldata
         exactValue: true, // enso does not check msg.value, any excess native would be stranded
@@ -142,16 +152,18 @@ export class EnsoSwapProvider implements ISwapProvider {
     config: EnsoSwapConfig,
     fromToken: TokenEntity,
     amountIn: string
-  ) {
+  ): RouteSingleArgs {
     if (tx.to.toLowerCase() !== config.routerAddress.toLowerCase()) {
       throw new Error(`enso swap target ${tx.to} is not the enso router ${config.routerAddress}`);
     }
 
-    // throws unless the selector is routeSingle
-    const { args } = decodeFunctionData({
+    const { functionName, args } = decodeFunctionData({
       abi: EnsoRouterAbi,
       data: tx.data as Hex,
     });
+    if (functionName !== 'routeSingle') {
+      throw new Error(`enso swap function ${functionName} is not routeSingle`);
+    }
 
     const [{ tokenType, data }] = args;
     const expectedAmount = BigInt(amountIn);
@@ -183,6 +195,37 @@ export class EnsoSwapProvider implements ISwapProvider {
     if (BigInt(tx.value) !== BigInt(value)) {
       throw new Error(`enso swap value ${tx.value} does not match ${value}`);
     }
+
+    return args;
+  }
+
+  /** safeRouteSingle runs the same route, then reverts unless the receiver gained the minimum */
+  protected encodeSafeRoute(
+    [tokenIn, data]: RouteSingleArgs,
+    toToken: TokenEntity,
+    minAmountOut: string,
+    receiver: string
+  ): Hex {
+    const min = BigInt(minAmountOut);
+    const tokenOut =
+      isTokenNative(toToken) ?
+        {
+          tokenType: TOKEN_TYPE_NATIVE,
+          data: encodeAbiParameters([{ type: 'uint256' }], [min]),
+        }
+      : {
+          tokenType: TOKEN_TYPE_ERC20,
+          data: encodeAbiParameters(
+            [{ type: 'address' }, { type: 'uint256' }],
+            [toToken.address as Address, min]
+          ),
+        };
+
+    return encodeFunctionData({
+      abi: EnsoRouterAbi,
+      functionName: 'safeRouteSingle',
+      args: [tokenIn, tokenOut, receiver as Address, data],
+    });
   }
 
   async getSupportedTokens(
