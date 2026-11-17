@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import { sortBy } from 'lodash-es';
+import { isEqual, sortBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { fromKeysBy, pushOrSet } from '../../../helpers/object.ts';
 import { fetchClmFeesAction } from '../actions/clm-fees.ts';
@@ -44,7 +44,7 @@ export const initialVaultsState: VaultsState = {
   byChainId: {},
   contractData: { byVaultId: {} },
   lastHarvestById: {},
-  clmFees: { byVaultId: {}, rangesLoadedByChainId: {} },
+  clmFees: { byVaultId: {} },
 };
 
 export const vaultsSlice = createSlice({
@@ -68,22 +68,21 @@ export const vaultsSlice = createSlice({
     });
 
     builder.addCase(fetchClmFeesAction.fulfilled, (sliceState, action) => {
-      const { chainId, fees, rangesLoaded } = action.payload;
-      for (const { id, swapFee, range } of fees) {
-        const clmFee = (sliceState.clmFees.byVaultId[id] ??= {});
-        // keep the last known fee when a read fails
-        if (swapFee !== undefined && clmFee.swapFee !== swapFee) {
-          clmFee.swapFee = swapFee;
+      for (const [id, fee] of Object.entries(action.payload.byVaultId)) {
+        const range =
+          fee.min !== undefined && fee.max !== undefined ?
+            { min: fee.min, max: fee.max }
+          : undefined;
+        const next = {
+          swapFee: fee.current,
+          isDynamic: fee.dynamic,
+          range,
+          firstSwapFee: fee.firstSwap,
+        };
+        // only replace on a real change so selectors stay stable between polls
+        if (!isEqual(sliceState.clmFees.byVaultId[id], next)) {
+          sliceState.clmFees.byVaultId[id] = next;
         }
-        if (
-          range !== undefined &&
-          (clmFee.range?.min !== range.min || clmFee.range?.max !== range.max)
-        ) {
-          clmFee.range = range;
-        }
-      }
-      if (rangesLoaded) {
-        sliceState.clmFees.rangesLoadedByChainId[chainId] = true;
       }
     });
 

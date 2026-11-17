@@ -31,7 +31,7 @@ import {
 } from '../../../../features/data/selectors/balance.ts';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens.ts';
 import {
-  selectAreClmFeeRangesLoaded,
+  selectCowcentratedFirstSwapFee,
   selectCowcentratedSwapFee,
   selectCowcentratedSwapFeeRange,
   selectCowcentratedVaultById,
@@ -139,6 +139,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel,
   fee,
   feeRange,
+  firstSwapFee,
   isFeeDynamic,
   platformName,
   tickSpacing,
@@ -151,6 +152,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   longLabel: string;
   fee: string | undefined;
   feeRange: string | undefined;
+  firstSwapFee: string | undefined;
   isFeeDynamic: boolean;
   platformName: string;
   tickSpacing: number;
@@ -165,6 +167,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
       `${platformName} trading fee: ${fee}${isFeeDynamic ? ' (dynamic)' : ''}`
     : undefined,
     feeRange !== undefined ? `Fee range: ${feeRange}` : undefined,
+    firstSwapFee !== undefined ? `First swap in a block: ${firstSwapFee}` : undefined,
     tickSpacing !== undefined ? `Pool tick spacing: ${tickSpacing}` : undefined,
   ]
     .filter(Boolean)
@@ -211,16 +214,15 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
 });
 
 function useClmSwapFee(clm: VaultCowcentrated) {
-  // until the bounds are known a dynamic fee would look fixed
-  const rangesLoaded = useAppSelector(state => selectAreClmFeeRangesLoaded(state, clm.chainId));
   const swapFee = useAppSelector(state => selectCowcentratedSwapFee(state, clm.id));
   const range = useAppSelector(state => selectCowcentratedSwapFeeRange(state, clm.id));
+  const firstSwapFee = useAppSelector(state => selectCowcentratedFirstSwapFee(state, clm.id));
   const isFeeDynamic = useAppSelector(state => selectIsClmSwapFeeDynamic(state, clm.id));
-  if (!rangesLoaded || swapFee === undefined) {
-    return { fee: undefined, feeRange: undefined, isFeeDynamic };
+  if (swapFee === undefined) {
+    return { fee: undefined, feeRange: undefined, firstSwapFee: undefined, isFeeDynamic };
   }
   return {
-    // rounded so the 45s refresh doesn't jitter the last digits
+    // a moving fee's last digits are noise
     fee:
       isFeeDynamic ?
         formatPercentTrim(new BigNumber(swapFee).precision(2, BigNumber.ROUND_HALF_UP), 6)
@@ -229,6 +231,7 @@ function useClmSwapFee(clm: VaultCowcentrated) {
       isFeeDynamic && range ?
         `${formatPercentTrim(range.min, 4)} – ${formatPercentTrim(range.max, 4)}`
       : undefined,
+    firstSwapFee: firstSwapFee !== undefined ? formatPercentTrim(firstSwapFee, 4) : undefined,
     isFeeDynamic,
   };
 }
@@ -258,7 +261,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
     depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
   );
 
-  const { fee, feeRange, isFeeDynamic } = useClmSwapFee(cowcentratedVault);
+  const { fee, feeRange, firstSwapFee, isFeeDynamic } = useClmSwapFee(cowcentratedVault);
 
   const typeLabel = isPool ? 'Pool' : 'Vault';
 
@@ -267,6 +270,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
       label={`CLM ${typeLabel}`}
       fee={fee}
       feeRange={feeRange}
+      firstSwapFee={firstSwapFee}
       isFeeDynamic={isFeeDynamic}
       longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
       platformName={provider?.name || 'LP'}
@@ -292,7 +296,7 @@ const VaultClmTag = memo(function VaultClmTag({
   css?: CssStyles;
   onlyIcon?: boolean;
 }) {
-  const { fee, feeRange, isFeeDynamic } = useClmSwapFee(vault);
+  const { fee, feeRange, firstSwapFee, isFeeDynamic } = useClmSwapFee(vault);
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
@@ -305,6 +309,7 @@ const VaultClmTag = memo(function VaultClmTag({
       label={'CLM'}
       fee={fee}
       feeRange={feeRange}
+      firstSwapFee={firstSwapFee}
       isFeeDynamic={isFeeDynamic}
       longLabel={'Cowcentrated Liquidity Manager'}
       platformName={provider?.name || 'LP'}

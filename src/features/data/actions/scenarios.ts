@@ -85,6 +85,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
 
     dispatch(fetchVaultsLastHarvests());
 
+    dispatch(fetchClmFeesAction());
+
     dispatch(fetchWeeklyRevenueStats());
 
     dispatch(fetchOffChainCampaignsAction());
@@ -136,7 +138,6 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       user: undefined,
     };
-    dispatch(fetchClmFeesAction({ chainId: chain.id }));
     const walletAddress = selectWalletAddress(getState());
     if (walletAddress) {
       fulfillsByNet[chain.id]!.user = fetchCaptureUserData(
@@ -214,13 +215,14 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
-  // refresh dynamic CLM fees like prices, retrying failed bound probes
-  for (const chain of chains) {
-    const pollStop = poll(async () => {
-      return dispatch(fetchClmFeesAction({ chainId: chain.id }));
-    }, 45 * 1000 /* every 45s */);
-    pollStopFns.push(pollStop);
-  }
+  // the api refreshes CLM swap fees every 15 minutes
+  pollStop = poll(
+    async () => {
+      return dispatch(fetchClmFeesAction());
+    },
+    5 * 60 * 1000 /* every 5 minutes */
+  );
+  pollStopFns.push(pollStop);
 
   // regular calls to update last harvest
   pollStop = poll(
@@ -273,8 +275,8 @@ export function manualPoll(): BeefyThunk {
 
     for (const chainId of chains) {
       dispatch(fetchAllContractDataByChainAction({ chainId: chainId }));
-      dispatch(fetchClmFeesAction({ chainId }));
     }
+    dispatch(fetchClmFeesAction());
 
     if (selectIsWalletKnown(state)) {
       const walletAddress = selectWalletAddress(state);
