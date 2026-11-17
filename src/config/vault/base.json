@@ -1,5 +1,838 @@
 [
   {
+    "id": "aero-cow-base-xdp-usdc-vault",
+    "name": "XDP-USDC",
+    "type": "standard",
+    "token": "XDP-USDC",
+    "tokenAddress": "0xD8128f5BEcb13968723B9714cbbC40B9c0e51882",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xfFaE466A0d812DF5559A5bb33C1efc338F65B21B",
+    "earnedToken": "mooCowAeroBaseXDP-USDC",
+    "earnedTokenAddress": "0xfFaE466A0d812DF5559A5bb33C1efc338F65B21B",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-xdp-usdc",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["XDP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-pod-vault",
+    "name": "POD-USDC",
+    "type": "standard",
+    "token": "POD-USDC",
+    "tokenAddress": "0xA1f99f22ef878Ee1901c00922d4Db10686b9F47E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xD6E5C5Bf8a6219E22B20BBa4e4Bd0F7053b1BA5e",
+    "earnedToken": "mooCowAeroBasePOD-USDC",
+    "earnedTokenAddress": "0xD6E5C5Bf8a6219E22B20BBa4e4Bd0F7053b1BA5e",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-pod",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["POD", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-whuf-vault",
+    "name": "WHUF-USDC",
+    "type": "standard",
+    "token": "WHUF-USDC",
+    "tokenAddress": "0x91d8315888f0925d50FbEc3773466fCe0e7Fde58",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x7e33DcA276412B69a6A48FecDBcb5e4AeFC6645d",
+    "earnedToken": "mooCowAeroBaseWHUF-USDC",
+    "earnedTokenAddress": "0x7e33DcA276412B69a6A48FecDBcb5e4AeFC6645d",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-whuf",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["WHUF", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-link-vault",
+    "name": "LINK-USDC",
+    "type": "standard",
+    "token": "LINK-USDC",
+    "tokenAddress": "0x96C0E2498bd240dF124E3E2E026C167184095265",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x5FF53c0b5dC66dF094CD445c6e8A95B4B248731B",
+    "earnedToken": "mooCowAeroBaseLINK-USDC",
+    "earnedTokenAddress": "0x5FF53c0b5dC66dF094CD445c6e8A95B4B248731B",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-link",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["LINK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-ethfi-vault",
+    "name": "ETHFI-WETH",
+    "type": "standard",
+    "token": "ETHFI-WETH",
+    "tokenAddress": "0x97424dc4c053e19862fC5226398A257EFA861c5D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xd4Bb622b070f0802142D05D007DCE897d5565B7a",
+    "earnedToken": "mooCowAeroBaseETHFI-WETH",
+    "earnedTokenAddress": "0xd4Bb622b070f0802142D05D007DCE897d5565B7a",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-ethfi",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["ETHFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-msusd-mseth-vault",
+    "name": "msUSD-msETH",
+    "type": "standard",
+    "token": "msUSD-msETH",
+    "tokenAddress": "0xd291d92d7CE86D4b8802DCe9C447f2fA111af384",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x126d0BaB488731a1A3b46C96A8465EA999D554a6",
+    "earnedToken": "mooCowAeroBasemsUSD-msETH",
+    "earnedTokenAddress": "0x126d0BaB488731a1A3b46C96A8465EA999D554a6",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-msusd-mseth",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["msUSD", "msETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-brett-vault",
+    "name": "BRETT-WETH",
+    "type": "standard",
+    "token": "BRETT-WETH",
+    "tokenAddress": "0xbecC94BD040Bb0E59ba40248ee7FBe8E72e6F4E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xA18aB55596190EC3A92760B9665e90EF4663ee8B",
+    "earnedToken": "mooCowAeroBaseBRETT-WETH",
+    "earnedTokenAddress": "0xA18aB55596190EC3A92760B9665e90EF4663ee8B",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-brett",
+    "status": "active",
+    "createdAt": 1794820000,
+    "platformId": "aero",
+    "assets": ["BRETT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-xdp-usdc-rp",
+    "name": "XDP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseXDP-USDC",
+    "tokenAddress": "0xD8128f5BEcb13968723B9714cbbC40B9c0e51882",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x513fAF0Ca1515A2EFB709Cd641f86E690fE991b9",
+    "earnedToken": "rCowAeroBaseXDP-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-xdp-usdc",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["XDP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-pod-rp",
+    "name": "POD-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBasePOD-USDC",
+    "tokenAddress": "0xA1f99f22ef878Ee1901c00922d4Db10686b9F47E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x9aa0Ee500550881f5CeFee29330Aef616475fb7D",
+    "earnedToken": "rCowAeroBasePOD-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-pod",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["POD", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-whuf-rp",
+    "name": "WHUF-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseWHUF-USDC",
+    "tokenAddress": "0x91d8315888f0925d50FbEc3773466fCe0e7Fde58",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x777F19d83Eb0AAa0dD4087C8DC5CE43Ec8417697",
+    "earnedToken": "rCowAeroBaseWHUF-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-whuf",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["WHUF", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-link-rp",
+    "name": "LINK-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseLINK-USDC",
+    "tokenAddress": "0x96C0E2498bd240dF124E3E2E026C167184095265",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x44aAd180F786c9C9c9d05BfA8C36Eb711b070019",
+    "earnedToken": "rCowAeroBaseLINK-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-link",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["LINK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-ethfi-rp",
+    "name": "ETHFI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseETHFI-WETH",
+    "tokenAddress": "0x97424dc4c053e19862fC5226398A257EFA861c5D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x5F0C4972BC89eFC5a9fEDa7c58d487f001D5dc16",
+    "earnedToken": "rCowAeroBaseETHFI-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-ethfi",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["ETHFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-msusd-mseth-rp",
+    "name": "msUSD-msETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBasemsUSD-msETH",
+    "tokenAddress": "0xd291d92d7CE86D4b8802DCe9C447f2fA111af384",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xD82Ed52eff7c668c552630B3f6603Af127D40725",
+    "earnedToken": "rCowAeroBasemsUSD-msETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-msusd-mseth",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["msUSD", "msETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-brett-rp",
+    "name": "BRETT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseBRETT-WETH",
+    "tokenAddress": "0xbecC94BD040Bb0E59ba40248ee7FBe8E72e6F4E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x3907AD2E9C8A40E3CA86c3D974C9625Ed5653FF0",
+    "earnedToken": "rCowAeroBaseBRETT-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-brett",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "aero",
+    "assets": ["BRETT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-xdp-usdc",
+    "name": "XDP-USDC",
+    "type": "cowcentrated",
+    "token": "XDP-USDC aero",
+    "tokenAddress": "0xC3CBFbaab532a04E36b6F901D725EaA5113FD781",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x07b3D902783c3C12b077508c3B5c00113d1291D0",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xD8128f5BEcb13968723B9714cbbC40B9c0e51882",
+    "earnedToken": "cowAeroBaseXDP-USDC",
+    "earnedTokenAddress": "0xD8128f5BEcb13968723B9714cbbC40B9c0e51882",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-xdp-usdc",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["XDP", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-pod",
+    "name": "POD-USDC",
+    "type": "cowcentrated",
+    "token": "POD-USDC aero",
+    "tokenAddress": "0xc4D5E62261648a3Ceb127924F741C0929f040f13",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xeD664536023d8E4b1640C394777D34aBAFF1dF8F"
+    ],
+    "earnContractAddress": "0xA1f99f22ef878Ee1901c00922d4Db10686b9F47E",
+    "earnedToken": "cowAeroBasePOD-USDC",
+    "earnedTokenAddress": "0xA1f99f22ef878Ee1901c00922d4Db10686b9F47E",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-pod",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["POD", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": true,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-whuf",
+    "name": "WHUF-USDC",
+    "type": "cowcentrated",
+    "token": "WHUF-USDC aero",
+    "tokenAddress": "0xb9eE0db4a1C1c8072972e1b75d16d4e5C1065C03",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xeeee77bC7e82c0d4166d52F58239D4c5Bf41eeee"
+    ],
+    "earnContractAddress": "0x91d8315888f0925d50FbEc3773466fCe0e7Fde58",
+    "earnedToken": "cowAeroBaseWHUF-USDC",
+    "earnedTokenAddress": "0x91d8315888f0925d50FbEc3773466fCe0e7Fde58",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-whuf",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["WHUF", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-link",
+    "name": "LINK-USDC",
+    "type": "cowcentrated",
+    "token": "LINK-USDC aero",
+    "tokenAddress": "0x8963dbac7EC963878e416187599a6576590fC7b5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0x88Fb150BDc53A65fe94Dea0c9BA0a6dAf8C6e196"
+    ],
+    "earnContractAddress": "0x96C0E2498bd240dF124E3E2E026C167184095265",
+    "earnedToken": "cowAeroBaseLINK-USDC",
+    "earnedTokenAddress": "0x96C0E2498bd240dF124E3E2E026C167184095265",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-link",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["LINK", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-ethfi",
+    "name": "ETHFI-WETH",
+    "type": "cowcentrated",
+    "token": "ETHFI-WETH aero",
+    "tokenAddress": "0x448134560A0f4eB18E1A794E4984a895fAD35454",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6C240DDA6b5c336DF09A4D011139beAAa1eA2Aa2"
+    ],
+    "earnContractAddress": "0x97424dc4c053e19862fC5226398A257EFA861c5D",
+    "earnedToken": "cowAeroBaseETHFI-WETH",
+    "earnedTokenAddress": "0x97424dc4c053e19862fC5226398A257EFA861c5D",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-ethfi",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["ETHFI", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-msusd-mseth",
+    "name": "msUSD-msETH",
+    "type": "cowcentrated",
+    "token": "msUSD-msETH aero",
+    "tokenAddress": "0x883E9C376F4119F9c475b3E80aF4002f00f6964a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x526728DBc96689597F85ae4cd716d4f7fCcBAE9d",
+      "0x7Ba6F01772924a82D9626c126347A28299E98c98"
+    ],
+    "earnContractAddress": "0xd291d92d7CE86D4b8802DCe9C447f2fA111af384",
+    "earnedToken": "cowAeroBasemsUSD-msETH",
+    "earnedTokenAddress": "0xd291d92d7CE86D4b8802DCe9C447f2fA111af384",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-msusd-mseth",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["msUSD", "msETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": true
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-weth-brett",
+    "name": "BRETT-WETH",
+    "type": "cowcentrated",
+    "token": "BRETT-WETH aero",
+    "tokenAddress": "0xFA9C1d85B8A9879b2cFE0153E9D25aeCAF6e6E2F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x532f27101965dd16442E59d40670FaF5eBB142E4"
+    ],
+    "earnContractAddress": "0xbecC94BD040Bb0E59ba40248ee7FBe8E72e6F4E7",
+    "earnedToken": "cowAeroBaseBRETT-WETH",
+    "earnedTokenAddress": "0xbecC94BD040Bb0E59ba40248ee7FBe8E72e6F4E7",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-weth-brett",
+    "status": "active",
+    "createdAt": 1793290000,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 200,
+    "assets": ["BRETT", "WETH"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-usdc-ttwoc-vault",
     "name": "TTWOc-USDC",
     "type": "standard",
