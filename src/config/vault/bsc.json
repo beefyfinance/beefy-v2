@@ -1,5 +1,162 @@
 [
   {
+    "id": "uniswap-cow-bsc-usdt-spcxb-rp",
+    "name": "SPCXB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscUSDT-SPCXB",
+    "tokenAddress": "0xd5cAD65dcbBFef11E76237EA36e4DEd91A3214AA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xF6e3B9f0980d6438FD3980f87E2184607109cA60",
+    "earnedToken": "rCowUniswapBscUSDT-SPCXB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-spcxb",
+    "status": "active",
+    "createdAt": 1794903946,
+    "platformId": "uniswap",
+    "assets": ["SPCXB", "USDT"],
+    "icons": ["SPCX", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-spcxb",
+    "name": "USDT-SPCXB",
+    "type": "cowcentrated",
+    "token": "USDT-SPCXB uniswap",
+    "tokenAddress": "0x51A45A72Cc96CA3bA615E25e80a6Af2740ae2E2d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xbe9D156892E55e7154BcD3cB0FEA677F9D3103E1"
+    ],
+    "earnContractAddress": "0xd5cAD65dcbBFef11E76237EA36e4DEd91A3214AA",
+    "earnedToken": "cowUniswapBscUSDT-SPCXB",
+    "earnedTokenAddress": "0xd5cAD65dcbBFef11E76237EA36e4DEd91A3214AA",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-spcxb",
+    "status": "active",
+    "createdAt": 1794903946,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["USDT", "SPCXB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-nvdab-usdt-rp",
+    "name": "NVDAB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscNVDAB-USDT",
+    "tokenAddress": "0x67F54A9edFEF950AcDddD9FB206d03a271a7117f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x3e90659360bA9f01c4C3E16E6bB6614779475675",
+    "earnedToken": "rCowUniswapBscNVDAB-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-nvdab-usdt",
+    "status": "active",
+    "createdAt": 1794903939,
+    "platformId": "uniswap",
+    "assets": ["NVDAB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-nvdab-usdt",
+    "name": "NVDAB-USDT",
+    "type": "cowcentrated",
+    "token": "NVDAB-USDT uniswap",
+    "tokenAddress": "0xDD9d5164CcBc57bE377a964Fc064135b03D06177",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x02Fca66C1D1aFB4E2A7884261eB00F63598a7436",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x67F54A9edFEF950AcDddD9FB206d03a271a7117f",
+    "earnedToken": "cowUniswapBscNVDAB-USDT",
+    "earnedTokenAddress": "0x67F54A9edFEF950AcDddD9FB206d03a271a7117f",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-nvdab-usdt",
+    "status": "active",
+    "createdAt": 1794903939,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "tickSpacing": 10,
+    "assets": ["NVDAB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-aster-wbnb-rp",
     "name": "ASTER-WBNB Reward Pool",
     "type": "gov",
