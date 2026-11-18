@@ -171,8 +171,7 @@
     "chainId": "robinhood",
     "routerAddress": "0xCfBAa9Cfce952Ca4F4069874fF1Df8c05e37a3c7",
     "blockedTokens": [],
-    "blockedVaults": [],
-    "quoteTimeoutMs": 4000
+    "blockedVaults": []
   },
   {
     "id": "enso-arc",

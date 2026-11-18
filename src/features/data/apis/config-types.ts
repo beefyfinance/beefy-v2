@@ -364,8 +364,6 @@ export type EnsoSwapConfig = MakeSwapConfig<
   {
     /** the api-supplied tx.to must match this */
     routerAddress: string;
-    /** quotes slower than this are dropped so they don't hold up the other providers */
-    quoteTimeoutMs?: number;
   }
 >;
 export type SwapAggregatorConfig =

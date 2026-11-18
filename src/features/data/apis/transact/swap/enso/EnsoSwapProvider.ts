@@ -37,7 +37,7 @@ const ENSO_NATIVE_ADDRESS = EEEE_ADDRESS.toLowerCase();
 const TOKEN_TYPE_NATIVE = 0;
 const TOKEN_TYPE_ERC20 = 1;
 
-const DEFAULT_QUOTE_TIMEOUT_MS = 2500;
+const QUOTE_TIMEOUT_MS = 2500;
 
 type RouteSingleArgs = DecodeFunctionDataReturnType<typeof EnsoRouterAbi, 'routeSingle'>['args'];
 
@@ -74,7 +74,7 @@ export class EnsoSwapProvider implements ISwapProvider {
           { ignoreAggregators: config.excludedSources.join(',') }
         : {}),
       },
-      config.quoteTimeoutMs ?? DEFAULT_QUOTE_TIMEOUT_MS
+      QUOTE_TIMEOUT_MS
     );
 
     return {
