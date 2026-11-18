@@ -5,6 +5,7 @@ import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-
 import type {
   AmmConfig,
   SwapAggregatorConfig,
+  ZapPriorityTokensConfig,
   ZapConfig,
   ZapFeeRule,
 } from '../apis/config-types.ts';
@@ -15,6 +16,7 @@ import type { VaultEntity } from '../entities/vault.ts';
 import { selectAllChainIds } from '../selectors/chains.ts';
 import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults.ts';
 import {
+  featureFlag_ensoSupport,
   featureFlag_kyberSwapSupport,
   featureFlag_liquidSwapSupport,
   featureFlag_oneInchSupport,
@@ -56,6 +58,7 @@ export const fetchZapFeeCampaignsAction = createAppAsyncThunk<FetchZapFeeCampaig
 
 interface FetchAllSwapAggregatorsFulfilledPayload {
   aggregators: SwapAggregatorConfig[];
+  priorityTokens: ZapPriorityTokensConfig;
 }
 
 export const fetchZapSwapAggregatorsAction =
@@ -63,9 +66,12 @@ export const fetchZapSwapAggregatorsAction =
     'zap/fetchSwapAggregators',
     async () => {
       const api = await getConfigApi();
-      const aggregators = await api.fetchZapSwapAggregators();
+      const [aggregators, priorityTokens] = await Promise.all([
+        api.fetchZapSwapAggregators(),
+        api.fetchZapPriorityTokens(),
+      ]);
 
-      return { aggregators };
+      return { aggregators, priorityTokens };
     }
   );
 
@@ -118,6 +124,7 @@ export const fetchZapAggregatorTokenSupportAction =
         'one-inch': featureFlag_oneInchSupport(),
         kyber: featureFlag_kyberSwapSupport(),
         'liquid-swap': featureFlag_liquidSwapSupport(),
+        enso: featureFlag_ensoSupport(),
       };
 
       for (const [key, support] of entries(extraSupport)) {
