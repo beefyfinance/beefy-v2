@@ -1,5 +1,27 @@
 [
   {
+    "id": "moo_aero-antc-usdc",
+    "title": "Beefy",
+    "vaultId": "aero-cow-base-usdc-antc-vault",
+    "assets": ["ANTc", "USDC"],
+    "tokenAddress": "0x0B0793fB37ceaCc5670CD6e1FCed0E2CB5b574fB",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc5cc27dE81c1a76b0C976dc886a1192C54AA25f8",
+    "status": "inactive",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-usdc-pyplc",
     "title": "Beefy",
     "vaultId": "aerodrome-cow-base-usdc-pyplc-vault",

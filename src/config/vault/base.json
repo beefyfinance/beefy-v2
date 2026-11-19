@@ -1,5 +1,126 @@
 [
   {
+    "id": "aero-cow-base-usdc-antc-vault",
+    "name": "ANTc-USDC",
+    "type": "standard",
+    "token": "ANTc-USDC",
+    "tokenAddress": "0x1C7877051af66a0BC519f1245Eb1FaCFdB2F2A41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x0B0793fB37ceaCc5670CD6e1FCed0E2CB5b574fB",
+    "earnedToken": "mooBeefyAeroBaseANTc-USDC",
+    "earnedTokenAddress": "0x0B0793fB37ceaCc5670CD6e1FCed0E2CB5b574fB",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-antc",
+    "status": "active",
+    "createdAt": 1795111490,
+    "platformId": "aero",
+    "feeTier": "Dynamic",
+    "assets": ["ANTc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-antc-rp",
+    "name": "ANTc-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseANTc-USDC",
+    "tokenAddress": "0x1C7877051af66a0BC519f1245Eb1FaCFdB2F2A41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0xf607D44d12460FA06e0D0BAd67EFb76493F51443",
+    "earnedToken": "rcowAeroBaseANTc-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-antc",
+    "status": "active",
+    "createdAt": 1795111474,
+    "platformId": "aero",
+    "feeTier": "Dynamic",
+    "assets": ["ANTc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-antc",
+    "name": "ANTc-USDC",
+    "type": "cowcentrated",
+    "token": "ANTc-USDC aero",
+    "tokenAddress": "0x599C4225FE90214795a0be228D20d7680f8CED15",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xb20000000000000000000016e38FD364d271Ba28"
+    ],
+    "earnContractAddress": "0x1C7877051af66a0BC519f1245Eb1FaCFdB2F2A41",
+    "earnedToken": "cowAeroBaseANTc-USDC",
+    "earnedTokenAddress": "0x1C7877051af66a0BC519f1245Eb1FaCFdB2F2A41",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-antc",
+    "status": "active",
+    "createdAt": 1795111471,
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
+    "tickSpacing": 10,
+    "assets": ["ANTc", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": true,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-usdc-infi-vault",
     "name": "INFI-USDC",
     "type": "standard",
