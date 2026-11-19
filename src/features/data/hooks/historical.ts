@@ -18,7 +18,11 @@ import {
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import { selectVaultById } from '../selectors/vaults.ts';
 
-export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket: GraphBucket) {
+export function useOracleIdToUsdPrices(
+  oracleId: TokenEntity['oracleId'],
+  bucket: GraphBucket,
+  enabled = true
+) {
   const dispatch = useAppDispatch();
   const status = useAppSelector(state =>
     selectHistoricalPriceBucketStatus(state, oracleId, bucket)
@@ -30,7 +34,7 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
   const hasData = alreadyFulfilled && !!data && data.length > 0;
 
   useEffect(() => {
-    if (!alreadyFulfilled) {
+    if (enabled && !alreadyFulfilled) {
       if (status === 'idle') {
         dispatch(fetchHistoricalPrices({ oracleId, bucket }));
       } else if (status === 'rejected') {
@@ -40,7 +44,7 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
         return () => clearTimeout(handle);
       }
     }
-  }, [dispatch, oracleId, bucket, alreadyFulfilled, status]);
+  }, [dispatch, oracleId, bucket, alreadyFulfilled, status, enabled]);
 
   return {
     data,

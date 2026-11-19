@@ -1,7 +1,9 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import { memo } from 'react';
+import { memo, useState } from 'react';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { useBtcPerformance } from '../../hooks.ts';
 import { useTranslation } from 'react-i18next';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent.tsx';
 import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
@@ -46,29 +48,50 @@ export const Header = memo(function Header({ vaultId, address }: HeaderProps) {
   } = useAppSelector(state => selectStandardGovPnl(state, vaultId, address));
 
   const classes = useStyles();
+  const [currency, setCurrency] = useState<'USD' | 'BTC'>('USD');
+  const btc = useBtcPerformance(vaultId, address, currency === 'BTC');
+  const inBtc = currency === 'BTC';
+  const formatBtc = (value: BigNumber | undefined) =>
+    value ? `${formatTokenDisplay(value, 8)} BTC` : '—';
+  const displayedPnl = inBtc ? btc?.pnl : totalPnlUsd;
 
   return (
     <>
+      <div className={css({ display: 'flex', justifyContent: 'flex-end', padding: '8px' })}>
+        <ToggleButtons<'USD' | 'BTC'>
+          value={currency}
+          onChange={setCurrency}
+          options={[
+            { value: 'USD', label: 'USD' },
+            { value: 'BTC', label: 'BTC' },
+          ]}
+        />
+      </div>
+      {inBtc && (
+        <p className={css({ padding: '8px', color: 'text.dark', textStyle: 'body.sm.medium' })}>
+          {t('pnl-btc-notice')}
+        </p>
+      )}
       {pendingIndex && <PendingIndexNotice />}
       <div className={classes.header}>
         <HeaderItem
-          tooltipText={t('pnl-graph-tooltip-deposit')}
+          tooltipText={t(inBtc ? 'pnl-btc-deposit-tooltip' : 'pnl-graph-tooltip-deposit')}
           label={t('At Deposit')}
-          subValue={formatLargeUsd(usdBalanceAtDeposit)}
+          subValue={inBtc ? formatBtc(btc?.atDeposit) : formatLargeUsd(usdBalanceAtDeposit)}
         >
           <SharesValue amount={balanceAtDeposit} decimals={tokenDecimals} />
         </HeaderItem>
         <HeaderItem
-          tooltipText={t('pnl-graph-tooltip-now-vault')}
+          tooltipText={t(inBtc ? 'pnl-btc-now-tooltip' : 'pnl-graph-tooltip-now-vault')}
           label={t('Now')}
-          subValue={formatLargeUsd(depositUsd)}
+          subValue={inBtc ? formatBtc(btc?.now) : formatLargeUsd(depositUsd)}
         >
           <SharesValue amount={deposit} decimals={tokenDecimals} />
         </HeaderItem>
         <HeaderItem
-          tooltipText={t('pnl-graph-tooltip-yield')}
+          tooltipText={t(inBtc ? 'pnl-btc-yield-tooltip' : 'pnl-graph-tooltip-yield')}
           label={t('Yield')}
-          subValue={formatLargeUsd(totalYieldUsd)}
+          subValue={inBtc ? formatBtc(btc?.yield) : formatLargeUsd(totalYieldUsd)}
         >
           <SharesValue
             amount={totalYield}
@@ -78,17 +101,32 @@ export const Header = memo(function Header({ vaultId, address }: HeaderProps) {
           />
         </HeaderItem>
         <HeaderItem
-          tooltipText={t('pnl-graph-tooltip-pnl')}
+          tooltipText={t(inBtc ? 'pnl-btc-tooltip' : 'pnl-graph-tooltip-pnl')}
           label={t('PNL')}
-          subValue={formatLargePercent(pnlPercentage)}
+          subValue={
+            inBtc ?
+              btc ?
+                formatLargePercent(btc.percentage)
+              : '—'
+            : formatLargePercent(pnlPercentage)
+          }
         >
           <div
             className={css(
               styles.value,
-              totalPnlUsd.gt(BIG_ZERO) ? styles.greenValue : styles.redValue
+              displayedPnl ?
+                displayedPnl.gt(BIG_ZERO) ?
+                  styles.greenValue
+                : styles.redValue
+              : undefined
             )}
           >
-            {formatPositiveOrNegative(totalPnlUsd, formatLargeUsd(totalPnlUsd))}{' '}
+            {displayedPnl ?
+              formatPositiveOrNegative(
+                displayedPnl,
+                inBtc ? formatBtc(displayedPnl) : formatLargeUsd(displayedPnl)
+              )
+            : '—'}{' '}
           </div>
         </HeaderItem>
       </div>

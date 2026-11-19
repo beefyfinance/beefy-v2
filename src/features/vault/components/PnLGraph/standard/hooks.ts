@@ -1,6 +1,10 @@
 import { differenceInHours, getUnixTime, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
 import { useMemo } from 'react';
+import { calculatePnlInCurrency } from '../../../../../helpers/pnl-currency.ts';
+import { useOracleIdToUsdPrices } from '../../../../data/hooks/historical.ts';
+import { selectStandardGovPnl } from '../../../../data/selectors/analytics.ts';
+import { selectTokenPriceByTokenOracleId } from '../../../../data/selectors/tokens.ts';
 import { getInvestorTimeseries } from '../../../../../helpers/graph/timeseries.ts';
 import type { GraphBucket } from '../../../../../helpers/graph/types.ts';
 import { useAppSelector } from '../../../../data/store/hooks.ts';
@@ -146,3 +150,34 @@ export const useVaultPeriods = (
     return [];
   }, [vaultDepositDate, minHours]);
 };
+
+export function useBtcPerformance(vaultId: VaultEntity['id'], address: string, enabled: boolean) {
+  const timeline = useAppSelector(state =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, address)
+  );
+  const usd = useAppSelector(state => selectStandardGovPnl(state, vaultId, address));
+  const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, 'BTC'));
+  const { data: prices } = useOracleIdToUsdPrices('BTC', '1d_all', enabled);
+  const token = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
+  const ppfsRaw = useAppSelector(state => selectVaultPricePerFullShare(state, vaultId));
+  return useMemo(() => {
+    if (!enabled || !prices || !isTimelineEntityStandard(timeline)) return null;
+    return calculatePnlInCurrency(
+      timeline.current,
+      prices,
+      price,
+      usd.oraclePrice,
+      ppfsRaw.shiftedBy(18 - token.decimals),
+      usd.totalYieldUsd
+    );
+  }, [
+    enabled,
+    prices,
+    price,
+    timeline,
+    usd.oraclePrice,
+    usd.totalYieldUsd,
+    ppfsRaw,
+    token.decimals,
+  ]);
+}
