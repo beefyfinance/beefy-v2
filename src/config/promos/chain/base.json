@@ -30,7 +30,7 @@
     "type": "boost",
     "version": 2,
     "contractAddress": "0xc5cc27dE81c1a76b0C976dc886a1192C54AA25f8",
-    "status": "inactive",
+    "status": "active",
     "campaign": "coinbase-stocks",
     "partners": ["coinbase"],
     "rewards": [
