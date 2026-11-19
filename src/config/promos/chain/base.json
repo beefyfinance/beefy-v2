@@ -1,5 +1,27 @@
 [
   {
+    "id": "moo_aero-ttwoc-usdc",
+    "title": "Beefy",
+    "vaultId": "aero-cow-base-usdc-ttwoc-vault",
+    "assets": ["TTWOc", "USDC"],
+    "tokenAddress": "0x3602fc35f1e754d5015b79fa71414ba5AF429FA6",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xcac4be61A7194669b9FceE3e8C4a65dd3504747E",
+    "status": "active",
+    "campaign": "coinbase-stocks",
+    "partners": ["coinbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_aero-antc-usdc",
     "title": "Beefy",
     "vaultId": "aero-cow-base-usdc-antc-vault",
