@@ -1580,7 +1580,8 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["wstETH", "WETH"],
+    "assets": ["WETH", "wstETH"],
+    "icons": ["wstETH", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -1619,7 +1620,8 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["EDEL", "WETH"],
+    "assets": ["WETH", "EDEL"],
+    "icons": ["EDEL", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -1697,7 +1699,8 @@
     "status": "active",
     "createdAt": 1794186468,
     "platformId": "aero",
-    "assets": ["DRV", "WETH"],
+    "assets": ["WETH", "DRV"],
+    "icons": ["DRV", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -1736,7 +1739,8 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["cbBTC", "WETH"],
+    "assets": ["WETH", "cbBTC"],
+    "icons": ["cbBTC", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -1814,7 +1818,8 @@
     "status": "active",
     "createdAt": 1794186464,
     "platformId": "aero",
-    "assets": ["bWELL", "WETH"],
+    "assets": ["WETH", "bWELL"],
+    "icons": ["bWELL", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -1931,7 +1936,8 @@
     "status": "active",
     "createdAt": 1794186469,
     "platformId": "aero",
-    "assets": ["VVV", "WETH"],
+    "assets": ["WETH", "VVV"],
+    "icons": ["VVV", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -2048,7 +2054,8 @@
     "status": "active",
     "createdAt": 1794186465,
     "platformId": "aero",
-    "assets": ["msETH", "WETH"],
+    "assets": ["WETH", "msETH"],
+    "icons": ["msETH", "WETH"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -4577,7 +4584,8 @@
     "status": "active",
     "createdAt": 1793550000,
     "platformId": "aero",
-    "assets": ["wstETH", "WETH"],
+    "assets": ["WETH", "wstETH"],
+    "icons": ["wstETH", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -6031,7 +6039,8 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 1,
-    "assets": ["wstETH", "WETH"],
+    "assets": ["WETH", "wstETH"],
+    "icons": ["wstETH", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -7643,7 +7652,6 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["WETH", "USDC"],
-    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -8443,7 +8451,6 @@
     "status": "active",
     "platformId": "beefy",
     "assets": ["WETH", "USDC"],
-    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -9303,7 +9310,6 @@
     "status": "active",
     "platformId": "aero",
     "assets": ["WETH", "USDC"],
-    "icons": ["WETH", "USDC"],
     "risks": {
       "complex": true,
       "curated": false,

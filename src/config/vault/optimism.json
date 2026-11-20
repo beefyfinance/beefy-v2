@@ -15,7 +15,8 @@
     "status": "active",
     "createdAt": 1794186444,
     "platformId": "aero",
-    "assets": ["alUSD", "USDC"],
+    "assets": ["USDC", "alUSD"],
+    "icons": ["alUSD", "USDC"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
@@ -93,7 +94,8 @@
     "status": "active",
     "createdAt": 1794186444,
     "platformId": "aero",
-    "assets": ["msUSD", "USDC"],
+    "assets": ["USDC", "msUSD"],
+    "icons": ["msUSD", "USDC"],
     "migrationIds": ["aero-v2"],
     "risks": {
       "complex": false,
