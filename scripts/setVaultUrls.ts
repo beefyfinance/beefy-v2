@@ -1,5 +1,6 @@
 import { omit } from 'lodash-es';
 import { addressBookToAppId, getVaultsForChain } from './common/config.ts';
+import { isEnabledChainId } from '../src/config/config.ts';
 import { saveJson } from './common/files.ts';
 import { allChainIds, type AppChainId } from './common/chains.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
@@ -186,6 +187,9 @@ async function replaceUrlsForVault(
   }
 
   const chainId = addressBookToAppId(vault.network);
+  if (!isEnabledChainId(chainId)) {
+    return undefined;
+  }
   const urlsForProvider = URLS[chainId]?.[vault.tokenProviderId];
   if (!urlsForProvider) {
     return undefined;

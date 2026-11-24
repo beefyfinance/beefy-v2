@@ -5,6 +5,7 @@ import {
   getVaultsForChain,
 } from './config.ts';
 import { chainsByAppId } from './chains.ts';
+import { isEnabledChainId } from '../../src/config/config.ts';
 import type { ChainEntity } from '../../src/features/data/entities/chain.ts';
 import {
   isTokenErc20,
@@ -177,6 +178,9 @@ const tokensByChainId: TokensByChainId = {};
 
 export async function getTokensForChain(chainId: string): Promise<TokensByChainId['chainId']> {
   const appChainId = addressBookToAppId(chainId);
+  if (!isEnabledChainId(appChainId)) {
+    throw new Error(`Chain ${appChainId} is disabled`);
+  }
 
   if (!tokensByChainId[appChainId]) {
     const chain = chainsByAppId[appChainId];

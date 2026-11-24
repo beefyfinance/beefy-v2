@@ -1,12 +1,11 @@
-import { config } from '../../src/config/config.ts';
-import type { ChainConfig } from '../../src/features/data/apis/config-types.ts';
+import { config, enabledChainIds, type EnabledChainId } from '../../src/config/config.ts';
 import type { ChainEntity } from '../../src/features/data/entities/chain.ts';
-import { entries } from '../../src/helpers/object.js';
 
-export type AppChainId = keyof typeof config;
+export type AppChainId = EnabledChainId;
 
-export const chainsByAppId: Record<AppChainId, ChainEntity> = entries(config).reduce(
-  (acc, [chainId, chainConfig]: [AppChainId, Omit<ChainConfig, 'id'>]) => {
+export const chainsByAppId: Record<AppChainId, ChainEntity> = enabledChainIds.reduce(
+  (acc, chainId) => {
+    const chainConfig = config[chainId];
     acc[chainId] = {
       ...chainConfig,
       id: chainId,

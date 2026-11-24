@@ -1,4 +1,4 @@
-import { config as chainConfigs } from '../../../config/config.ts';
+import { config as chainConfigs, enabledChainIds } from '../../../config/config.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type {
   AmmConfig,
@@ -25,16 +25,13 @@ const ammsChainPathToImportFn = import.meta.glob<AmmConfig[]>('../../../config/z
   import: 'default',
 });
 
-const enabledChains = entries(chainConfigs).filter(([, chain]) => chain.status !== 'disabled');
-const enabledChainIds = enabledChains.map(([id]) => id);
-
 /**
  * A class to access beefy configuration
  * Access to vaults, boosts, featured items, etc
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return enabledChains.map(([id, chain]) => ({ id, ...chain }));
+    return enabledChainIds.map(id => ({ id, ...chainConfigs[id] }));
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
