@@ -4,7 +4,6 @@ import {
   type TenderlyOpenSimulationPayload,
   tenderlySimulate,
   tenderlySimulateMerklClaim,
-  tenderlySimulateStellaSwapClaim,
   tenderlySimulateTransactQuote,
 } from '../actions/tenderly.ts';
 import { transactConfirmRejected } from '../actions/transact.ts';
@@ -79,7 +78,6 @@ export const tenderlySlice = createSlice({
 
     handleCalls(tenderlySimulateTransactQuote);
     handleCalls(tenderlySimulateMerklClaim);
-    handleCalls(tenderlySimulateStellaSwapClaim);
 
     builder
       .addCase(transactConfirmRejected, state => {

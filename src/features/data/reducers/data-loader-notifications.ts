@@ -33,7 +33,6 @@ const notificationCategories: LoaderNotificationCategoryMap = {
       'prices',
       'proposals',
       'revenue',
-      // 'stellaSwapRewards', 3rd-party api, not beefy
       'treasury',
       'zapAggregatorTokenSupport',
     ],
@@ -42,7 +41,6 @@ const notificationCategories: LoaderNotificationCategoryMap = {
       // 'dashboard', rpc, no chain or 3rd party api, not beefy
       'clmHarvests',
       // 'merklRewards', 3rd-party api, not beefy
-      // 'stellaSwapRewards', 3rd-party api, not beefy
     ],
     addressChain: ['clmHarvests'],
   },

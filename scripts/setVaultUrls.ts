@@ -71,13 +71,6 @@ const URLS: ChainProviderUrls = {
       },
     ],
   },
-  celo: {
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
   ethereum: {
     curve: {
       buyTokenUrl: curvePoolUrl,
@@ -102,20 +95,6 @@ const URLS: ChainProviderUrls = {
         removeLiquidityUrl: 'https://www.spiritswap.finance/liquidity/{token0}/{token1}',
       },
     ],
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
-  kava: {
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
-  moonbeam: {
     curve: {
       buyTokenUrl: curvePoolUrl,
       addLiquidityUrl: curvePoolUrl,
