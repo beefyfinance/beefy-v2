@@ -331,7 +331,7 @@
     "status": "active",
     "createdAt": 1794400000,
     "platformId": "beefy",
-    "feeTier": "Dynamic",
+    "feeTier": "0.3",
     "tickSpacing": 50,
     "assets": ["BIFI", "WETH"],
     "risks": {
@@ -454,7 +454,7 @@
     "status": "active",
     "createdAt": 1794400000,
     "platformId": "beefy",
-    "feeTier": "Dynamic",
+    "feeTier": "0.0479",
     "tickSpacing": 10,
     "assets": ["XAUt", "USDT"],
     "risks": {

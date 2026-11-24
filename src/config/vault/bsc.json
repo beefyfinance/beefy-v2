@@ -4914,7 +4914,7 @@
     "status": "active",
     "createdAt": 1743158532,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.25",
     "tickSpacing": 50,
     "assets": ["mubarak", "WBNB"],
     "risks": {

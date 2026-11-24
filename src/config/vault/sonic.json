@@ -470,7 +470,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.15",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["WBTC", "USDCe"],
     "risks": {
@@ -598,7 +598,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.15",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["WS", "WBTC"],
     "risks": {
@@ -726,7 +726,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.17",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -968,7 +968,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.30",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["beS", "USDCe"],
     "risks": {
@@ -1179,7 +1179,7 @@
     "retireReason": "tvl",
     "retiredAt": 1784063232,
     "platformId": "beefy",
-    "feeTier": "0.01",
+    "feeTier": "Dynamic",
     "tickSpacing": 1,
     "assets": ["beS", "WS"],
     "risks": {
@@ -1927,7 +1927,7 @@
     "retireReason": "tvl",
     "retiredAt": 1784063232,
     "platformId": "beefy",
-    "feeTier": "0.01",
+    "feeTier": "Dynamic",
     "tickSpacing": 1,
     "assets": ["USDCe", "USDT"],
     "risks": {
@@ -2055,7 +2055,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609953,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["SHADOW", "USDCe"],
     "risks": {
@@ -2180,7 +2180,7 @@
     "retireReason": "default",
     "retiredAt": 1784063232,
     "platformId": "beefy",
-    "feeTier": "0.50",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["BRUSH", "WS"],
     "risks": {
@@ -2375,7 +2375,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.16",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["WS", "WETH"],
     "risks": {
@@ -3258,7 +3258,7 @@
     "createdAt": 1737594509,
     "retiredAt": 1761065392,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["mooBIFI", "USDCe"],
     "risks": {
@@ -3782,7 +3782,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609953,
     "platformId": "beefy",
-    "feeTier": "2",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["SHADOW", "stS"],
     "risks": {
@@ -3912,7 +3912,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.04",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["USDCe", "WETH"],
     "risks": {
@@ -4042,7 +4042,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790951681,
     "platformId": "beefy",
-    "feeTier": "0.15",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["WS", "USDCe"],
     "risks": {

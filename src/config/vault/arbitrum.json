@@ -13644,7 +13644,7 @@
     "status": "active",
     "createdAt": 1719509612,
     "platformId": "beefy",
-    "feeTier": "Dynamic",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["GNS", "WETH"],
     "risks": {
@@ -14100,7 +14100,7 @@
     "status": "active",
     "createdAt": 1719321885,
     "platformId": "beefy",
-    "feeTier": "Dynamic",
+    "feeTier": "0.0025",
     "tickSpacing": 1,
     "assets": ["USDC", "USDT"],
     "risks": {

@@ -217,7 +217,7 @@
     "retireReason": "tvl",
     "retiredAt": 1794840538,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["UETH", "kHYPE"],
     "risks": {
@@ -461,7 +461,7 @@
     "status": "active",
     "createdAt": 1755877215,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["UETH", "WHYPE"],
     "risks": {
@@ -541,7 +541,7 @@
     "status": "active",
     "createdAt": 1755877044,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "0.3",
     "tickSpacing": 60,
     "assets": ["UBTC", "WHYPE"],
     "risks": {
@@ -958,7 +958,7 @@
     "retireReason": "tvl",
     "retiredAt": 1767991369,
     "platformId": "beefy",
-    "feeTier": "0.02",
+    "feeTier": "0.25",
     "tickSpacing": 50,
     "assets": ["WHLP", "WHYPE"],
     "risks": {
@@ -1042,7 +1042,7 @@
     "retireReason": "tvl",
     "retiredAt": 1767991369,
     "platformId": "beefy",
-    "feeTier": "0.25",
+    "feeTier": "0.02",
     "tickSpacing": 4,
     "assets": ["LHYPE", "WHYPE"],
     "risks": {
@@ -1290,7 +1290,7 @@
     "retireReason": "tvl",
     "retiredAt": 1767991369,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.25",
     "tickSpacing": 50,
     "assets": ["feUSD", "WHYPE"],
     "risks": {
