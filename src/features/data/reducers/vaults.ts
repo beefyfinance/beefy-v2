@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import { sortBy } from 'lodash-es';
+import { isEqual, sortBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { fromKeysBy, pushOrSet } from '../../../helpers/object.ts';
+import { fetchClmFeesAction } from '../actions/clm-fees.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
@@ -43,6 +44,7 @@ export const initialVaultsState: VaultsState = {
   byChainId: {},
   contractData: { byVaultId: {} },
   lastHarvestById: {},
+  clmFees: { byVaultId: {} },
 };
 
 export const vaultsSlice = createSlice({
@@ -63,6 +65,25 @@ export const vaultsSlice = createSlice({
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.contractData);
+    });
+
+    builder.addCase(fetchClmFeesAction.fulfilled, (sliceState, action) => {
+      for (const [id, fee] of Object.entries(action.payload.byVaultId)) {
+        const range =
+          fee.min !== undefined && fee.max !== undefined ?
+            { min: fee.min, max: fee.max }
+          : undefined;
+        const next = {
+          swapFee: fee.current,
+          isDynamic: fee.dynamic,
+          range,
+          firstSwapFee: fee.firstSwap,
+        };
+        // only replace on a real change so selectors stay stable between polls
+        if (!isEqual(sliceState.clmFees.byVaultId[id], next)) {
+          sliceState.clmFees.byVaultId[id] = next;
+        }
+      }
     });
 
     builder.addCase(fetchVaultsLastHarvests.fulfilled, (sliceState, action) => {

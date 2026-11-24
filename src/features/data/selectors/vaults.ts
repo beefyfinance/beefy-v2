@@ -282,6 +282,21 @@ export const selectVaultIdsByChainIdIncludingHidden = (
 export const selectVaultPricePerFullShare = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare || BIG_ONE;
 
+/** current CLM pool swap fee as a fraction, undefined until fetched */
+export const selectCowcentratedSwapFee = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.clmFees.byVaultId[vaultId]?.swapFee;
+
+/** bounds of the CLM pool swap fee as fractions, undefined if the pool has no known bounds */
+export const selectCowcentratedSwapFeeRange = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.clmFees.byVaultId[vaultId]?.range;
+
+/** fee the first swap of a block pays instead, undefined if the pool has none */
+export const selectCowcentratedFirstSwapFee = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.clmFees.byVaultId[vaultId]?.firstSwapFee;
+
+export const selectIsClmSwapFeeDynamic = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.clmFees.byVaultId[vaultId]?.isDynamic === true;
+
 export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
   valueOrThrow(
     state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress,

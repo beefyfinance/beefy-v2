@@ -3,6 +3,12 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { NormalizedEntity } from '../utils/normalized-entity.ts';
 
+/** fee fractions, e.g. 0.003 = 0.3% */
+export type ClmFeeRange = {
+  min: number;
+  max: number;
+};
+
 /**
  * State containing Vault infos
  */
@@ -84,5 +90,20 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 
   lastHarvestById: {
     [vaultId: VaultEntity['id']]: number;
+  };
+
+  clmFees: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: {
+        /** fraction (0.003 = 0.3%) a typical swap pays now */
+        swapFee: number;
+        /** volatility based, or set by an off-chain keeper */
+        isDynamic: boolean;
+        /** unset if the pool has no known fee bounds */
+        range?: ClmFeeRange;
+        /** charged instead on the first swap of a block, when the pool has one */
+        firstSwapFee?: number;
+      };
+    };
   };
 };

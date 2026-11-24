@@ -11,6 +11,7 @@ import { fetchApyAction, fetchAvgApyAction } from './apy.ts';
 import { fetchAllBalanceAction } from './balance.ts';
 import { fetchBridges } from './bridges.ts';
 import { fetchChainConfigs } from './chains.ts';
+import { fetchClmFeesAction } from './clm-fees.ts';
 import { fetchAllContractDataByChainAction } from './contract-data.ts';
 import { fetchCurators } from './curators.ts';
 import { fetchFeaturedVaults } from './featured-vaults.ts';
@@ -82,6 +83,8 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchBridges());
 
     dispatch(fetchVaultsLastHarvests());
+
+    dispatch(fetchClmFeesAction());
 
     dispatch(fetchOffChainCampaignsAction());
 
@@ -209,6 +212,15 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
   }, 45 * 1000 /* every 45s */);
   pollStopFns.push(pollStop);
 
+  // the api refreshes CLM swap fees every 15 minutes
+  pollStop = poll(
+    async () => {
+      return dispatch(fetchClmFeesAction());
+    },
+    5 * 60 * 1000 /* every 5 minutes */
+  );
+  pollStopFns.push(pollStop);
+
   // regular calls to update last harvest
   pollStop = poll(
     async () => {
@@ -261,6 +273,7 @@ export function manualPoll(): BeefyThunk {
     for (const chainId of chains) {
       dispatch(fetchAllContractDataByChainAction({ chainId: chainId }));
     }
+    dispatch(fetchClmFeesAction());
 
     if (selectIsWalletKnown(state)) {
       const walletAddress = selectWalletAddress(state);
