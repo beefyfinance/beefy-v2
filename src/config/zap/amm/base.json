@@ -1,5 +1,17 @@
 [
   {
+    "id": "base-aero-v2",
+    "name": "Aero V2",
+    "type": "solidly",
+    "routerAddress": "0x0fef9e88a7b76bcdbf451780c6774fe32965ee98",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "not-used",
+    "swapFeeDenominator": "not-used",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "base-baseswap",
     "name": "BaseSwap",
     "type": "uniswap-v2",

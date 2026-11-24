@@ -57,6 +57,16 @@ export const selectIsStepperStepping = (state: BeefyState) => {
   );
 };
 
+export const selectIsMigrationStepping = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return (
+    selectIsStepperStepping(state) &&
+    state.ui.stepperState.stepContent !== StepContent.ErrorTx &&
+    state.ui.stepperState.items.some(
+      item => item.step === 'migration' && item.extraInfo?.vaultId === vaultId
+    )
+  );
+};
+
 export const selectStepperCurrentStep = (state: BeefyState) => {
   return state.ui.stepperState.currentStep;
 };
@@ -68,15 +78,6 @@ export const selectStepperCurrentStepData = (state: BeefyState): Step => {
 
 export const selectStepperItems = (state: BeefyState) => {
   return state.ui.stepperState.items;
-};
-
-/** Claims batched ahead of a zap have no row in the zap route */
-export const selectStepperLeadingClaimStepCount = (state: BeefyState) => {
-  const items = state.ui.stepperState.items;
-  const firstNonClaim = items.findIndex(
-    item => item.step !== 'claim-gov' && item.step !== 'boost-claim'
-  );
-  return firstNonClaim === -1 ? items.length : firstNonClaim;
 };
 
 /** a boosted withdraw claims in its own step before the zap; the zap only runs if that succeeded */

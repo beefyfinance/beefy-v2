@@ -150,7 +150,7 @@ export interface EIP1559GasConfig {
   type: 'eip1559';
   /** how many past blocks should we look at when calculating fee */
   blocks: number;
-  /** what percentage of those blocks should we aim to be included in (0-1) */
+  /** eth_feeHistory reward percentile (0-100) sampled from each block */
   percentile: number;
   /** add this % on top of base gas price from RPC (0-1) */
   baseSafetyMargin?: number;
@@ -162,7 +162,7 @@ export interface EIP1559GasConfig {
   prioritySafetyMargin?: number;
   /** set priority gas price to at least this (wei) */
   priorityMinimum?: string;
-  /** set priority gas price to at most this (wei) */
+  /** set priority gas price to at most this (wei), even if below priorityMinimum */
   priorityMaximum?: string;
 }
 
@@ -350,7 +350,6 @@ type MakeSwapConfig<TType extends string, TExtra extends object = Record<never, 
   id: string;
   type: TType;
   chainId: ChainEntity['id'];
-  priorityTokens: TokenEntity['id'][];
   blockedTokens: TokenEntity['id'][];
   blockedVaults: VaultEntity['id'][];
   /** liquidity source ids never routed through on this chain */
@@ -360,7 +359,23 @@ type MakeSwapConfig<TType extends string, TExtra extends object = Record<never, 
 export type OneInchSwapConfig = MakeSwapConfig<'one-inch'>;
 export type KyberSwapSwapConfig = MakeSwapConfig<'kyber'>;
 export type LiquidSwapSwapConfig = MakeSwapConfig<'liquid-swap'>;
-export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | LiquidSwapSwapConfig;
+export type EnsoSwapConfig = MakeSwapConfig<
+  'enso',
+  {
+    /** the api-supplied tx.to must match this */
+    routerAddress: string;
+  }
+>;
+export type SwapAggregatorConfig =
+  | OneInchSwapConfig
+  | KyberSwapSwapConfig
+  | LiquidSwapSwapConfig
+  | EnsoSwapConfig;
+
+/** Ranked first in aggregator token lists; shared by every aggregator on the chain */
+export type ZapPriorityTokensConfig = {
+  [chainId in ChainEntity['id']]?: TokenEntity['id'][];
+};
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

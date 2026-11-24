@@ -544,8 +544,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USDf", "sUSDf"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [

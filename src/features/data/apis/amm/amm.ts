@@ -26,6 +26,7 @@ import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool
 import { TokanSolidlyPool } from './solidly/TokanSolidlyPool.ts';
 import { DefiveUniswapV2Pool } from './uniswap-v2/DefiveUniswapV2Pool.ts';
 import { BlackholeSolidlyPool } from './solidly/BlackholeSolidlyPool.ts';
+import { AeroV2SolidlyPool } from './solidly/AeroV2SolidlyPool.ts';
 
 const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -63,6 +64,8 @@ const mapSolidly: Record<string, typeof SolidlyPool> = {
   'sonic-shadow': SpiritSwapV2SolidlyPool,
   'avax-blackhole': BlackholeSolidlyPool,
   'robinhood-up33': VelodromeV2SolidlyPool,
+  'base-aero-v2': AeroV2SolidlyPool,
+  'optimism-aero-v2': AeroV2SolidlyPool,
 };
 
 export async function getUniswapLikePool(
@@ -91,6 +94,17 @@ export async function getUniswapLikePool(
   } else if (isSolidlyAmm(amm)) {
     const Constructor: typeof SolidlyPool = mapSolidly[amm.id] || SolidlyPool;
     return await initUniswapLikePool(new Constructor(lpAddress, amm, chain));
+  } else {
+    throw new Error(`Unknown AMM type`);
+  }
+}
+
+/** Whether the pool class for this AMM can build swap-through-pool steps */
+export function poolSupportsSwap(amm: AmmEntityUniswapLike): boolean {
+  if (isUniswapV2Amm(amm)) {
+    return (mapUniswapV2[amm.id] || UniswapV2Pool).supportsPoolSwap;
+  } else if (isSolidlyAmm(amm)) {
+    return (mapSolidly[amm.id] || SolidlyPool).supportsPoolSwap;
   } else {
     throw new Error(`Unknown AMM type`);
   }

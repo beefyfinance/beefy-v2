@@ -18,7 +18,7 @@ import {
 } from '../helpers/same-balance.test-helper.ts';
 import type { QuoteRequest } from '../swap/ISwapProvider.ts';
 import { SwapAggregator } from '../swap/SwapAggregator.ts';
-import type { UniswapV2DepositOption } from '../transact-types.ts';
+import { SelectionOrder, type UniswapV2DepositOption } from '../transact-types.ts';
 import type { ZapTransactHelpers } from './IStrategy.ts';
 import { WNativeSwapProvider } from '../swap/wnative/WNativeSwapProvider.ts';
 import { UniswapV2StrategyImpl } from './uniswap-v2/UniswapV2Strategy.ts';
@@ -26,17 +26,19 @@ import { UniswapV2StrategyImpl } from './uniswap-v2/UniswapV2Strategy.ts';
 const wnativeProvider = new WNativeSwapProvider();
 const swapAggregator = new SwapAggregator([new WNativeSwapProvider()]);
 
-const { pool } = vi.hoisted(() => ({
+const { pool, poolSupportsSwap } = vi.hoisted(() => ({
   pool: {
     getOptimalSwapAmount: vi.fn(),
     getAddLiquidityRatio: vi.fn(),
     swap: vi.fn(),
     addLiquidity: vi.fn(),
   },
+  poolSupportsSwap: vi.fn(),
 }));
 
 vi.mock('../../amm/amm.ts', () => ({
   getUniswapLikePool: vi.fn(async () => pool),
+  poolSupportsSwap,
 }));
 
 const arcLp = erc20Token(
@@ -102,6 +104,7 @@ function makeStrategy(chainId: 'arc' | 'base', assetIds: [string, string], lp: T
 }
 
 beforeEach(() => {
+  poolSupportsSwap.mockReset().mockReturnValue(true);
   pool.getOptimalSwapAmount
     .mockReset()
     .mockImplementation((amountIn: BigNumber) => amountIn.idiv(2));
@@ -342,5 +345,89 @@ describe('UniswapLikeStrategy option lists where native and wnative are separate
     const rows = depositRowTokens(await strategy.fetchDepositOptions());
 
     expectRowTokens(rows, [baseNative, baseWeth, baseUsdc]);
+  });
+});
+
+describe('UniswapLikeStrategy option lists where the pool cannot swap', () => {
+  function makeStrategyWithAggregator() {
+    const made = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    // the aggregator can reach both pool tokens from USDC and WETH
+    Object.assign(made.strategy.getHelpers().swapAggregator, {
+      fetchTokenSupport: vi.fn(async () => ({
+        any: [baseUsdc, baseWeth],
+        tokens: [
+          [baseUsdc, baseWeth],
+          [baseUsdc, baseWeth],
+        ],
+      })),
+    });
+    return made;
+  }
+
+  it('offers pool routes when the pool supports swaps', async () => {
+    const { strategy } = makeStrategyWithAggregator();
+
+    const deposit = await strategy.fetchDepositOptions();
+    const withdraw = await strategy.fetchWithdrawOptions();
+
+    expect(deposit.some(option => option.swapVia === 'pool')).toBe(true);
+    expect(withdraw.some(option => 'swapVia' in option && option.swapVia === 'pool')).toBe(true);
+  });
+
+  it('offers only aggregator routes when the pool does not support swaps', async () => {
+    poolSupportsSwap.mockReturnValue(false);
+    const { strategy } = makeStrategyWithAggregator();
+
+    const deposit = await strategy.fetchDepositOptions();
+    const withdraw = await strategy.fetchWithdrawOptions();
+
+    expect(deposit.length).toBeGreaterThan(0);
+    expect(deposit.every(option => option.swapVia === 'aggregator')).toBe(true);
+    expect(
+      withdraw.every(option => !('swapVia' in option) || option.swapVia === 'aggregator')
+    ).toBe(true);
+  });
+
+  it('still ranks pool tokens first when only aggregator routes are offered', async () => {
+    poolSupportsSwap.mockReturnValue(false);
+    const { strategy } = makeStrategyWithAggregator();
+
+    const deposit = await strategy.fetchDepositOptions();
+    const weth = deposit.find(option => option.inputs[0].id === baseWeth.id);
+
+    expect(weth?.selectionOrder).toBe(SelectionOrder.TokenOfPool);
+  });
+});
+
+describe('UniswapLikeStrategy route eligibility for pool tokens', () => {
+  function makeStrategyWithPairCheck(reachable: boolean) {
+    const made = makeStrategy('base', ['WETH', 'USDC'], baseLp);
+    Object.assign(made.strategy.getHelpers().swapAggregator, {
+      canSwapTokenPair: vi.fn(async () => reachable),
+    });
+    return made;
+  }
+
+  it('accepts a pool token when the pool can swap it, whatever the aggregator says', async () => {
+    const { strategy } = makeStrategyWithPairCheck(false);
+
+    expect(await strategy.canAcceptTokenAsDeposit(baseWeth)).toBe(true);
+    expect(await strategy.canEmitTokenAsWithdraw(baseWeth)).toBe(true);
+  });
+
+  it('rejects a pool token when the pool cannot swap and the aggregator cannot reach the other side', async () => {
+    poolSupportsSwap.mockReturnValue(false);
+    const { strategy } = makeStrategyWithPairCheck(false);
+
+    expect(await strategy.canAcceptTokenAsDeposit(baseWeth)).toBe(false);
+    expect(await strategy.canEmitTokenAsWithdraw(baseWeth)).toBe(false);
+  });
+
+  it('accepts a pool token when the pool cannot swap but the aggregator can reach the other side', async () => {
+    poolSupportsSwap.mockReturnValue(false);
+    const { strategy } = makeStrategyWithPairCheck(true);
+
+    expect(await strategy.canAcceptTokenAsDeposit(baseWeth)).toBe(true);
+    expect(await strategy.canEmitTokenAsWithdraw(baseWeth)).toBe(true);
   });
 });

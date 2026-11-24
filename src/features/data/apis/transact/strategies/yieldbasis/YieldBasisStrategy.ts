@@ -29,16 +29,22 @@ import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
 import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
   selectTokenByAddress,
-  selectTokenById,
-  selectTokenPriceByAddress,
 } from '../../../../selectors/tokens.ts';
-import { isTokenEqual, isTokenErc20, type TokenEntity } from '../../../../entities/token.ts';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenEntity,
+  type TokenErc20,
+  type TokenNative,
+} from '../../../../entities/token.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import { type Address, encodeFunctionData, parseAbi } from 'viem';
 import {
-  BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
   toWei,
@@ -54,10 +60,8 @@ import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts'
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../../helpers/amounts.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { pickTokens } from '../../helpers/tokens.ts';
+import { includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
-import { isFulfilledResult, isRejectedResult } from '../../../../../../helpers/promises.ts';
-import type BigNumber from 'bignumber.js';
 
 const strategyId = 'yieldbasis';
 type StrategyId = typeof strategyId;
@@ -71,16 +75,18 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly want: TokenEntity;
   protected readonly asset: TokenEntity;
   protected readonly ybToken: TokenEntity;
-  protected readonly crvUsd: TokenEntity;
+  protected readonly native: TokenNative;
+  protected readonly wnative: TokenErc20;
 
   protected readonly stakeZap = '0xE862bC39B8D5F12D8c4117d3e2D493Dc20051EC6';
+  protected readonly ltDepositZap = '0xF3a2bf354C28a1e0C84033f3ba3379e223F56E6A';
   protected readonly abi = parseAbi([
-    'function preview_deposit(uint assets, uint debt) external view returns (uint)',
+    'function preview_deposit(address LT, uint assets) external view returns (uint)',
+    'function deposit(address LT, uint assets, uint min, address receiver, bool stake) external returns (uint)',
     'function preview_withdraw(uint yb) external view returns (uint)',
     'function previewDeposit(uint assets) external view returns (uint)',
     'function previewRedeem(uint shares) external view returns (uint)',
     'function deposit(uint assets, address receiver) external returns (uint)',
-    'function deposit_and_stake(address gauge, uint assets, uint debt, uint min_shares) external returns (uint)',
     'function withdraw_and_unstake(address gauge, uint shares, uint min_assets) external returns (uint)',
   ]);
 
@@ -98,12 +104,14 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     this.want = vaultType.depositToken;
     this.asset = selectTokenByAddress(state, vault.chainId, options.asset);
     this.ybToken = selectTokenByAddress(state, vault.chainId, options.ybToken);
-    this.crvUsd = selectTokenById(state, vault.chainId, 'crvUSD');
+    this.native = selectChainNativeToken(state, vault.chainId);
+    this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
   }
 
   async fetchDepositOptions(): Promise<ZapStrategyIdToDepositOption<StrategyId>[]> {
     const outputs = [this.want];
-    return [this.asset, this.ybToken].map(token => {
+    const tokens = includeWrappedAndNative([this.asset, this.ybToken], this.wnative, this.native);
+    return tokens.map(token => {
       const inputs = [token];
       const selectionId = createSelectionId(this.vault.chainId, inputs);
       return {
@@ -136,8 +144,10 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     let ybTokenAmount: bigint;
     if (isTokenEqual(input.token, this.ybToken)) {
       ybTokenAmount = toWeiBigInt(input.amount, input.token.decimals);
-    } else if (isTokenEqual(input.token, this.asset)) {
-      ({ preview: ybTokenAmount } = await this.fetchYbPreviewDeposit(input));
+    } else if (isTokenEqual(input.token, this.asset) || isTokenNative(input.token)) {
+      const assets = toWeiBigInt(input.amount, input.token.decimals);
+      const ltZap = fetchContract(this.ltDepositZap, this.abi, this.vault.chainId);
+      ybTokenAmount = await ltZap.read.preview_deposit([this.ybToken.address as Address, assets]);
     } else {
       throw new Error(`Unsupported token ${input.token.symbol} ${input.token.address}`);
     }
@@ -184,47 +194,6 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
-  private assetToCrvUsd(amount: BigNumber) {
-    const state = this.helpers.getState();
-    const assetPrice = selectTokenPriceByAddress(state, this.vault.chainId, this.asset.address);
-    const crvUsdPrice = selectTokenPriceByAddress(state, this.vault.chainId, this.crvUsd.address);
-    const assetValue = assetPrice.times(amount);
-    // fallback to 1:1 if crvUsd is 0
-    return crvUsdPrice.gt(BIG_ZERO) ? assetValue.dividedBy(crvUsdPrice) : assetValue;
-  }
-
-  async fetchYbPreviewDeposit(input: TokenAmount) {
-    if (!isTokenEqual(input.token, this.asset)) {
-      throw new Error('Preview input token must be the deposit asset');
-    }
-    const crvUsdDebt = this.assetToCrvUsd(input.amount);
-    const YB = fetchContract(this.ybToken.address, this.abi, this.vault.chainId);
-    const assets = toWeiBigInt(input.amount, input.token.decimals);
-    const debt = toWeiBigInt(crvUsdDebt, this.crvUsd.decimals);
-
-    // may still be able to deposit with no debt once debt limit is reached
-    const [withDebt, noDebt] = await Promise.allSettled([
-      YB.read.preview_deposit([assets, debt]),
-      YB.read.preview_deposit([assets, 0n]),
-    ]);
-
-    const previewDebt = isFulfilledResult(withDebt) ? withDebt.value : undefined;
-    const previewNoDebt = isFulfilledResult(noDebt) ? noDebt.value : undefined;
-
-    if (previewDebt !== undefined && (previewNoDebt === undefined || previewDebt > previewNoDebt)) {
-      return { debt, preview: previewDebt };
-    } else if (previewNoDebt !== undefined) {
-      return { debt: 0n, preview: previewNoDebt };
-    }
-
-    throw new Error('YieldBasisStrategy: preview_deposit failed', {
-      cause:
-        isRejectedResult(noDebt) ? noDebt.reason
-        : isRejectedResult(withDebt) ? withDebt.reason
-        : undefined,
-    });
-  }
-
   async zapDeposit(
     quote: ZapStrategyIdToDepositQuote<StrategyId>
   ): Promise<UserlessZapWithdrawBreakdown> {
@@ -236,20 +205,23 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
     if (!buildQuote) throw new Error('YieldBasisStrategy: No build step in quote');
 
     const input = onlyOneTokenAmount(buildQuote.inputs);
-    const inputWei = toWei(input.amount, input.token.decimals);
-    const inputBigInt = bigNumberToBigInt(inputWei);
+    const inputBigInt = bigNumberToBigInt(toWei(input.amount, input.token.decimals));
+    const amount = toWeiString(input.amount, input.token.decimals);
+    const receiver = this.helpers.zap.router as Address;
 
-    if (isTokenEqual(input.token, this.asset)) {
-      const { debt } = await this.fetchYbPreviewDeposit(input);
+    if (isTokenEqual(input.token, this.asset) || isTokenNative(input.token)) {
+      if (isTokenNative(input.token)) {
+        steps.push({ target: this.wnative.address, data: '0xd0e30db0', value: amount, tokens: [] });
+      }
       steps.push({
-        target: this.stakeZap,
+        target: this.ltDepositZap,
         data: encodeFunctionData({
           abi: this.abi,
-          functionName: 'deposit_and_stake',
-          args: [this.want.address as Address, inputBigInt, debt, 0n],
+          functionName: 'deposit',
+          args: [this.ybToken.address as Address, inputBigInt, 0n, receiver, true],
         }),
         value: '0',
-        tokens: [{ token: input.token.address, index: -1 }],
+        tokens: [{ token: this.asset.address, index: -1 }],
       });
     } else if (isTokenEqual(input.token, this.ybToken)) {
       steps.push({
@@ -257,7 +229,7 @@ class YieldBasisStrategyImpl implements IZapStrategy<StrategyId> {
         data: encodeFunctionData({
           abi: this.abi,
           functionName: 'deposit',
-          args: [inputBigInt, this.helpers.zap.router as Address],
+          args: [inputBigInt, receiver],
         }),
         value: '0',
         tokens: [{ token: input.token.address, index: -1 }],

@@ -30,6 +30,9 @@ import type {
 } from '../reducers/wallet/user-rewards-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import type { TokenEntity } from '../entities/token.ts';
+import { isVaultWithPricePerFullShare, type VaultEntity } from '../entities/vault.ts';
+import { selectIsVaultStable } from './filtered-vaults.ts';
+import { selectVaultGeoRestriction } from './restrictions.ts';
 
 export const UNSTABLE_MESSAGE = 'returned a different result when called with the same parameters';
 export const FIXTURE_TIMESTAMP = 1_700_000_000_000;
@@ -124,25 +127,36 @@ export async function buildFixture() {
   await store.dispatch(initPromos());
 
   const configured = store.getState();
-  const onChain = configured.entities.vaults.byChainId[FIXTURE_CHAIN]?.allIds ?? [];
-  const byType = (type: string, subType?: string) =>
-    onChain.find(id => {
-      const vault = configured.entities.vaults.byId[id];
-      return (
-        !!vault &&
+  const oldestFirst = (configured.entities.vaults.byChainId[FIXTURE_CHAIN]?.allIds ?? [])
+    .map(id => configured.entities.vaults.byId[id])
+    .filter((vault): vault is VaultEntity => vault !== undefined)
+    .filter(vault => selectVaultGeoRestriction(configured, vault.id) === undefined)
+    .sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id));
+  const isStable = (vault: VaultEntity) => selectIsVaultStable(configured, vault.id);
+  const oldestActive = (
+    type: VaultEntity['type'],
+    subType: VaultEntity['subType'],
+    matches: (vault: VaultEntity) => boolean = () => true
+  ) => {
+    const vault = oldestFirst.find(
+      vault =>
         vault.status === 'active' &&
         vault.type === type &&
-        (subType === undefined || ('subType' in vault && vault.subType === subType))
-      );
-    });
+        vault.subType === subType &&
+        matches(vault)
+    );
+    if (!vault) {
+      throw new Error(`no matching active ${type}/${subType} vault on ${FIXTURE_CHAIN}`);
+    }
+    return vault.id;
+  };
 
   const vaultIds = [
-    byType('standard', 'standard'),
-    byType('standard', 'cowcentrated'),
-    byType('gov'),
-    byType('cowcentrated'),
-    byType('erc4626'),
-  ].filter((id): id is string => id !== undefined);
+    oldestActive('standard', 'standard', isStable),
+    oldestActive('standard', 'cowcentrated'),
+    oldestActive('gov', 'cowcentrated'),
+    oldestActive('cowcentrated', 'cowcentrated', vault => !isStable(vault)),
+  ];
 
   // statuses are forced, or this goes vacuous the day every boost in `config/promos` expires
   const boostIds = configured.entities.promos.byType.boost?.byChainId[FIXTURE_CHAIN]?.allIds ?? [];
@@ -154,9 +168,12 @@ export async function buildFixture() {
     list.push(boostId);
     boostsByVault.set(promo.vaultId, list);
   }
-  const boostedVaults = [...boostsByVault.entries()].filter(
-    ([vaultId]) => configured.entities.vaults.byId[vaultId] !== undefined
-  );
+  const boostedVaults = oldestFirst
+    .filter(vault => boostsByVault.has(vault.id))
+    .map((vault): [string, string[]] => [vault.id, boostsByVault.get(vault.id)!]);
+  if (boostedVaults.length < 2) {
+    throw new Error(`fewer than two boosted vaults on ${FIXTURE_CHAIN}`);
+  }
   // `selectPastVaultBoostIds` filters on `'inactive'`; `'expired'` is not a `PromoEntity['status']`
   const activeBoost = boostedVaults[0];
   const pastBoost = boostedVaults[1];
@@ -200,6 +217,19 @@ export async function buildFixture() {
   }
   prices[rewardToken.oracleId] = 4;
 
+  const contractDataByVaultId: BeefyState['entities']['vaults']['contractData']['byVaultId'] = {};
+  for (const vaultId of [...vaultIds, activeBoost[0], pastBoost[0]]) {
+    const vault = configured.entities.vaults.byId[vaultId]!;
+    if (!isVaultWithPricePerFullShare(vault)) {
+      continue;
+    }
+    const depositToken = chainTokens.byAddress[vault.depositTokenAddress.toLowerCase()];
+    const shareToken = chainTokens.byAddress[vault.receiptTokenAddress.toLowerCase()];
+    contractDataByVaultId[vaultId] = {
+      pricePerFullShare: new BigNumber(1).shiftedBy(depositToken.decimals - shareToken.decimals),
+    };
+  }
+
   store.dispatch(fetchAllPricesAction.fulfilled({ prices, breakdowns }, 'fixture', undefined));
 
   const totals: Record<string, TotalApy> = {};
@@ -236,6 +266,13 @@ export async function buildFixture() {
     ...built,
     entities: {
       ...built.entities,
+      vaults: {
+        ...built.entities.vaults,
+        contractData: {
+          ...built.entities.vaults.contractData,
+          byVaultId: { ...built.entities.vaults.contractData.byVaultId, ...contractDataByVaultId },
+        },
+      },
       promos: {
         ...built.entities.promos,
         statusById: {

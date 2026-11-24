@@ -1,11 +1,10 @@
 import type { VaultCowcentrated } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
@@ -56,34 +55,32 @@ export const v3Deposit = (
       selectTransactSelectedQuote(state)?.outputs[0].amount.times(0.99),
       18
     );
-    txWallet(dispatch);
-
-    const transaction = contract.write.deposit(
-      [BigInt(rawAmounts[0]), BigInt(rawAmounts[1]), BigInt(estimatedLiquidity)],
-      {
-        account: address as Address,
-        ...gasPrices,
-        chain: publicClient.chain,
-      }
-    );
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
+        contract.write.deposit(
+          [BigInt(rawAmounts[0]), BigInt(rawAmounts[1]), BigInt(estimatedLiquidity)],
+          {
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          }
+        ),
+      additionalData: {
         spender: vault.contractAddress,
         amount: selectTransactSelectedQuote(state)?.outputs[0].amount,
         token: depositToken,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 export const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: boolean) => {
@@ -115,42 +112,40 @@ export const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, 
     );
     const sharesToWithdrawWei = toWeiString(withdrawAmount, 18);
 
-    txWallet(dispatch);
-    const transaction = (() => {
-      if (max) {
-        return contract.write.withdrawAll([BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])], {
-          account: address as Address,
-          ...gasPrices,
-          chain: publicClient.chain,
-        });
-      } else {
-        return contract.write.withdraw(
-          [BigInt(sharesToWithdrawWei), BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])],
-          {
+    sendTransaction({
+      dispatch,
+      chainId: vault.chainId,
+      walletClient,
+      builder: () => {
+        if (max) {
+          return contract.write.withdrawAll([BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])], {
             account: address as Address,
             ...gasPrices,
             chain: publicClient.chain,
-          }
-        );
-      }
-    })();
-
-    bindTransactionEvents(
-      dispatch,
-      transaction,
-      publicClient,
-      {
+          });
+        } else {
+          return contract.write.withdraw(
+            [BigInt(sharesToWithdrawWei), BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])],
+            {
+              account: address as Address,
+              ...gasPrices,
+              chain: publicClient.chain,
+            }
+          );
+        }
+      },
+      additionalData: {
         spender: vault.contractAddress,
         amount: withdrawAmount,
         token: selectTokenByAddress(state, vault.chainId, vault.contractAddress),
       },
-      {
+      refreshOnSuccess: {
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };

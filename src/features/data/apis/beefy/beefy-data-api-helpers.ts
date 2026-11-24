@@ -5,7 +5,7 @@ import type {
   ApiTimeBucketRange,
 } from './beefy-data-api-types.ts';
 import { firstKey, keys } from '../../../../helpers/object.ts';
-import { getUnixTime, isAfter, isBefore, sub } from 'date-fns';
+import { fromUnixTime, getUnixTime, isAfter, isBefore, sub } from 'date-fns';
 import { convertDurationSingle, isDurationEqual, isLonger } from '../../../../helpers/date.ts';
 import type { DurationSingle } from '../../../../helpers/date-types.ts';
 
@@ -127,4 +127,36 @@ export function getDataApiBucketsLongerThan(
         isDurationEqual(thisBucket.interval, otherBucket.interval) &&
         isLonger(otherBucket.range, thisBucket.range)
     );
+}
+
+// must match API
+const SNAPSHOT_INTERVAL: number = 15 * 60;
+
+function getNextSnapshot() {
+  return Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
+}
+
+function getLatestSnapshot() {
+  return getNextSnapshot() - SNAPSHOT_INTERVAL;
+}
+
+export function getBucketParams(bucket: ApiTimeBucket) {
+  const { range, interval, maPeriod } = getDataApiBucket(bucket);
+  const endDate = fromUnixTime(getLatestSnapshot());
+  const startDate = sub(endDate, range);
+  const startEpoch = getUnixTime(startDate);
+  const [intervalKeys, maPeriodKeys] = [interval, maPeriod].map(values => keys(values));
+
+  if (intervalKeys.length !== 1 || maPeriodKeys.length !== 1) {
+    throw new Error('Invalid bucket interval/maPeriod');
+  }
+
+  const key = intervalKeys[0];
+  if (!maPeriod[key] || !interval[key]) {
+    throw new Error('Missing bucket interval/maPeriod');
+  }
+
+  const maPeriods = Math.floor(maPeriod[key] / interval[key]);
+
+  return { startEpoch, maPeriods, maUnit: key };
 }

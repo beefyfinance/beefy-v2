@@ -2,13 +2,7 @@ import type { ChainEntity } from '../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../entities/token.ts';
 import type BigNumber from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter.ts';
-import {
-  bindTransactionEvents,
-  captureWalletErrors,
-  txStart,
-  txWallet,
-  type TxWriteProps,
-} from './common.ts';
+import { captureWalletErrors, sendTransaction, txStart, type TxWriteProps } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectChainNativeToken } from '../../selectors/tokens.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
@@ -70,25 +64,23 @@ export const mintDeposit = (
 
       return contract.write.deposit([BigInt(amountInWeiString)], args);
     };
-    txWallet(dispatch);
-    const transaction = buildCall(txProps);
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId,
+      walletClient,
+      builder: () => buildCall(txProps),
+      additionalData: {
         amount: amount,
         token: mintedToken,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: chainId,
         spenderAddress: minterAddress,
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
         minterId: minter.id,
-      }
-    );
+      },
+    });
   });
 };
 export const burnWithdraw = (
@@ -116,31 +108,29 @@ export const burnWithdraw = (
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = (() => {
-      const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
-      return contract.write.withdraw([BigInt(rawAmount)], {
-        account: address as Address,
-        ...gasPrices,
-        chain: publicClient.chain,
-      });
-    })();
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId,
+      walletClient,
+      builder: () => {
+        const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
+        return contract.write.withdraw([BigInt(rawAmount)], {
+          account: address as Address,
+          ...gasPrices,
+          chain: publicClient.chain,
+        });
+      },
+      additionalData: {
         amount: amount,
         token: burnedToken,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: chainId,
         spenderAddress: contractAddr,
         tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
         minterId,
-      }
-    );
+      },
+    });
   });
 };

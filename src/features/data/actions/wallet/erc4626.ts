@@ -64,24 +64,25 @@ export const deposit = (vault: VaultEntity, amount: BigNumber) => {
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    sendTransaction(
+    sendTransaction({
       dispatch,
-      () =>
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
         contract.write.deposit([uint256Amount, account], {
           account,
           ...gasPrices,
           chain: publicClient.chain,
         }),
-      publicClient,
-      { spender: contractAddress, amount, token: depositToken },
-      {
+      additionalData: { spender: contractAddress, amount, token: depositToken },
+      refreshOnSuccess: {
         walletAddress: account,
         chainId: vault.chainId,
         spenderAddress: contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -167,25 +168,26 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    sendTransaction(
+    sendTransaction({
       dispatch,
-      () =>
+      chainId: vault.chainId,
+      walletClient,
+      builder: () =>
         contract.write.requestRedeem([redeemShares, account, account], {
           account,
           ...gasPrices,
           chain: publicClient.chain,
         }),
-      publicClient,
-      { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
-      {
+      additionalData: { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
+      refreshOnSuccess: {
         vaultId: vault.id,
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };
 
@@ -250,19 +252,20 @@ export const fulfillRedeem = (vaultId: VaultEntity['id'], requestId: bigint) => 
       return walletClient.writeContract(tx);
     };
 
-    sendTransaction(
+    sendTransaction({
       dispatch,
-      buildTx,
-      publicClient,
-      { spender: contractAddress, amount: request.assets, token: depositToken },
-      {
+      chainId: vault.chainId,
+      walletClient,
+      builder: buildTx,
+      additionalData: { spender: contractAddress, amount: request.assets, token: depositToken },
+      refreshOnSuccess: {
         vaultId: vault.id,
         chainId: vault.chainId,
         spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
-      }
-    );
+      },
+    });
   });
 };

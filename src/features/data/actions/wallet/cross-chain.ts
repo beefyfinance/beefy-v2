@@ -46,11 +46,10 @@ import { fetchCCTPDstTokensReturned } from '../cctp.ts';
 import { fetchAllowanceAction } from '../allowance.ts';
 import { transactSetExecuting } from '../transact.ts';
 import {
-  bindTransactionEvents,
   captureWalletErrors,
   selectVaultTokensToRefresh,
+  sendTransaction,
   txStart,
-  txWallet,
 } from './common.ts';
 import { approve } from './approval.ts';
 import {
@@ -229,31 +228,29 @@ export const crossChainZapExecuteOrder = (
       })
     );
 
-    txWallet(dispatch);
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
-    bindTransactionEvents(
+    const { hashPromise: transaction } = sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: sourceChainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
         expectedTokens,
         vaultId: vault.id,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: sourceChainId,
         spenderAddress: zap.manager,
         tokens: selectCrossChainZapTokensToRefresh(state, sourceChainId, order),
         clearInput: false,
         boostId,
-      }
-    );
+      },
+    });
 
-    // Track cross-chain op lifecycle alongside bindTransactionEvents
+    // Track cross-chain op lifecycle alongside sendTransaction
     bindCrossChainOpTracking(dispatch, transaction, publicClient, metadata.opId);
   });
 };
@@ -355,19 +352,17 @@ export const crossChainRecoveryExecuteOrder = (
 
     dispatch(crossChainOpStatusUpdate({ id: opId, status: 'dest-pending' }));
 
-    txWallet(dispatch);
-    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
-
     const refreshTokens = uniqBy(
       [...selectVaultTokensToRefresh(state, vault), ...expectedTokens],
       'id'
     );
 
-    bindTransactionEvents(
+    const { hashPromise: transaction } = sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: destChainId,
+      walletClient,
+      builder: () => contract.write.executeOrder([castedOrder, castedSteps], options),
+      additionalData: {
         type: 'zap',
         amount: BIG_ZERO,
         token: depositToken,
@@ -375,15 +370,15 @@ export const crossChainRecoveryExecuteOrder = (
         vaultId: vault.id,
         recovery: true,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: destChainId,
         spenderAddress: zap.manager,
         tokens: refreshTokens,
         clearInput: false,
         boostId,
-      }
-    );
+      },
+    });
 
     // Track recovery outcome
     transaction

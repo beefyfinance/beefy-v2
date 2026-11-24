@@ -1,6 +1,6 @@
 import type { TokenErc20 } from '../../entities/token.ts';
 import BigNumber from 'bignumber.js';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import { captureWalletErrors, sendTransaction, txStart } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
@@ -35,27 +35,30 @@ export const approve = (token: TokenErc20, spenderAddress: string, amount: BigNu
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
-    txWallet(dispatch);
-    const transaction = viemContract.write.approve(
-      [spenderAddress as Address, bigNumberToBigInt(approvalAmountWei)],
-      {
-        account: address as Address,
-        ...gasPrices,
-        chain: publicClient.chain,
-      }
-    );
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      { spender: spenderAddress, amount: fromWei(approvalAmountWei, token.decimals), token: token },
-      {
+      chainId: token.chainId,
+      walletClient,
+      builder: () =>
+        viemContract.write.approve(
+          [spenderAddress as Address, bigNumberToBigInt(approvalAmountWei)],
+          {
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          }
+        ),
+      additionalData: {
+        spender: spenderAddress,
+        amount: fromWei(approvalAmountWei, token.decimals),
+        token: token,
+      },
+      refreshOnSuccess: {
         walletAddress: address,
         chainId: token.chainId,
         spenderAddress,
         tokens: uniqBy([token, native], 'id'),
-      }
-    );
+      },
+    });
   });
 };

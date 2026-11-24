@@ -1,4 +1,5 @@
 import { fromWei } from '../../../../helpers/big-number.ts';
+import { fetchAllowanceAction } from '../../actions/allowance.ts';
 import { approve } from '../../actions/wallet/approval.ts';
 import { migrateUnstake } from '../../actions/wallet/migrate.ts';
 import { deposit } from '../../actions/wallet/standard.ts';
@@ -48,6 +49,8 @@ export function buildExecute<
       vault,
       t,
       getState,
+      dispatch,
+      walletAddress,
       data: { balance },
     } = params;
     const steps: Step[] = [];
@@ -69,8 +72,17 @@ export function buildExecute<
     });
 
     if (isTokenErc20(depositToken)) {
+      // allowance isn't loaded for this spender unless the deposit form fetched it
+      await dispatch(
+        fetchAllowanceAction({
+          chainId: vault.chainId,
+          spenderAddress: vault.contractAddress,
+          tokens: [depositToken],
+          walletAddress,
+        })
+      );
       const allowance = selectAllowanceByTokenAddress(
-        state,
+        getState(),
         depositToken.chainId,
         depositToken.address,
         vault.contractAddress

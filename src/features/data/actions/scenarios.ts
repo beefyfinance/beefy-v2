@@ -32,7 +32,6 @@ import {
   fetchZapFeeCampaignsAction,
   fetchZapSwapAggregatorsAction,
 } from './zap.ts';
-import { fetchWeeklyRevenueStats } from './revenue.ts';
 
 declare const window: {
   __manual_poll?: () => unknown;
@@ -86,8 +85,6 @@ export async function initAppData(dispatch: BeefyDispatchFn, getState: BeefyStat
     dispatch(fetchVaultsLastHarvests());
 
     dispatch(fetchClmFeesAction());
-
-    dispatch(fetchWeeklyRevenueStats());
 
     dispatch(fetchOffChainCampaignsAction());
 

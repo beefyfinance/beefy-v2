@@ -1,6 +1,6 @@
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types.ts';
-import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
+import { captureWalletErrors, sendTransaction, txStart } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectChainNativeToken } from '../../selectors/tokens.ts';
@@ -49,33 +49,32 @@ export const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfi
     const contract = fetchWalletContract(viaBeefyBridgeAddress, BeefyCommonBridgeAbi, walletClient);
     const gasPrices = await getGasPriceOptions(fromChain);
 
-    txWallet(dispatch);
-    const transaction = contract.write.bridge(
-      [BigInt(toChain.networkChainId), BigInt(inputWei), receiverAddress as Address],
-      {
-        ...gasPrices,
-        account: fromAddress as Address,
-        value: BigInt(feeWei),
-        chain: publicClient.chain,
-      }
-    );
-
-    bindTransactionEvents(
+    sendTransaction({
       dispatch,
-      transaction,
-      publicClient,
-      {
+      chainId: fromChainId,
+      walletClient,
+      builder: () =>
+        contract.write.bridge(
+          [BigInt(toChain.networkChainId), BigInt(inputWei), receiverAddress as Address],
+          {
+            ...gasPrices,
+            account: fromAddress as Address,
+            value: BigInt(feeWei),
+            chain: publicClient.chain,
+          }
+        ),
+      additionalData: {
         type: 'bridge',
         amount: input.amount,
         token: input.token,
         quote: quote,
       },
-      {
+      refreshOnSuccess: {
         walletAddress: fromAddress,
         chainId: fromChainId,
         spenderAddress: viaBeefyBridgeAddress,
         tokens: uniqBy([gasToken, input.token], 'id'),
-      }
-    );
+      },
+    });
   });
 };

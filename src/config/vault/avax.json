@@ -3539,8 +3539,10 @@
     "earnedTokenAddress": "0x282B11E65f0B49363D4505F91c7A44fBEe6bCc0b",
     "oracle": "tokens",
     "oracleId": "JOE",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1631011023,
+    "retireReason": "rewards",
+    "retiredAt": 1794991776,
     "platformId": "traderjoe",
     "assets": ["JOE"],
     "risks": {

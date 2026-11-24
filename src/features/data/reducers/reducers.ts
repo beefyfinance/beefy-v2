@@ -45,6 +45,7 @@ import { windowReducer } from './window.ts';
 import { zapsSlice } from './zaps.ts';
 import type { BeefyState } from '../store/types.ts';
 import { revenueSlice } from './revenue.ts';
+import { tvlHistorySlice } from './tvl-history.ts';
 
 const entitiesReducer = combineReducers({
   articles: persistReducer(
@@ -71,6 +72,7 @@ const bizReducer = combineReducers({
   partners: partnersSlice.reducer,
   rewards: rewardsReducer,
   tvl: tvlSlice.reducer,
+  tvlHistory: tvlHistorySlice.reducer,
 });
 const userReducer = combineReducers({
   allowance: allowanceSlice.reducer,
