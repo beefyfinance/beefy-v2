@@ -1,5 +1,161 @@
 [
   {
+    "id": "pancake-cow-bsc-antb-usdt-rp",
+    "name": "ANTB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscANTB-USDT",
+    "tokenAddress": "0x067ee7735463f4E2ADd89A8bf330AE9850425c13",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x715ee66e74d6B15241D8442C648867107B2ff91E",
+    "earnedToken": "rCowPancakeBscANTB-USDT",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-antb-usdt",
+    "status": "active",
+    "createdAt": 1795505134,
+    "platformId": "pancakeswap",
+    "assets": ["ANTB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-antb-usdt",
+    "name": "ANTB-USDT",
+    "type": "cowcentrated",
+    "token": "ANTB-USDT pancakeswap",
+    "tokenAddress": "0x5AFB6E189A268c6adFC9DA13CA13e3BA91171a31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x38Dd26788Cf2d901E3aBf04efE3007d459d0Fc53",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnContractAddress": "0x067ee7735463f4E2ADd89A8bf330AE9850425c13",
+    "earnedToken": "cowPancakeBscANTB-USDT",
+    "earnedTokenAddress": "0x067ee7735463f4E2ADd89A8bf330AE9850425c13",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-antb-usdt",
+    "status": "active",
+    "createdAt": 1795505134,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["ANTB", "USDT"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-antb-wbnb-rp",
+    "name": "ANTB-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscANTB-WBNB",
+    "tokenAddress": "0x505190b8C0c2a53b9Ab11d16bb2ea0eb6E7689Be",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x5Dd254015b992F73aC4754Cc11dED873B4Ade9C4",
+    "earnedToken": "rCowPancakeBscANTB-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-antb-wbnb",
+    "status": "active",
+    "createdAt": 1795505122,
+    "platformId": "pancakeswap",
+    "assets": ["ANTB", "WBNB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-antb-wbnb",
+    "name": "ANTB-WBNB",
+    "type": "cowcentrated",
+    "token": "ANTB-WBNB pancakeswap",
+    "tokenAddress": "0x55B89A904C936fba04FbB6BC59891ca9986Cc857",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x38Dd26788Cf2d901E3aBf04efE3007d459d0Fc53",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x505190b8C0c2a53b9Ab11d16bb2ea0eb6E7689Be",
+    "earnedToken": "cowPancakeBscANTB-WBNB",
+    "earnedTokenAddress": "0x505190b8C0c2a53b9Ab11d16bb2ea0eb6E7689Be",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-antb-wbnb",
+    "status": "active",
+    "createdAt": 1795505122,
+    "platformId": "beefy",
+    "feeTier": "0.25",
+    "tickSpacing": 50,
+    "assets": ["ANTB", "WBNB"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-bsc-usdt-msftb-rp",
     "name": "MSFTB-USDT Reward Pool",
     "type": "gov",
