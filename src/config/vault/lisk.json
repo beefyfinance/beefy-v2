@@ -105,7 +105,7 @@
     "retireReason": "tvl",
     "retiredAt": 1782156394,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "0.27",
     "tickSpacing": 100,
     "assets": ["WETH", "USDT0"],
     "risks": {
@@ -368,7 +368,7 @@
     "retireReason": "tvl",
     "retiredAt": 1782156394,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "0.27",
     "tickSpacing": 100,
     "assets": ["WBTC", "WETH"],
     "risks": {
@@ -578,7 +578,7 @@
     "retireReason": "tvl",
     "retiredAt": 1764609953,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "0.27",
     "tickSpacing": 100,
     "assets": ["USDT", "WETH"],
     "risks": {

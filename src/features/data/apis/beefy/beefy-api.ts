@@ -7,6 +7,7 @@ import type {
   BeefyAPIApyBreakdownResponse,
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
+  BeefyApiClmSwapFeesResponse,
   BeefyApiVaultLastHarvestResponse,
   BeefyGeoCountryResponse,
   BeefyLastArticleResponse,
@@ -186,6 +187,14 @@ export class BeefyAPI {
   async getAllCowcentratedVaultRanges(): Promise<AllCowcentratedVaultRangesResponse> {
     return await getJson<AllCowcentratedVaultRangesResponse>({
       url: `${this.api}/cow-price-ranges`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
+    });
+  }
+
+  async getClmSwapFees(): Promise<BeefyApiClmSwapFeesResponse> {
+    return await getJson<BeefyApiClmSwapFeesResponse>({
+      url: `${this.api}/cow-swap-fees`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });

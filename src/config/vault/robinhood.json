@@ -831,7 +831,7 @@
     "earnContractAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
     "earnedToken": "cowAeroCASHCAT-WETH",
     "earnedTokenAddress": "0x444085efd5494629E40f79A342aDBd67330327F9",
-    "feeTier": "Dynamic",
+    "feeTier": "0.3885",
     "tickSpacing": 100,
     "createdAt": 1793588400,
     "updatedAt": 1793588421,
@@ -874,7 +874,7 @@
     "earnContractAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
     "earnedToken": "cowAeroPONS-USDG",
     "earnedTokenAddress": "0x077c9c3f88F374cE9fC0b8EDdA5d276f1c6cE1cB",
-    "feeTier": "Dynamic",
+    "feeTier": "0.1548",
     "tickSpacing": 100,
     "createdAt": 1793588400,
     "updatedAt": 1793588420,
@@ -917,7 +917,7 @@
     "earnContractAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
     "earnedToken": "cowAeroAI-USDG",
     "earnedTokenAddress": "0xbC31C6FCadF8588A8416e3496bA2F97136dF514F",
-    "feeTier": "Dynamic",
+    "feeTier": "0.376",
     "tickSpacing": 100,
     "createdAt": 1793588400,
     "updatedAt": 1793588419,
@@ -1218,7 +1218,7 @@
     "earnContractAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
     "earnedToken": "cowAeroAMD-USDG",
     "earnedTokenAddress": "0x9e04a1991C0A828CA5aEE91B9c9a276868E53d5d",
-    "feeTier": "Dynamic",
+    "feeTier": "0.3092",
     "tickSpacing": 50,
     "createdAt": 1793588400,
     "updatedAt": 1793588412,
@@ -2420,7 +2420,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.50",
+    "feeTier": "Dynamic",
     "tickSpacing": 60,
     "assets": ["SHOPrh", "WETH"],
     "risks": {
@@ -4003,7 +4003,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["RAM", "WETH"],
     "risks": {
@@ -4086,7 +4086,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "Dynamic",
     "tickSpacing": 5,
     "assets": ["SPYrh", "USDG"],
     "risks": {
@@ -4170,7 +4170,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["NVDArh", "WETH"],
     "risks": {
@@ -4253,7 +4253,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.75",
+    "feeTier": "Dynamic",
     "tickSpacing": 300,
     "assets": ["microduck", "USDG"],
     "risks": {
@@ -4335,7 +4335,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.1",
+    "feeTier": "Dynamic",
     "tickSpacing": 50,
     "assets": ["PONS", "USDG"],
     "risks": {
@@ -4418,7 +4418,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "Dynamic",
     "tickSpacing": 10,
     "assets": ["rhcbBTC", "USDG"],
     "risks": {
@@ -4501,7 +4501,7 @@
     "retireReason": "tvl",
     "retiredAt": 1793628138,
     "platformId": "beefy",
-    "feeTier": "0.25",
+    "feeTier": "Dynamic",
     "tickSpacing": 100,
     "assets": ["CASHCAT", "USDG"],
     "risks": {
@@ -4622,7 +4622,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "Dynamic",
     "tickSpacing": 60,
     "assets": ["SPYrh", "WETH"],
     "risks": {
@@ -4742,7 +4742,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "Dynamic",
     "tickSpacing": 60,
     "assets": ["LUTE", "USDG"],
     "risks": {
@@ -4861,7 +4861,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "Dynamic",
     "tickSpacing": 60,
     "assets": ["LUTE", "WETH"],
     "risks": {
@@ -4980,7 +4980,7 @@
     "status": "active",
     "createdAt": 1786635001,
     "platformId": "beefy",
-    "feeTier": "0.004",
+    "feeTier": "0.006",
     "tickSpacing": 10,
     "assets": ["WETH", "USDG"],
     "risks": {
@@ -7534,7 +7534,7 @@
     "status": "active",
     "createdAt": 1786635000,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "Dynamic",
     "tickSpacing": 60,
     "assets": ["NVDArh", "USDG"],
     "risks": {
@@ -7773,7 +7773,7 @@
     "status": "active",
     "createdAt": 1786523797,
     "platformId": "beefy",
-    "feeTier": "0.3",
+    "feeTier": "1",
     "tickSpacing": 200,
     "assets": ["TENDIES", "WETH"],
     "risks": {
@@ -8019,7 +8019,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790608551,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "Dynamic",
     "tickSpacing": 200,
     "assets": ["STONKBROKER", "UP33"],
     "risks": {
@@ -9944,7 +9944,7 @@
     "retireReason": "tvl",
     "retiredAt": 1790608551,
     "platformId": "beefy",
-    "feeTier": "0.05",
+    "feeTier": "Dynamic",
     "tickSpacing": 10,
     "assets": ["WETH", "USDG"],
     "risks": {
@@ -10222,7 +10222,7 @@
     "status": "active",
     "createdAt": 1784537618,
     "platformId": "beefy",
-    "feeTier": "1",
+    "feeTier": "Dynamic",
     "tickSpacing": 200,
     "assets": ["UP33", "WETH"],
     "icons": ["UP33", "WETH"],

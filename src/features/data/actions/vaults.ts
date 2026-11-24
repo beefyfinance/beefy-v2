@@ -301,9 +301,6 @@ function getCowcentratedBases(configs: VaultConfig[]) {
           `Cowcentrated vault ${config.id} must have exactly 2 deposit token addresses (depositTokenAddresses)`
         );
       }
-      if (!config.feeTier) {
-        throw new Error(`Cowcentrated vault ${config.id} must have a fee tier (feeTier)`);
-      }
       if (!config.tickSpacing) {
         throw new Error(`Cowcentrated vault ${config.id} must have tick spacing (tickSpacing)`);
       }
@@ -333,7 +330,6 @@ function getCowcentratedBases(configs: VaultConfig[]) {
           vaults: standards.map(v => v.id),
         },
         depositTokenAddresses: config.depositTokenAddresses,
-        feeTier: config.feeTier,
         tickSpacing: config.tickSpacing,
         poolAddress: config.tokenAddress,
         tokenProviderId: config.tokenProviderId,

@@ -95,6 +95,22 @@ export interface BeefyAPILpBreakdownResponse {
 }
 
 export type BeefyApiVaultLastHarvestResponse = Record<string, number>;
+
+/** CLM pool swap fees as fractions (0.003 = 0.3%), keyed by CLM id */
+export type BeefyApiClmSwapFeesResponse = Record<
+  string,
+  {
+    /** fee a typical swap pays now */
+    current: number;
+    /** volatility based, or set by an off-chain keeper */
+    dynamic: boolean;
+    /** bounds of a dynamic fee, when the pool has any */
+    min?: number;
+    max?: number;
+    /** charged instead on the first swap of a block, when enabled */
+    firstSwap?: number;
+  }
+>;
 export type BeefySnapshotProposal = {
   id: string;
   title: string;
