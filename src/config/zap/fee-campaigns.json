@@ -31,7 +31,11 @@
     "bps": 0,
     "input": {
       "vault": {
-        "ids": ["aerodrome-cow-base-weth-aero-rp", "aerodrome-cow-base-weth-aero-vault"]
+        "ids": [
+          "aerodrome-cow-base-weth-aero-rp",
+          "aerodrome-cow-base-weth-aero-vault",
+          "uniswap-cow-base-aero-weth-rp"
+        ]
       }
     },
     "output": {

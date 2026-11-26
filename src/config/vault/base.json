@@ -54088,6 +54088,7 @@
     "feeTier": "0.30",
     "tickSpacing": 60,
     "assets": ["WETH", "AERO"],
+    "replacementVaultId": "aero-cow-base-aero-weth",
     "risks": {
       "updatedAt": 1765557014,
       "complex": true,
