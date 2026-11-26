@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { UnlimitedApprovalButton } from '../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
+import { useNeedsApproval } from '../../../../../data/hooks/approval.ts';
 import {
   selectZapClaimRewards,
   transactSteps,
@@ -274,6 +276,9 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+  const handleWithdrawUnlimited = useCallback(() => {
+    dispatch(transactSteps(quote, t, true));
+  }, [dispatch, quote, t]);
 
   const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
@@ -286,6 +291,15 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
     (isTxInProgress &&
       (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
   const isLoading = isExecuting || isTxInProgress;
+  const needsApproval = useNeedsApproval(quote.allowances);
+  const offerApprovalChoice =
+    needsApproval && !isComplete && !isLoading && !confirmNeededWithChanges;
+  const withdrawLabel = t(
+    isMaxAll ?
+      willClaim ? 'Transact-Claim-WithdrawAll'
+      : 'Transact-WithdrawAll'
+    : 'Transact-Withdraw'
+  );
 
   return (
     <>
@@ -315,14 +329,17 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
               t('Transact-WithdrawInProgress')
             : confirmNeededWithChanges ?
               t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
-            : t(
-                isMaxAll ?
-                  willClaim ? 'Transact-Claim-WithdrawAll'
-                  : 'Transact-WithdrawAll'
-                : 'Transact-Withdraw'
-              )
-            }
+            : offerApprovalChoice ?
+              t('Approve-Exact-And', { action: withdrawLabel })
+            : withdrawLabel}
           </AnimatedButton>
+          {offerApprovalChoice ?
+            <UnlimitedApprovalButton
+              action={withdrawLabel}
+              disabled={isDisabled}
+              onClick={handleWithdrawUnlimited}
+            />
+          : null}
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />
@@ -379,6 +396,9 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+  const handleWithdrawUnlimited = useCallback(() => {
+    dispatch(transactSteps(quote, t, true));
+  }, [dispatch, quote, t]);
 
   const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
@@ -391,6 +411,16 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
     (isTxInProgress &&
       (stepperContent === StepContent.StartTx || stepperContent === StepContent.WalletTx));
   const isLoading = isExecuting || isTxInProgress;
+  const needsApproval = useNeedsApproval(quote.allowances);
+  const offerApprovalChoice =
+    needsApproval && !isComplete && !isLoading && !confirmNeededWithChanges;
+  const withdrawLabel = t(
+    isMaxAll ?
+      (quote.outputs.length > 1 && showClaim) || willClaim ?
+        'Transact-Claim-WithdrawAll'
+      : 'Transact-WithdrawAll'
+    : 'Transact-Withdraw'
+  );
 
   return (
     <>
@@ -424,15 +454,17 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
               t('Transact-WithdrawInProgress')
             : confirmNeededWithChanges ?
               t(isMaxAll ? 'Transact-ConfirmWithdrawAll' : 'Transact-ConfirmWithdraw')
-            : t(
-                isMaxAll ?
-                  (quote.outputs.length > 1 && showClaim) || willClaim ?
-                    'Transact-Claim-WithdrawAll'
-                  : 'Transact-WithdrawAll'
-                : 'Transact-Withdraw'
-              )
-            }
+            : offerApprovalChoice ?
+              t('Approve-Exact-And', { action: withdrawLabel })
+            : withdrawLabel}
           </AnimatedButton>
+          {offerApprovalChoice ?
+            <UnlimitedApprovalButton
+              action={withdrawLabel}
+              disabled={isDisabled}
+              onClick={handleWithdrawUnlimited}
+            />
+          : null}
 
           {import.meta.env.DEV ?
             <TenderlyTransactButton option={option} quote={quote} />

@@ -10,7 +10,6 @@ import { getBridgeApi, getConfigApi } from '../apis/instances.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import { type BridgeFormState, FormStep } from '../reducers/wallet/bridge-types.ts';
 import type { Step } from '../reducers/wallet/stepper-types.ts';
-import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
 import {
   selectBridgeConfigById,
   selectBridgeConfirmQuote,
@@ -29,7 +28,8 @@ import { createAppAsyncThunk } from '../utils/store-utils.ts';
 import { fetchAllowanceAction } from './allowance.ts';
 import { fetchBalanceAction } from './balance.ts';
 import { stepperStartWithSteps } from './wallet/stepper.ts';
-import { approve } from './wallet/approval.ts';
+import { fetchApproveSteps } from './wallet/approval.ts';
+import { transactSetExecuting } from './transact.ts';
 import { selectShouldLoadBridgeConfig } from '../selectors/data-loader/bridge.ts';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
@@ -288,41 +288,32 @@ export const confirmBridgeForm = createAppAsyncThunk<
 
 type PerformBridgeParams = {
   t: TFunction<Namespace>;
+  unlimitedApproval?: boolean;
 };
 
 type PerformBridgePayload = void;
 
 export const performBridge = createAppAsyncThunk<PerformBridgePayload, PerformBridgeParams>(
   'bridge/performBridge',
-  async ({ t }, { getState, dispatch }) => {
-    const state = getState();
-    const quote = selectBridgeConfirmQuote(state);
-    const steps: Step[] = [];
+  async ({ t, unlimitedApproval = false }, { getState, dispatch }) => {
+    dispatch(transactSetExecuting(true));
+    try {
+      const state = getState();
+      const quote = selectBridgeConfirmQuote(state);
+      const steps: Step[] = [];
 
-    if (quote.allowance) {
-      const tokenAllowance = selectAllowanceByTokenAddress(
-        state,
-        quote.allowance.token.chainId,
-        quote.allowance.token.address,
-        quote.allowance.spenderAddress
-      );
-      if (tokenAllowance.isLessThan(quote.allowance.amount)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: approve(
-            quote.allowance.token,
-            quote.allowance.spenderAddress,
-            quote.allowance.amount
-          ),
-          pending: false,
-        });
+      if (quote.allowance) {
+        steps.push(
+          ...(await fetchApproveSteps(quote.allowance, t, dispatch, getState, unlimitedApproval))
+        );
       }
+
+      const api = await getBridgeApi();
+      steps.push(await api.fetchBridgeStep(quote, t, state));
+
+      dispatch(stepperStartWithSteps(steps, quote.input.token.chainId));
+    } finally {
+      dispatch(transactSetExecuting(false));
     }
-
-    const api = await getBridgeApi();
-    steps.push(await api.fetchBridgeStep(quote, t, state));
-
-    dispatch(stepperStartWithSteps(steps, quote.input.token.chainId));
   }
 );

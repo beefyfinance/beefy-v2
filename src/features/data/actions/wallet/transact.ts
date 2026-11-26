@@ -1,7 +1,10 @@
 import { nanoid } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
+import { ERC20Abi } from '../../../../config/abi/ERC20Abi.ts';
+import type { Address } from 'viem';
+import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
 import { getTransactApi } from '../../apis/instances.ts';
 import { toDepositTokenIfVaultShare } from '../../apis/transact/helpers/quotes.ts';
 import { serializeError } from '../../apis/transact/strategies/error.ts';
@@ -13,6 +16,7 @@ import {
   isVaultToVaultSingleTokenOption,
   isWithdrawOption,
   isWithdrawQuote,
+  type AllowanceTokenAmount,
   type QuoteOutputTokenAmountChange,
   type TransactOption,
   type TransactQuote,
@@ -22,7 +26,6 @@ import {
 import { type ContractRewardToken, isTokenEqual, isTokenErc20 } from '../../entities/token.ts';
 import type { VaultGov } from '../../entities/vault.ts';
 import type { Step, ZapStepDetails } from '../../reducers/wallet/stepper-types.ts';
-import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import {
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewards,
@@ -32,7 +35,7 @@ import { selectChainById } from '../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../selectors/transact.ts';
 import { selectGovVaultById } from '../../selectors/vaults.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
-import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
+import type { BeefyDispatchFn, BeefyState, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import {
   transactConfirmNeeded,
   transactConfirmPending,
@@ -40,7 +43,7 @@ import {
   transactConfirmUnneeded,
   transactSetExecuting,
 } from '../transact.ts';
-import { approve } from './approval.ts';
+import { fetchApproveSteps } from './approval.ts';
 import { claimBoost } from './boost.ts';
 import { prefetchGasPrice } from './cross-chain.ts';
 import { claimGovVault } from './gov.ts';
@@ -125,7 +128,9 @@ function maybeClaimStep(
 export async function getTransactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>,
-  getState: BeefyStateFn
+  getState: BeefyStateFn,
+  dispatch: BeefyDispatchFn,
+  unlimitedApproval: boolean = false
 ): Promise<Step[]> {
   const steps: Step[] = [];
   const state = getState();
@@ -147,29 +152,21 @@ export async function getTransactSteps(
   }
 
   const api = await getTransactApi();
-  for (const allowanceTokenAmount of quote.allowances) {
-    if (isTokenErc20(allowanceTokenAmount.token)) {
-      const allowance = selectAllowanceByTokenAddress(
-        state,
-        allowanceTokenAmount.token.chainId,
-        allowanceTokenAmount.token.address,
-        allowanceTokenAmount.spenderAddress
-      );
-
-      if (allowance.lt(allowanceTokenAmount.amount)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: approve(
-            allowanceTokenAmount.token,
-            allowanceTokenAmount.spenderAddress,
-            allowanceTokenAmount.amount
-          ),
-          pending: false,
-        });
-      }
-    }
-  }
+  const walletAddress = selectWalletAddress(state);
+  const approveStepsPromise = Promise.all(
+    quote.allowances
+      .filter(allowance => isTokenErc20(allowance.token))
+      .map(async allowance =>
+        fetchApproveSteps(
+          await coverLiveBalanceIfMax(allowance, quote, walletAddress),
+          t,
+          dispatch,
+          getState,
+          unlimitedApproval
+        )
+      )
+  );
+  approveStepsPromise.catch(() => {});
 
   // Kick off re-quote prefetch in parallel with step building.
   // Both use independent strategy instances (confirmed safe by audit).
@@ -201,10 +198,44 @@ export async function getTransactSteps(
   }
 
   steps.push(
+    ...(await approveStepsPromise).flat(),
     wrapStepConfirmQuote(withZapDetails(originalStep, quote, getState()), quote, prefetchedRequote)
   );
 
   return steps;
+}
+
+/**
+ * Max means the whole balance: some routes (e.g. zapping out of a vault) pull the live balance
+ * when they execute, which can exceed the balance the quote was built from.
+ * Exported for tests.
+ */
+export async function coverLiveBalanceIfMax(
+  allowance: AllowanceTokenAmount,
+  quote: TransactQuote,
+  walletAddress: string | undefined
+): Promise<AllowanceTokenAmount> {
+  // an input token is covered only if that input is max; shares that aren't inputs follow any max
+  const input = quote.inputs.find(input => isTokenEqual(input.token, allowance.token));
+  const isMax = input ? input.max : quote.inputs.some(input => input.max);
+  if (!walletAddress || !isMax) {
+    return allowance;
+  }
+
+  try {
+    const balanceWei = await rpcClientManager
+      .getSingleClient(allowance.token.chainId)
+      .readContract({
+        address: allowance.token.address as Address,
+        abi: ERC20Abi,
+        functionName: 'balanceOf',
+        args: [walletAddress as Address],
+      });
+    const balance = fromWei(balanceWei.toString(10), allowance.token.decimals);
+    return { ...allowance, amount: BigNumber.max(allowance.amount, balance) };
+  } catch {
+    return allowance;
+  }
 }
 
 /** Moves between two vaults: the v2v strategy, and reward pool <-> vault conversions */
@@ -251,11 +282,15 @@ export function withZapDetails(step: Step, quote: TransactQuote, state: BeefySta
  * then asks quote provider for the deposit/withdraw step,
  * which is wrapped to provide quote recheck/confirm functionality
  */
-export function transactSteps(quote: TransactQuote, t: TFunction<Namespace>): BeefyThunk {
+export function transactSteps(
+  quote: TransactQuote,
+  t: TFunction<Namespace>,
+  unlimitedApproval: boolean = false
+): BeefyThunk {
   return async function (dispatch, getState) {
     dispatch(transactSetExecuting(true));
     try {
-      const steps = await getTransactSteps(quote, t, getState);
+      const steps = await getTransactSteps(quote, t, getState, dispatch, unlimitedApproval);
       dispatch(transactSetExecuting(false));
       dispatch(stepperStartWithSteps(steps, quote.inputs[0].token.chainId));
     } finally {

@@ -44,6 +44,7 @@ import {
   selectIsStepperRecoveryExecution,
   selectIsStepperStepping,
   selectStepperCurrentStep,
+  selectStepperItems,
   selectStepperStepContent,
 } from '../../../../../data/selectors/stepper.ts';
 import { selectPendingAllowances } from '../../../../../data/selectors/allowances.ts';
@@ -182,10 +183,18 @@ const ChainTag = memo(function ChainTag({
   );
 });
 
+type ApprovalRow = AllowanceTokenAmount & { kind: 'reset' | 'exact' | 'unlimited' };
+
+const APPROVAL_ROW_I18N_KEY: Record<ApprovalRow['kind'], string> = {
+  reset: 'Transact-Route-Step-ApprovalReset',
+  exact: 'Transact-Route-Step-Approval',
+  unlimited: 'Transact-Route-Step-ApprovalUnlimited',
+};
+
 const ApprovalStepContent = memo(function ApprovalStepContent({
   allowance,
 }: {
-  allowance: AllowanceTokenAmount;
+  allowance: ApprovalRow;
 }) {
   const { t } = useTranslation();
   const chainId = allowance.token.chainId;
@@ -193,7 +202,7 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
   return (
     <Trans
       t={t}
-      i18nKey="Transact-Route-Step-Approval"
+      i18nKey={APPROVAL_ROW_I18N_KEY[allowance.kind]}
       values={{
         fromToken: allowance.token.symbol,
       }}
@@ -205,8 +214,12 @@ const ApprovalStepContent = memo(function ApprovalStepContent({
   );
 });
 
+function approvalKey(chainId: ChainEntity['id'], tokenAddress: string, spenderAddress: string) {
+  return `${chainId}-${tokenAddress.toLowerCase()}-${spenderAddress.toLowerCase()}`;
+}
+
 type ApprovalStepProps = {
-  allowance: AllowanceTokenAmount;
+  allowance: ApprovalRow;
   number: number;
   status: StepStatusState;
 };
@@ -688,6 +701,43 @@ export const ZapRoute = memo(function ZapRoute({
   const pendingAllowances =
     stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
+  // while stepping, rows mirror the approve steps actually sent (resets, unlimited, refreshed amounts)
+  const stepperItems = useAppSelector(selectStepperItems);
+  const stepperApprovalRows = useMemo(() => {
+    // the stepper may be running another flow on the page, e.g. a boost stake
+    const isQuoteFlow = stepperItems.some(
+      item => item.extraInfo?.zap || item.extraInfo?.crossChain
+    );
+    if (!stepperModal || isRecoveryExecution || !isQuoteFlow) {
+      return undefined;
+    }
+    const quoteKeys = new Set(
+      quote.allowances.map(a => approvalKey(a.token.chainId, a.token.address, a.spenderAddress))
+    );
+    return stepperItems.flatMap(item => {
+      const approval = item.extraInfo?.approval;
+      return (
+          approval &&
+            quoteKeys.has(
+              approvalKey(approval.token.chainId, approval.token.address, approval.spenderAddress)
+            )
+        ) ?
+          [approval]
+        : [];
+    });
+  }, [stepperModal, isRecoveryExecution, stepperItems, quote.allowances]);
+  // recovery replaces the stepper items mid-flow, so keep the last rows
+  const stepperApprovalRowsRef = useRef(stepperApprovalRows);
+  useEffect(() => {
+    if (stepperApprovalRows || (!stepperModal && !isRecovery)) {
+      stepperApprovalRowsRef.current = stepperApprovalRows;
+    }
+  }, [stepperApprovalRows, stepperModal, isRecovery]);
+  const approvalRows: ApprovalRow[] =
+    stepperApprovalRows ??
+    (isRecovery ? stepperApprovalRowsRef.current : undefined) ??
+    pendingAllowances.map(allowance => ({ ...allowance, kind: 'exact' }));
+
   // frozen like the approvals: the row must outlive the claim confirming and zeroing the rewards
   const claimRewardsLive = useAppSelector(state => selectZapClaimRewards(state, quote));
   const claimSnapshotRef = useRef(claimRewardsLive);
@@ -706,7 +756,7 @@ export const ZapRoute = memo(function ZapRoute({
     const displaySteps = quote.steps.filter(s => isDisplayedStep(s, sharedChainIds));
     const bridgeIdx = displaySteps.findIndex(s => s.type === 'bridge');
     const absoluteBridgeIdx =
-      claimCount + pendingAllowances.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
+      claimCount + approvalRows.length + (bridgeIdx >= 0 ? bridgeIdx : displaySteps.length);
 
     if (isRecovery && recoveryQuote && recoveryQuoteMatchesOp && bridgeIdx >= 0) {
       const preBridgeSteps = displaySteps.slice(0, bridgeIdx + 1);
@@ -723,12 +773,12 @@ export const ZapRoute = memo(function ZapRoute({
     isRecovery,
     recoveryQuote,
     recoveryQuoteMatchesOp,
-    pendingAllowances.length,
+    approvalRows.length,
     claimCount,
     sharedChainIds,
   ]);
 
-  const prefixCount = claimCount + pendingAllowances.length;
+  const prefixCount = claimCount + approvalRows.length;
   const totalSteps = prefixCount + effectiveSteps.length;
   const stepStatuses = useStepStatuses(
     totalSteps,
@@ -782,10 +832,10 @@ export const ZapRoute = memo(function ZapRoute({
               {claimRewards ?
                 <ClaimStep rewards={claimRewards} number={1} status={stepStatuses[0]} />
               : null}
-              {pendingAllowances.map((allowance, i) => (
+              {approvalRows.map((allowance, i) => (
                 <ApprovalStep
                   allowance={allowance}
-                  key={`approval-${allowance.token.address}`}
+                  key={`approval-${allowance.token.address}-${allowance.spenderAddress}-${allowance.kind}`}
                   number={claimCount + i + 1}
                   status={stepStatuses[claimCount + i]}
                 />

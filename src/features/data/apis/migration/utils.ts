@@ -1,11 +1,9 @@
 import { fromWei } from '../../../../helpers/big-number.ts';
-import { fetchAllowanceAction } from '../../actions/allowance.ts';
-import { approve } from '../../actions/wallet/approval.ts';
+import { fetchApproveSteps } from '../../actions/wallet/approval.ts';
 import { migrateUnstake } from '../../actions/wallet/migrate.ts';
 import { deposit } from '../../actions/wallet/standard.ts';
 import { isTokenErc20 } from '../../entities/token.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
-import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import type { BaseUserData, ExecuteFn, UpdateFn } from './migration-types.ts';
 import type {
@@ -50,7 +48,6 @@ export function buildExecute<
       t,
       getState,
       dispatch,
-      walletAddress,
       data: { balance },
     } = params;
     const steps: Step[] = [];
@@ -72,29 +69,14 @@ export function buildExecute<
     });
 
     if (isTokenErc20(depositToken)) {
-      // allowance isn't loaded for this spender unless the deposit form fetched it
-      await dispatch(
-        fetchAllowanceAction({
-          chainId: vault.chainId,
-          spenderAddress: vault.contractAddress,
-          tokens: [depositToken],
-          walletAddress,
-        })
+      steps.push(
+        ...(await fetchApproveSteps(
+          { token: depositToken, spenderAddress: vault.contractAddress, amount: balance },
+          t,
+          dispatch,
+          getState
+        ))
       );
-      const allowance = selectAllowanceByTokenAddress(
-        getState(),
-        depositToken.chainId,
-        depositToken.address,
-        vault.contractAddress
-      );
-      if (allowance.lt(balance)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: approve(depositToken, vault.contractAddress, balance),
-          pending: false,
-        });
-      }
     }
 
     steps.push({

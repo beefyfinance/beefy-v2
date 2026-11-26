@@ -367,6 +367,12 @@ export function featureFlag_disableEnso(): boolean {
   return featureFlag_disableSwapAggregators() || params.has('__disable_enso');
 }
 
+/** kill switch: back to the old effectively-unlimited approvals */
+export function featureFlag_disableExactApprovals(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_exact_approvals');
+}
+
 export function featureFlag_detailedTooltips(): boolean {
   if (import.meta.env.VITE_DETAILED_TOOLTIPS === 'true') {
     return true;

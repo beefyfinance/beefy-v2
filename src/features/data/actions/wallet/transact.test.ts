@@ -1,10 +1,16 @@
 import BigNumber from 'bignumber.js';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { TransactQuote } from '../../apis/transact/transact-types.ts';
 import type { Step } from '../../reducers/wallet/stepper-types.ts';
 import { TransactMode } from '../../reducers/wallet/transact-types.ts';
 import type { BeefyState } from '../../store/types.ts';
-import { withZapDetails } from './transact.ts';
+import type { TokenErc20 } from '../../entities/token.ts';
+import { coverLiveBalanceIfMax, withZapDetails } from './transact.ts';
+
+const rpc = vi.hoisted(() => ({ readContract: vi.fn() }));
+vi.mock('../../apis/rpc-contract/rpc-manager.ts', () => ({
+  rpcClientManager: { getSingleClient: () => rpc },
+}));
 
 const CHAIN = 'base';
 const VAULT_SHARES = '0x000000000000000000000000000000000000d001';
@@ -188,5 +194,63 @@ describe('withZapDetails', () => {
 
     expect(details?.vaultToVault).toEqual({ srcVaultId: 'test-pool', destVaultId: 'test-vault' });
     expect(details?.inputs).toEqual([{ token: clm, amount: bn('5') }]);
+  });
+});
+
+describe('coverLiveBalanceIfMax', () => {
+  const USER = '0x00000000000000000000000000000000000000aa';
+  const MANAGER = '0x00000000000000000000000000000000000000bb';
+  const shares = mooVault as unknown as TokenErc20;
+  const allowance = { token: shares, spenderAddress: MANAGER, amount: bn('10') };
+  const quoteOf = (inputToken: object, max: boolean) =>
+    ({ inputs: [{ token: inputToken, amount: bn('20'), max }] }) as unknown as TransactQuote;
+
+  beforeEach(() => {
+    rpc.readContract.mockReset();
+  });
+
+  it('raises a max withdraw approval to the live share balance', async () => {
+    rpc.readContract.mockResolvedValue(12n * 10n ** 18n);
+    const covered = await coverLiveBalanceIfMax(allowance, quoteOf(want, true), USER);
+    expect(covered.amount.toString(10)).toBe('12');
+    expect(rpc.readContract).toHaveBeenCalledWith(
+      expect.objectContaining({ address: VAULT_SHARES, functionName: 'balanceOf', args: [USER] })
+    );
+  });
+
+  it('never lowers the quoted amount', async () => {
+    rpc.readContract.mockResolvedValue(8n * 10n ** 18n);
+    const covered = await coverLiveBalanceIfMax(allowance, quoteOf(want, true), USER);
+    expect(covered.amount.toString(10)).toBe('10');
+  });
+
+  it('keeps the quoted amount when the input is not max', async () => {
+    const covered = await coverLiveBalanceIfMax(allowance, quoteOf(want, false), USER);
+    expect(covered).toBe(allowance);
+    expect(rpc.readContract).not.toHaveBeenCalled();
+  });
+
+  it('raises the approval when the shares are themselves the max input (vault to vault)', async () => {
+    rpc.readContract.mockResolvedValue(12n * 10n ** 18n);
+    const covered = await coverLiveBalanceIfMax(allowance, quoteOf(mooVault, true), USER);
+    expect(covered.amount.toString(10)).toBe('12');
+  });
+
+  it('keeps the quoted amount for an input that is not max in a multi-input deposit', async () => {
+    const quote = {
+      inputs: [
+        { token: want, amount: bn('20'), max: true },
+        { token: mooVault, amount: bn('10'), max: false },
+      ],
+    } as unknown as TransactQuote;
+    const covered = await coverLiveBalanceIfMax(allowance, quote, USER);
+    expect(covered).toBe(allowance);
+    expect(rpc.readContract).not.toHaveBeenCalled();
+  });
+
+  it('keeps the quoted amount when the balance read fails', async () => {
+    rpc.readContract.mockRejectedValue(new Error('rpc down'));
+    const covered = await coverLiveBalanceIfMax(allowance, quoteOf(want, true), USER);
+    expect(covered).toBe(allowance);
   });
 });
