@@ -611,9 +611,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
               allowanceTokenAmount.token.address,
               allowanceTokenAmount.spenderAddress
             );
-            steps.push(
-              ...(await getApproveSteps(allowanceTokenAmount, allowance, walletAddress, t))
-            );
+            steps.push(...getApproveSteps(allowanceTokenAmount, allowance, t));
           }
         }
       }

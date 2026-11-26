@@ -56,8 +56,7 @@ export type Step = {
       sourceChainId: ChainEntity['id'];
       destChainId: ChainEntity['id'];
     };
-    /** reset: approve(0) first, for tokens that reject changing one non-zero allowance to another */
-    approval?: AllowanceTokenAmount & { kind: 'reset' | 'exact' | 'unlimited' };
+    approval?: AllowanceTokenAmount & { kind: 'exact' | 'unlimited' };
   };
 };
 

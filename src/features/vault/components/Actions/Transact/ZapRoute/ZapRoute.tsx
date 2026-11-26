@@ -183,10 +183,9 @@ const ChainTag = memo(function ChainTag({
   );
 });
 
-type ApprovalRow = AllowanceTokenAmount & { kind: 'reset' | 'exact' | 'unlimited' };
+type ApprovalRow = AllowanceTokenAmount & { kind: 'exact' | 'unlimited' };
 
 const APPROVAL_ROW_I18N_KEY: Record<ApprovalRow['kind'], string> = {
-  reset: 'Transact-Route-Step-ApprovalReset',
   exact: 'Transact-Route-Step-Approval',
   unlimited: 'Transact-Route-Step-ApprovalUnlimited',
 };
@@ -701,7 +700,7 @@ export const ZapRoute = memo(function ZapRoute({
   const pendingAllowances =
     stepperModal || isRecovery ? snapshotRef.current : pendingAllowancesLive;
 
-  // while stepping, rows mirror the approve steps actually sent (resets, unlimited, refreshed amounts)
+  // while stepping, rows mirror the approve steps actually sent (unlimited, refreshed amounts)
   const stepperItems = useAppSelector(selectStepperItems);
   const stepperApprovalRows = useMemo(() => {
     // the stepper may be running another flow on the page, e.g. a boost stake
