@@ -33,9 +33,9 @@ function relevance(state: FilteredVaultsState): boolean {
 
 describe('filteredVaultsSlice reconcile', () => {
   it('prunes chain ids outside the active set from both pending and applied', () => {
-    // `canto` is an EOL chain: it passes codec validation but is never shown in the active-only
+    // `fantom` is an EOL chain: it passes codec validation but is never shown in the active-only
     // checklist, so it must be pruned once chain data is loaded
-    const state = stateWith({ chainIds: ['base', 'canto', 'ethereum'] });
+    const state = stateWith({ chainIds: ['base', 'fantom', 'ethereum'] });
     const next = reducer(
       state,
       filteredVaultsActions.reconcile({ chainIds: ['base', 'ethereum'], platformIds: [] })
@@ -55,7 +55,7 @@ describe('filteredVaultsSlice reconcile', () => {
   });
 
   it('prunes chain and platform ids together in a single reconcile', () => {
-    const state = stateWith({ chainIds: ['base', 'canto'], platformIds: ['aave', 'gone'] });
+    const state = stateWith({ chainIds: ['base', 'fantom'], platformIds: ['aave', 'gone'] });
     const next = reducer(
       state,
       filteredVaultsActions.reconcile({ chainIds: ['base'], platformIds: ['aave'] })

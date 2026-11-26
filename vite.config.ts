@@ -8,6 +8,7 @@ import cspPlugin from './tools/bundle/csp-plugin.ts';
 import headersPlugin from './tools/bundle/headers-plugin.ts';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { muiCompatSvgrPlugin, standardSvgrPlugin } from './tools/bundle/svgr.ts';
+import { chainLoadersPlugin } from './tools/bundle/chain-loaders-plugin.ts';
 
 const optionalPlugins: Plugin[] = [];
 
@@ -39,6 +40,7 @@ export default defineConfig({
     react(),
     standardSvgrPlugin(),
     muiCompatSvgrPlugin(),
+    chainLoadersPlugin(),
     headersPlugin({
       headers: {
         '/*': { 'Cross-Origin-Opener-Policy': 'same-origin-allow-popups' },

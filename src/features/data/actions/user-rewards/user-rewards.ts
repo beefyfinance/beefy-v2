@@ -3,8 +3,7 @@ import { selectUserDepositedVaultIds } from '../../selectors/balance.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../store/types.ts';
 import { fetchUserMerklRewardsAction } from './merkl-user-rewards.ts';
-import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards.ts';
-import { maybeHasMerklRewards, maybeHasStellaSwapRewards } from './helpers.ts';
+import { maybeHasMerklRewards } from './helpers.ts';
 
 export function fetchUserOffChainRewardsForVaultAction(
   vaultId: VaultEntity['id'],
@@ -15,9 +14,6 @@ export function fetchUserOffChainRewardsForVaultAction(
     if (maybeHasMerklRewards(vault)) {
       dispatch(fetchUserMerklRewardsAction({ walletAddress }));
     }
-    if (maybeHasStellaSwapRewards(vault)) {
-      dispatch(fetchUserStellaSwapRewardsAction({ walletAddress }));
-    }
   };
 }
 
@@ -25,33 +21,12 @@ export function fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress: 
   return async function (dispatch: BeefyDispatchFn, getState: BeefyStateFn) {
     const state = getState();
     const depositedVaultIds = selectUserDepositedVaultIds(state, walletAddress);
-    let fetchMerkl: boolean = false;
-    let fetchStellaSwap: boolean = false;
-
-    for (const vaultId of depositedVaultIds) {
-      const vault = selectVaultById(state, vaultId);
-      if (!fetchMerkl && maybeHasMerklRewards(vault)) {
-        fetchMerkl = true;
-      }
-      if (!fetchStellaSwap && maybeHasStellaSwapRewards(vault)) {
-        fetchStellaSwap = true;
-      }
-      if (fetchMerkl && fetchStellaSwap) {
-        break;
-      }
-    }
-
-    const promises: Promise<unknown>[] = [];
+    const fetchMerkl = depositedVaultIds.some(vaultId =>
+      maybeHasMerklRewards(selectVaultById(state, vaultId))
+    );
 
     if (fetchMerkl) {
-      promises.push(dispatch(fetchUserMerklRewardsAction({ walletAddress })));
-    }
-    if (fetchStellaSwap) {
-      promises.push(dispatch(fetchUserStellaSwapRewardsAction({ walletAddress })));
-    }
-
-    if (promises.length > 0) {
-      await Promise.allSettled(promises);
+      await Promise.allSettled([dispatch(fetchUserMerklRewardsAction({ walletAddress }))]);
     }
   };
 }

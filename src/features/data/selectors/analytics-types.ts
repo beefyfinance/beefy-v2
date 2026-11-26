@@ -67,7 +67,7 @@ export type PnlYieldSource = {
   token: UnifiedRewardToken;
   amount: BigNumber;
   usd: BigNumber;
-  source: 'vault' | 'clm' | 'pool' | 'merkl' | 'stellaswap';
+  source: 'vault' | 'clm' | 'pool' | 'merkl';
 };
 
 export type PnlYieldTotal = {

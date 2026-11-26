@@ -10,7 +10,6 @@ import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } f
 import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
-  selectVaultActiveStellaSwapCampaigns,
   type UnifiedRewardToken,
 } from './rewards.ts';
 import { selectTokenPriceLookup, type TokenPriceLookup } from './tokens.ts';
@@ -18,15 +17,10 @@ import { selectWalletAddress } from './wallet.ts';
 import { bigNumberEqual, numberEqual } from '../utils/selector-equality.ts';
 import {
   selectHasMerklRewardsDispatchedRecentlyForAnyUser,
-  selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
   selectMerklRewardsForUserHasFulfilledOnce,
   selectMerklRewardsForUserIsPending,
   selectMerklRewardsForUserIsRejected,
   selectMerklRewardsForUserShouldLoad,
-  selectStellaSwapRewardsForUserHasFulfilledOnce,
-  selectStellaSwapRewardsForUserIsPending,
-  selectStellaSwapRewardsForUserIsRejected,
-  selectStellaSwapRewardsForUserShouldLoad,
 } from './data-loader/user-rewards.ts';
 
 export type UnifiedReward = {
@@ -160,7 +154,7 @@ export const selectUserMerklUnifiedRewardsForChain = createSelector(
 );
 
 export function selectMayHaveOffchainUserRewards(_state: BeefyState, vault: VaultEntity) {
-  return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
+  return isCowcentratedLikeVault(vault);
 }
 
 export const selectUserMerklRewardsForVault = (
@@ -178,78 +172,6 @@ const selectConnectedUserMerklRewardsForVault = (state: BeefyState, vaultId: Vau
 
 export const selectConnectedUserHasMerklRewardsForVault = createSelector(
   selectConnectedUserMerklRewardsForVault,
-  rewards => rewards?.some(r => r.unclaimed.gt(BIG_ZERO)) || false
-);
-
-export const selectUserStellaSwapUnifiedRewardsForVault = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
-    walletAddress ?
-      state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
-        vaultId
-      ] || undefined
-    : undefined,
-  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    selectVaultActiveStellaSwapCampaigns(state, vaultId),
-  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.byChainId,
-  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    selectTokenPriceLookup(state),
-  (unclaimedRewards, activeCampaigns, tokensByChainId, priceLookup) => {
-    if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
-      return undefined;
-    }
-
-    const rewards: UnifiedReward[] =
-      isNonEmptyArray(unclaimedRewards) ?
-        buildUnifiedMerklRewards(tokensByChainId, priceLookup, unclaimedRewards)
-      : [];
-
-    if (isNonEmptyArray(activeCampaigns)) {
-      for (const campaign of activeCampaigns) {
-        const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
-        if (existing) {
-          existing.active = true;
-          existing.apr = (existing.apr || 0) + campaign.apr;
-        } else {
-          rewards.push(
-            buildUnifiedReward(
-              tokensByChainId,
-              priceLookup,
-              BIG_ZERO,
-              campaign.rewardToken,
-              true,
-              campaign.apr
-            )
-          );
-        }
-      }
-    }
-
-    return rewards;
-  }
-);
-
-export const selectUserStellaSwapRewardsForVault = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress: string
-) =>
-  state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
-    vaultId
-  ] || undefined;
-
-const selectConnectedUserStellaSwapRewardsForVault = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const walletAddress = selectWalletAddress(state);
-  return walletAddress ?
-      selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress)
-    : undefined;
-};
-
-export const selectConnectedUserHasStellaSwapRewardsForVault = createSelector(
-  selectConnectedUserStellaSwapRewardsForVault,
   rewards => rewards?.some(r => r.unclaimed.gt(BIG_ZERO)) || false
 );
 
@@ -309,19 +231,6 @@ export const selectMerklUserRewardsStatus = createSelector(
   selectMerklRewardsForUserIsRejected,
   selectMerklRewardsForUserIsPending,
   selectHasMerklRewardsDispatchedRecentlyForAnyUser,
-  (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
-    canLoad: userShouldLoad && !anyUserDispatchedRecently,
-    isLoaded: userFulfilled,
-    isLoading: userPending,
-    isError: !userFulfilled && userRejected,
-  })
-);
-export const selectStellaSwapUserRewardsStatus = createSelector(
-  selectStellaSwapRewardsForUserHasFulfilledOnce,
-  selectStellaSwapRewardsForUserShouldLoad,
-  selectStellaSwapRewardsForUserIsRejected,
-  selectStellaSwapRewardsForUserIsPending,
-  selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
   (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
     canLoad: userShouldLoad && !anyUserDispatchedRecently,
     isLoaded: userFulfilled,

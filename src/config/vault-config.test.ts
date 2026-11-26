@@ -1,22 +1,24 @@
 import { addressBook } from '@beefyfinance/blockchain-addressbook';
 import { describe, expect, it } from 'vitest';
 import type { VaultConfig } from '../features/data/apis/config-types.ts';
-import type { ChainEntity } from '../features/data/entities/chain.ts';
 import { singleAssetExists, singleAssetKeys } from '../helpers/singleAssetSrc.ts';
+import { isEnabledChainId } from './config.ts';
 
 const vaultsByPath = import.meta.glob<VaultConfig[]>('./vault/*.json', {
   import: 'default',
   eager: true,
 });
 
-const chains = Object.entries(vaultsByPath).map(([path, vaults]) => {
-  const chainId = path.replace('./vault/', '').replace('.json', '') as ChainEntity['id'];
-  const addressBookChainId = chainId === 'harmony' ? 'one' : chainId;
-  const addressBookChain = addressBook[addressBookChainId as keyof typeof addressBook];
+const chains = Object.entries(vaultsByPath).flatMap(([path, vaults]) => {
+  const chainId = path.replace('./vault/', '').replace('.json', '');
+  if (!isEnabledChainId(chainId)) {
+    return [];
+  }
+  const addressBookChain = addressBook[chainId];
   const tokensByAddress = new Map(
     Object.values(addressBookChain.tokens).map(token => [token.address.toLowerCase(), token])
   );
-  return { chainId, addressBookChain, tokensByAddress, vaults };
+  return [{ chainId, addressBookChain, tokensByAddress, vaults }];
 });
 
 function findAssetsWithoutImages(): string[] {

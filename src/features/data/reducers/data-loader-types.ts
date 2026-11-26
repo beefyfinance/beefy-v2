@@ -91,7 +91,6 @@ export interface DataLoaderState {
     prices: LoaderState;
     proposals: LoaderState;
     promos: LoaderState;
-    stellaSwapRewards: LoaderState;
     treasury: LoaderState;
     vaults: LoaderState;
     wallet: LoaderState;
@@ -135,7 +134,6 @@ export interface ByAddressGlobalDataEntity {
   dashboard: LoaderState;
   clmHarvests: LoaderState;
   merklRewards: LoaderState;
-  stellaSwapRewards: LoaderState;
 }
 
 export type LoaderGlobalKey = keyof DataLoaderState['global'];

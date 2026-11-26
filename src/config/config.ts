@@ -1,3 +1,4 @@
+import type { ChainIdKey } from '@beefyfinance/blockchain-addressbook/types/chainid';
 import { mapValues } from 'lodash-es';
 import type { ChainConfig, ChainFeature, ChainStatus } from '../features/data/apis/config-types.ts';
 
@@ -999,6 +1000,18 @@ const chainConfigInputs = {
       type: 'standard',
     },
   },
-} satisfies Record<ChainConfig['id'], ChainConfigInput>;
+} satisfies Partial<Record<ChainIdKey | 'harmony', ChainConfigInput>>;
+
+type ChainConfigInputs = typeof chainConfigInputs;
+
+export type EnabledChainId = {
+  [K in keyof ChainConfigInputs]: ChainConfigInputs[K]['status'] extends 'disabled' ? never : K;
+}[keyof ChainConfigInputs];
 
 export const config = mapValues(chainConfigInputs, input => resolveChainConfig(input));
+
+export function isEnabledChainId(id: string): id is EnabledChainId {
+  return Object.hasOwn(config, id) && config[id as keyof typeof config].status !== 'disabled';
+}
+
+export const enabledChainIds: EnabledChainId[] = Object.keys(config).filter(isEnabledChainId);
