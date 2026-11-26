@@ -4,21 +4,14 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useAppSelector } from '../../../../../data/store/hooks.ts';
 import { isCowcentratedLikeVault, isGovVault } from '../../../../../data/entities/vault.ts';
 import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance.ts';
-import {
-  selectVaultHasActiveMerklCampaigns,
-  selectVaultHasActiveStellaSwapCampaigns,
-} from '../../../../../data/selectors/rewards.ts';
+import { selectVaultHasActiveMerklCampaigns } from '../../../../../data/selectors/rewards.ts';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { GovRewards } from './Gov/GovRewards.tsx';
 import { MerklRewards } from './Merkl/MerklRewards.tsx';
-import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards.tsx';
 import { styles } from './styles.ts';
-import {
-  maybeHasMerklRewards,
-  maybeHasStellaSwapRewards,
-} from '../../../../../data/actions/user-rewards/helpers.ts';
+import { maybeHasMerklRewards } from '../../../../../data/actions/user-rewards/helpers.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -31,9 +24,6 @@ const ClaimFormLoader = memo(function ClaimFormLoader() {
   const deposited = useAppSelector(state => selectHasUserDepositInVault(state, vaultId));
   const hasActiveMerkl = useAppSelector(state =>
     selectVaultHasActiveMerklCampaigns(state, vaultId)
-  );
-  const hasActiveStellaSwap = useAppSelector(state =>
-    selectVaultHasActiveStellaSwapCampaigns(state, vaultId)
   );
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
@@ -48,11 +38,8 @@ const ClaimFormLoader = memo(function ClaimFormLoader() {
     if (hasActiveMerkl) {
       type += '-merkl';
     }
-    if (hasActiveStellaSwap) {
-      type += '-stellaswap';
-    }
     return type;
-  }, [vault, isCowcentratedLike, hasActiveMerkl, hasActiveStellaSwap]);
+  }, [vault, isCowcentratedLike, hasActiveMerkl]);
   const descriptionKey = `Transact-Claim-Description-${rewardType}`;
 
   return (
@@ -68,14 +55,6 @@ const ClaimFormLoader = memo(function ClaimFormLoader() {
       : null}
       {maybeHasMerklRewards(vault) && (
         <MerklRewards
-          vaultId={vault.id}
-          chainId={vault.chainId}
-          walletAddress={walletAddress}
-          deposited={deposited}
-        />
-      )}
-      {maybeHasStellaSwapRewards(vault) && (
-        <StellaSwapRewards
           vaultId={vault.id}
           chainId={vault.chainId}
           walletAddress={walletAddress}

@@ -41,7 +41,6 @@ import {
 } from '../actions/tokens.ts';
 import { fetchTreasury } from '../actions/treasury.ts';
 import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards.ts';
-import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
 import { initWallet } from '../actions/wallet.ts';
 import {
@@ -91,7 +90,6 @@ const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
     dashboard: dataLoaderStateInit,
     clmHarvests: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
-    stellaSwapRewards: dataLoaderStateInit,
   },
 };
 
@@ -142,7 +140,6 @@ export const initialDataLoaderState: DataLoaderState = {
     prices: dataLoaderStateInit,
     promos: dataLoaderStateInit,
     proposals: dataLoaderStateInit,
-    stellaSwapRewards: dataLoaderStateInit,
     treasury: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
@@ -653,12 +650,6 @@ export const dataLoaderSlice = createSlice({
     );
     addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard'], undefined);
     addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests'], undefined);
-    addByAddressAsyncThunkActions(
-      builder,
-      fetchUserStellaSwapRewardsAction,
-      ['stellaSwapRewards'],
-      ['stellaSwapRewards']
-    );
     addByAddressAsyncThunkActions(
       builder,
       fetchUserMerklRewardsAction,

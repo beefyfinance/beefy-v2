@@ -7,7 +7,6 @@ export const tldToChain = {
   // eth: ['ethereum'], // we resolve eth tld with ens resolver
   // manta: ['manta'], // TODO uncomment when manta released
   gno: ['gnosis'],
-  mode: ['mode'],
   cake: ['bsc'],
   // ll: ['lightlink'],
   // zkf: ['zkfair'],

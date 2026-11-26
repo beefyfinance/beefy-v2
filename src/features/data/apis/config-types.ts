@@ -1,3 +1,4 @@
+import type { EnabledChainId } from '../../../config/config.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
@@ -176,56 +177,12 @@ export interface GaslessGasConfig {
 
 export type GasConfig = StandardGasConfig | EIP1559GasConfig | CeloGasConfig | GaslessGasConfig;
 
-type ChainId =
-  | 'ethereum'
-  | 'polygon'
-  | 'bsc'
-  | 'optimism'
-  | 'fantom'
-  | 'arbitrum'
-  | 'avax'
-  | 'cronos'
-  | 'moonbeam'
-  | 'moonriver'
-  | 'metis'
-  | 'fuse'
-  | 'kava'
-  | 'canto'
-  | 'zksync'
-  | 'zkevm'
-  | 'base'
-  | 'gnosis'
-  | 'linea'
-  | 'mantle'
-  | 'fraxtal'
-  | 'mode'
-  | 'manta'
-  | 'real'
-  | 'sei'
-  | 'rootstock'
-  | 'scroll'
-  | 'lisk'
-  | 'sonic'
-  | 'aurora'
-  | 'emerald'
-  | 'berachain'
-  | 'celo'
-  | 'heco'
-  | 'harmony'
-  | 'saga'
-  | 'hyperevm'
-  | 'plasma'
-  | 'monad'
-  | 'megaeth'
-  | 'robinhood'
-  | 'arc';
-
 export type ChainStatus = 'active' | 'eol' | 'disabled';
 
 export type ChainFeature = 'price' | 'apy';
 
 export type ChainConfig = {
-  id: ChainId;
+  id: EnabledChainId;
   name: string;
   status: ChainStatus;
   /** unix timestamp, set when status is not active */

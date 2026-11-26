@@ -32,28 +32,11 @@ export type MerklRewardsState = {
   };
 };
 
-export type StellaSwapVaultReward = {
-  position: number;
-  token: RewardToken;
-  proofs: string[];
-  isNative: boolean;
-  accumulated: BigNumber;
-  unclaimed: BigNumber;
-  claimContractAddress: string;
-};
-
-export type StellaSwapRewardsState = {
-  byVaultId: {
-    [vaultId: string]: StellaSwapVaultReward[];
-  };
-};
-
 export type UserRewardsState = {
   byUser: {
     [userAddress: string]: {
       byProvider: {
         merkl: MerklRewardsState;
-        stellaswap: StellaSwapRewardsState;
       };
     };
   };

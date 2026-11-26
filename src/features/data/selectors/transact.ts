@@ -53,11 +53,7 @@ import {
   selectZapStakeableBoostOrUndefined,
   selectZapUnstakeableBoostOrUndefined,
 } from './boosts.ts';
-import {
-  selectVaultHasActiveGovRewards,
-  selectVaultHasActiveMerklCampaigns,
-  selectVaultHasActiveStellaSwapCampaigns,
-} from './rewards.ts';
+import { selectVaultHasActiveGovRewards, selectVaultHasActiveMerklCampaigns } from './rewards.ts';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectIsStepperStepping, selectStepperStepContent } from './stepper.ts';
 import { StepContent } from '../reducers/wallet/stepper-types.ts';
@@ -65,7 +61,6 @@ import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
-  selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards.ts';
 import { selectVaultById, selectVaultReplacementMigration } from './vaults.ts';
 import { convertVaultShareToDepositTokenAmount } from '../apis/transact/helpers/quotes.ts';
@@ -947,26 +942,20 @@ export const selectTransactShouldShowClaims = createSelector(
   selectConnectedUserHasGovRewardsForVault,
   selectVaultHasActiveMerklCampaigns,
   selectConnectedUserHasMerklRewardsForVault,
-  selectVaultHasActiveStellaSwapCampaigns,
-  selectConnectedUserHasStellaSwapRewardsForVault,
   (
     vault,
     vaultHasActiveGovRewards,
     userHasUnclaimedGovRewards,
     vaultHasActiveMerklCampaigns,
-    userHasUnclaimedMerklRewards,
-    vaultHasActiveStellaSwapCampaigns,
-    userHasUnclaimedStellaSwapRewards
+    userHasUnclaimedMerklRewards
   ) => {
     // single gov vault do not have periodFinish/rewardRate data
     return (
       isSingleGovVault(vault) ||
       vaultHasActiveGovRewards ||
       vaultHasActiveMerklCampaigns ||
-      vaultHasActiveStellaSwapCampaigns ||
       userHasUnclaimedGovRewards ||
-      userHasUnclaimedMerklRewards ||
-      userHasUnclaimedStellaSwapRewards
+      userHasUnclaimedMerklRewards
     );
   }
 );
@@ -974,19 +963,11 @@ export const selectTransactShouldShowClaims = createSelector(
 export const selectTransactShouldShowClaimsNotification = createSelector(
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
-  selectConnectedUserHasStellaSwapRewardsForVault,
   (
     userHasUnclaimedGovRewards,
-    userHasUnclaimedMerklRewards,
-    userHasUnclaimedStellaSwapRewards
+    userHasUnclaimedMerklRewards
   ): PulseHighlightProps['variant'] | false => {
-    return (
-        userHasUnclaimedGovRewards ||
-          userHasUnclaimedMerklRewards ||
-          userHasUnclaimedStellaSwapRewards
-      ) ?
-        'success'
-      : false;
+    return userHasUnclaimedGovRewards || userHasUnclaimedMerklRewards ? 'success' : false;
   }
 );
 

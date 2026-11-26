@@ -12,7 +12,6 @@ import { PortfolioStats } from '../../home/components/HomeHeader/Stats/Portfolio
 import { PlatformStats } from '../../home/components/HomeHeader/Stats/PlatformStats.tsx';
 import { PastBoosts } from '../../vault/components/Actions/Boosts/PastBoosts.tsx';
 import { MerklRewards } from '../../vault/components/Actions/Transact/ClaimForm/Merkl/MerklRewards.tsx';
-import { StellaSwapRewards } from '../../vault/components/Actions/Transact/ClaimForm/StellaSwap/StellaSwapRewards.tsx';
 import { FormStepFooter } from '../../vault/components/Actions/Transact/FormStepFooter/FormStepFooter.tsx';
 import { useCalculatedBreakdown } from '../../vault/components/LiquidityPoolBreakdown/hooks.ts';
 import { ShareButton } from '../../vault/components/ShareButton/ShareButton.tsx';
@@ -178,15 +177,6 @@ describe('the trees the sibling file does not reach', () => {
         {fixture.vaultIds.map(id => (
           <MerklRewards
             key={`merkl-${id}`}
-            vaultId={id}
-            chainId={FIXTURE_CHAIN}
-            walletAddress={FIXTURE_WALLET}
-            deposited={true}
-          />
-        ))}
-        {fixture.vaultIds.map(id => (
-          <StellaSwapRewards
-            key={`stella-${id}`}
             vaultId={id}
             chainId={FIXTURE_CHAIN}
             walletAddress={FIXTURE_WALLET}

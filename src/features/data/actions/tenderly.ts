@@ -6,7 +6,6 @@ import { TenderlyApi } from '../apis/tenderly/tenderly-api.ts';
 import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types.ts';
 import type { TransactOption, TransactQuote } from '../apis/transact/transact-types.ts';
 import type { ChainId } from '../entities/chain.ts';
-import type { VaultEntity } from '../entities/vault.ts';
 import type { Step } from '../reducers/wallet/stepper-types.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import {
@@ -16,7 +15,7 @@ import {
 import type { BeefyDispatchFn } from '../store/types.ts';
 import { sleep, withTimeoutSignal } from '../utils/async-utils.ts';
 import { createAppAsyncThunk } from '../utils/store-utils.ts';
-import { claimMerkl, claimStellaSwap } from './wallet/offchain.ts';
+import { claimMerkl } from './wallet/offchain.ts';
 import { getTransactSteps } from './wallet/transact.ts';
 
 export type TenderlyTxCallRequest = {
@@ -193,28 +192,6 @@ export const tenderlySimulateTransactQuote = createAppAsyncThunk<
   const steps = await getTransactSteps(quote, t, getState);
   const txs = await captureTransactionsFromSteps(steps, dispatch);
   return { chainId: option.chainId, calls: txs };
-});
-
-type TenderlyStellaSwapClaimButtonParams = {
-  chainId: ChainId;
-  vaultId: VaultEntity['id'];
-  t: TFunction;
-};
-
-export const tenderlySimulateStellaSwapClaim = createAppAsyncThunk<
-  TenderlyOpenSimulationPayload,
-  TenderlyStellaSwapClaimButtonParams
->('tenderly/simulateStellaSwapClaim', async ({ chainId, vaultId, t }, { dispatch }) => {
-  const steps: Step[] = [
-    {
-      step: 'claim-rewards',
-      message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: claimStellaSwap(chainId, vaultId),
-      pending: false,
-    },
-  ];
-  const txs = await captureTransactionsFromSteps(steps, dispatch);
-  return { chainId: chainId, calls: txs };
 });
 
 type TenderlyMerklClaimButtonParams = {
