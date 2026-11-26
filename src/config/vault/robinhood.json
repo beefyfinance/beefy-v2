@@ -55,7 +55,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "uniswap",
-    "assets": ["ANT", "USDG"],
+    "assets": ["ANTrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -90,7 +90,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["ANT", "USDG"],
+    "assets": ["ANTrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -128,7 +128,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["TTWO", "USDG"],
+    "assets": ["TTWOrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -166,7 +166,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["TSLA", "USDG"],
+    "assets": ["TSLArh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -204,7 +204,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["GOOGL", "USDG"],
+    "assets": ["GOOGLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -242,7 +242,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["MSTR", "USDG"],
+    "assets": ["MSTRrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -280,7 +280,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["COIN", "WETH"],
+    "assets": ["COINrh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -318,7 +318,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["CRCL", "USDG"],
+    "assets": ["CRCLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -356,7 +356,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["NVDA", "WETH"],
+    "assets": ["NVDArh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -394,7 +394,7 @@
     "status": "active",
     "createdAt": 1795687000,
     "platformId": "aero",
-    "assets": ["MU", "USDG"],
+    "assets": ["MUrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -474,7 +474,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["ANT", "USDG"],
+    "assets": ["ANTrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -514,7 +514,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["TTWO", "USDG"],
+    "assets": ["TTWOrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -554,7 +554,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["TSLA", "USDG"],
+    "assets": ["TSLArh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -594,7 +594,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["GOOGL", "USDG"],
+    "assets": ["GOOGLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -634,7 +634,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["MSTR", "USDG"],
+    "assets": ["MSTRrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -674,7 +674,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["COIN", "WETH"],
+    "assets": ["COINrh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -714,7 +714,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["CRCL", "USDG"],
+    "assets": ["CRCLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -754,7 +754,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["NVDA", "WETH"],
+    "assets": ["NVDArh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -794,7 +794,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["MU", "USDG"],
+    "assets": ["MUrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -879,7 +879,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
-    "assets": ["ANT", "USDG"],
+    "assets": ["ANTrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -920,7 +920,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
-    "assets": ["ANT", "USDG"],
+    "assets": ["ANTrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -961,7 +961,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
-    "assets": ["TTWO", "USDG"],
+    "assets": ["TTWOrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1002,7 +1002,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "assets": ["TSLA", "USDG"],
+    "assets": ["TSLArh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1043,7 +1043,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 10,
-    "assets": ["GOOGL", "USDG"],
+    "assets": ["GOOGLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1084,7 +1084,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 100,
-    "assets": ["MSTR", "USDG"],
+    "assets": ["MSTRrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1125,7 +1125,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "assets": ["COIN", "WETH"],
+    "assets": ["COINrh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1166,7 +1166,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 100,
-    "assets": ["CRCL", "USDG"],
+    "assets": ["CRCLrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1207,7 +1207,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "assets": ["NVDA", "WETH"],
+    "assets": ["NVDArh", "WETH"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -1248,7 +1248,7 @@
     "platformId": "beefy",
     "feeTier": "Dynamic",
     "tickSpacing": 50,
-    "assets": ["MU", "USDG"],
+    "assets": ["MUrh", "USDG"],
     "risks": {
       "complex": true,
       "curated": false,
