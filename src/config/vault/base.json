@@ -1,5 +1,124 @@
 [
   {
+    "id": "aero-cow-base-usdc-inj-vault",
+    "name": "INJ-USDC",
+    "type": "standard",
+    "token": "USDC-INJ",
+    "tokenAddress": "0x97aD4Ec4325D00975f238C6950d812fFF977d4Bc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x9962E8EDe2Bfa61120B43876e859Da0aA86D8d67",
+    "earnedToken": "mooCowAeroBaseUSDC-INJ",
+    "earnedTokenAddress": "0x9962E8EDe2Bfa61120B43876e859Da0aA86D8d67",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-inj",
+    "status": "active",
+    "createdAt": 1795709989,
+    "platformId": "aero",
+    "assets": ["INJ", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-inj-rp",
+    "name": "INJ-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBaseUSDC-INJ",
+    "tokenAddress": "0x97aD4Ec4325D00975f238C6950d812fFF977d4Bc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "earnContractAddress": "0x52C8ea0cAA9695a1b4016372165C06282c247eC3",
+    "earnedToken": "rCowAeroBaseUSDC-INJ",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-inj",
+    "status": "active",
+    "createdAt": 1795709988,
+    "platformId": "aero",
+    "assets": ["INJ", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-base-usdc-inj",
+    "name": "INJ-USDC",
+    "type": "cowcentrated",
+    "token": "USDC-INJ aero",
+    "tokenAddress": "0x4AaA3B7e83d3A85237e7E32EBa7e723F59e83F88",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aero",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB783f2D2e031a7C4aA48AedaC4c58bE85BfA04d3"
+    ],
+    "earnContractAddress": "0x97aD4Ec4325D00975f238C6950d812fFF977d4Bc",
+    "earnedToken": "cowAeroBaseUSDC-INJ",
+    "earnedTokenAddress": "0x97aD4Ec4325D00975f238C6950d812fFF977d4Bc",
+    "oracle": "lps",
+    "oracleId": "aero-cow-base-usdc-inj",
+    "status": "active",
+    "createdAt": 1795709988,
+    "platformId": "beefy",
+    "feeTier": "0.3",
+    "tickSpacing": 50,
+    "assets": ["INJ", "USDC"],
+    "risks": {
+      "complex": true,
+      "curated": false,
+      "notAudited": false,
+      "notBattleTested": false,
+      "notCorrelated": true,
+      "notTimelocked": false,
+      "notVerified": false,
+      "synthAsset": false
+    },
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-base-usdc-antc-vault",
     "name": "ANTc-USDC",
     "type": "standard",
