@@ -56,7 +56,6 @@ export interface ApyStandard {
 export interface ApyCLM {
   clmApr: number;
   merklApr?: number;
-  stellaSwapApr?: number;
   lineaIgnitionApr?: number;
   totalApy: number;
 }
@@ -141,7 +140,7 @@ export type ZapAggregatorTokenSupportResponse = {
   };
 };
 
-export type BeefyOffChainRewardsProviderId = 'merkl' | 'stellaswap';
+export type BeefyOffChainRewardsProviderId = 'merkl';
 
 export type BeefyOffChainRewardsRewardToken = {
   address: string;
@@ -197,15 +196,4 @@ export type BeefyOffChainRewardsMerklCampaign = MakeCampaign<
   }
 >;
 
-export type BeefyOffChainRewardsStellaSwapCampaign = MakeCampaign<
-  'stellaswap',
-  {
-    rewardId: number;
-    rewarderAddress: string;
-    isPaused: boolean;
-  }
->;
-
-export type BeefyOffChainRewardsCampaign =
-  | BeefyOffChainRewardsMerklCampaign
-  | BeefyOffChainRewardsStellaSwapCampaign;
+export type BeefyOffChainRewardsCampaign = BeefyOffChainRewardsMerklCampaign;

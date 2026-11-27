@@ -130,12 +130,6 @@ export class BeefyAPI {
       timeout: this.timeout,
     });
 
-    // Handle api->app chain id
-    if ('one' in data) {
-      data['harmony'] = data['one'] as ZapAggregatorTokenSupportResponse['harmony'];
-      delete data['one'];
-    }
-
     return data;
   }
 
@@ -201,10 +195,11 @@ export class BeefyAPI {
   }
 
   async getOffChainRewardCampaigns(): Promise<BeefyOffChainRewardsCampaign[]> {
-    return await getJson<BeefyOffChainRewardsCampaign[]>({
+    const campaigns = await getJson<BeefyOffChainRewardsCampaign[]>({
       url: `${this.api}/offchain-rewards/active`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });
+    return campaigns.filter(campaign => campaign.providerId === 'merkl');
   }
 }

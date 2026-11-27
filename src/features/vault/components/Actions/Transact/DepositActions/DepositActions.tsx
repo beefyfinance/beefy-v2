@@ -43,7 +43,6 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
-import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
@@ -222,9 +221,6 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
 
   return (
     <>
-      {option.chainId === 'emerald' ?
-        <EmeraldGasNotice />
-      : null}
       <PriceImpactNotice state={priceImpactState} hideCheckbox={isDisabledByNotEnoughInput} />
       <MaxNativeNotice quote={quote} />
       <ConfirmNotice />

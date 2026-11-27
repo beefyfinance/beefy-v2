@@ -1,5 +1,6 @@
 import { omit } from 'lodash-es';
 import { addressBookToAppId, getVaultsForChain } from './common/config.ts';
+import { isEnabledChainId } from '../src/config/config.ts';
 import { saveJson } from './common/files.ts';
 import { allChainIds, type AppChainId } from './common/chains.ts';
 import { sortVaultKeys } from './common/vault-fields.ts';
@@ -71,13 +72,6 @@ const URLS: ChainProviderUrls = {
       },
     ],
   },
-  celo: {
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
   ethereum: {
     curve: {
       buyTokenUrl: curvePoolUrl,
@@ -102,20 +96,6 @@ const URLS: ChainProviderUrls = {
         removeLiquidityUrl: 'https://www.spiritswap.finance/liquidity/{token0}/{token1}',
       },
     ],
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
-  kava: {
-    curve: {
-      buyTokenUrl: curvePoolUrl,
-      addLiquidityUrl: curvePoolUrl,
-      removeLiquidityUrl: curvePoolUrl,
-    },
-  },
-  moonbeam: {
     curve: {
       buyTokenUrl: curvePoolUrl,
       addLiquidityUrl: curvePoolUrl,
@@ -207,6 +187,9 @@ async function replaceUrlsForVault(
   }
 
   const chainId = addressBookToAppId(vault.network);
+  if (!isEnabledChainId(chainId)) {
+    return undefined;
+  }
   const urlsForProvider = URLS[chainId]?.[vault.tokenProviderId];
   if (!urlsForProvider) {
     return undefined;

@@ -65,7 +65,6 @@ function stateWithCampaigns(campaigns: OffChainRewardsCampaign[]): BeefyState {
           byVaultId: { [VAULT_ID]: campaigns.map(c => ({ id: c.id, apr: 0.1 })) },
           byProviderId: {
             merkl: { [VAULT_ID]: vaultAprs('merkl') },
-            stellaswap: { [VAULT_ID]: vaultAprs('stellaswap') },
           },
         },
       },
@@ -94,7 +93,7 @@ describe('selectVaultActiveExtraRewardTokens', () => {
   it('uses the address book token, so it keeps its id', () => {
     const state = stateWithCampaigns([
       campaign('merkl', apiToken(rewardBifi)),
-      campaign('stellaswap', apiToken(rewardUsdc)),
+      campaign('merkl', apiToken(rewardUsdc)),
     ]);
 
     expect(selectVaultActiveExtraRewardTokens(state, VAULT_ID)).toEqual([rewardBifi, rewardUsdc]);

@@ -13,7 +13,6 @@ const initialState: RewardsState = {
     byVaultId: {},
     byProviderId: {
       merkl: {},
-      stellaswap: {},
     },
   },
   gov: {
@@ -31,7 +30,6 @@ export const rewardsSlice = createSlice({
         const byVaultId: RewardsState['offchain']['byVaultId'] = {};
         const byProviderId: RewardsState['offchain']['byProviderId'] = {
           merkl: {},
-          stellaswap: {},
         };
         const seenIds = new Set<string>();
 
