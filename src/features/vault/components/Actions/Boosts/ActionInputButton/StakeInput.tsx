@@ -27,6 +27,12 @@ export const StakeInput = memo(function StakeInput({
     },
     [t, boostId, dispatch]
   );
+  const handleStakeUnlimited = useCallback<ActionInputButtonProps['onSubmit']>(
+    amount => {
+      dispatch(startStakeBoostSteps(boostId, t, amount, true));
+    },
+    [t, boostId, dispatch]
+  );
   const handleToggle = useCallback(() => {
     toggleOpen('stake');
   }, [toggleOpen]);
@@ -37,6 +43,7 @@ export const StakeInput = memo(function StakeInput({
       open={open === 'stake'}
       onToggle={handleToggle}
       onSubmit={handleStake}
+      onUnlimitedSubmit={handleStakeUnlimited}
       balance={balance}
       title={t('Boost-Button-Stake')}
       balanceLabel={t('Available')}

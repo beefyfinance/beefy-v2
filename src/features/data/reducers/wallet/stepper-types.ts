@@ -1,7 +1,7 @@
 import type { ThunkAction } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { MessageLifecycleState } from '../../apis/cctp/cctp-api-types.ts';
-import type { TokenAmount } from '../../apis/transact/transact-types.ts';
+import type { AllowanceTokenAmount, TokenAmount } from '../../apis/transact/transact-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
@@ -56,6 +56,7 @@ export type Step = {
       sourceChainId: ChainEntity['id'];
       destChainId: ChainEntity['id'];
     };
+    approval?: AllowanceTokenAmount & { kind: 'exact' | 'unlimited' };
   };
 };
 

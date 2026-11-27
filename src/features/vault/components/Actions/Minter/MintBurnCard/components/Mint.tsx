@@ -2,18 +2,22 @@ import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
+import { UnlimitedApprovalButton } from '../../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
-import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
+import { stepperStartWithSteps } from '../../../../../../data/actions/wallet/stepper.ts';
+import { transactSetExecuting } from '../../../../../../data/actions/transact.ts';
+import { selectTransactExecuting } from '../../../../../../data/selectors/transact.ts';
 import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import { approve } from '../../../../../../data/actions/wallet/approval.ts';
+import { fetchApproveSteps } from '../../../../../../data/actions/wallet/approval.ts';
 import { mintDeposit } from '../../../../../../data/actions/wallet/minters.ts';
 import { useInputForm } from '../../../../../../data/hooks/input.ts';
-import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
+import { useNeedsApproval } from '../../../../../../data/hooks/approval.ts';
+import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
 import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
@@ -58,9 +62,6 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const mintedTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
-  const depositTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(state, vault.chainId, depositToken.address, minter.minterAddress)
-  );
 
   const minterEarningsType = useAppSelector(state => selectMinterVaultsType(state, minterId));
 
@@ -78,6 +79,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   }, [canBurn, minterEarningsType]);
 
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
 
   const { handleMax, handleChange, formData } = useInputForm(
     depositTokenBalance,
@@ -92,42 +94,74 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     dispatch(askForWalletConnection());
   }, [dispatch]);
 
-  const handleDeposit = () => {
-    if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
-      return;
-    }
-    if (!isWalletOnVaultChain) {
-      dispatch(askForNetworkChange({ chainId: vault.chainId }));
-      return;
-    }
+  const allowances = useMemo(
+    () =>
+      isTokenErc20(depositToken) ?
+        [{ token: depositToken, spenderAddress: minter.minterAddress, amount: formData.amount }]
+      : [],
+    [depositToken, minter.minterAddress, formData.amount]
+  );
+  const needsApproval = useNeedsApproval(allowances);
+  const offerApprovalChoice = needsApproval && !isStepping && !isExecuting;
+  const isDisabled = formData.amount.isLessThanOrEqualTo(0) || isStepping || isExecuting;
+  const mintLabel = t('action', { action: t('mint'), token: minter.mintedToken.symbol });
 
-    if (depositToken.type !== 'native' && depositTokenAllowance.isLessThan(formData.amount)) {
-      dispatch(
-        stepperAddStep({
-          step: {
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: approve(depositToken, minter.minterAddress, formData.amount),
+  const deposit = useCallback(
+    (unlimited: boolean) => {
+      if (!isWalletConnected) {
+        dispatch(askForWalletConnection());
+        return;
+      }
+      if (!isWalletOnVaultChain) {
+        dispatch(askForNetworkChange({ chainId: vault.chainId }));
+        return;
+      }
+
+      dispatch(async (dispatch, getState) => {
+        dispatch(transactSetExecuting(true));
+        try {
+          const steps =
+            isTokenErc20(depositToken) ?
+              await fetchApproveSteps(
+                {
+                  token: depositToken,
+                  spenderAddress: minter.minterAddress,
+                  amount: formData.amount,
+                },
+                t,
+                dispatch,
+                getState,
+                unlimited
+              )
+            : [];
+          steps.push({
+            step: 'mint',
+            message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
+            action: mintDeposit(minter, depositToken, mintedToken, formData.amount, formData.max),
             pending: false,
-          },
-        })
-      );
-    }
-
-    dispatch(
-      stepperAddStep({
-        step: {
-          step: 'mint',
-          message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-          action: mintDeposit(minter, depositToken, mintedToken, formData.amount, formData.max),
-          pending: false,
-        },
-      })
-    );
-
-    dispatch(stepperStart(chain.id));
-  };
+          });
+          dispatch(stepperStartWithSteps(steps, chain.id));
+        } finally {
+          dispatch(transactSetExecuting(false));
+        }
+      });
+    },
+    [
+      dispatch,
+      t,
+      isWalletConnected,
+      isWalletOnVaultChain,
+      vault.chainId,
+      depositToken,
+      mintedToken,
+      minter,
+      formData.amount,
+      formData.max,
+      chain.id,
+    ]
+  );
+  const handleDeposit = useCallback(() => deposit(false), [deposit]);
+  const handleDepositUnlimited = useCallback(() => deposit(true), [deposit]);
 
   return (
     <CardContent css={styles.cardContent}>
@@ -202,14 +236,23 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             <Button onClick={handleNetworkChange} borderless={true} css={styles.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          : <Button
-              disabled={formData.amount.isLessThanOrEqualTo(0) || isStepping}
-              onClick={handleDeposit}
-              borderless={true}
-              css={styles.btn}
-            >
-              {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
-            </Button>
+          : <>
+              <Button
+                disabled={isDisabled}
+                onClick={handleDeposit}
+                borderless={true}
+                css={styles.btn}
+              >
+                {offerApprovalChoice ? t('Approve-Exact-And', { action: mintLabel }) : mintLabel}
+              </Button>
+              {offerApprovalChoice ?
+                <UnlimitedApprovalButton
+                  action={mintLabel}
+                  disabled={isDisabled}
+                  onClick={handleDepositUnlimited}
+                />
+              : null}
+            </>
 
         : <Button onClick={handleConnectWallet} borderless={true} css={styles.btn}>
             {t('Network-ConnectWallet')}

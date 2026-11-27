@@ -1,5 +1,6 @@
 import type BigNumber from 'bignumber.js';
 import { memo, useCallback, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Collapse } from '../../../../../../components/Collapse/Collapse.tsx';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
@@ -20,6 +21,9 @@ import { AmountInput } from '../../Transact/AmountInput/AmountInput.tsx';
 import { ActionButton } from '../ActionButton/ActionButton.tsx';
 import { styles } from './styles.ts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader/tokens.ts';
+import { UnlimitedApprovalButton } from '../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
+import { useNeedsApproval } from '../../../../../data/hooks/approval.ts';
+import type { AllowanceTokenAmount } from '../../../../../data/apis/transact/transact-types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -28,6 +32,8 @@ export interface ActionInputButtonProps {
   open: boolean;
   onToggle: () => void;
   onSubmit: (amount: BigNumber, max: boolean) => void;
+  /** when set, offers the exact / unlimited approval choice for the receipt token -> boost */
+  onUnlimitedSubmit?: (amount: BigNumber, max: boolean) => void;
   balance: BigNumber;
   title: string;
   balanceLabel: string;
@@ -40,6 +46,7 @@ export const ActionInputButton = memo(function ActionInputButton({
   open,
   onToggle,
   onSubmit,
+  onUnlimitedSubmit,
   balance,
   title,
   balanceLabel,
@@ -47,6 +54,7 @@ export const ActionInputButton = memo(function ActionInputButton({
   buttonVariant = 'boost',
 }: ActionInputButtonProps) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, boost.vaultId));
@@ -79,6 +87,19 @@ export const ActionInputButton = memo(function ActionInputButton({
   const handleClick = useCallback(() => {
     onSubmit(formData.amount, formData.max);
   }, [onSubmit, formData]);
+  const handleUnlimitedClick = useCallback(() => {
+    onUnlimitedSubmit?.(formData.amount, formData.max);
+  }, [onUnlimitedSubmit, formData]);
+
+  const allowances = useMemo(
+    (): AllowanceTokenAmount[] =>
+      onUnlimitedSubmit ?
+        [{ token: mooToken, spenderAddress: boost.contractAddress, amount: formData.amount }]
+      : [],
+    [onUnlimitedSubmit, mooToken, boost.contractAddress, formData.amount]
+  );
+  const needsApproval = useNeedsApproval(allowances);
+  const offerApprovalChoice = needsApproval && !isStepping && !isExecuting;
 
   useEffect(() => {
     if (open) {
@@ -122,9 +143,18 @@ export const ActionInputButton = memo(function ActionInputButton({
               </button>
             }
           />
-          <ActionButton onClick={handleClick} disabled={isDisabled} variant={buttonVariant}>
-            {buttonLabel}
-          </ActionButton>
+          <div>
+            <ActionButton onClick={handleClick} disabled={isDisabled} variant={buttonVariant}>
+              {offerApprovalChoice ? t('Approve-Exact-And', { action: buttonLabel }) : buttonLabel}
+            </ActionButton>
+            {offerApprovalChoice ?
+              <UnlimitedApprovalButton
+                action={buttonLabel}
+                disabled={isDisabled}
+                onClick={handleUnlimitedClick}
+              />
+            : null}
+          </div>
         </div>
       </Collapse>
     </div>

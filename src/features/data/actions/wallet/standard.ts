@@ -23,7 +23,7 @@ import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'viem';
 import { bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
 
-export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
+export const deposit = (vault: VaultEntity, amount: BigNumber, _max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -60,19 +60,12 @@ export const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => 
             chain: publicClient.chain,
           });
         } else {
-          if (max) {
-            return contract.write.depositAll({
-              account: address as Address,
-              ...gasPrices,
-              chain: publicClient.chain,
-            });
-          } else {
-            return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
-              account: address as Address,
-              ...gasPrices,
-              chain: publicClient.chain,
-            });
-          }
+          // not depositAll: it pulls the live balance, which can exceed the exact approval
+          return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
+            account: address as Address,
+            ...gasPrices,
+            chain: publicClient.chain,
+          });
         }
       },
       additionalData: { spender: contractAddr, amount, token: depositToken },

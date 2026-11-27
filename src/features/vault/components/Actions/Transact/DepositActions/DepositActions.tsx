@@ -1,3 +1,5 @@
+import { UnlimitedApprovalButton } from '../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
+import { useNeedsApproval } from '../../../../../data/hooks/approval.ts';
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
@@ -203,6 +205,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   const handleDeposit = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
+  const handleDepositUnlimited = useCallback(() => {
+    dispatch(transactSteps(quote, t, true));
+  }, [dispatch, quote, t]);
 
   const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
@@ -218,6 +223,13 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
   // the CTA keeps showing a blocking state and only morphs once the deposit is fireable
   const boostCta =
     !!quote.option.boostId && !isDisabled && !isComplete && !confirmNeededWithChanges;
+  const needsApproval = useNeedsApproval(quote.allowances);
+  const offerApprovalChoice =
+    needsApproval && !isComplete && !isLoading && !confirmNeededWithChanges;
+  const depositLabel =
+    boostCta ?
+      t('Transact-DepositAndBoost')
+    : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit');
 
   return (
     <>
@@ -249,10 +261,17 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
                   'Transact-ConfirmDepositAll'
                 : 'Transact-ConfirmDeposit'
               )
-            : boostCta ?
-              t('Transact-DepositAndBoost')
-            : t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
+            : offerApprovalChoice ?
+              t('Approve-Exact-And', { action: depositLabel })
+            : depositLabel}
           </AnimatedButton>
+          {offerApprovalChoice ?
+            <UnlimitedApprovalButton
+              action={depositLabel}
+              disabled={isDisabled}
+              onClick={handleDepositUnlimited}
+            />
+          : null}
         </ActionConnectSwitch>
         {import.meta.env.DEV ?
           <TenderlyTransactButton option={option} quote={quote} />

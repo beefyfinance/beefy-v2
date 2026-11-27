@@ -21,7 +21,7 @@ export const mintDeposit = (
   payToken: TokenEntity,
   mintedToken: TokenEntity,
   amount: BigNumber,
-  max: boolean,
+  _max: boolean,
   _slippageTolerance: number = 0.01
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -58,10 +58,7 @@ export const mintDeposit = (
         });
       }
 
-      if (max) {
-        return contract.write.depositAll(args);
-      }
-
+      // not depositAll: it pulls the live balance, which can exceed the exact approval
       return contract.write.deposit([BigInt(amountInWeiString)], args);
     };
     sendTransaction({

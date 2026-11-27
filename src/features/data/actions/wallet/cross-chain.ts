@@ -51,7 +51,7 @@ import {
   sendTransaction,
   txStart,
 } from './common.ts';
-import { approve } from './approval.ts';
+import { getApproveSteps } from './approval.ts';
 import {
   stepperSetBridgeStatus,
   stepperSetRecoveryExecution,
@@ -611,18 +611,7 @@ export function crossChainRecoverySteps(opId: string, t: TFunction<Namespace>): 
               allowanceTokenAmount.token.address,
               allowanceTokenAmount.spenderAddress
             );
-            if (allowance.lt(allowanceTokenAmount.amount)) {
-              steps.push({
-                step: 'approve',
-                message: t('Vault-ApproveMsg'),
-                action: approve(
-                  allowanceTokenAmount.token,
-                  allowanceTokenAmount.spenderAddress,
-                  allowanceTokenAmount.amount
-                ),
-                pending: false,
-              });
-            }
+            steps.push(...getApproveSteps(allowanceTokenAmount, allowance, t));
           }
         }
       }

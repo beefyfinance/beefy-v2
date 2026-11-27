@@ -189,7 +189,7 @@ export const tenderlySimulateTransactQuote = createAppAsyncThunk<
   TenderlyOpenSimulationPayload,
   TenderlySimulateTransactQuoteParams
 >('tenderly/simulateTransactQuote', async ({ option, quote, t }, { getState, dispatch }) => {
-  const steps = await getTransactSteps(quote, t, getState);
+  const steps = await getTransactSteps(quote, t, getState, dispatch);
   const txs = await captureTransactionsFromSteps(steps, dispatch);
   return { chainId: option.chainId, calls: txs };
 });

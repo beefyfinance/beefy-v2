@@ -4,20 +4,23 @@ import { useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
+import { UnlimitedApprovalButton } from '../../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
 import { fromWei, toWei } from '../../../../../../../helpers/big-number.ts';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../data/store/hooks.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
-import { stepperStart, stepperAddStep } from '../../../../../../data/actions/wallet/stepper.ts';
+import { stepperStartWithSteps } from '../../../../../../data/actions/wallet/stepper.ts';
+import { transactSetExecuting } from '../../../../../../data/actions/transact.ts';
+import { selectTransactExecuting } from '../../../../../../data/selectors/transact.ts';
 import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import { approve } from '../../../../../../data/actions/wallet/approval.ts';
+import { fetchApproveSteps } from '../../../../../../data/actions/wallet/approval.ts';
 import { burnWithdraw } from '../../../../../../data/actions/wallet/minters.ts';
 import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
 import { useInputForm } from '../../../../../../data/hooks/input.ts';
-import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
+import { useNeedsApproval } from '../../../../../../data/hooks/approval.ts';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
 import { selectChainById } from '../../../../../../data/selectors/chains.ts';
 import {
@@ -62,12 +65,10 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const mintedTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
-  const mintedTokenAllowance = useAppSelector(state =>
-    selectAllowanceByTokenAddress(state, vault.chainId, mintedToken.address, minter.burnerAddress!)
-  );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
   const totalSupply = useAppSelector(state => selectMinterTotalSupply(state, minter.id));
   const isStepping = useAppSelector(selectIsStepperStepping);
+  const isExecuting = useAppSelector(selectTransactExecuting);
 
   const { handleMax, handleChange, formData } = useInputForm(
     mintedTokenBalance,
@@ -95,54 +96,88 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     dispatch(askForWalletConnection());
   }, [dispatch]);
 
-  const handleWithdraw = () => {
-    if (!isWalletConnected) {
-      dispatch(askForWalletConnection());
-      return;
-    }
-    if (!isWalletOnVaultChain) {
-      dispatch(askForNetworkChange({ chainId: vault.chainId }));
-      return;
-    }
+  const allowances = useMemo(
+    () =>
+      minter.burnerAddress !== mintedToken.address && isTokenErc20(mintedToken) ?
+        [{ token: mintedToken, spenderAddress: minter.burnerAddress!, amount: formData.amount }]
+      : [],
+    [minter.burnerAddress, mintedToken, formData.amount]
+  );
+  const needsApproval = useNeedsApproval(allowances);
+  const offerApprovalChoice = needsApproval && !isStepping && !isExecuting;
+  const isDisabled =
+    formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
+    formData.amount.isLessThanOrEqualTo(0) ||
+    isStepping ||
+    isExecuting;
+  const burnLabel = t('action', { action: t('burn'), token: minter.mintedToken.symbol });
 
-    // minted token does not need allowance to burn itself
-    if (
-      minter.burnerAddress !== mintedToken.address &&
-      isTokenErc20(mintedToken) &&
-      mintedTokenAllowance.isLessThan(formData.amount)
-    ) {
-      dispatch(
-        stepperAddStep({
-          step: {
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: approve(mintedToken, minter.burnerAddress!, formData.amount),
+  const withdraw = useCallback(
+    (unlimited: boolean) => {
+      if (!isWalletConnected) {
+        dispatch(askForWalletConnection());
+        return;
+      }
+      if (!isWalletOnVaultChain) {
+        dispatch(askForNetworkChange({ chainId: vault.chainId }));
+        return;
+      }
+
+      dispatch(async (dispatch, getState) => {
+        dispatch(transactSetExecuting(true));
+        try {
+          // minted token does not need allowance to burn itself
+          const steps =
+            minter.burnerAddress !== mintedToken.address && isTokenErc20(mintedToken) ?
+              await fetchApproveSteps(
+                {
+                  token: mintedToken,
+                  spenderAddress: minter.burnerAddress!,
+                  amount: formData.amount,
+                },
+                t,
+                dispatch,
+                getState,
+                unlimited
+              )
+            : [];
+          steps.push({
+            step: 'burn',
+            message: t('Vault-TxnConfirm', { type: t('Burn') }),
+            action: burnWithdraw(
+              vault.chainId,
+              minter.burnerAddress!,
+              depositToken,
+              mintedToken,
+              formData.amount,
+              formData.max,
+              minterId
+            ),
             pending: false,
-          },
-        })
-      );
-    }
-    dispatch(
-      stepperAddStep({
-        step: {
-          step: 'burn',
-          message: t('Vault-TxnConfirm', { type: t('Burn') }),
-          action: burnWithdraw(
-            vault.chainId,
-            minter.burnerAddress!,
-            depositToken,
-            mintedToken,
-            formData.amount,
-            formData.max,
-            minterId
-          ),
-          pending: false,
-        },
-      })
-    );
-
-    dispatch(stepperStart(chain.id));
-  };
+          });
+          dispatch(stepperStartWithSteps(steps, chain.id));
+        } finally {
+          dispatch(transactSetExecuting(false));
+        }
+      });
+    },
+    [
+      dispatch,
+      t,
+      isWalletConnected,
+      isWalletOnVaultChain,
+      vault.chainId,
+      depositToken,
+      mintedToken,
+      minter.burnerAddress,
+      minterId,
+      formData.amount,
+      formData.max,
+      chain.id,
+    ]
+  );
+  const handleWithdraw = useCallback(() => withdraw(false), [withdraw]);
+  const handleWithdrawUnlimited = useCallback(() => withdraw(true), [withdraw]);
 
   return (
     <CardContent css={styles.cardContent}>
@@ -227,18 +262,23 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             <Button onClick={handleNetworkChange} borderless={true} css={styles.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          : <Button
-              disabled={
-                formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
-                formData.amount.isLessThanOrEqualTo(0) ||
-                isStepping
-              }
-              onClick={handleWithdraw}
-              borderless={true}
-              css={styles.btn}
-            >
-              {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
-            </Button>
+          : <>
+              <Button
+                disabled={isDisabled}
+                onClick={handleWithdraw}
+                borderless={true}
+                css={styles.btn}
+              >
+                {offerApprovalChoice ? t('Approve-Exact-And', { action: burnLabel }) : burnLabel}
+              </Button>
+              {offerApprovalChoice ?
+                <UnlimitedApprovalButton
+                  action={burnLabel}
+                  disabled={isDisabled}
+                  onClick={handleWithdrawUnlimited}
+                />
+              : null}
+            </>
 
         : <Button onClick={handleConnectWallet} borderless={true} css={styles.btn}>
             {t('Network-ConnectWallet')}

@@ -1,8 +1,10 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import { AnimatedButton } from '../../../../../../components/Button/AnimatedButton.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
+import { UnlimitedApprovalButton } from '../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
+import { useNeedsApproval } from '../../../../../data/hooks/approval.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.ts';
 import {
   transactClearQuotes,
@@ -121,6 +123,11 @@ export const MigrateActions = memo(function MigrateActions({
       dispatch(transactSteps(quote, t));
     }
   }, [dispatch, quote, t]);
+  const handleMigrateUnlimited = useCallback(() => {
+    if (quote) {
+      dispatch(transactSteps(quote, t, true));
+    }
+  }, [dispatch, quote, t]);
 
   const handleClose = useCallback(() => {
     dispatch(transactSetSuccessClosed(false));
@@ -151,6 +158,11 @@ export const MigrateActions = memo(function MigrateActions({
   // keep the refresh control mounted while retrying, even when the countdown is paused
   const retrying =
     !!stickyRetry || (quoteStatus === TransactStatus.Rejected && !!quoteRetryOf(quoteError));
+  const allowances = useMemo(() => quote?.allowances ?? [], [quote]);
+  const needsApproval = useNeedsApproval(allowances);
+  const offerApprovalChoice =
+    needsApproval && !isComplete && !isLoading && !isCreating && !confirmNeededWithChanges;
+  const migrateLabel = t('ReplacementVault-Action');
 
   if (hasQuote && isZapQuote(quote)) {
     return (
@@ -185,8 +197,17 @@ export const MigrateActions = memo(function MigrateActions({
                 t('Transact-DepositInProgress')
               : confirmNeededWithChanges ?
                 t('ReplacementVault-Confirm')
-              : t('ReplacementVault-Action')}
+              : offerApprovalChoice ?
+                t('Approve-Exact-And', { action: migrateLabel })
+              : migrateLabel}
             </AnimatedButton>
+            {offerApprovalChoice ?
+              <UnlimitedApprovalButton
+                action={migrateLabel}
+                disabled={isDisabled}
+                onClick={handleMigrateUnlimited}
+              />
+            : null}
           </ActionConnectSwitch>
           <VaultFees />
         </ActionsContainer>

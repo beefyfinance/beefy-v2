@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { Button } from '../../../../../../components/Button/Button.tsx';
 import { TechLoader } from '../../../../../../components/TechLoader/TechLoader.tsx';
+import { UnlimitedApprovalButton } from '../../../../../../components/UnlimitedApprovalButton/UnlimitedApprovalButton.tsx';
 import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc.ts';
 import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
 import {
@@ -17,6 +18,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../data/store/hooks.
 import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
 import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
 import { performBridge } from '../../../../../data/actions/bridge.ts';
+import { useNeedsApproval } from '../../../../../data/hooks/approval.ts';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
 import {
   selectBridgeConfirmQuote,
@@ -73,6 +75,14 @@ const ConfirmReady = memo(function ConfirmReady() {
   const handleBridge = useCallback(() => {
     dispatch(performBridge({ t }));
   }, [dispatch, t]);
+  const handleBridgeUnlimited = useCallback(() => {
+    dispatch(performBridge({ t, unlimitedApproval: true }));
+  }, [dispatch, t]);
+  const allowances = useMemo(() => (quote.allowance ? [quote.allowance] : []), [quote.allowance]);
+  const needsApproval = useNeedsApproval(allowances);
+  const isBusy = isStepping || isExecuting;
+  const offerApprovalChoice = needsApproval && !isBusy;
+  const bridgeLabel = t('Bridge-Action');
 
   const handleConnectWallet = useCallback(() => {
     dispatch(askForWalletConnection());
@@ -156,15 +166,26 @@ const ConfirmReady = memo(function ConfirmReady() {
       <div className={classes.buttonsContainer}>
         {isWalletConnected ?
           isWalletOnFromChain ?
-            <Button
-              onClick={handleBridge}
-              disabled={isStepping || isExecuting}
-              variant="cta"
-              fullWidth={true}
-              borderless={true}
-            >
-              {t('Confirm')}
-            </Button>
+            <>
+              <Button
+                onClick={handleBridge}
+                disabled={isBusy}
+                variant="cta"
+                fullWidth={true}
+                borderless={true}
+              >
+                {offerApprovalChoice ?
+                  t('Approve-Exact-And', { action: bridgeLabel })
+                : t('Confirm')}
+              </Button>
+              {offerApprovalChoice ?
+                <UnlimitedApprovalButton
+                  action={bridgeLabel}
+                  disabled={isBusy}
+                  onClick={handleBridgeUnlimited}
+                />
+              : null}
+            </>
           : <Button onClick={handleNetworkChange} variant="cta" fullWidth={true} borderless={true}>
               {t('Network-Change', { network: fromChain.name })}
             </Button>

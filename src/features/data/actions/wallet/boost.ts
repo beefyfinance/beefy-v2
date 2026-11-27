@@ -13,11 +13,11 @@ import { selectBoostById } from '../../selectors/boosts.ts';
 import { selectChainById } from '../../selectors/chains.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectVaultByIdWithReceipt } from '../../selectors/vaults.ts';
-import { selectIsApprovalNeededForBoostStaking } from '../../selectors/wallet-actions.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { stepperStartWithSteps } from './stepper.ts';
-import { approve } from './approval.ts';
+import { fetchApproveSteps } from './approval.ts';
+import { transactSetExecuting } from '../transact.ts';
 import {
   captureWalletErrors,
   selectVaultTokensToRefresh,
@@ -139,33 +139,39 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
 export const startStakeBoostSteps = (
   boostId: BoostPromoEntity['id'],
   t: TFunction,
-  amount: BigNumber
+  amount: BigNumber,
+  unlimitedApproval: boolean = false
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
-    const state = getState();
-    const boost = selectBoostById(state, boostId);
-    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
-    const needsApproval = selectIsApprovalNeededForBoostStaking(state, boost, amount);
-    const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-    const steps: Step[] = [];
+    dispatch(transactSetExecuting(true));
+    try {
+      const state = getState();
+      const boost = selectBoostById(state, boostId);
+      const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
+      const receiptToken = selectErc20TokenByAddress(
+        state,
+        vault.chainId,
+        vault.receiptTokenAddress
+      );
+      const steps: Step[] = await fetchApproveSteps(
+        { token: receiptToken, spenderAddress: boost.contractAddress, amount },
+        t,
+        dispatch,
+        getState,
+        unlimitedApproval
+      );
 
-    if (needsApproval) {
       steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: approve(receiptToken, boost.contractAddress, amount),
+        step: 'boost-stake',
+        message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+        action: stakeBoost(boostId, amount),
         pending: false,
-      } satisfies Step);
+      });
+
+      dispatch(stepperStartWithSteps(steps, boost.chainId));
+    } finally {
+      dispatch(transactSetExecuting(false));
     }
-
-    steps.push({
-      step: 'boost-stake',
-      message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-      action: stakeBoost(boostId, amount),
-      pending: false,
-    });
-
-    dispatch(stepperStartWithSteps(steps, boost.chainId));
   });
 };
 
