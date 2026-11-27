@@ -55,10 +55,7 @@ import {
   selectTokenPriceByAddress,
   selectTokenPriceLookup,
 } from './tokens.ts';
-import {
-  selectUserMerklRewardsForVault,
-  selectUserStellaSwapRewardsForVault,
-} from './user-rewards.ts';
+import { selectUserMerklRewardsForVault } from './user-rewards.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectVaultById,
@@ -386,9 +383,7 @@ const selectClmPnlLivePrices = createCachedSelector(
 const selectClmPnlOffChainRewards = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
     selectUserMerklRewardsForVault(state, vaultId, walletAddress),
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
-    selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress),
-  (merkl, stella) => ({ merkl, stella })
+  merkl => ({ merkl })
 )(
   (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
     `${vaultId}:${walletAddress}`
@@ -446,7 +441,7 @@ const selectClmPnlInner = createCachedSelector(
       token0: liveToken0Price,
       token1: liveToken1Price,
     } = livePrices;
-    const { merkl: merklRewards, stella: stellaSwapRewards } = offChainRewardsData;
+    const { merkl: merklRewards } = offChainRewardsData;
     const { byChainId: tokensByChainId, priceLookup } = slices;
 
     // === Now (Live, on-chain)
@@ -553,14 +548,9 @@ const selectClmPnlInner = createCachedSelector(
       });
     }
 
-    // Merkl/StellaSwap: Claimed + Unclaimed rewards
+    // Merkl: Claimed + Unclaimed rewards
     // TODO: fetch merkl claims and use usd price at time of claim?
-    const offChainRewards = [
-      ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' as const })) : []),
-      ...(stellaSwapRewards ?
-        stellaSwapRewards.map(r => ({ ...r, source: 'stellaswap' as const }))
-      : []),
-    ];
+    const offChainRewards = (merklRewards ?? []).map(r => ({ ...r, source: 'merkl' as const }));
     for (const reward of offChainRewards) {
       const claimedAmount = reward.accumulated.minus(reward.unclaimed);
       const rewardTokenEntity =

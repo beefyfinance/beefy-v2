@@ -130,7 +130,7 @@ describe('selectTokenPriceLookup', () => {
   });
 
   it('returns 0 for a chain not in state', () => {
-    expect(selectTokenPriceLookup(state)('heco', 'WETH').toNumber()).toBe(0);
+    expect(selectTokenPriceLookup(state)('sonic', 'WETH').toNumber()).toBe(0);
   });
 
   it('returns 0 for an unknown oracle', () => {

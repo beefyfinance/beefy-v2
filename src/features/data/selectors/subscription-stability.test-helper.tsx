@@ -23,11 +23,7 @@ import { setTvlContractState } from '../reducers/tvl.ts';
 import type { BalanceState } from '../reducers/wallet/balance-types.ts';
 import type { TimelineEntityStandard, TimelineEntryStandard } from '../entities/analytics.ts';
 import type { TransactSelection, TransactSelections } from '../reducers/wallet/transact-types.ts';
-import type {
-  MerklVaultReward,
-  StellaSwapVaultReward,
-  UserRewardsState,
-} from '../reducers/wallet/user-rewards-types.ts';
+import type { MerklVaultReward, UserRewardsState } from '../reducers/wallet/user-rewards-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isVaultWithPricePerFullShare, type VaultEntity } from '../entities/vault.ts';
@@ -344,7 +340,6 @@ export async function buildFixture() {
                 dashboard: FULFILLED,
                 clmHarvests: FULFILLED,
                 merklRewards: FULFILLED,
-                stellaSwapRewards: FULFILLED,
               },
               byChainId: {
                 [FIXTURE_CHAIN]: {
@@ -384,15 +379,6 @@ function makeUserRewards(rewardToken: TokenEntity, vaultIds: string[]): UserRewa
     accumulated: new BigNumber(10),
     unclaimed: new BigNumber(4),
   };
-  const stellaSwapVaultReward: StellaSwapVaultReward = {
-    position: 0,
-    token,
-    proofs: [],
-    isNative: false,
-    accumulated: new BigNumber(10),
-    unclaimed: new BigNumber(4),
-    claimContractAddress: rewardToken.address,
-  };
 
   return {
     byUser: {
@@ -405,9 +391,6 @@ function makeUserRewards(rewardToken: TokenEntity, vaultIds: string[]): UserRewa
                 { token, accumulated: new BigNumber(20), unclaimed: new BigNumber(9), proof: [] },
               ],
             },
-          },
-          stellaswap: {
-            byVaultId: Object.fromEntries(vaultIds.map(id => [id, [stellaSwapVaultReward]])),
           },
         },
       },

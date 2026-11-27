@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { muiCompatSvgrPlugin, standardSvgrPlugin } from './tools/bundle/svgr.ts';
+import { chainLoadersPlugin } from './tools/bundle/chain-loaders-plugin.ts';
 
 // eslint-disable-next-line no-restricted-syntax -- required for Vite
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     }),
     standardSvgrPlugin(),
     muiCompatSvgrPlugin(),
+    chainLoadersPlugin(),
   ],
   // .riv files are imported as urls; without this vite tries to parse them as JS
   assetsInclude: ['**/*.riv'],

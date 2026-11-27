@@ -16,7 +16,6 @@ const registryAddresses: Partial<Record<ChainId, Address>> = {
   bsc: '0x08CEd32a7f3eeC915Ba84415e9C07a7286977956',
   gnosis: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
   // manta: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
-  mode: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
   arbitrum: '0x4a067EE58e73ac5E4a43722E008DFdf65B2bF348',
 } satisfies Record<AllChainsFromTldToChain<typeof tldToChain>, Address>;
 

@@ -31,12 +31,6 @@ const sharedBalanceChains: Case[] = [
     wnativeId: 'WMETIS',
     wnativeAddress: '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
   },
-  {
-    chainId: 'celo',
-    nativeId: 'NATIVE',
-    wnativeId: 'WCELO',
-    wnativeAddress: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-  },
 ];
 
 const separateBalanceChains: Case[] = [

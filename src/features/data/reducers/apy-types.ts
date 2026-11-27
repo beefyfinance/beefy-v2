@@ -35,8 +35,6 @@ export interface TotalApy {
   clmDaily?: number;
   merklApr?: number;
   merklDaily?: number;
-  stellaSwapApr?: number;
-  stellaSwapDaily?: number;
   lineaIgnitionApr?: number;
   lineaIgnitionDaily?: number;
   rewardPoolApr?: number;

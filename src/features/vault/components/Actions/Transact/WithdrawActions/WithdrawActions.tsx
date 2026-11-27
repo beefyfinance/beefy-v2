@@ -55,7 +55,6 @@ import {
 } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitchWithFees as ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
-import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { usePriceImpactState } from '../hooks/usePriceImpactState.ts';
@@ -289,9 +288,6 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 
   return (
     <>
-      {option.chainId === 'emerald' ?
-        <EmeraldGasNotice />
-      : null}
       <PriceImpactNotice state={priceImpactState} />
       <ConfirmNotice />
       <NotEnoughNotice mode="withdraw" />
@@ -394,9 +390,6 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
 
   return (
     <>
-      {option.chainId === 'emerald' ?
-        <EmeraldGasNotice />
-      : null}
       <PriceImpactNotice state={priceImpactState} />
       <ConfirmNotice />
       <NotEnoughNotice mode="withdraw" />

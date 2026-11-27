@@ -11,8 +11,7 @@ const addressbookImporter = import('@beefyfinance/blockchain-addressbook');
 export const getChainAddressBook = memoize(
   async (chain: ChainEntity): Promise<ChainAddressBook> => {
     const { addressBook } = await addressbookImporter;
-    const addressbookChainId = chain.id === 'harmony' ? 'one' : chain.id;
-    const addressBookChain = addressBook[addressbookChainId];
+    const addressBookChain = addressBook[chain.id];
     const addressBookTokens = addressBookChain.tokens;
     const wnative = addressBookTokens['WNATIVE'];
     const native = addressBookChain.native;

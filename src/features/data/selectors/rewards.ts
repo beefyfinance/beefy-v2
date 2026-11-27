@@ -6,7 +6,7 @@ import { uniqBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types.ts';
+import type { MerklRewardsCampaign } from '../reducers/rewards-types.ts';
 import type { BeefyState } from '../store/types.ts';
 import { isNonEmptyArray } from '../utils/array-utils.ts';
 import { selectCurrentBoostByVaultIdOrUndefined } from './boosts.ts';
@@ -25,10 +25,6 @@ export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & {
   apr: number;
 };
 
-export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & {
-  apr: number;
-};
-
 export const selectVaultActiveMerklCampaigns = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.merkl[vaultId],
@@ -42,7 +38,7 @@ export const selectVaultActiveMerklCampaigns = createCachedSelector(
     const now = getUnixTime(new Date());
     const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
-      .map(v => ({ ...(campaignById[v.id] as MerklRewardsCampaign), apr: v.apr }))
+      .map(v => ({ ...campaignById[v.id], apr: v.apr }))
       .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
 
     return activeCampaigns.length ? activeCampaigns : undefined;
@@ -56,38 +52,8 @@ export function selectVaultHasActiveMerklCampaigns(state: BeefyState, vaultId: V
 
 export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boolean {
   return (
-    campaign.providerId === 'merkl' &&
-    ((campaign.chainId === 'base' && campaign.type === 'zap-v3') ||
-      (campaign.chainId === 'mode' && campaign.type === 'mode-grant'))
+    campaign.providerId === 'merkl' && campaign.chainId === 'base' && campaign.type === 'zap-v3'
   );
-}
-
-export const selectVaultActiveStellaSwapCampaigns = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.biz.rewards.offchain.byProviderId.stellaswap[vaultId],
-  (state: BeefyState) => state.biz.rewards.offchain.byId,
-  () => Math.trunc(Date.now() / 600000), // re-evaluate campaign windows on a 10-min bucket
-  (vaultCampaigns, campaignById, _bucket): StellaSwapRewardsCampaignWithApr[] | undefined => {
-    if (!vaultCampaigns) {
-      return undefined;
-    }
-
-    const now = getUnixTime(new Date());
-    const activeCampaigns = vaultCampaigns
-      .filter(v => v.apr > 0)
-      .map(v => ({ ...(campaignById[v.id] as StellaSwapRewardsCampaign), apr: v.apr }))
-      .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
-
-    return activeCampaigns.length ? activeCampaigns : undefined;
-  }
-)(byVaultId);
-
-export function selectVaultHasActiveStellaSwapCampaigns(
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) {
-  const campaigns = selectVaultActiveStellaSwapCampaigns(state, vaultId);
-  return !!campaigns && campaigns.length > 0;
 }
 
 export const selectVaultHasActiveOffchainCampaigns = createCachedSelector(
@@ -145,17 +111,16 @@ export function selectVaultHasActiveGovRewards(state: BeefyState, vaultId: Vault
 
 export const selectVaultActiveExtraRewardTokens = createSelector(
   selectVaultActiveMerklCampaigns,
-  selectVaultActiveStellaSwapCampaigns,
   (state: BeefyState) => state.entities.tokens.byChainId,
   // TODO - add a selector for 'extra' gov rewards once we have the data
-  (merklCampaigns, stellaSwapCampaigns, tokensByChainId): UnifiedRewardToken[] | undefined => {
-    if (!isNonEmptyArray(merklCampaigns) && !isNonEmptyArray(stellaSwapCampaigns)) {
+  (merklCampaigns, tokensByChainId): UnifiedRewardToken[] | undefined => {
+    if (!isNonEmptyArray(merklCampaigns)) {
       return undefined;
     }
 
     const tokens: UnifiedRewardToken[] = [];
 
-    for (const campaign of [...(merklCampaigns || []), ...(stellaSwapCampaigns || [])]) {
+    for (const campaign of merklCampaigns) {
       const { address, symbol, decimals, chainId } = campaign.rewardToken;
       tokens.push(
         tokensByChainId[chainId]?.byAddress[address.toLowerCase()] ?? {
