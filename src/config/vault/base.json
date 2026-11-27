@@ -6253,7 +6253,7 @@
     "status": "active",
     "createdAt": 1793550000,
     "platformId": "aero",
-    "assets": ["AERO", "cbBTC"],
+    "assets": ["AEROv2", "cbBTC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -7256,7 +7256,7 @@
     "status": "active",
     "createdAt": 1793290000,
     "platformId": "aero",
-    "assets": ["AERO", "cbBTC"],
+    "assets": ["AEROv2", "cbBTC"],
     "risks": {
       "complex": true,
       "curated": false,
@@ -7711,7 +7711,7 @@
     "platformId": "beefy",
     "feeTier": "0.2835",
     "tickSpacing": 200,
-    "assets": ["AERO", "cbBTC"],
+    "assets": ["AEROv2", "cbBTC"],
     "risks": {
       "complex": true,
       "curated": false,
